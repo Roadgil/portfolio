@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --surf: #161616;
+      --border: #2a2a2a;
+      --text: #f0ede6;
+      --muted: #666;
+      --c1: #5b4fcf;
+      --c2: #c4621a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── GRAIN ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 48px 60px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      animation: fadeDown 0.7s ease both;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--muted);
+    }
+
+    .header-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    /* ── HERO TEXT ── */
+    .hero {
+      padding: 80px 60px 0;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--muted);
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 8vw, 110px);
+      line-height: 0.88;
+      letter-spacing: -1px;
+      margin-bottom: 28px;
+    }
+    .hero-title .t1 { color: var(--text); }
+    .hero-title .t2 { color: var(--c1); }
+    .hero-title .t3 { color: var(--c2); }
+
+    .hero-sub {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      margin: 60px 60px 0;
+      height: 1px;
+      background: var(--border);
+      animation: scaleX 0.8s ease 0.3s both;
+      transform-origin: left;
+    }
+    @keyframes scaleX {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    /* ── PROJECT CARDS ── */
+    .projects {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin: 0 60px;
+      gap: 0;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    .proj-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 56px 48px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+      animation: fadeUp 0.8s ease both;
+      cursor: pointer;
+    }
+    .proj-card:last-child { border-right: none; }
+    .proj-card:hover { background: var(--surf); }
+
+    /* hover accent bar */
+    .proj-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .proj-card.p1::after { background: var(--c1); }
+    .proj-card.p2::after { background: var(--c2); }
+    .proj-card:hover::after { transform: scaleX(1); }
+
+    /* big background number */
+    .proj-bg-num {
+      position: absolute;
+      bottom: -20px; right: 20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 180px;
+      line-height: 1;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      transition: color 0.3s;
+    }
+    .proj-card:hover .proj-bg-num { color: rgba(255,255,255,0.04); }
+
+    .proj-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+
+    .proj-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid;
+      text-transform: uppercase;
+    }
+    .tag-purple { color: #a78bfa; border-color: rgba(167,139,250,0.25); background: rgba(167,139,250,0.07); }
+    .tag-orange { color: #fdba74; border-color: rgba(253,186,116,0.25); background: rgba(253,186,116,0.07); }
+    .tag-teal   { color: #2dd4bf; border-color: rgba(45,212,191,0.25);  background: rgba(45,212,191,0.07); }
+    .tag-green  { color: #86efac; border-color: rgba(134,239,172,0.25); background: rgba(134,239,172,0.07); }
+    .tag-blue   { color: #93c5fd; border-color: rgba(147,197,253,0.25); background: rgba(147,197,253,0.07); }
+
+    .proj-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .proj-title em { font-style: italic; }
+    .p1 .proj-title em { color: var(--c1); }
+    .p2 .proj-title em { color: var(--c2); }
+
+    .proj-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 36px;
+      max-width: 360px;
+    }
+
+    .proj-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .proj-stack {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+
+    .proj-arrow {
+      width: 44px; height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--muted);
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+    .proj-card:hover .proj-arrow {
+      border-color: transparent;
+      color: #fff;
+      transform: rotate(-45deg);
+    }
+    .p1:hover .proj-arrow { background: var(--c1); }
+    .p2:hover .proj-arrow { background: var(--c2); }
+
+    /* ── FOOTER ── */
+    footer {
+      margin: 0 60px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .footer-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+
+    .footer-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .footer-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .proj-card.p1 { animation-delay: 0.35s; }
+    .proj-card.p2 { animation-delay: 0.45s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      header { padding: 36px 24px 0; }
+      .hero  { padding: 56px 24px 0; }
+      .divider { margin: 40px 24px 0; }
+      .projects {
+        grid-template-columns: 1fr;
+        margin: 0 24px;
+      }
+      .proj-card { padding: 40px 28px; border-right: none; }
+      .proj-card:last-child { border-right: none; }
+      footer { margin: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">PORTFOLIO</div>
+    <div class="header-meta">
+      CANDELA KOREA<br>
+      OPERATION · SALES
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Projects · 2025–2026</div>
+    <h1 class="hero-title">
+      <span class="t1">MADE</span><br>
+      <span class="t2">TO</span><br>
+      <span class="t3">AUTOMATE</span>
+    </h1>
+    <p class="hero-sub">
+      두 개의 프로젝트 · 하나의 목표 — 반복 업무를 코드로.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="projects">
+
+    <!-- Project 1 -->
+    <a class="proj-card p1" href="portfolio.html">
+      <div class="proj-bg-num">01</div>
+      <div class="proj-num">PROJECT · 01</div>
+      <div class="proj-tags">
+        <span class="tag tag-purple">React 18</span>
+        <span class="tag tag-teal">Firebase</span>
+        <span class="tag tag-blue">Chart.js</span>
+        <span class="tag tag-green">KO/EN</span>
+      </div>
+      <h2 class="proj-title">영업 납품처<br><em>FCST Dashboard</em></h2>
+      <p class="proj-desc">
+        분기 목표 대비 실적 실시간 관리 시스템.<br>
+        Firebase Auth · Firestore 기반 3개 모듈로<br>
+        구성된 웹 대시보드 플랫폼.
+      </p>
+      <div class="proj-meta">
+        <div class="proj-stack">
+          React · Firebase Auth<br>
+          Firestore · Chart.js · Tailwind
+        </div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Project 2 -->
+    <a class="proj-card p2" href="portfolio_import_automation.html">
+      <div class="proj-bg-num">02</div>
+      <div class="proj-num">PROJECT · 02</div>
+      <div class="proj-tags">
+        <span class="tag tag-orange">Python</span>
+        <span class="tag tag-green">openpyxl</span>
+        <span class="tag tag-blue">win32com</span>
+        <span class="tag tag-teal">pdfplumber</span>
+      </div>
+      <h2 class="proj-title">수입 업무<br><em>자동화 시스템</em></h2>
+      <p class="proj-desc">
+        Outlook 메일 수신부터 Excel 반영, 내부 공유<br>
+        메일 발송까지 수작업 제로(Zero)를 목표로<br>
+        설계된 8개 모듈 파이썬 파이프라인.
+      </p>
+      <div class="proj-meta">
+        <div class="proj-stack">
+          Python · win32com · openpyxl<br>
+          pdfplumber · tkinter · subprocess
+        </div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    <div class="footer-note">2 PROJECTS · ALL RIGHTS RESERVED</div>
+    <div class="footer-dots">
+      <div class="footer-dot" style="background:var(--c1);"></div>
+      <div class="footer-dot" style="background:var(--c2);"></div>
+      <div class="footer-dot" style="background:var(--border);"></div>
+    </div>
+  </footer>
+
+</body>
+</html>

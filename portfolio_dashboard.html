@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Dashboard · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --surf: #13151c;
+      --surf2: #1a1d27;
+      --border: #252836;
+      --accent: #5b4fcf;
+      --accent2: #0faaa0;
+      --accent3: #e84d6f;
+      --accent4: #e09c10;
+      --text: #eef0f8;
+      --muted: #6b6f84;
+      --green: #0fa878;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.35;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(91,79,207,0.18) 0%, transparent 70%);
+      top: -200px; left: -200px;
+      animation: floatGlow 8s ease-in-out infinite;
+    }
+    .hero-bg-glow2 {
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15,170,160,0.12) 0%, transparent 70%);
+      bottom: -100px; right: 100px;
+      animation: floatGlow 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatGlow {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(30px) scale(1.05); }
+    }
+
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--accent2);
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 9vw, 130px);
+      line-height: 0.9;
+      letter-spacing: -1px;
+      color: var(--text);
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+    .hero-title span.accent { color: var(--accent); }
+    .hero-title span.accent2 { color: var(--accent2); }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.8;
+      animation: fadeUp 0.8s ease 0.2s both;
+      margin-bottom: 48px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      animation: fadeUp 0.8s ease 0.3s both;
+      flex-wrap: wrap;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 60px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 1.5px solid var(--muted);
+      border-bottom: 1.5px solid var(--muted);
+      transform: rotate(45deg);
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(5px)} }
+
+    /* ── SECTION ── */
+    .section {
+      padding: 100px 60px;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.1;
+      margin-bottom: 60px;
+      color: var(--text);
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--accent2);
+    }
+
+    /* ── PROJECT CARDS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      border-color: var(--accent);
+    }
+
+    .card-preview {
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Dashboard preview mockup */
+    .preview-dashboard {
+      background: linear-gradient(135deg, #13151c 0%, #1a1d27 100%);
+      padding: 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mock-header {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .mock-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .mock-title-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.15);
+      flex: 1;
+    }
+    .mock-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 8px;
+    }
+    .mock-kpi {
+      border-radius: 8px;
+      height: 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .mock-kpi::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .mock-kpi-inner {
+      padding: 8px;
+    }
+    .mock-line {
+      height: 6px;
+      border-radius: 3px;
+      margin-bottom: 6px;
+    }
+    .mock-line2 { height: 4px; border-radius: 2px; }
+    .mock-chart {
+      flex: 1;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      display: flex;
+      align-items: flex-end;
+      padding: 10px;
+      gap: 6px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .mock-bar {
+      border-radius: 3px 3px 0 0;
+      flex: 1;
+    }
+    .preview-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(19,21,28,0.9));
+    }
+
+    /* Report preview */
+    .preview-report {
+      background: #f1f5f9;
+      padding: 20px;
+      height: 100%;
+    }
+    .mock-table-header {
+      background: #1e293b;
+      height: 28px;
+      border-radius: 4px 4px 0 0;
+      display: flex;
+      gap: 2px;
+      padding: 8px 10px;
+      align-items: center;
+    }
+    .mock-th {
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.3);
+      flex: 1;
+    }
+    .mock-tr {
+      display: flex;
+      gap: 2px;
+      padding: 7px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      align-items: center;
+    }
+    .mock-td {
+      height: 5px;
+      border-radius: 3px;
+      flex: 1;
+    }
+
+    /* Login preview */
+    .preview-login {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mock-login-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 28px 32px;
+      width: 200px;
+      backdrop-filter: blur(10px);
+    }
+    .mock-login-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      background: linear-gradient(135deg, #5b4fcf, #0faaa0);
+    }
+    .mock-input {
+      height: 28px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+    .mock-btn {
+      height: 30px;
+      background: #5b4fcf;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+
+    .card-body {
+      padding: 28px;
+    }
+    .card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid;
+    }
+    .tag-purple { color: #a78bfa; border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.08); }
+    .tag-teal   { color: #2dd4bf; border-color: rgba(45,212,191,0.3);  background: rgba(45,212,191,0.08); }
+    .tag-rose   { color: #fb7185; border-color: rgba(251,113,133,0.3); background: rgba(251,113,133,0.08); }
+    .tag-amber  { color: #fbbf24; border-color: rgba(251,191,36,0.3);  background: rgba(251,191,36,0.08); }
+    .tag-green  { color: #34d399; border-color: rgba(52,211,153,0.3);  background: rgba(52,211,153,0.08); }
+
+    .card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .card-features {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .feature-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .card-footer {
+      padding: 18px 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-footer-info {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+    .card-arrow {
+      width: 32px; height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .project-card:hover .card-arrow {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      transform: rotate(-45deg);
+    }
+
+    /* ── TECH STACK ── */
+    .stack-section {
+      background: var(--surf);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 2px;
+    }
+
+    .stack-item {
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+      transition: background 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .stack-item:hover { background: var(--surf2); }
+
+    .stack-icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+    .stack-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .stack-role {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ── */
+    .arch-section {
+      padding: 100px 60px;
+    }
+    .arch-diagram {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .arch-diagram::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(91,79,207,0.06) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 50%, rgba(15,170,160,0.06) 0%, transparent 60%);
+    }
+
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .arch-node {
+      background: var(--surf2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      text-align: center;
+      min-width: 140px;
+      flex: 1;
+      position: relative;
+    }
+    .arch-node-icon { font-size: 28px; margin-bottom: 10px; line-height: 1; }
+    .arch-node-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .arch-node-sub { font-size: 10px; color: var(--muted); }
+    .arch-node.highlight { border-color: var(--accent); background: rgba(91,79,207,0.1); }
+
+    .arch-arrow {
+      color: var(--muted);
+      font-size: 20px;
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    /* ── HIGHLIGHTS ── */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 60px;
+    }
+    .highlight-card {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .highlight-card.c1::after { background: var(--accent); }
+    .highlight-card.c2::after { background: var(--accent2); }
+    .highlight-card.c3::after { background: var(--accent3); }
+    .highlight-card.c4::after { background: var(--accent4); }
+    .highlight-card.c5::after { background: var(--green); }
+
+    .highlight-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 56px;
+      line-height: 1;
+      margin-bottom: 8px;
+      opacity: 0.15;
+      position: absolute;
+      top: 16px;
+      right: 20px;
+    }
+    .highlight-icon { font-size: 28px; margin-bottom: 16px; }
+    .highlight-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .highlight-desc { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 60px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+    }
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+    .footer-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── DIVIDER ── */
+    .ticker {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      background: var(--surf);
+    }
+    .ticker-inner {
+      display: flex;
+      gap: 60px;
+      animation: ticker 20s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-item {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .ticker-item::after {
+      content: '·';
+      color: var(--accent);
+      font-size: 18px;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 768px) {
+      .hero, .section, .arch-section { padding: 60px 24px; }
+      .scroll-hint { left: 24px; }
+      footer { padding: 40px 24px; flex-direction: column; gap: 16px; text-align: center; }
+      .arch-flow { flex-direction: column; }
+      .arch-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-bg-glow2"></div>
+
+    <div class="hero-tag">Portfolio · 2025–2026</div>
+
+    <h1 class="hero-title">
+      SALES<br>
+      <span class="accent">FCST</span><br>
+      <span class="accent2">DASH</span>BOARD
+    </h1>
+
+    <p class="hero-desc">
+      Firebase 기반의 실시간 영업 납품처 관리 시스템.<br>
+      팀원별 분기 목표 추적, 다국어 지원, 대표 보고용 리포트까지<br>
+      하나의 플랫폼에서 연결한 End-to-End 솔루션.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Core Modules</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">2</span>
+        <span class="stat-label">Languages</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">RT</span>
+        <span class="stat-label">Realtime DB</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Quarters Tracked</span>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-arrow"></div>
+      SCROLL
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="ticker-item">React 18</span>
+      <span class="ticker-item">Firebase Firestore</span>
+      <span class="ticker-item">Firebase Auth</span>
+      <span class="ticker-item">Chart.js</span>
+      <span class="ticker-item">Tailwind CSS</span>
+      <span class="ticker-item">DM Serif Display</span>
+      <span class="ticker-item">다국어 지원 KO/EN</span>
+      <span class="ticker-item">실시간 동기화</span>
+      <span class="ticker-item">드래그 정렬</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">React 18</span>
+      <span class="ticker-item">Firebase Firestore</span>
+      <span class="ticker-item">Firebase Auth</span>
+      <span class="ticker-item">Chart.js</span>
+      <span class="ticker-item">Tailwind CSS</span>
+      <span class="ticker-item">DM Serif Display</span>
+      <span class="ticker-item">다국어 지원 KO/EN</span>
+      <span class="ticker-item">실시간 동기화</span>
+      <span class="ticker-item">드래그 정렬</span>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section class="section">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">세 개의 모듈로<br><em>완성되는 시스템</em></h2>
+
+    <div class="projects-grid">
+
+      <!-- Card 1: FCST Dashboard -->
+      <a class="project-card reveal" href="index_password.html">
+        <div class="card-preview">
+          <div class="preview-dashboard">
+            <div class="mock-header">
+              <div class="mock-dot" style="background:#e84d6f"></div>
+              <div class="mock-dot" style="background:#e09c10"></div>
+              <div class="mock-dot" style="background:#0fa878"></div>
+              <div class="mock-title-bar" style="max-width:100px; margin-left:8px;"></div>
+            </div>
+            <div class="mock-kpi-row">
+              <div class="mock-kpi" style="background:rgba(91,79,207,0.15);">
+                <div class="mock-kpi-inner">
+                  <div class="mock-line" style="background:rgba(91,79,207,0.5); width:60%;"></div>
+                  <div class="mock-line2" style="background:rgba(91,79,207,0.3); width:80%;"></div>
+                </div>
+              </div>
+              <div class="mock-kpi" style="background:rgba(15,170,160,0.12);">
+                <div class="mock-kpi-inner">
+                  <div class="mock-line" style="background:rgba(15,170,160,0.5); width:70%;"></div>
+                  <div class="mock-line2" style="background:rgba(15,170,160,0.3); width:55%;"></div>
+                </div>
+              </div>
+              <div class="mock-kpi" style="background:rgba(232,77,111,0.1);">
+                <div class="mock-kpi-inner">
+                  <div class="mock-line" style="background:rgba(232,77,111,0.5); width:50%;"></div>
+                  <div class="mock-line2" style="background:rgba(232,77,111,0.3); width:75%;"></div>
+                </div>
+              </div>
+              <div class="mock-kpi" style="background:rgba(224,156,16,0.1);">
+                <div class="mock-kpi-inner">
+                  <div class="mock-line" style="background:rgba(224,156,16,0.5); width:65%;"></div>
+                  <div class="mock-line2" style="background:rgba(224,156,16,0.3); width:45%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mock-chart">
+              <div class="mock-bar" style="height:60%; background:rgba(91,79,207,0.6);"></div>
+              <div class="mock-bar" style="height:80%; background:rgba(91,79,207,0.6);"></div>
+              <div class="mock-bar" style="height:45%; background:rgba(91,79,207,0.6);"></div>
+              <div class="mock-bar" style="height:90%; background:rgba(91,79,207,0.8);"></div>
+              <div class="mock-bar" style="height:70%; background:rgba(91,79,207,0.6);"></div>
+              <div class="mock-bar" style="height:55%; background:rgba(91,79,207,0.6);"></div>
+              <div class="mock-bar" style="height:85%; background:rgba(15,170,160,0.7);"></div>
+              <div class="mock-bar" style="height:100%; background:rgba(15,170,160,0.8);"></div>
+            </div>
+          </div>
+          <div class="preview-overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-purple">Firebase Auth</span>
+            <span class="tag tag-teal">Firestore</span>
+            <span class="tag tag-green">KO/EN</span>
+          </div>
+          <h3 class="card-title">영업 납품처 FCST Dashboard</h3>
+          <p class="card-desc">
+            팀원별 분기 목표 대비 실적을 실시간으로 관리하는 메인 대시보드. Firebase Auth로 접근 권한을 제어하며 Committed / Back up / 미납 상태별 분류와 드래그 앤 드롭 순서 정렬을 지원합니다.
+          </p>
+          <div class="card-features">
+            <div class="feature">
+              <div class="feature-dot" style="background:#5b4fcf;"></div>
+              <span>이메일/비밀번호 로그인 + 비밀번호 리셋 기능</span>
+            </div>
+            <div class="feature">
+              <div class="feature-dot" style="background:#0faaa0;"></div>
+              <span>분기 & 팀원별 필터링 + 상태별 테이블 분리</span>
+            </div>
+            <div class="feature">
+              <div class="feature-dot" style="background:#0fa878;"></div>
+              <span>드래그로 행 순서 변경 · CSV 내보내기</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-info">MODULE 01 · MAIN</span>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Card 2: Detail Report Dashboard -->
+      <a class="project-card reveal" href="dashboard_26.html" style="transition-delay:0.1s">
+        <div class="card-preview">
+          <div class="preview-dashboard" style="background: linear-gradient(135deg, #f4f5f7 0%, #e8eaf0 100%);">
+            <div class="mock-header">
+              <div style="height:14px; width:120px; background:#1a1a2e; border-radius:3px; opacity:0.8;"></div>
+              <div style="flex:1;"></div>
+              <div style="height:10px; width:60px; background:#5b4fcf; border-radius:10px; opacity:0.6;"></div>
+            </div>
+            <div class="mock-kpi-row">
+              <div class="mock-kpi" style="background:#fff; border:1px solid #e4e6eb;">
+                <div class="mock-kpi-inner">
+                  <div class="mock-line" style="background:#5b4fcf; width:55%; opacity:0.7;"></div>
+                  <div class="mock-line2" style="background:#8a8fa8; width:80%; opacity:0.4;"></div>
+                </div>
+              </div>
+              <div class="mock-kpi" style="background:#fff; border:1px solid #e4e6eb;">
+                <div class="mock-kpi-inner">
+                  <div class="mock-line" style="background:#0faaa0; width:70%; opacity:0.7;"></div>
+                  <div class="mock-line2" style="background:#8a8fa8; width:60%; opacity:0.4;"></div>
+                </div>
+              </div>
+              <div class="mock-kpi" style="background:#fff; border:1px solid #e4e6eb;">
+                <div class="mock-kpi-inner">
+                  <div class="mock-line" style="background:#e84d6f; width:45%; opacity:0.7;"></div>
+                  <div class="mock-line2" style="background:#8a8fa8; width:70%; opacity:0.4;"></div>
+                </div>
+              </div>
+              <div class="mock-kpi" style="background:#fff; border:1px solid #e4e6eb;">
+                <div class="mock-kpi-inner">
+                  <div class="mock-line" style="background:#e09c10; width:65%; opacity:0.7;"></div>
+                  <div class="mock-line2" style="background:#8a8fa8; width:50%; opacity:0.4;"></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; flex:1;">
+              <div style="background:#fff; border:1px solid #e4e6eb; border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:5px;">
+                <div style="height:5px; background:#5b4fcf; border-radius:2px; width:40%; opacity:0.5;"></div>
+                <div style="height:60px; background:#f4f5f7; border-radius:6px; display:flex; align-items:flex-end; padding:6px; gap:4px;">
+                  <div style="flex:1; background:#5b4fcf; border-radius:2px 2px 0 0; height:70%; opacity:0.5;"></div>
+                  <div style="flex:1; background:#5b4fcf; border-radius:2px 2px 0 0; height:90%; opacity:0.5;"></div>
+                  <div style="flex:1; background:#0faaa0; border-radius:2px 2px 0 0; height:55%; opacity:0.5;"></div>
+                  <div style="flex:1; background:#0faaa0; border-radius:2px 2px 0 0; height:80%; opacity:0.5;"></div>
+                </div>
+              </div>
+              <div style="background:#fff; border:1px solid #e4e6eb; border-radius:10px; padding:10px;">
+                <div style="height:5px; background:#5b4fcf; border-radius:2px; width:40%; opacity:0.5; margin-bottom:8px;"></div>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                  <div style="height:6px; background:#e4e6eb; border-radius:3px;"><div style="width:70%; height:100%; background:#5b4fcf; border-radius:3px; opacity:0.5;"></div></div>
+                  <div style="height:6px; background:#e4e6eb; border-radius:3px;"><div style="width:45%; height:100%; background:#0faaa0; border-radius:3px; opacity:0.5;"></div></div>
+                  <div style="height:6px; background:#e4e6eb; border-radius:3px;"><div style="width:85%; height:100%; background:#e09c10; border-radius:3px; opacity:0.5;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="preview-overlay" style="background:linear-gradient(to bottom, transparent 50%, rgba(19,21,28,0.85));"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-purple">Chart.js</span>
+            <span class="tag tag-amber">Firestore</span>
+            <span class="tag tag-teal">DM Serif</span>
+          </div>
+          <h3 class="card-title">Detail Report Dashboard</h3>
+          <p class="card-desc">
+            Candela Korea 영업팀 전체 실적을 시각화하는 분석 대시보드. 팀원별 진척률, 제품군별 매출, 딜러 현황을 Chart.js로 렌더링하며 상세 리포트 탭을 지원합니다.
+          </p>
+          <div class="card-features">
+            <div class="feature">
+              <div class="feature-dot" style="background:#5b4fcf;"></div>
+              <span>KPI 카드 4종 + 팀원별 달성률 바차트</span>
+            </div>
+            <div class="feature">
+              <div class="feature-dot" style="background:#0faaa0;"></div>
+              <span>탭 네비게이션으로 팀원 개별 분석 전환</span>
+            </div>
+            <div class="feature">
+              <div class="feature-dot" style="background:#e09c10;"></div>
+              <span>Blink 애니메이션 · 라이브 뱃지 UI</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-info">MODULE 02 · ANALYTICS</span>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Card 3: 대표 보고 리포트 -->
+      <a class="project-card reveal" href="report.html" style="transition-delay:0.2s">
+        <div class="card-preview">
+          <div class="preview-report">
+            <div class="mock-table-header">
+              <div class="mock-th"></div>
+              <div class="mock-th"></div>
+              <div class="mock-th"></div>
+              <div class="mock-th"></div>
+              <div class="mock-th"></div>
+              <div class="mock-th"></div>
+            </div>
+            <div style="background:white; border:1px solid #e2e8f0; border-top:none;">
+              <div class="mock-tr" style="background:#dbeafe;">
+                <div class="mock-td" style="background:#93c5fd; height:6px;"></div>
+                <div class="mock-td" style="background:#93c5fd; height:6px;"></div>
+                <div class="mock-td" style="background:#93c5fd; height:6px;"></div>
+                <div class="mock-td" style="background:#93c5fd; height:6px;"></div>
+              </div>
+              <div class="mock-tr">
+                <div class="mock-td" style="background:#cbd5e1;"></div>
+                <div class="mock-td" style="background:#e2e8f0;"></div>
+                <div class="mock-td" style="background:#fca5a5;"></div>
+                <div class="mock-td" style="background:#cbd5e1;"></div>
+              </div>
+              <div class="mock-tr">
+                <div class="mock-td" style="background:#cbd5e1;"></div>
+                <div class="mock-td" style="background:#86efac;"></div>
+                <div class="mock-td" style="background:#e2e8f0;"></div>
+                <div class="mock-td" style="background:#86efac;"></div>
+              </div>
+              <div class="mock-tr" style="background:#fef9c3;">
+                <div class="mock-td" style="background:#fbbf24; opacity:0.6;"></div>
+                <div class="mock-td" style="background:#fbbf24; opacity:0.6;"></div>
+                <div class="mock-td" style="background:#fbbf24; opacity:0.6;"></div>
+                <div class="mock-td" style="background:#fbbf24; opacity:0.6;"></div>
+              </div>
+              <div class="mock-tr">
+                <div class="mock-td" style="background:#cbd5e1;"></div>
+                <div class="mock-td" style="background:#e2e8f0;"></div>
+                <div class="mock-td" style="background:#93c5fd;"></div>
+                <div class="mock-td" style="background:#cbd5e1;"></div>
+              </div>
+              <div class="mock-tr">
+                <div class="mock-td" style="background:#cbd5e1;"></div>
+                <div class="mock-td" style="background:#fca5a5;"></div>
+                <div class="mock-td" style="background:#e2e8f0;"></div>
+                <div class="mock-td" style="background:#86efac;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="preview-overlay" style="background:linear-gradient(to bottom, transparent 40%, rgba(19,21,28,0.9));"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-rose">대표 보고용</span>
+            <span class="tag tag-teal">주차별 추적</span>
+            <span class="tag tag-green">Progress</span>
+          </div>
+          <h3 class="card-title">대표님 보고용 리포트</h3>
+          <p class="card-desc">
+            경영진에게 주간 영업 진척을 보고하기 위한 Excel 스타일 리포트. 팀원별 분기 목표 및 주차별 누적 실적을 색상으로 구분하며 Progress % 자동 계산을 지원합니다.
+          </p>
+          <div class="card-features">
+            <div class="feature">
+              <div class="feature-dot" style="background:#e84d6f;"></div>
+              <span>주차 자동 날짜 레이블 표시</span>
+            </div>
+            <div class="feature">
+              <div class="feature-dot" style="background:#0faaa0;"></div>
+              <span>Progress 셀 자동 % 계산 및 색상 강조</span>
+            </div>
+            <div class="feature">
+              <div class="feature-dot" style="background:#e09c10;"></div>
+              <span>비밀번호 보호 + Firestore 실시간 데이터</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-info">MODULE 03 · REPORT</span>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <div class="stack-section">
+    <div class="section" style="padding-bottom:0;">
+      <div class="section-label">Stack</div>
+      <h2 class="section-title">사용된<br><em>기술 스택</em></h2>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-item">
+        <div class="stack-icon">⚛️</div>
+        <div class="stack-name">React 18</div>
+        <div class="stack-role">UI Framework (Babel Standalone)</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🔥</div>
+        <div class="stack-name">Firebase Firestore</div>
+        <div class="stack-role">실시간 NoSQL 데이터베이스</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🔐</div>
+        <div class="stack-name">Firebase Auth</div>
+        <div class="stack-role">이메일 인증 & 권한 관리</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">📊</div>
+        <div class="stack-name">Chart.js 4.4</div>
+        <div class="stack-role">데이터 시각화 차트</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🎨</div>
+        <div class="stack-name">Tailwind CSS</div>
+        <div class="stack-role">유틸리티 CSS 프레임워크</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🌐</div>
+        <div class="stack-name">다국어 지원</div>
+        <div class="stack-role">Korean / English 전환</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <section class="arch-section reveal">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">시스템<br><em>아키텍처</em></h2>
+
+    <div class="arch-diagram">
+      <div class="arch-flow">
+        <div class="arch-node">
+          <div class="arch-node-icon">🌐</div>
+          <div class="arch-node-name">Browser</div>
+          <div class="arch-node-sub">HTML + Babel</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node highlight">
+          <div class="arch-node-icon">⚛️</div>
+          <div class="arch-node-name">React App</div>
+          <div class="arch-node-sub">3 Modules</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="arch-node-icon">🔐</div>
+          <div class="arch-node-name">Firebase Auth</div>
+          <div class="arch-node-sub">Email / Password</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="arch-node-icon">🔥</div>
+          <div class="arch-node-name">Firestore</div>
+          <div class="arch-node-sub">Real-time Sync</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlights">
+      <div class="highlight-card c1 reveal">
+        <div class="highlight-num">01</div>
+        <div class="highlight-icon">🔄</div>
+        <div class="highlight-title">실시간 데이터 동기화</div>
+        <div class="highlight-desc">Firestore onSnapshot으로 데이터 변경 시 모든 클라이언트에 즉시 반영. 새로고침 없이 팀원 간 실시간 협업 가능.</div>
+      </div>
+      <div class="highlight-card c2 reveal" style="transition-delay:0.1s">
+        <div class="highlight-num">02</div>
+        <div class="highlight-icon">🔐</div>
+        <div class="highlight-title">역할 기반 접근 제어</div>
+        <div class="highlight-desc">Firebase Auth로 로그인한 사용자만 대시보드 접근. 비밀번호 분리로 대표 보고 리포트를 별도 보호.</div>
+      </div>
+      <div class="highlight-card c3 reveal" style="transition-delay:0.2s">
+        <div class="highlight-num">03</div>
+        <div class="highlight-icon">↕️</div>
+        <div class="highlight-title">드래그 앤 드롭 정렬</div>
+        <div class="highlight-desc">Committed / Back up / 미납 테이블에서 행을 드래그하여 우선순위 순서를 변경하고 Firestore에 자동 저장.</div>
+      </div>
+      <div class="highlight-card c4 reveal" style="transition-delay:0.3s">
+        <div class="highlight-num">04</div>
+        <div class="highlight-icon">🌏</div>
+        <div class="highlight-title">완전한 다국어 지원</div>
+        <div class="highlight-desc">KO ↔ EN 전환 버튼 하나로 UI 전체가 전환. localStorage에 선호 언어를 기억하여 다음 방문 시 유지.</div>
+      </div>
+      <div class="highlight-card c5 reveal" style="transition-delay:0.4s">
+        <div class="highlight-num">05</div>
+        <div class="highlight-icon">📈</div>
+        <div class="highlight-title">분기 목표 추적 자동화</div>
+        <div class="highlight-desc">입력된 영업 데이터로 분기 목표 달성률, Back up 비율, 미납 현황을 KPI 카드 및 차트로 자동 계산.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">SALES FCST</div>
+    <div class="footer-note">BUILT WITH REACT · FIREBASE · CHART.JS</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 60);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
