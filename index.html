@@ -16,6 +16,131 @@
       --c2: #c4621a;
     }
 
+    /* ── LOCK SCREEN ── */
+    #lock-screen {
+      position: fixed;
+      inset: 0;
+      background: #0e0e0e;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0;
+    }
+    #lock-screen.hidden { display: none; }
+
+    .lock-wrap {
+      width: 100%;
+      max-width: 380px;
+      padding: 0 24px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .lock-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: #444;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lock-eyebrow::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: #444;
+    }
+
+    .lock-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      line-height: 0.9;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .lock-title span { color: var(--c1); }
+
+    .lock-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+    }
+
+    .lock-input-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .lock-input {
+      width: 100%;
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 16px 52px 16px 18px;
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 3px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .lock-input:focus { border-color: var(--c1); }
+    .lock-input.error { border-color: #e84d6f; animation: shake 0.35s ease; }
+
+    .lock-eye {
+      position: absolute;
+      right: 16px; top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #444;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .lock-eye:hover { color: var(--text); }
+
+    .lock-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--c1);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-bottom: 16px;
+    }
+    .lock-btn:hover { background: #4a3fb8; }
+    .lock-btn:active { transform: scale(0.98); }
+
+    .lock-error {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #e84d6f;
+      letter-spacing: 1px;
+      text-align: center;
+      height: 16px;
+      transition: opacity 0.2s;
+    }
+    .lock-error.visible { opacity: 1; }
+    .lock-error:not(.visible) { opacity: 0; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%,60%  { transform: translateX(-6px); }
+      40%,80%  { transform: translateX(6px); }
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
 
@@ -310,6 +435,28 @@
 </head>
 <body>
 
+  <!-- LOCK SCREEN -->
+  <div id="lock-screen">
+    <div class="lock-wrap">
+      <div class="lock-eyebrow">Private · Portfolio</div>
+      <div class="lock-title">ENTER<br><span>ACCESS</span></div>
+      <div class="lock-sub">비밀번호를 입력하세요</div>
+      <div class="lock-input-wrap">
+        <input
+          id="pwd-input"
+          class="lock-input"
+          type="password"
+          placeholder="Password"
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter') tryUnlock()"
+        />
+        <button class="lock-eye" onclick="toggleEye()" id="eye-btn">👁</button>
+      </div>
+      <button class="lock-btn" onclick="tryUnlock()">ENTER →</button>
+      <div class="lock-error" id="lock-error">비밀번호가 틀렸습니다</div>
+    </div>
+  </div>
+
   <header>
     <div class="logo">PORTFOLIO</div>
     <div class="header-meta">
@@ -394,6 +541,51 @@
       <div class="footer-dot" style="background:var(--border);"></div>
     </div>
   </footer>
+
+  <script>
+    // ✅ 여기서 비밀번호를 바꾸세요
+    const PASSWORD = "codbsrlf0127";
+    const SESSION_KEY = "portfolio_unlocked";
+
+    // 이미 풀었으면 바로 통과
+    if (sessionStorage.getItem(SESSION_KEY) === "true") {
+      document.getElementById("lock-screen").classList.add("hidden");
+    }
+
+    function tryUnlock() {
+      const input = document.getElementById("pwd-input");
+      const error = document.getElementById("lock-error");
+      if (input.value === PASSWORD) {
+        sessionStorage.setItem(SESSION_KEY, "true");
+        const lock = document.getElementById("lock-screen");
+        lock.style.transition = "opacity 0.4s ease";
+        lock.style.opacity = "0";
+        setTimeout(() => lock.classList.add("hidden"), 400);
+      } else {
+        input.classList.remove("error");
+        void input.offsetWidth; // reflow for re-trigger
+        input.classList.add("error");
+        error.classList.add("visible");
+        input.value = "";
+        setTimeout(() => {
+          input.classList.remove("error");
+          error.classList.remove("visible");
+        }, 2000);
+      }
+    }
+
+    function toggleEye() {
+      const input = document.getElementById("pwd-input");
+      const btn = document.getElementById("eye-btn");
+      if (input.type === "password") {
+        input.type = "text";
+        btn.textContent = "🙈";
+      } else {
+        input.type = "password";
+        btn.textContent = "👁";
+      }
+    }
+  </script>
 
 </body>
 </html>
