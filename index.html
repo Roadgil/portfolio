@@ -16,7 +16,7 @@
       --c2: #c4621a;
     }
 
-    /* ── LOCK SCREEN ── */
+
     #lock-screen {
       position: fixed;
       inset: 0;
@@ -153,7 +153,7 @@
       flex-direction: column;
     }
 
-    /* ── GRAIN ── */
+
     body::before {
       content: '';
       position: fixed;
@@ -163,7 +163,7 @@
       z-index: 100;
     }
 
-    /* ── HEADER ── */
+
     header {
       padding: 48px 60px 0;
       display: flex;
@@ -188,7 +188,7 @@
       line-height: 1.8;
     }
 
-    /* ── HERO TEXT ── */
+
     .hero {
       padding: 80px 60px 0;
       animation: fadeUp 0.8s ease 0.1s both;
@@ -230,7 +230,7 @@
       line-height: 1.8;
     }
 
-    /* ── DIVIDER ── */
+
     .divider {
       margin: 60px 60px 0;
       height: 1px;
@@ -243,7 +243,7 @@
       to   { transform: scaleX(1); }
     }
 
-    /* ── PROJECT CARDS ── */
+
     .projects {
       flex: 1;
       display: grid;
@@ -270,7 +270,7 @@
     .proj-card:last-child { border-right: none; }
     .proj-card:hover { background: var(--surf); }
 
-    /* hover accent bar */
+
     .proj-card::after {
       content: '';
       position: absolute;
@@ -284,7 +284,7 @@
     .proj-card.p2::after { background: var(--c2); }
     .proj-card:hover::after { transform: scaleX(1); }
 
-    /* big background number */
+
     .proj-bg-num {
       position: absolute;
       bottom: -20px; right: 20px;
@@ -378,7 +378,7 @@
     .p1:hover .proj-arrow { background: var(--c1); }
     .p2:hover .proj-arrow { background: var(--c2); }
 
-    /* ── FOOTER ── */
+
     footer {
       margin: 0 60px;
       padding: 32px 0;
@@ -405,7 +405,7 @@
       border-radius: 50%;
     }
 
-    /* ── ANIMATIONS ── */
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -418,7 +418,7 @@
     .proj-card.p1 { animation-delay: 0.35s; }
     .proj-card.p2 { animation-delay: 0.45s; }
 
-    /* ── RESPONSIVE ── */
+
     @media (max-width: 768px) {
       header { padding: 36px 24px 0; }
       .hero  { padding: 56px 24px 0; }
@@ -435,7 +435,6 @@
 </head>
 <body>
 
-  <!-- LOCK SCREEN -->
   <div id="lock-screen">
     <div class="lock-wrap">
       <div class="lock-eyebrow">Private · Portfolio</div>
@@ -481,7 +480,6 @@
 
   <div class="projects">
 
-    <!-- Project 1 -->
     <a class="proj-card p1" href="portfolio.html">
       <div class="proj-bg-num">01</div>
       <div class="proj-num">PROJECT · 01</div>
@@ -506,7 +504,6 @@
       </div>
     </a>
 
-    <!-- Project 2 -->
     <a class="proj-card p2" href="portfolio_import_automation.html">
       <div class="proj-bg-num">02</div>
       <div class="proj-num">PROJECT · 02</div>
@@ -543,27 +540,33 @@
   </footer>
 
   <script>
-    // ✅ 여기서 비밀번호를 바꾸세요
-    const PASSWORD = "codbsrlf0127";
-    const SESSION_KEY = "portfolio_unlocked";
+    const _k = "a3f8b2e1d7c94056";
+    const _h = "1dd12add4cc1a014beb3e56fb3ec79dee805fc4a065bf4efcf22178fcaa10b96";
 
-    // 이미 풀었으면 바로 통과
-    if (sessionStorage.getItem(SESSION_KEY) === "true") {
-      document.getElementById("lock-screen").classList.add("hidden");
+    async function _digest(str) {
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
     }
 
-    function tryUnlock() {
+    (async () => {
+      if (sessionStorage.getItem(_k) === _h.slice(0, 16)) {
+        document.getElementById("lock-screen").classList.add("hidden");
+      }
+    })();
+
+    async function tryUnlock() {
       const input = document.getElementById("pwd-input");
       const error = document.getElementById("lock-error");
-      if (input.value === PASSWORD) {
-        sessionStorage.setItem(SESSION_KEY, "true");
+      const digest = await _digest(input.value);
+      if (digest === _h) {
+        sessionStorage.setItem(_k, _h.slice(0, 16));
         const lock = document.getElementById("lock-screen");
         lock.style.transition = "opacity 0.4s ease";
         lock.style.opacity = "0";
         setTimeout(() => lock.classList.add("hidden"), 400);
       } else {
         input.classList.remove("error");
-        void input.offsetWidth; // reflow for re-trigger
+        void input.offsetWidth;
         input.classList.add("error");
         error.classList.add("visible");
         input.value = "";
@@ -577,13 +580,8 @@
     function toggleEye() {
       const input = document.getElementById("pwd-input");
       const btn = document.getElementById("eye-btn");
-      if (input.type === "password") {
-        input.type = "text";
-        btn.textContent = "🙈";
-      } else {
-        input.type = "password";
-        btn.textContent = "👁";
-      }
+      input.type = input.type === "password" ? "text" : "password";
+      btn.textContent = input.type === "password" ? "👁" : "🙈";
     }
   </script>
 
