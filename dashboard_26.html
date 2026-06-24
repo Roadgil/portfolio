@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Detail Report · Candela Korea</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.14.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore-compat.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+:root {
+  --bg:#f4f5f7; --surf:#fff; --surf2:#f9fafb; --border:#e4e6eb;
+  --a1:#5b4fcf; --a2:#0faaa0; --a3:#e84d6f; --a4:#e09c10; --green:#0fa878;
+  --text:#1a1a2e; --muted:#8a8fa8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;min-height:100vh;}
+.wrap{max-width:1440px;margin:0 auto;padding:32px 24px;}
+header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;padding-bottom:18px;border-bottom:2px solid var(--border);}
+h1{font-family:'DM Serif Display',serif;font-size:36px;font-weight:400;line-height:1;margin-bottom:4px;}
+h1 span{color:var(--a1);}
+.sub{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.hbadge{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;background:rgba(15,168,120,.1);border:1px solid rgba(15,168,120,.3);border-radius:20px;font-size:11px;color:var(--green);font-family:'DM Mono',monospace;margin-bottom:6px;}
+.hbadge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hdate{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;text-align:right;}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-decoration:none;padding:4px 10px;border:1px solid var(--border);border-radius:20px;transition:all .2s;margin-bottom:8px;}
+.back-link:hover{color:var(--a1);border-color:var(--a1);}
+.view-toggle{display:flex;gap:6px;margin-bottom:18px;align-items:center;flex-wrap:wrap;}
+.vt-btn{padding:5px 14px;border-radius:16px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.vt-btn:hover{border-color:var(--a1);color:var(--a1);}
+.vt-btn.active{background:var(--a1);border-color:var(--a1);color:#fff;}
+.qbreak-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+@media(max-width:768px){.qbreak-grid{grid-template-columns:1fr 1fr;}}
+.qbreak-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:all .2s;}
+.qbreak-card:hover{border-color:var(--a1);transform:translateY(-1px);}
+.qbreak-card.active-q{border-color:var(--a1);background:rgba(91,79,207,.06);}
+.data-note{background:rgba(91,79,207,.06);border:1px solid rgba(91,79,207,.2);border-radius:8px;padding:8px 14px;font-size:11px;color:var(--a1);font-family:'DM Mono',monospace;margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.data-note::before{content:'ℹ';font-size:13px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);margin:24px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.section-title span{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.kpi-row{display:grid;gap:12px;margin-bottom:16px;}
+.kpi-5{grid-template-columns:repeat(5,1fr);}
+.kpi-3{grid-template-columns:repeat(3,1fr);}
+@media(max-width:1000px){.kpi-5{grid-template-columns:1fr 1fr;} .kpi-3{grid-template-columns:1fr 1fr;}}
+.kpi{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi.k1::before{background:var(--a1);}
+.kpi.k2::before{background:var(--a2);}
+.kpi.k3::before{background:var(--a3);}
+.kpi.k4::before{background:var(--a4);}
+.kpi.kg::before{background:var(--green);}
+.klabel{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;font-family:'DM Mono',monospace;margin-bottom:8px;}
+.kval{font-family:'DM Serif Display',serif;font-size:24px;line-height:1;margin-bottom:5px;}
+.kval.v1{color:var(--a1);} .kval.v2{color:var(--a2);} .kval.v3{color:var(--a3);} .kval.v4{color:var(--a4);} .kval.vg{color:var(--green);}
+.ksub{font-size:11px;color:var(--muted);}
+.kpi-pbar{margin-top:10px;}
+.kpi-pbar-bg{height:4px;background:var(--border);border-radius:3px;overflow:hidden;}
+.kpi-pbar-fill{height:100%;border-radius:3px;transition:width 1.2s ease;}
+.kpi-pbar-label{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:3px;}
+.g{display:grid;gap:14px;margin-bottom:14px;}
+.g11{grid-template-columns:1fr 1fr;}
+.g21{grid-template-columns:2fr 1fr;}
+.g12{grid-template-columns:1fr 2fr;}
+@media(max-width:900px){.g11,.g21,.g12{grid-template-columns:1fr;}}
+.card{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.ctitle{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;font-family:'DM Mono',monospace;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.ctitle::before{content:'';width:3px;height:10px;background:var(--a1);border-radius:2px;flex-shrink:0;}
+.srow{display:flex;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);gap:10px;}
+.srow:last-child{border-bottom:none;}
+.savt{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.sinfo{flex:1;}
+.sname{font-size:12px;margin-bottom:4px;font-weight:600;}
+.sbw{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:2px;}
+.sbf{height:100%;border-radius:3px;transition:width 1s ease;}
+.samt{font-family:'DM Mono',monospace;font-size:11px;text-align:right;white-space:nowrap;min-width:90px;}
+.spct{font-size:9px;color:var(--muted);}
+.abadge{font-size:10px;font-family:'DM Mono',monospace;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;text-align:left;padding:0 8px 10px;border-bottom:2px solid var(--border);}
+td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--surf2);}
+.mono{font-family:'DM Mono',monospace;font-size:11px;}
+.dim{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;}
+.mbar{height:4px;border-radius:2px;background:var(--a1);opacity:.6;}
+.pbar-bg{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.pbar-fill{height:100%;border-radius:4px;transition:width 1.2s ease;}
+.tab-nav{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.tab-btn{padding:6px 16px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all .2s;}
+.tab-btn:hover{border-color:var(--a1);color:var(--a1);}
+.tab-btn.active{background:var(--a1);border-color:var(--a1);color:#fff;}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+.sr-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.sr-kpi{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;overflow:hidden;}
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;flex-direction:column;gap:10px;color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--a1);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;color:var(--muted);font-size:10px;font-family:'DM Mono',monospace;}
+html,body{overflow-x:hidden;max-width:100vw;}
+@media(max-width:768px){.wrap{padding:16px 12px;}}
+@media print{.back-link,.view-toggle,#langToggleBtn,#erDisplay,#printBtn{display:none!important;} .card{break-inside:avoid;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <a class="back-link" href="index.html">← Dashboard로 돌아가기</a>
+    <h1>Sales <span>Dashboard</span></h1>
+    <div class="sub">Candela Korea · <span id="quarterSubLabel">--</span> Detail Report</div>
+  </div>
+  <div style="text-align:right">
+    <div class="hbadge" id="quarterBadge">--</div>
+    <div class="hdate" id="quarterDate">--</div>
+    <div style="margin-top:4px;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace" id="genDate"></div>
+  </div>
+</header>
+
+<div class="data-note" id="dataNoteBar">집계 기준: Ship Confirm만 매출 반영 (ACT · Pending · Back up 제외)</div>
+
+<div class="view-toggle">
+  <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">View:</span>
+  <button class="vt-btn active" id="btn-quarter-view" onclick="setViewMode('quarter')">📅 Quarter</button>
+  <button class="vt-btn" id="btn-year-view" onclick="setViewMode('year')">📆 Full Year</button>
+  <span style="color:var(--border);margin:0 4px">|</span>
+  <span id="yearQuarterBtns" style="display:flex;gap:4px;flex-wrap:wrap;"></span>
+</div>
+<div id="quarterBreakdown" style="display:none"><div class="qbreak-grid" id="qbreakGrid"></div></div>
+
+<!-- ① 핵심 KPI -->
+<div class="section-title">핵심 지표 <span>Key Metrics · SC 기준</span></div>
+<div class="kpi-row kpi-5">
+  <div class="kpi k1">
+    <div class="klabel">Total Revenue</div>
+    <div class="kval v1" id="kpi-total">--</div>
+    <div class="ksub" id="kpi-total-sub">--</div>
+    <div class="kpi-pbar" id="kpi-pbar-wrap" style="display:none">
+      <div class="kpi-pbar-bg"><div class="kpi-pbar-fill" id="kpi-pbar-fill" style="background:var(--a1)"></div></div>
+      <div class="kpi-pbar-label"><span id="kpi-pbar-pct">--</span><span id="kpi-pbar-tgt">--</span></div>
+    </div>
+  </div>
+  <div class="kpi k2"><div class="klabel">건수 (SC)</div><div class="kval v2" id="kpi-count">--</div><div class="ksub">Ship Confirmed</div></div>
+  <div class="kpi k4"><div class="klabel">1인당 생산성</div><div class="kval v4" id="kpi-prod">--</div><div class="ksub" id="kpi-prod-sub">담당자 평균</div></div>
+  <div class="kpi k3"><div class="klabel">Top Performer</div><div class="kval v3" id="kpi-top" style="font-size:18px;padding-top:4px">--</div><div class="ksub" id="kpi-top-sub">--</div></div>
+  <div class="kpi kg"><div class="klabel">달성률 vs Target</div><div class="kval vg" id="kpi-attain">--</div><div class="ksub" id="kpi-attain-sub">--</div></div>
+</div>
+
+<!-- ② Achievement vs Target -->
+<div class="section-title">Target 달성 현황 <span>Achievement vs Target</span></div>
+<div class="card" style="margin-bottom:14px" id="targetCard">
+  <div class="loading"><div class="spinner"></div></div>
+</div>
+
+<!-- ③ 월별 추이 + 제품 구성비 -->
+<div class="section-title">매출 추이 <span>Monthly Trend · SC 기준</span></div>
+<div class="g g21">
+  <div class="card"><div class="ctitle" id="ct-monthly">월별 매출 추이</div><div style="position:relative;height:230px"><canvas id="monthlyChart"></canvas></div></div>
+  <div class="card"><div class="ctitle">제품 구성비</div><div style="position:relative;height:230px"><canvas id="prodChart"></canvas></div></div>
+</div>
+
+<!-- ④ 담당자별 달성 -->
+<div class="section-title">담당자별 달성 현황 <span>Rep Achievement · SC 기준</span></div>
+<div class="g g12">
+  <div class="card"><div class="ctitle">달성률 비교</div><div id="memberList"><div class="loading"><div class="spinner"></div></div></div></div>
+  <div class="card"><div class="ctitle">담당자별 매출</div><div style="position:relative;height:260px"><canvas id="memberChart"></canvas></div></div>
+</div>
+
+<!-- ⑤ 제품별 상세 -->
+<div class="section-title">제품별 매출 상세 <span>By Product · SC 기준</span></div>
+<div class="g g11">
+  <div class="card"><div class="ctitle">제품별 매출 · 건수</div><div id="productTable"><div class="loading"><div class="spinner"></div></div></div></div>
+  <div class="card"><div class="ctitle">월별 제품 구성 추이</div><div style="position:relative;height:260px"><canvas id="prodMonthChart"></canvas></div></div>
+</div>
+
+<!-- ⑥ 파이프라인 -->
+<div class="section-title">납품 파이프라인 <span>Pipeline · 현재 분기</span></div>
+<div class="kpi-row kpi-3">
+  <div class="kpi k1"><div class="klabel">Pending 예상 매출</div><div class="kval v1" id="pipe-amt">--</div><div class="ksub" id="pipe-cnt">--</div></div>
+  <div class="kpi k4"><div class="klabel">ACT (납품완료)</div><div class="kval v4" id="act-amt">--</div><div class="ksub" id="act-cnt">--</div></div>
+  <div class="kpi kg"><div class="klabel">SC + ACT + Pending</div><div class="kval vg" id="total-pipe">--</div><div class="ksub">전체 예상치</div></div>
+</div>
+
+<!-- ⑦ 담당자별 상세 -->
+<div class="section-title">담당자별 상세 <span>Rep Detail</span></div>
+<div class="card" style="margin-bottom:14px">
+  <div class="tab-nav" id="memberTabNav"></div>
+  <div id="memberTabContent"><div class="loading"><div class="spinner"></div></div></div>
+</div>
+
+<footer>
+  <span>Source: Firebase Firestore · 실시간 연동 · SC 기준</span>
+  <span>Candela Korea Sales Ops</span>
+</footer>
+</div>
+
+<div style="position:fixed;top:16px;right:16px;z-index:9999;display:flex;align-items:center;gap:8px;">
+  <button id="printBtn" onclick="window.print()" style="padding:6px 12px;border-radius:20px;border:1.5px solid #e4e6eb;background:white;cursor:pointer;font-size:11px;font-family:'DM Mono',monospace;box-shadow:0 2px 8px rgba(0,0,0,.1)">🖨 Print</button>
+  <button id="langToggleBtn" onclick="toggleLang()" style="padding:6px 14px;border-radius:20px;border:1.5px solid #e4e6eb;background:white;cursor:pointer;font-weight:bold;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:'DM Mono',monospace;">🇺🇸 EN</button>
+</div>
+<div id="erDisplay" style="position:fixed;top:16px;right:190px;z-index:9999;padding:5px 12px;border-radius:20px;border:1.5px solid #e4e6eb;background:#0f172a;font-weight:700;font-size:11px;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:4px;box-shadow:0 2px 8px rgba(0,0,0,.2)"><span style="color:#64748b">ER</span><span id="erValue" style="color:#e2e8f0">₩1,389</span></div>
+
+<script>
+let _lang = localStorage.getItem('lang')||'ko';
+function t(ko,en){return _lang==='en'?en:ko;}
+function toggleLang(){_lang=_lang==='ko'?'en':'ko';localStorage.setItem('lang',_lang);applyLang();if(_loaded.s&&_loaded.t&&_loaded.q)render(_sales,_targets,_qTargets);}
+function applyLang(){
+  document.getElementById('langToggleBtn').textContent=_lang==='ko'?'🇺🇸 EN':'🇰🇷 KO';
+  const nb=document.getElementById('dataNoteBar');
+  if(nb) nb.textContent=t('집계 기준: Ship Confirm만 매출 반영 (ACT · Pending · Back up 제외)','Revenue basis: Ship Confirm only (ACT·Pending·Back up excluded)');
+}
+
+const firebaseConfig={apiKey:"AIzaSyDpdX6I7fkE1m9jQDARg5l4Skv3vhD7iyI",authDomain:"sales-dashboard-d0d13.firebaseapp.com",projectId:"sales-dashboard-d0d13",storageBucket:"sales-dashboard-d0d13.firebasestorage.app",messagingSenderId:"870275096697",appId:"1:870275096697:web:cd7373b77358681e21b4a8"};
+if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+const auth=firebase.auth();
+
+function getCurrentQuarter(){const now=new Date(),m=now.getMonth()+1,y=now.getFullYear();return `${y} ${m<=3?'Q1':m<=6?'Q2':m<=9?'Q3':'Q4'}`;}
+const QUARTER=new URLSearchParams(window.location.search).get('quarter')||getCurrentQuarter();
+const QM={Q1:['01','03'],Q2:['04','06'],Q3:['07','09'],Q4:['10','12']};
+const QM_M={Q1:[1,2,3],Q2:[4,5,6],Q3:[7,8,9],Q4:[10,11,12]};
+const MKO={1:'1월',2:'2월',3:'3월',4:'4월',5:'5월',6:'6월',7:'7월',8:'8월',9:'9월',10:'10월',11:'11월',12:'12월'};
+const MEN={1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
+const [YR,QK]=QUARTER.split(' ');
+const [MS,ME]=QM[QK]||['01','03'];
+const Q_MONTHS=QM_M[QK]||[1,2,3];
+
+let _viewMode='quarter', _activeQ=QUARTER;
+document.getElementById('pageTitle').textContent=`Detail Report · ${QUARTER} · Candela Korea`;
+document.getElementById('quarterBadge').textContent=QUARTER;
+document.getElementById('quarterSubLabel').textContent=QUARTER;
+document.getElementById('quarterDate').textContent=`${YR}.${MS} — ${YR}.${ME}`;
+document.getElementById('genDate').textContent=`Generated: ${new Date().toLocaleDateString('ko-KR')}`;
+
+function setViewMode(mode){
+  _viewMode=mode;
+  document.getElementById('btn-quarter-view').classList.toggle('active',mode==='quarter');
+  document.getElementById('btn-year-view').classList.toggle('active',mode==='year');
+  document.getElementById('quarterBreakdown').style.display=mode==='year'?'block':'none';
+  if(mode==='year'){document.getElementById('quarterBadge').textContent=`${YR} Full Year`;document.getElementById('quarterSubLabel').textContent=`${YR} Annual`;document.getElementById('quarterDate').textContent=`${YR}.01 — ${YR}.12`;buildYQBtns();}
+  else{document.getElementById('quarterBadge').textContent=QUARTER;document.getElementById('quarterSubLabel').textContent=QUARTER;document.getElementById('quarterDate').textContent=`${YR}.${MS} — ${YR}.${ME}`;document.getElementById('yearQuarterBtns').innerHTML='';}
+  if(_loaded.s&&_loaded.t&&_loaded.q)render(_sales,_targets,_qTargets);
+}
+function buildYQBtns(){const nav=document.getElementById('yearQuarterBtns');nav.innerHTML='<span style="font-family:DM Mono,monospace;font-size:10px;color:var(--muted);margin-right:2px">Jump: </span>'+['Q1','Q2','Q3','Q4'].map(q=>`<button class="vt-btn${`${YR} ${q}`===_activeQ?' active':''}" onclick="jumpToQ('${YR} ${q}')">${q}</button>`).join('');}
+function jumpToQ(q){_activeQ=q;buildYQBtns();document.querySelectorAll('.qbreak-card').forEach(c=>c.classList.toggle('active-q',c.dataset.q===q));}
+
+let _er=1389;
+const fmt억=v=>v>=100000000?`₩${(v/100000000).toFixed(2)}억`:`₩${Math.round(v/10000).toLocaleString()}만`;
+const fmtFull=v=>`₩ ${Number(v).toLocaleString()}`;
+const fmtUSD=v=>v>=1000000?`$${(v/1000000).toFixed(2)}M`:`$${Math.round(v/1000).toLocaleString()}K`;
+const fmtA=krw=>_lang==='en'?fmtUSD(krw/_er):fmt억(krw);
+const fmtAF=krw=>_lang==='en'?`$ ${Math.round(krw/_er).toLocaleString()}`:fmtFull(krw);
+const toChart=v=>_lang==='en'?parseFloat((v/_er/1000000).toFixed(3)):parseFloat((v/100000000).toFixed(3));
+const unitSuffix=()=>_lang==='en'?'M':'억';
+const COLORS=['#5b4fcf','#0faaa0','#e84d6f','#e09c10','#0fa878','#8b7ff0','#3ecfc9','#f07a96','#f0c040','#52c9a0'];
+const MC=['#e09c10','#5b4fcf','#0faaa0','#e84d6f','#0fa878','#8b7ff0','#3ecfc9'];
+const TT={backgroundColor:'#fff',borderColor:'#e4e6eb',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#1a1a2e'};
+Chart.defaults.color='#8a8fa8';Chart.defaults.font.family="'Noto Sans KR', sans-serif";Chart.defaults.font.size=11;
+const CI={};
+function mkChart(id,cfg){if(CI[id])CI[id].destroy();const el=document.getElementById(id);if(el)CI[id]=new Chart(el,cfg);}
+
+function render(salesData,memberTargets,qTargets){
+  const SC=['Ship Confirm'];
+  let scData,allQ,months;
+  if(_viewMode==='year'){
+    scData=salesData.filter(d=>d.quarter&&d.quarter.startsWith(YR+' ')&&SC.includes(d.status));
+    allQ=salesData.filter(d=>d.quarter&&d.quarter.startsWith(YR+' '));
+    months=[1,2,3,4,5,6,7,8,9,10,11,12];
+    const grid=document.getElementById('qbreakGrid');
+    if(grid){grid.innerHTML=['Q1','Q2','Q3','Q4'].map(q=>{
+      const fq=`${YR} ${q}`,rows=salesData.filter(d=>d.quarter===fq&&SC.includes(d.status));
+      const tot=rows.reduce((s,d)=>s+(d.priceKRW||0),0),qT=qTargets?.[fq]?.target||0,pct=qT?(tot/qT*100).toFixed(0):null;
+      return `<div class="qbreak-card${fq===_activeQ?' active-q':''}" data-q="${fq}" onclick="jumpToQ('${fq}')">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${q}</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--a1);line-height:1;margin-bottom:3px">${tot>0?fmtA(tot):'-'}</div>
+        <div style="font-size:10px;color:var(--muted)">${rows.length}건${pct?` · ${pct}%`:''}</div>
+      </div>`;}).join('');}
+    document.getElementById('dataNoteBar').textContent=t(`집계 기준: ${YR} 전체 합산 (SC만)`,`Revenue basis: ${YR} Full Year (SC only)`);
+  } else {
+    scData=salesData.filter(d=>d.quarter===QUARTER&&SC.includes(d.status));
+    allQ=salesData.filter(d=>d.quarter===QUARTER);
+    months=Q_MONTHS;
+    document.getElementById('dataNoteBar').textContent=t('집계 기준: Ship Confirm만 매출 반영 (ACT · Pending · Back up 제외)','Revenue basis: Ship Confirm only');
+  }
+
+  const pendData=allQ.filter(d=>d.status==='Pending');
+  const actData=allQ.filter(d=>d.status==='ACT');
+  const totalKRW=scData.reduce((s,d)=>s+(d.priceKRW||0),0);
+  const pendKRW=pendData.reduce((s,d)=>s+(d.priceKRW||0),0);
+  const actKRW=actData.reduce((s,d)=>s+(d.priceKRW||0),0);
+  const qTgtKey=_viewMode==='year'?null:QUARTER;
+  const qTarget=qTgtKey?(qTargets?.[qTgtKey]?.target||0):0;
+  const attain=qTarget?(totalKRW/qTarget*100):null;
+  const getM=dStr=>dStr?parseInt(dStr.split('-')[1],10):0;
+  const mLabels=months.map(m=>_lang==='en'?MEN[m]:MKO[m]);
+
+  const memSum={};
+  scData.forEach(d=>{memSum[d.member]=(memSum[d.member]||0)+(d.priceKRW||0);});
+  const sortedM=Object.entries(memSum).sort((a,b)=>b[1]-a[1]);
+  const topM=sortedM[0];
+  const mCount=sortedM.length;
+  const prodv=mCount>0?totalKRW/mCount:0;
+
+  // ① KPI
+  document.getElementById('kpi-total').textContent=fmtA(totalKRW);
+  document.getElementById('kpi-total-sub').textContent=fmtAF(totalKRW);
+  document.getElementById('kpi-count').textContent=scData.length;
+  document.getElementById('kpi-prod').textContent=fmtA(prodv);
+  document.getElementById('kpi-prod-sub').textContent=`${mCount}${t('명 평균 (SC)','reps avg (SC)')}`;
+  document.getElementById('kpi-top').textContent=topM?topM[0]:'-';
+  document.getElementById('kpi-top-sub').textContent=topM?`${fmtA(topM[1])} · ${totalKRW?(topM[1]/totalKRW*100).toFixed(1):0}%`:'-';
+  document.getElementById('kpi-attain').textContent=attain?`${attain.toFixed(1)}%`:'-';
+  document.getElementById('kpi-attain-sub').textContent=qTarget?`Target: ${fmtA(qTarget)}`:t('Target 미설정','No target');
+  const pbWrap=document.getElementById('kpi-pbar-wrap');
+  if(qTarget&&attain!==null){
+    pbWrap.style.display='block';
+    const f=document.getElementById('kpi-pbar-fill');
+    f.style.width=Math.min(attain,100)+'%';
+    f.style.background=attain>=100?'var(--green)':attain>=80?'var(--a1)':attain>=50?'var(--a4)':'var(--a3)';
+    document.getElementById('kpi-pbar-pct').textContent=`${attain.toFixed(1)}%`;
+    document.getElementById('kpi-pbar-tgt').textContent=fmtA(qTarget);
+  } else pbWrap.style.display='none';
+
+  // ② Target 달성 현황
+  const tCard=document.getElementById('targetCard');
+  if(qTarget){
+    const t120=qTarget*1.2,t150=qTarget*1.5;
+    const maxS=Math.max(t150,totalKRW*1.05,qTarget*1.6);
+    const scW=(totalKRW/maxS*100).toFixed(1),actW=(actKRW/maxS*100).toFixed(1),pendW=(pendKRW/maxS*100).toFixed(1);
+    const l100=(qTarget/maxS*100).toFixed(1),l120=(t120/maxS*100).toFixed(1),l150=(t150/maxS*100).toFixed(1);
+    tCard.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:8px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span style="font-size:11px;font-weight:700;color:#1d4ed8;background:#dbeafe;padding:3px 10px;border-radius:12px">SC: ${fmtA(totalKRW)}${attain?' ('+attain.toFixed(1)+'%)':''}</span>
+          <span style="font-size:11px;font-weight:700;color:#065f46;background:#d1fae5;padding:3px 10px;border-radius:12px">ACT: ${fmtA(actKRW)}</span>
+          <span style="font-size:11px;font-weight:700;color:#92400e;background:#fef3c7;padding:3px 10px;border-radius:12px">Pending: ${fmtA(pendKRW)}</span>
+        </div>
+        <span style="font-size:18px;font-weight:800;color:${attain>=100?'var(--green)':'var(--a1)'};font-family:'DM Serif Display',serif">${attain?attain.toFixed(1)+'%':'-'} ${t('달성','Attained')}</span>
+      </div>
+      <div style="position:relative;margin-bottom:28px">
+        <div style="position:absolute;top:-16px;left:${l100}%;transform:translateX(-50%);font-size:9px;font-family:'DM Mono',monospace;color:var(--muted)">100%</div>
+        <div style="position:absolute;top:-16px;left:${l120}%;transform:translateX(-50%);font-size:9px;font-family:'DM Mono',monospace;color:var(--green)">120%</div>
+        <div style="position:absolute;top:-16px;left:${l150}%;transform:translateX(-50%);font-size:9px;font-family:'DM Mono',monospace;color:var(--a3)">150%</div>
+        <div style="width:100%;height:28px;background:#f1f5f9;border-radius:14px;overflow:hidden;display:flex;border:1px solid var(--border);position:relative">
+          <div style="width:${scW}%;height:100%;background:#3b82f6;transition:width 1.2s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px">${parseFloat(scW)>6?`<span style="color:#fff;font-size:10px;font-weight:700">${attain?attain.toFixed(0)+'%':''}</span>`:''}</div>
+          <div style="width:${actW}%;height:100%;background:#10b981;transition:width 1.2s ease"></div>
+          <div style="width:${pendW}%;height:100%;background:#fbbf24;transition:width 1.2s ease;opacity:.7"></div>
+        </div>
+        <div style="position:absolute;top:0;left:${l100}%;border-left:2px dashed #94a3b8;height:28px"></div>
+        <div style="position:absolute;top:0;left:${l120}%;border-left:2px dashed #86efac;height:28px"></div>
+        <div style="position:absolute;top:0;left:${l150}%;border-left:2px dashed #fca5a5;height:28px"></div>
+      </div>
+      <div style="display:flex;gap:16px;font-size:11px;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#3b82f6;display:inline-block"></span>SC</span>
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#10b981;display:inline-block"></span>ACT</span>
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#fbbf24;display:inline-block"></span>Pending</span>
+        <span style="color:var(--muted)">Target: ${fmtAF(qTarget)}</span>
+      </div>`;
+  } else {
+    tCard.innerHTML=`<div style="padding:20px;color:var(--muted);text-align:center;font-family:'DM Mono',monospace">${t('Target이 설정되지 않았습니다.','No target set.')}</div>`;
+  }
+
+  // ③ 월별 매출 추이
+  const mKRW=months.map(m=>scData.filter(d=>getM(d.deliveryDate)===m).reduce((s,d)=>s+(d.priceKRW||0),0));
+  const mCnt=months.map(m=>scData.filter(d=>getM(d.deliveryDate)===m).length);
+  mkChart('monthlyChart',{type:'bar',data:{labels:mLabels,datasets:[
+    {label:t('매출(SC)','Revenue(SC)'),data:mKRW.map(toChart),backgroundColor:'rgba(91,79,207,.75)',borderRadius:6,yAxisID:'y'},
+    {label:t('건수','Count'),data:mCnt,type:'line',borderColor:'#e09c10',backgroundColor:'rgba(224,156,16,.1)',pointBackgroundColor:'#e09c10',pointRadius:5,tension:.3,yAxisID:'y1'}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>c.datasetIndex===0?` ${c.raw}${unitSuffix()}`:` ${c.raw}${t('건','cs')}`}}},scales:{y:{grid:{color:'#f0f1f5'},ticks:{callback:v=>`${v}${unitSuffix()}`}},y1:{position:'right',grid:{display:false},ticks:{stepSize:1,callback:v=>`${v}${t('건','cs')}`}}}}});
+
+  // 제품 도넛
+  const pSum={},pCnt={};
+  scData.forEach(d=>{pSum[d.product]=(pSum[d.product]||0)+(d.priceKRW||0);pCnt[d.product]=(pCnt[d.product]||0)+1;});
+  const pE=Object.entries(pSum).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  mkChart('prodChart',{type:'doughnut',data:{labels:pE.map(([k])=>k),datasets:[{data:pE.map(([,v])=>totalKRW?parseFloat((v/totalKRW*100).toFixed(1)):0),backgroundColor:COLORS,borderColor:'#fff',borderWidth:3,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'right',labels:{color:'#8a8fa8',usePointStyle:true,pointStyle:'circle',padding:10}},tooltip:{...TT,callbacks:{label:c=>` ${c.label}: ${c.raw}%`}}}}});
+
+  // ④ 담당자 달성률 리스트
+  const maxMV=sortedM[0]?.[1]||1;
+  document.getElementById('memberList').innerHTML=sortedM.map(([name,val],i)=>{
+    const col=MC[i%MC.length],tgt=memberTargets[name]||0,pct=tgt?(val/tgt*100):null;
+    const bw=(val/maxMV*100).toFixed(0);
+    const [bg,tc]=pct>=100?['#dcfce7','#166534']:pct>=80?['#dbeafe','#1d4ed8']:pct>=50?['#fef3c7','#92400e']:['#fee2e2','#991b1b'];
+    return `<div class="srow">
+      <div class="savt" style="background:${col}22;color:${col}">${name[0]||'?'}</div>
+      <div class="sinfo">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+          <span class="sname">${name}</span>
+          ${pct!==null?`<span class="abadge" style="background:${bg};color:${tc}">${pct.toFixed(1)}%</span>`:'<span class="abadge" style="background:#f1f5f9;color:#94a3b8">-</span>'}
+        </div>
+        <div class="sbw"><div class="sbf" style="width:${bw}%;background:${col}"></div></div>
+        ${tgt?`<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px"><span>${fmtA(val)}</span><span>/ ${fmtA(tgt)}</span></div>`:''}
+      </div>
+      <div class="samt"><div style="color:${col};font-weight:700">${fmtA(val)}</div><div class="spct">${totalKRW?(val/totalKRW*100).toFixed(1):0}%</div></div>
+    </div>`;
+  }).join('')||`<div style="padding:20px;color:var(--muted);text-align:center">${t('데이터 없음','No data')}</div>`;
+
+  // 담당자 바 차트
+  mkChart('memberChart',{type:'bar',data:{labels:sortedM.map(([n])=>n),datasets:[
+    {label:'SC',data:sortedM.map(([,v])=>toChart(v)),backgroundColor:MC.slice(0,sortedM.length),borderRadius:8},
+    {label:t('목표','Target'),data:sortedM.map(([n])=>{const tg=memberTargets[n]||0;return tg?toChart(tg):null;}),type:'line',borderColor:'#94a3b8',borderDash:[4,4],pointStyle:'crossRot',pointRadius:6,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,pointStyle:'circle',padding:12}},tooltip:{...TT,callbacks:{label:c=>` ${c.raw}${unitSuffix()}`}}},scales:{y:{grid:{color:'#f0f1f5'},ticks:{callback:v=>`${v}${unitSuffix()}`}},x:{grid:{display:false}}}}});
+
+  // ⑤ 제품 테이블
+  const maxP=pE[0]?.[1]||1;
+  document.getElementById('productTable').innerHTML=pE.length?`<table><thead><tr>
+    <th>${t('제품','Product')}</th><th>${t('금액','Amount')}</th><th>${t('건수','Count')}</th><th>${t('비중','Share')}</th><th></th>
+  </tr></thead><tbody>${pE.map(([k,v],i)=>`<tr>
+    <td style="font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:${COLORS[i%COLORS.length]};display:inline-block;margin-right:6px;vertical-align:middle"></span>${k}</td>
+    <td class="mono" style="font-weight:700">${fmtA(v)}</td>
+    <td class="dim">${pCnt[k]}${t('건','cs')}</td>
+    <td class="dim">${totalKRW?(v/totalKRW*100).toFixed(1):0}%</td>
+    <td><div class="mbar" style="width:${Math.round(v/maxP*80)}px;background:${COLORS[i%COLORS.length]}"></div></td>
+  </tr>`).join('')}</tbody></table>`:
+  `<div style="padding:20px;text-align:center;color:var(--muted)">${t('데이터 없음','No data')}</div>`;
+
+  // 월별 제품 스택 차트
+  const topProds=pE.slice(0,5).map(([k])=>k);
+  mkChart('prodMonthChart',{type:'bar',data:{labels:mLabels,datasets:topProds.map((prod,i)=>({
+    label:prod,
+    data:months.map(m=>toChart(scData.filter(d=>d.product===prod&&getM(d.deliveryDate)===m).reduce((s,d)=>s+(d.priceKRW||0),0))),
+    backgroundColor:COLORS[i],borderRadius:3
+  }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,pointStyle:'circle',padding:10}},tooltip:{...TT,mode:'index',callbacks:{label:c=>` ${c.dataset.label}: ${c.raw}${unitSuffix()}`}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,grid:{color:'#f0f1f5'},ticks:{callback:v=>`${v}${unitSuffix()}`}}}}});
+
+  // ⑥ 파이프라인
+  document.getElementById('pipe-amt').textContent=fmtA(pendKRW);
+  document.getElementById('pipe-cnt').textContent=`${pendData.length}${t('건 납품 예정','cs pending')}`;
+  document.getElementById('act-amt').textContent=fmtA(actKRW);
+  document.getElementById('act-cnt').textContent=`${actData.length}${t('건 납품완료','cs delivered')}`;
+  document.getElementById('total-pipe').textContent=fmtA(totalKRW+actKRW+pendKRW);
+
+  // ⑦ 담당자 상세 탭
+  const allMs=sortedM.map(([m])=>m);
+  const nav=document.getElementById('memberTabNav'),cont=document.getElementById('memberTabContent');
+  if(!allMs.length){nav.innerHTML='';cont.innerHTML=`<div style="padding:30px;text-align:center;color:var(--muted)">${t('데이터 없음','No data')}</div>`;return;}
+  nav.innerHTML=allMs.map((m,i)=>`<button class="tab-btn${i===0?' active':''}" onclick="switchMTab('${m.replace(/'/g,"\\'")}',this)">${m}</button>`).join('');
+  cont.innerHTML=allMs.map((m,mi)=>{
+    const mD=scData.filter(d=>d.member===m),mT=mD.reduce((s,d)=>s+(d.priceKRW||0),0);
+    const tgt=memberTargets[m]||0,aP=tgt?(mT/tgt*100):null,col=MC[mi%MC.length];
+    const mp={},mc={};mD.forEach(d=>{mp[d.product]=(mp[d.product]||0)+(d.priceKRW||0);mc[d.product]=(mc[d.product]||0)+1;});
+    const mpe=Object.entries(mp).sort((a,b)=>b[1]-a[1]),mmp=mpe[0]?.[1]||1;
+    const sid=m.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+    return `<div class="tab-pane${mi===0?' active':''}" id="tab-m-${sid}">
+      <div class="sr-kpis">
+        <div class="sr-kpi"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:${col}"></div>
+          <div class="klabel">Total (SC)</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:${col};line-height:1;margin-bottom:4px">${fmtA(mT)}</div>
+          <div style="font-size:11px;color:var(--muted)">${mD.length}${t('건','cs')}</div></div>
+        <div class="sr-kpi"><div class="klabel">${t('달성률','Attainment')}</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:${aP>=100?'var(--green)':col};line-height:1;margin-bottom:4px">${aP?aP.toFixed(1)+'%':'-'}</div>
+          <div style="font-size:11px;color:var(--muted)">${tgt?'Target: '+fmtA(tgt):t('목표 미설정','No target')}</div></div>
+        <div class="sr-kpi"><div class="klabel">${t('팀 비중','Share')}</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--a4);line-height:1;margin-bottom:4px">${totalKRW?(mT/totalKRW*100).toFixed(1)+'%':'-'}</div>
+          <div style="font-size:11px;color:var(--muted)">${t('전체 SC 대비','of total SC')}</div></div>
+      </div>
+      ${tgt?`<div style="margin-bottom:14px;padding:12px;background:var(--surf2);border-radius:10px;border:1px solid var(--border)">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px">
+          <span style="color:var(--muted);font-family:'DM Mono',monospace">TARGET ACHIEVEMENT</span>
+          <span style="font-weight:700;color:${aP>=100?'var(--green)':col}">${aP?aP.toFixed(1)+'%':'-'}</span>
+        </div>
+        <div class="pbar-bg"><div class="pbar-fill" style="width:${aP?Math.min(aP,100):0}%;background:${aP>=100?'var(--green)':col}"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace">
+          <span>${t('현재','Current')}: ${fmtAF(mT)}</span><span>${t('목표','Target')}: ${fmtAF(tgt)}</span>
+        </div>
+      </div>`:''}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card" style="padding:16px">
+          <div class="ctitle">${t('제품별','By Product')}</div>
+          <table><thead><tr><th>${t('제품','Prod')}</th><th>${t('금액','Amt')}</th><th></th></tr></thead><tbody>
+          ${mpe.map(([k,v])=>`<tr><td style="font-weight:600">${k}</td><td class="mono">${fmtA(v)}</td>
+            <td><div class="mbar" style="width:${Math.round(v/mmp*60)}px"></div></td></tr>`).join('')}
+          </tbody></table>
+        </div>
+        <div class="card" style="padding:16px">
+          <div class="ctitle">${t('월별 추이','Monthly')}</div>
+          <div style="position:relative;height:150px"><canvas id="c-m-${sid}"></canvas></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  requestAnimationFrame(()=>{
+    allMs.forEach((m,mi)=>{
+      const col=MC[mi%MC.length];
+      const sid=m.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+      const mMo=months.map(mo=>toChart(scData.filter(d=>d.member===m&&getM(d.deliveryDate)===mo).reduce((s,d)=>s+(d.priceKRW||0),0)));
+      mkChart(`c-m-${sid}`,{type:'bar',data:{labels:mLabels,datasets:[{label:m,data:mMo,backgroundColor:col+'99',borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` ${c.raw}${unitSuffix()}`}}},scales:{x:{grid:{display:false}},y:{grid:{color:'#f0f1f5'},ticks:{callback:v=>`${v}${unitSuffix()}`}}}}});
+    });
+  });
+}
+
+function switchMTab(id,btn){
+  document.querySelectorAll('#memberTabContent .tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#memberTabNav .tab-btn').forEach(b=>b.classList.remove('active'));
+  const sid=id.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+  const pane=document.getElementById('tab-m-'+sid);
+  if(pane)pane.classList.add('active');
+  btn.classList.add('active');
+}
+
+let _sales=[],_targets={},_qTargets={},_loaded={s:false,t:false,q:false};
+const tryRender=()=>{if(_loaded.s&&_loaded.t&&_loaded.q){render(_sales,_targets,_qTargets);applyLang();const el=document.getElementById('erValue');if(el)el.textContent='₩'+_er.toLocaleString();}};
+
+// 스피너가 있는 영역에 안내 메시지 표시 (로그인 필요 / 오류)
+function showNotice(html){
+  ['targetCard','memberList','productTable','memberTabContent'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML=`<div style="padding:24px;text-align:center;color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;line-height:1.7">${html}</div>`;
+  });
+}
+
+// Firestore 구독 — 에러 콜백 포함(권한 거부 등이 조용히 무시되지 않도록)
+function subscribe(){
+  const onErr=(label)=>(e)=>{
+    console.error(`[Firestore] ${label} 구독 실패:`,e);
+    showNotice(`⚠️ 데이터를 불러오지 못했습니다 (${label})<br>${e.code||e.message||''}<br><br>Firestore 권한 또는 네트워크를 확인하세요.`);
+  };
+  db.collection("targets").doc("quarterTargets").onSnapshot(doc=>{if(doc.exists){_qTargets=doc.data();_er=_qTargets?.[QUARTER]?.er||1389;}_loaded.q=true;tryRender();}, onErr('quarterTargets'));
+  db.collection("sales").onSnapshot(snap=>{_sales=snap.docs.map(d=>d.data());_loaded.s=true;tryRender();}, onErr('sales'));
+  db.collection("targets").doc("memberTargets").onSnapshot(doc=>{if(doc.exists)_targets=doc.data();_loaded.t=true;tryRender();}, onErr('memberTargets'));
+}
+
+// 로그인 세션이 확인된 뒤에만 데이터를 읽는다.
+// (index.html에서 로그인하면 같은 도메인에서 세션이 공유됨)
+let _subscribed=false;
+auth.onAuthStateChanged(user=>{
+  if(user){
+    if(_subscribed) return;
+    _subscribed=true;
+    subscribe();
+  } else {
+    showNotice(`🔒 로그인이 필요합니다.<br><br>먼저 <a href="index.html" style="color:var(--a1);text-decoration:underline">메인 대시보드</a>에서 로그인한 뒤<br>이 페이지를 다시 열어주세요.`);
+  }
+});
+</script>
+</body>
+</html>
