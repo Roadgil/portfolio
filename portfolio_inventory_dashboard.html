@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inventory Dashboard · Portfolio</title>
+  <title>KRP Inventory Dashboard · Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
       --accent:#0faaa0; --accent2:#5b4fcf; --accent3:#e09c10; --accent4:#e84d6f;
-      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878; --blue:#5b9bf5;
     }
     *{margin:0;padding:0;box-sizing:border-box;}
     html{scroll-behavior:smooth;}
@@ -17,7 +17,7 @@
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
 
     .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
-    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color 0.2s;}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
     .back-link:hover{color:var(--text);}
     .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
     .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
@@ -28,12 +28,12 @@
     @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(30px) scale(1.05);}}
     .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
     .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
-    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,9vw,120px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,9vw,118px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
     .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
-    .hero-desc{font-size:15px;color:var(--muted);max-width:580px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:600px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
     .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
     .stat{display:flex;flex-direction:column;gap:4px;}
-    .stat-num{font-family:'DM Serif Display',serif;font-size:36px;line-height:1;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
     .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
 
     .section{padding:90px 60px;}
@@ -42,22 +42,41 @@
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
     .section-title em{font-style:italic;color:var(--accent);}
 
-    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
-    .feat-card{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;overflow:hidden;}
-    .feat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;}
-    .feat-card.c1::after{background:var(--accent);}.feat-card.c2::after{background:var(--accent2);}
-    .feat-card.c3::after{background:var(--accent3);}.feat-card.c4::after{background:var(--accent4);}
-    .feat-card.c5::after{background:var(--green);}.feat-card.c6::after{background:#93c5fd;}
-    .feat-icon{font-size:28px;margin-bottom:16px;}
-    .feat-title{font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:10px;}
-    .feat-desc{font-size:12.5px;color:var(--muted);line-height:1.75;}
-
-    .sources{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2px;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-    .source-item{padding:28px 24px;background:var(--surf);transition:background 0.2s;border:1px solid var(--border);}
+    .sources{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+    .source-item{padding:26px 22px;background:var(--surf);transition:background 0.2s;border:1px solid var(--border);}
     .source-item:hover{background:var(--surf2);}
-    .source-icon{font-size:24px;margin-bottom:12px;}
-    .source-name{font-family:'DM Mono',monospace;font-size:12px;color:var(--text);margin-bottom:6px;}
+    .source-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:2px;margin-bottom:10px;}
+    .source-icon{font-size:22px;margin-bottom:10px;}
+    .source-name{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
     .source-role{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .tab-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:32px;position:relative;overflow:hidden;}
+    .tab-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+    .tab-card.t1::before{background:var(--accent);}.tab-card.t2::before{background:var(--accent2);}
+    .tab-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid;margin-bottom:16px;}
+    .tab-card.t1 .tab-badge{color:var(--accent);border-color:rgba(15,170,160,0.3);background:rgba(15,170,160,0.08);}
+    .tab-card.t2 .tab-badge{color:var(--accent2);border-color:rgba(91,79,207,0.3);background:rgba(91,79,207,0.08);}
+    .tab-title{font-family:'DM Serif Display',serif;font-size:23px;margin-bottom:12px;}
+    .tab-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:20px;}
+    .tab-points{display:flex;flex-direction:column;gap:9px;}
+    .tpoint{font-size:12px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .tpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .tab-card.t1 .tpoint-dot{background:var(--accent);}.tab-card.t2 .tpoint-dot{background:var(--accent2);}
+
+    .fcst-box{background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:40px;position:relative;overflow:hidden;}
+    .fcst-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(91,155,245,0.06) 0%,transparent 55%),radial-gradient(ellipse at 85% 100%,rgba(232,77,111,0.06) 0%,transparent 55%);}
+    .fcst-head{position:relative;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:28px;}
+    .fcst-compare{position:relative;display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:28px;}
+    .fcst-node{background:var(--surf2);border:1px solid var(--border);border-radius:12px;padding:18px 26px;text-align:center;flex:1;min-width:130px;}
+    .fcst-node-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:6px;}
+    .fcst-vs{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);}
+    .fcst-flags{position:relative;display:flex;gap:14px;flex-wrap:wrap;}
+    .flag{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:8px 14px;border-radius:10px;border:1px solid;}
+    .flag.up{color:var(--blue);border-color:rgba(91,155,245,0.3);background:rgba(91,155,245,0.07);}
+    .flag.down{color:var(--accent4);border-color:rgba(232,77,111,0.3);background:rgba(232,77,111,0.07);}
+    .flag-dot{width:8px;height:8px;border-radius:50%;}
+    .flag.up .flag-dot{background:var(--blue);}.flag.down .flag-dot{background:var(--accent4);}
 
     .stack-section{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
     .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
@@ -82,6 +101,7 @@
     @media (max-width:768px){
       .topbar{padding:16px 24px;}
       .hero,.section{padding:90px 24px 50px;}
+      .tabs{grid-template-columns:1fr;}
       footer{padding:40px 24px;}
     }
   </style>
@@ -98,42 +118,76 @@
 
   <section class="hero">
     <div class="hero-bg-glow"></div>
-    <div class="hero-tag">Inventory · APAC / KRP</div>
-    <h1 class="hero-title"><span class="a1">INVENTORY</span><br><span class="a2">DASH</span>BOARD</h1>
+    <div class="hero-tag">KRP Inventory · Single-file App</div>
+    <h1 class="hero-title"><span class="a1">KRP</span> INVENTORY<br><span class="a2">DASH</span>BOARD</h1>
     <p class="hero-desc">
-      <span data-ko>Oracle ERP에서 추출한 5종의 CSV/Excel 데이터를 하나로 통합해, 만료일·로케이터·시리얼/로트 단위까지 재고를 들여다보는 오프라인 단일 HTML 앱. MDM으로 막힌 회사 환경에서도 도는 가벼운 설계.</span>
-      <span data-en>An offline single-file HTML app that merges five Oracle ERP exports into one view — drilling down to expiry date, locator, and serial/lot level. Built lightweight to run even in an MDM-locked corporate environment.</span>
+      <span data-ko>본사 SOP 예측을 포함한 5종의 월간 데이터를 하나의 오프라인 HTML 앱으로 통합. 단순 재고 현황을 넘어, 본사 예측(SOP)과 실제 평균 판매를 대조해 어긋난 SKU를 자동으로 잡아내는 예측 검증 도구.</span>
+      <span data-en>A single offline HTML app that merges five monthly data sources — including HQ SOP forecasts. Beyond stock visibility, it cross-checks HQ forecast against actual average sales to auto-flag SKUs that drift.</span>
     </p>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num" style="color:var(--accent);">5</span><span class="stat-label" data-ko>데이터 소스</span><span class="stat-label" data-en>Data Sources</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent2);">SN</span><span class="stat-label" data-ko>로트 단위 추적</span><span class="stat-label" data-en>Lot-level Tracking</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent3);">1</span><span class="stat-label" data-ko>단일 HTML 파일</span><span class="stat-label" data-en>Single HTML File</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--green);">∞</span><span class="stat-label" data-ko>월간 KPI 스냅샷</span><span class="stat-label" data-en>Monthly Snapshots</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent);">5</span><span class="stat-label" data-ko>월간 데이터 소스</span><span class="stat-label" data-en>Monthly Sources</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent2);">2</span><span class="stat-label" data-ko>분석 시트 탭</span><span class="stat-label" data-en>Sheet Tabs</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent3);">30%</span><span class="stat-label" data-ko>예측 편차 플래그</span><span class="stat-label" data-en>Forecast Flag</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--green);">1</span><span class="stat-label" data-ko>단일 HTML · 오프라인</span><span class="stat-label" data-en>Single HTML · Offline</span></div>
     </div>
   </section>
 
   <section class="section">
     <div class="section-label">Data Sources</div>
-    <h2 class="section-title reveal"><span data-ko>다섯 개의 소스를</span><span data-en>Five sources,</span><br><em><span data-ko>하나의 화면으로</span><span data-en>one screen</span></em></h2>
+    <h2 class="section-title reveal"><span data-ko>다섯 개의 월간 소스를</span><span data-en>Five monthly sources,</span><br><em><span data-ko>한 앱으로 통합</span><span data-en>merged into one app</span></em></h2>
     <div class="sources reveal">
-      <div class="source-item"><div class="source-icon">📦</div><div class="source-name">Inventory_dashboard.xlsx</div><div class="source-role" data-ko>월간 재고 기준 데이터</div><div class="source-role" data-en>Monthly base inventory</div></div>
-      <div class="source-item"><div class="source-icon">🌏</div><div class="source-name">APAC Inventory CSV</div><div class="source-role" data-ko>Oracle ERP 지역 재고 추출</div><div class="source-role" data-en>Oracle ERP regional export</div></div>
-      <div class="source-item"><div class="source-icon">🚢</div><div class="source-name">Intransit Report</div><div class="source-role" data-ko>운송 중 재고 현황</div><div class="source-role" data-en>In-transit stock status</div></div>
-      <div class="source-item"><div class="source-icon">📋</div><div class="source-name">Open Sales / TO</div><div class="source-role" data-ko>미출고 주문·이고 현황</div><div class="source-role" data-en>Open orders &amp; transfers</div></div>
-      <div class="source-item"><div class="source-icon">📈</div><div class="source-name">SOP Forecast</div><div class="source-role" data-ko>본사 SOP 수요 예측 파일</div><div class="source-role" data-en>HQ SOP demand forecast</div></div>
+      <div class="source-item"><div class="source-num">SRC 01</div><div class="source-icon">📦</div><div class="source-name">Inventory_dashboard.xlsx</div><div class="source-role" data-ko>월간 재고 기준 데이터</div><div class="source-role" data-en>Monthly base inventory</div></div>
+      <div class="source-item"><div class="source-num">SRC 02</div><div class="source-icon">🌏</div><div class="source-name">APAC Inventory CSV</div><div class="source-role" data-ko>Oracle ERP 지역 재고</div><div class="source-role" data-en>Oracle ERP regional stock</div></div>
+      <div class="source-item"><div class="source-num">SRC 03</div><div class="source-icon">🚢</div><div class="source-name">Intransit Report</div><div class="source-role" data-ko>운송 중 재고 현황</div><div class="source-role" data-en>In-transit stock</div></div>
+      <div class="source-item"><div class="source-num">SRC 04</div><div class="source-icon">📋</div><div class="source-name">Open Sales / TO</div><div class="source-role" data-ko>미출고 주문·이고 현황</div><div class="source-role" data-en>Open orders &amp; transfers</div></div>
+      <div class="source-item"><div class="source-num">SRC 05</div><div class="source-icon">📈</div><div class="source-name">SOP Forecast</div><div class="source-role" data-ko>본사가 매월 보내는 예측 파일</div><div class="source-role" data-en>HQ monthly forecast file</div></div>
     </div>
   </section>
 
   <section class="section" style="padding-top:0;">
-    <div class="section-label">Features</div>
-    <h2 class="section-title reveal"><span data-ko>핵심</span><span data-en>Key</span> <em><span data-ko>기능</span><span data-en>Features</span></em></h2>
-    <div class="feat-grid">
-      <div class="feat-card c1 reveal"><div class="feat-icon">📅</div><div class="feat-title" data-ko>만료일 추적</div><div class="feat-title" data-en>Expiry Tracking</div><div class="feat-desc" data-ko>Expiration 필드를 읽어 만료 임박 재고를 별도 컬럼으로 표시. 의료기기 short-expiry 관리에 직접 활용.</div><div class="feat-desc" data-en>Reads the Expiration field to surface near-expiry stock in a dedicated column — built for medical-device short-expiry control.</div></div>
-      <div class="feat-card c2 reveal"><div class="feat-icon">📍</div><div class="feat-title" data-ko>로케이터·시리얼/로트</div><div class="feat-title" data-en>Locator &amp; Serial/Lot</div><div class="feat-desc" data-ko>창고 로케이터, 시리얼번호, 로트번호 컬럼을 추가해 개별 단위까지 추적 가능.</div><div class="feat-desc" data-en>Adds locator, serial number, and lot columns to trace stock down to the individual unit.</div></div>
-      <div class="feat-card c3 reveal"><div class="feat-icon">🔮</div><div class="feat-title" data-ko>예측 검증</div><div class="feat-title" data-en>Forecast Check</div><div class="feat-desc" data-ko>KRP 시트에서 AVG 2025 vs AVG FCT(6)를 비교해 30% 이상 차이나는 SKU를 자동 플래그.</div><div class="feat-desc" data-en>The KRP sheet compares AVG 2025 vs AVG FCT(6) and auto-flags any SKU diverging more than 30%.</div></div>
-      <div class="feat-card c4 reveal"><div class="feat-icon">💾</div><div class="feat-title" data-ko>오프라인 영속성</div><div class="feat-title" data-en>Offline Persistence</div><div class="feat-desc" data-ko>IndexedDB로 데이터를 저장하고 localStorage에 월간 KPI 스냅샷을 누적해 추세를 본다.</div><div class="feat-desc" data-en>Stores data in IndexedDB and accumulates monthly KPI snapshots in localStorage to show trends.</div></div>
-      <div class="feat-card c5 reveal"><div class="feat-icon">📤</div><div class="feat-title" data-ko>Excel 내보내기</div><div class="feat-title" data-en>Excel Export</div><div class="feat-desc" data-ko>회사 모바일 Outlook의 JS 차단(MDM) 이슈로, KRP 공유 출력을 SheetJS 기반 .xlsx로 전환.</div><div class="feat-desc" data-en>Because corporate mobile Outlook blocks JS (MDM), the KRP shared output was switched to SheetJS-based .xlsx.</div></div>
-      <div class="feat-card c6 reveal"><div class="feat-icon">🧩</div><div class="feat-title" data-ko>KRP 시트 재현</div><div class="feat-title" data-en>KRP Sheet Replica</div><div class="feat-desc" data-ko>기존 Excel 레이아웃을 그대로 재현한 KRP 탭으로, 현업이 익숙한 화면 그대로 사용.</div><div class="feat-desc" data-en>A KRP tab that replicates the existing Excel layout so the team works in a familiar view.</div></div>
+    <div class="section-label">Two Views</div>
+    <h2 class="section-title reveal"><span data-ko>두 개의</span><span data-en>Two</span> <em><span data-ko>분석 시트</span><span data-en>analysis sheets</span></em></h2>
+    <div class="tabs">
+      <div class="tab-card t1 reveal">
+        <div class="tab-badge">Tab 01</div>
+        <div class="tab-title" data-ko>Dashboard 시트</div><div class="tab-title" data-en>Dashboard Sheet</div>
+        <div class="tab-desc" data-ko>통합된 5종 데이터를 한눈에 보는 재고 현황 뷰. 과재고를 별도로 분류하고 월간 KPI를 자동 계산한다.</div>
+        <div class="tab-desc" data-en>An at-a-glance stock view over all five merged sources. Classifies excess stock and auto-computes monthly KPIs.</div>
+        <div class="tab-points">
+          <div class="tpoint"><div class="tpoint-dot"></div><span data-ko>재고·인트랜짓·미출고 통합 현황</span><span data-en>On-hand, in-transit &amp; open orders combined</span></div>
+          <div class="tpoint"><div class="tpoint-dot"></div><span data-ko>과재고 자동 분류</span><span data-en>Auto-classifies excess stock</span></div>
+          <div class="tpoint"><div class="tpoint-dot"></div><span data-ko>월간 KPI 자동 산출</span><span data-en>Auto monthly KPI calc</span></div>
+        </div>
+      </div>
+      <div class="tab-card t2 reveal" style="transition-delay:0.08s">
+        <div class="tab-badge">Tab 02</div>
+        <div class="tab-title" data-ko>KRP 시트</div><div class="tab-title" data-en>KRP Sheet</div>
+        <div class="tab-desc" data-ko>기존 Excel 레이아웃을 그대로 재현한 탭. 현업이 익숙한 화면을 유지하면서 여기에 예측 검증 로직을 얹었다.</div>
+        <div class="tab-desc" data-en>Replicates the existing Excel layout so the team keeps a familiar view — with forecast verification layered on top.</div>
+        <div class="tab-points">
+          <div class="tpoint"><div class="tpoint-dot"></div><span data-ko>Excel 레이아웃 1:1 재현</span><span data-en>1:1 Excel layout replica</span></div>
+          <div class="tpoint"><div class="tpoint-dot"></div><span data-ko>예측 검증 컬럼 내장</span><span data-en>Built-in forecast-check columns</span></div>
+          <div class="tpoint"><div class="tpoint-dot"></div><span data-ko>전체 예측 합계 자동 집계</span><span data-en>Auto total-forecast rollup</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="section-label">Signature</div>
+    <h2 class="section-title reveal"><span data-ko>핵심 — </span><span data-en>The core — </span><em><span data-ko>예측 검증</span><span data-en>forecast verification</span></em></h2>
+    <div class="fcst-box reveal">
+      <div class="fcst-head" data-ko>// 본사 예측이 실제 판매 추세와 얼마나 어긋나는지 자동 대조</div>
+      <div class="fcst-head" data-en>// auto-checks how far HQ forecast drifts from actual sales trend</div>
+      <div class="fcst-compare">
+        <div class="fcst-node"><div class="fcst-node-label">AVG 2025</div><div style="color:var(--accent);font-family:'DM Serif Display',serif;font-size:18px;" data-ko>실제 평균 판매</div><div style="color:var(--accent);font-family:'DM Serif Display',serif;font-size:18px;" data-en>actual avg sales</div></div>
+        <div class="fcst-vs">vs</div>
+        <div class="fcst-node"><div class="fcst-node-label">AVG FCT (6)</div><div style="color:var(--accent2);font-family:'DM Serif Display',serif;font-size:18px;" data-ko>본사 6개월 예측</div><div style="color:var(--accent2);font-family:'DM Serif Display',serif;font-size:18px;" data-en>HQ 6-mo forecast</div></div>
+      </div>
+      <div class="fcst-flags">
+        <div class="flag up"><div class="flag-dot"></div><span data-ko>예측 ↑ (파랑) — 본사 예측이 실제보다 30% 이상 높음</span><span data-en>Forecast ↑ (blue) — HQ forecast 30%+ above actual</span></div>
+        <div class="flag down"><div class="flag-dot"></div><span data-ko>예측 ↓ (빨강) — 본사 예측이 실제보다 30% 이상 낮음</span><span data-en>Forecast ↓ (red) — HQ forecast 30%+ below actual</span></div>
+      </div>
     </div>
   </section>
 
@@ -143,17 +197,17 @@
       <h2 class="section-title reveal"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
     </div>
     <div class="stack-grid reveal">
-      <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">SheetJS (xlsx)</div><div class="stack-role" data-ko>CSV/Excel 파싱·생성</div><div class="stack-role" data-en>CSV/Excel parse &amp; export</div></div>
-      <div class="stack-item"><div class="stack-emoji">💾</div><div class="stack-name">IndexedDB</div><div class="stack-role" data-ko>브라우저 영속 저장</div><div class="stack-role" data-en>Browser persistence</div></div>
-      <div class="stack-item"><div class="stack-emoji">🗂️</div><div class="stack-name">localStorage</div><div class="stack-role" data-ko>월간 KPI 스냅샷</div><div class="stack-role" data-en>Monthly KPI snapshots</div></div>
+      <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">SheetJS (xlsx)</div><div class="stack-role" data-ko>5종 파일 파싱·집계</div><div class="stack-role" data-en>Parse &amp; aggregate 5 files</div></div>
+      <div class="stack-item"><div class="stack-emoji">💾</div><div class="stack-name">IndexedDB</div><div class="stack-role" data-ko>통합 데이터 영속 저장</div><div class="stack-role" data-en>Persists merged data</div></div>
+      <div class="stack-item"><div class="stack-emoji">🗂️</div><div class="stack-name">localStorage</div><div class="stack-role" data-ko>월간 KPI 스냅샷 누적</div><div class="stack-role" data-en>Monthly KPI snapshots</div></div>
       <div class="stack-item"><div class="stack-emoji">🏛️</div><div class="stack-name">Oracle ERP CSV</div><div class="stack-role" data-ko>소스 데이터 추출</div><div class="stack-role" data-en>Source data export</div></div>
       <div class="stack-item"><div class="stack-emoji">📄</div><div class="stack-name">Single-file HTML</div><div class="stack-role" data-ko>설치 불필요·오프라인</div><div class="stack-role" data-en>No install · offline</div></div>
     </div>
   </div>
 
   <footer>
-    <div class="footer-brand">INVENTORY</div>
-    <div class="footer-note">SHEETJS · INDEXEDDB · ORACLE ERP CSV</div>
+    <div class="footer-brand">KRP INVENTORY</div>
+    <div class="footer-note">SHEETJS · INDEXEDDB · LOCALSTORAGE · ORACLE ERP CSV</div>
   </footer>
 
   <script>
