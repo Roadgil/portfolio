@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>거래명세서 생성기 · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f5f3ee; --surf:#ffffff; --surf2:#f0ede6; --border:#ddd9d0;
+      --ink:#1c1a16; --muted:#8c8679; --accent:#b5930a; --accent2:#c4621a;
+      --accent3:#2d5016; --accent4:#1a4a6e;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='none'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23000' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:998;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:linear-gradient(to bottom,rgba(245,243,238,0.95),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--ink);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;background:var(--surf);}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#fff;}
+
+    .hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--ink);}
+    .hero-left{padding:120px 60px 80px;display:flex;flex-direction:column;justify-content:space-between;border-right:2px solid var(--ink);}
+    .hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px;}
+    .hero-eyebrow span.line{display:inline-block;width:32px;height:1px;background:var(--muted);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,7vw,104px);line-height:0.88;letter-spacing:-1px;color:var(--ink);}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:14px;line-height:1.85;color:var(--muted);max-width:420px;border-left:3px solid var(--accent);padding-left:18px;}
+    .hero-right{padding:120px 60px 80px;display:flex;flex-direction:column;justify-content:center;background:var(--ink);gap:14px;}
+
+    .demo-row{display:flex;align-items:center;gap:14px;font-family:'DM Mono',monospace;animation:fadeRight 0.6s ease both;}
+    .demo-row:nth-child(1){animation-delay:0.1s;}.demo-row:nth-child(2){animation-delay:0.2s;}
+    .demo-row:nth-child(3){animation-delay:0.3s;}.demo-row:nth-child(4){animation-delay:0.4s;}
+    .demo-in{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 14px;font-size:12px;color:#fde68a;min-width:90px;text-align:center;}
+    .demo-arrow{color:rgba(255,255,255,0.3);font-size:14px;}
+    .demo-out{flex:1;}
+    .demo-out-name{font-size:11px;color:rgba(255,255,255,0.85);margin-bottom:2px;}
+    .demo-out-price{font-size:11px;color:#86efac;}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:none;}}
+    .demo-caption{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-top:10px;}
+
+    .section{padding:90px 60px;border-bottom:1px solid var(--border);}
+    .label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+    .sec-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,48px);line-height:1.1;margin-bottom:50px;}
+    .sec-title em{font-style:italic;color:var(--accent2);}
+
+    .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border:2px solid var(--ink);}
+    .feat-card{background:var(--surf);padding:32px 28px;position:relative;overflow:hidden;transition:background 0.2s;}
+    .feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease;}
+    .feat-card:hover::before{transform:scaleX(1);}
+    .feat-card:hover{background:var(--surf2);}
+    .feat-card.c1::before{background:var(--accent);}.feat-card.c2::before{background:var(--accent2);}
+    .feat-card.c3::before{background:var(--accent3);}.feat-card.c4::before{background:var(--accent4);}
+    .feat-card.c5::before{background:var(--accent);}.feat-card.c6::before{background:var(--accent2);}
+    .feat-icon{font-size:26px;margin-bottom:16px;}
+    .feat-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:10px;}
+    .feat-desc{font-size:12px;color:var(--muted);line-height:1.75;}
+
+    .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+    .stat-block{padding:44px 36px;border-right:1px solid var(--border);}
+    .stat-block:last-child{border-right:none;}
+    .stat-big{font-family:'Bebas Neue',sans-serif;font-size:60px;line-height:1;margin-bottom:8px;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+    .stat-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+
+    footer{padding:60px;display:flex;justify-content:space-between;align-items:flex-end;border-top:2px solid var(--ink);flex-wrap:wrap;gap:20px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:2px;color:var(--ink);line-height:1;}
+    .footer-brand span{color:var(--accent2);}
+    .footer-stack{text-align:right;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;line-height:2;}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .hero-left{padding:110px 28px 50px;}
+      .hero-right{padding:50px 28px;}
+      .section{padding:60px 28px;}
+      .feat-grid{grid-template-columns:1fr;}
+      .stats-bar{grid-template-columns:1fr 1fr;}
+      footer{padding:40px 28px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span class="line"></span>Transaction Statement · Tool</div>
+      <div>
+        <h1 class="hero-title"><span data-ko>거래</span><span data-en>STATEMENT</span><br><span class="a1" data-ko>명세서</span><span class="a1" data-en>AUTO</span><br><span class="a2" data-ko>생성기</span><span class="a2" data-en>BUILDER</span></h1>
+      </div>
+      <p class="hero-desc">
+        <span data-ko>559개 품목 단가 DB와 코드 별칭 시스템을 내장해, 품목코드만 입력하면 거래명세서가 자동으로 완성되는 HTML 툴. 손으로 단가 찾던 작업을 제거.</span>
+        <span data-en>An HTML tool with a built-in 559-item price DB and code-alias system — type an item code and the statement builds itself. No more manual price lookups.</span>
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="demo-row"><div class="demo-in">DCD</div><div class="demo-arrow">→</div><div class="demo-out"><div class="demo-out-name">FIN101110</div><div class="demo-out-price" data-ko>단가 자동 매칭</div><div class="demo-out-price" data-en>price auto-matched</div></div></div>
+      <div class="demo-row"><div class="demo-in">dcd</div><div class="demo-arrow">→</div><div class="demo-out"><div class="demo-out-name">FIN101110</div><div class="demo-out-price" data-ko>대소문자 무관 인식</div><div class="demo-out-price" data-en>case-insensitive</div></div></div>
+      <div class="demo-row"><div class="demo-in">A + B, C</div><div class="demo-arrow">→</div><div class="demo-out"><div class="demo-out-name" data-ko>3개 품목 분리</div><div class="demo-out-name" data-en>3 items split</div><div class="demo-out-price" data-ko>+ / 쉼표 구분자</div><div class="demo-out-price" data-en>+ / comma separators</div></div></div>
+      <div class="demo-row"><div class="demo-in" data-ko>프리미엄</div><div class="demo-in" data-en>Premium</div><div class="demo-arrow">→</div><div class="demo-out"><div class="demo-out-name" data-ko>10% 할인 적용</div><div class="demo-out-name" data-en>10% discount applied</div><div class="demo-out-price" data-ko>센터 자동 판별</div><div class="demo-out-price" data-en>auto-detected</div></div></div>
+      <div class="demo-caption" data-ko>// 입력 → 자동 변환 예시</div>
+      <div class="demo-caption" data-en>// input → auto-transform examples</div>
+    </div>
+  </section>
+
+  <div class="stats-bar reveal">
+    <div class="stat-block"><div class="stat-big" style="color:var(--accent);">559</div><div class="stat-label" data-ko>품목 단가 DB</div><div class="stat-label" data-en>Item Price DB</div><div class="stat-sub" data-ko>PRICE_DB 내장</div><div class="stat-sub" data-en>built-in PRICE_DB</div></div>
+    <div class="stat-block"><div class="stat-big" style="color:var(--accent2);">0</div><div class="stat-label" data-ko>수동 단가 조회</div><div class="stat-label" data-en>Manual Lookups</div><div class="stat-sub" data-ko>코드 입력만으로 완성</div><div class="stat-sub" data-en>code-only entry</div></div>
+    <div class="stat-block"><div class="stat-big" style="color:var(--accent3);">10%</div><div class="stat-label" data-ko>자동 할인</div><div class="stat-label" data-en>Auto Discount</div><div class="stat-sub" data-ko>프리미엄 센터 판별</div><div class="stat-sub" data-en>premium-center logic</div></div>
+    <div class="stat-block"><div class="stat-big" style="color:var(--accent4);">A↔a</div><div class="stat-label" data-ko>별칭·대소문자</div><div class="stat-label" data-en>Alias / Case</div><div class="stat-sub" data-ko>유연한 코드 인식</div><div class="stat-sub" data-en>flexible code lookup</div></div>
+  </div>
+
+  <section class="section reveal">
+    <div class="label">Features</div>
+    <h2 class="sec-title"><span data-ko>입력은 간단하게,</span><span data-en>Simple input,</span><br><em><span data-ko>처리는 똑똑하게</span><span data-en>smart processing</span></em></h2>
+    <div class="feat-grid">
+      <div class="feat-card c1 reveal"><div class="feat-icon">🗃️</div><div class="feat-title" data-ko>559품목 단가 DB</div><div class="feat-title" data-en>559-item Price DB</div><div class="feat-desc" data-ko>전 품목 단가를 PRICE_DB로 내장. 품목코드 입력 시 단가가 자동으로 채워진다.</div><div class="feat-desc" data-en>All item prices embedded as PRICE_DB. Enter an item code and the price fills in automatically.</div></div>
+      <div class="feat-card c2 reveal"><div class="feat-icon">🔤</div><div class="feat-title" data-ko>코드 별칭 시스템</div><div class="feat-title" data-en>Code Alias System</div><div class="feat-desc" data-ko>CODE_ALIAS로 현업 약어를 정식 코드로 매핑 (예: DCD → FIN101110). Carebot 포맷도 파싱.</div><div class="feat-desc" data-en>CODE_ALIAS maps field shorthand to official codes (e.g. DCD → FIN101110) and parses the Carebot format.</div></div>
+      <div class="feat-card c3 reveal"><div class="feat-icon">🔡</div><div class="feat-title" data-ko>대소문자 무관 조회</div><div class="feat-title" data-en>Case-insensitive Lookup</div><div class="feat-desc" data-ko>PRICE_DB_CI로 대소문자 구분 없이 코드를 찾아, 입력 실수에도 정확히 매칭.</div><div class="feat-desc" data-en>PRICE_DB_CI resolves codes regardless of case, matching correctly even with typos.</div></div>
+      <div class="feat-card c4 reveal"><div class="feat-icon">➕</div><div class="feat-title" data-ko>유연한 구분자</div><div class="feat-title" data-en>Flexible Separators</div><div class="feat-desc" data-ko>+ 와 쉼표를 모두 품목 구분자로 인식해, 한 줄에 여러 품목을 자유롭게 입력.</div><div class="feat-desc" data-en>Both + and commas work as item separators, so multiple items can be entered freely on one line.</div></div>
+      <div class="feat-card c5 reveal"><div class="feat-icon">🏷️</div><div class="feat-title" data-ko>프리미엄 할인 로직</div><div class="feat-title" data-en>Premium Discount Logic</div><div class="feat-desc" data-ko>프리미엄 센터를 자동 판별해 10% 할인을 적용. 거래처 유형별 가격을 자동 산출.</div><div class="feat-desc" data-en>Detects premium centers and applies a 10% discount, computing prices per account type.</div></div>
+      <div class="feat-card c6 reveal"><div class="feat-icon">🖋️</div><div class="feat-title" data-ko>투명 도장 오버레이</div><div class="feat-title" data-en>Stamp Overlay</div><div class="feat-desc" data-ko>투명 처리된 도장 이미지를 명세서에 합성해, 출력물에 바로 날인된 형태로 완성.</div><div class="feat-desc" data-en>Composites a transparency-processed stamp image onto the statement, so the output looks pre-sealed.</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div><div class="footer-brand"><span data-ko>거래</span><span data-en>STATE</span><br><span data-ko>명세서</span><span data-en>MENT</span></div></div>
+    <div class="footer-stack">HTML · JS · PRICE_DB (559)<br>CODE ALIAS · PRICE_DB_CI<br>STAMP OVERLAY</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang');if(s)setLang(s);}catch(e){}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>

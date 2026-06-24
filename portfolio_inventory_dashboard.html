@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Dashboard · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#0faaa0; --accent2:#5b4fcf; --accent3:#e09c10; --accent4:#e84d6f;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#fff;}
+
+    .hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 60px;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(15,170,160,0.16) 0%,transparent 70%);top:-200px;right:-200px;animation:floatGlow 8s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(30px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,9vw,120px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:580px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:36px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
+    .section-title em{font-style:italic;color:var(--accent);}
+
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+    .feat-card{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;overflow:hidden;}
+    .feat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;}
+    .feat-card.c1::after{background:var(--accent);}.feat-card.c2::after{background:var(--accent2);}
+    .feat-card.c3::after{background:var(--accent3);}.feat-card.c4::after{background:var(--accent4);}
+    .feat-card.c5::after{background:var(--green);}.feat-card.c6::after{background:#93c5fd;}
+    .feat-icon{font-size:28px;margin-bottom:16px;}
+    .feat-title{font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:10px;}
+    .feat-desc{font-size:12.5px;color:var(--muted);line-height:1.75;}
+
+    .sources{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2px;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+    .source-item{padding:28px 24px;background:var(--surf);transition:background 0.2s;border:1px solid var(--border);}
+    .source-item:hover{background:var(--surf2);}
+    .source-icon{font-size:24px;margin-bottom:12px;}
+    .source-name{font-family:'DM Mono',monospace;font-size:12px;color:var(--text);margin-bottom:6px;}
+    .source-role{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .stack-section{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+
+    @media (max-width:768px){
+      .topbar{padding:16px 24px;}
+      .hero,.section{padding:90px 24px 50px;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-tag">Inventory · APAC / KRP</div>
+    <h1 class="hero-title"><span class="a1">INVENTORY</span><br><span class="a2">DASH</span>BOARD</h1>
+    <p class="hero-desc">
+      <span data-ko>Oracle ERP에서 추출한 5종의 CSV/Excel 데이터를 하나로 통합해, 만료일·로케이터·시리얼/로트 단위까지 재고를 들여다보는 오프라인 단일 HTML 앱. MDM으로 막힌 회사 환경에서도 도는 가벼운 설계.</span>
+      <span data-en>An offline single-file HTML app that merges five Oracle ERP exports into one view — drilling down to expiry date, locator, and serial/lot level. Built lightweight to run even in an MDM-locked corporate environment.</span>
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" style="color:var(--accent);">5</span><span class="stat-label" data-ko>데이터 소스</span><span class="stat-label" data-en>Data Sources</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent2);">SN</span><span class="stat-label" data-ko>로트 단위 추적</span><span class="stat-label" data-en>Lot-level Tracking</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent3);">1</span><span class="stat-label" data-ko>단일 HTML 파일</span><span class="stat-label" data-en>Single HTML File</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--green);">∞</span><span class="stat-label" data-ko>월간 KPI 스냅샷</span><span class="stat-label" data-en>Monthly Snapshots</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Data Sources</div>
+    <h2 class="section-title reveal"><span data-ko>다섯 개의 소스를</span><span data-en>Five sources,</span><br><em><span data-ko>하나의 화면으로</span><span data-en>one screen</span></em></h2>
+    <div class="sources reveal">
+      <div class="source-item"><div class="source-icon">📦</div><div class="source-name">Inventory_dashboard.xlsx</div><div class="source-role" data-ko>월간 재고 기준 데이터</div><div class="source-role" data-en>Monthly base inventory</div></div>
+      <div class="source-item"><div class="source-icon">🌏</div><div class="source-name">APAC Inventory CSV</div><div class="source-role" data-ko>Oracle ERP 지역 재고 추출</div><div class="source-role" data-en>Oracle ERP regional export</div></div>
+      <div class="source-item"><div class="source-icon">🚢</div><div class="source-name">Intransit Report</div><div class="source-role" data-ko>운송 중 재고 현황</div><div class="source-role" data-en>In-transit stock status</div></div>
+      <div class="source-item"><div class="source-icon">📋</div><div class="source-name">Open Sales / TO</div><div class="source-role" data-ko>미출고 주문·이고 현황</div><div class="source-role" data-en>Open orders &amp; transfers</div></div>
+      <div class="source-item"><div class="source-icon">📈</div><div class="source-name">SOP Forecast</div><div class="source-role" data-ko>본사 SOP 수요 예측 파일</div><div class="source-role" data-en>HQ SOP demand forecast</div></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="section-label">Features</div>
+    <h2 class="section-title reveal"><span data-ko>핵심</span><span data-en>Key</span> <em><span data-ko>기능</span><span data-en>Features</span></em></h2>
+    <div class="feat-grid">
+      <div class="feat-card c1 reveal"><div class="feat-icon">📅</div><div class="feat-title" data-ko>만료일 추적</div><div class="feat-title" data-en>Expiry Tracking</div><div class="feat-desc" data-ko>Expiration 필드를 읽어 만료 임박 재고를 별도 컬럼으로 표시. 의료기기 short-expiry 관리에 직접 활용.</div><div class="feat-desc" data-en>Reads the Expiration field to surface near-expiry stock in a dedicated column — built for medical-device short-expiry control.</div></div>
+      <div class="feat-card c2 reveal"><div class="feat-icon">📍</div><div class="feat-title" data-ko>로케이터·시리얼/로트</div><div class="feat-title" data-en>Locator &amp; Serial/Lot</div><div class="feat-desc" data-ko>창고 로케이터, 시리얼번호, 로트번호 컬럼을 추가해 개별 단위까지 추적 가능.</div><div class="feat-desc" data-en>Adds locator, serial number, and lot columns to trace stock down to the individual unit.</div></div>
+      <div class="feat-card c3 reveal"><div class="feat-icon">🔮</div><div class="feat-title" data-ko>예측 검증</div><div class="feat-title" data-en>Forecast Check</div><div class="feat-desc" data-ko>KRP 시트에서 AVG 2025 vs AVG FCT(6)를 비교해 30% 이상 차이나는 SKU를 자동 플래그.</div><div class="feat-desc" data-en>The KRP sheet compares AVG 2025 vs AVG FCT(6) and auto-flags any SKU diverging more than 30%.</div></div>
+      <div class="feat-card c4 reveal"><div class="feat-icon">💾</div><div class="feat-title" data-ko>오프라인 영속성</div><div class="feat-title" data-en>Offline Persistence</div><div class="feat-desc" data-ko>IndexedDB로 데이터를 저장하고 localStorage에 월간 KPI 스냅샷을 누적해 추세를 본다.</div><div class="feat-desc" data-en>Stores data in IndexedDB and accumulates monthly KPI snapshots in localStorage to show trends.</div></div>
+      <div class="feat-card c5 reveal"><div class="feat-icon">📤</div><div class="feat-title" data-ko>Excel 내보내기</div><div class="feat-title" data-en>Excel Export</div><div class="feat-desc" data-ko>회사 모바일 Outlook의 JS 차단(MDM) 이슈로, KRP 공유 출력을 SheetJS 기반 .xlsx로 전환.</div><div class="feat-desc" data-en>Because corporate mobile Outlook blocks JS (MDM), the KRP shared output was switched to SheetJS-based .xlsx.</div></div>
+      <div class="feat-card c6 reveal"><div class="feat-icon">🧩</div><div class="feat-title" data-ko>KRP 시트 재현</div><div class="feat-title" data-en>KRP Sheet Replica</div><div class="feat-desc" data-ko>기존 Excel 레이아웃을 그대로 재현한 KRP 탭으로, 현업이 익숙한 화면 그대로 사용.</div><div class="feat-desc" data-en>A KRP tab that replicates the existing Excel layout so the team works in a familiar view.</div></div>
+    </div>
+  </section>
+
+  <div class="stack-section">
+    <div class="section" style="padding-bottom:0;">
+      <div class="section-label">Stack</div>
+      <h2 class="section-title reveal"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">SheetJS (xlsx)</div><div class="stack-role" data-ko>CSV/Excel 파싱·생성</div><div class="stack-role" data-en>CSV/Excel parse &amp; export</div></div>
+      <div class="stack-item"><div class="stack-emoji">💾</div><div class="stack-name">IndexedDB</div><div class="stack-role" data-ko>브라우저 영속 저장</div><div class="stack-role" data-en>Browser persistence</div></div>
+      <div class="stack-item"><div class="stack-emoji">🗂️</div><div class="stack-name">localStorage</div><div class="stack-role" data-ko>월간 KPI 스냅샷</div><div class="stack-role" data-en>Monthly KPI snapshots</div></div>
+      <div class="stack-item"><div class="stack-emoji">🏛️</div><div class="stack-name">Oracle ERP CSV</div><div class="stack-role" data-ko>소스 데이터 추출</div><div class="stack-role" data-en>Source data export</div></div>
+      <div class="stack-item"><div class="stack-emoji">📄</div><div class="stack-name">Single-file HTML</div><div class="stack-role" data-ko>설치 불필요·오프라인</div><div class="stack-role" data-en>No install · offline</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">INVENTORY</div>
+    <div class="footer-note">SHEETJS · INDEXEDDB · ORACLE ERP CSV</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang');if(s)setLang(s);}catch(e){}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>

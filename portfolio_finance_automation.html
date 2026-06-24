@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Automation · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#93c5fd; --accent2:#0faaa0; --accent3:#e09c10; --accent4:#5b4fcf;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 60px;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(147,197,253,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,8.5vw,116px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:600px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
+    .section-title em{font-style:italic;color:var(--accent);}
+
+    /* module cards */
+    .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .mod-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .mod-card:hover{transform:translateY(-5px);border-color:var(--accent);}
+    .mod-head{padding:26px 28px 0;}
+    .mod-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;background:var(--surf2);padding:5px 10px;border-radius:5px;display:inline-block;margin-bottom:14px;}
+    .mod-title{font-family:'DM Serif Display',serif;font-size:21px;margin-bottom:10px;}
+    .mod-desc{font-size:12.5px;color:var(--muted);line-height:1.75;padding:0 28px 18px;}
+    .mod-points{padding:0 28px 26px;display:flex;flex-direction:column;gap:8px;}
+    .mpoint{font-size:11.5px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .mpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
+    .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
+    .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+
+    /* pipeline */
+    .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pipeline{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .pipe-step{flex:1;padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+    .pipe-step:last-child{border-right:none;}
+    .pipe-step:hover{background:var(--surf2);}
+    .pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+    .pipe-icon{font-size:24px;margin-bottom:14px;}
+    .pipe-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
+    .pipe-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+
+    @media (max-width:900px){
+      .topbar{padding:16px 24px;}
+      .hero,.section,.pipeline-section{padding:90px 24px 50px;}
+      .pipeline{flex-direction:column;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-tag">Finance Workflow · Automation</div>
+    <h1 class="hero-title"><span class="a1">PAYMENT</span><br><span class="a2">REQUEST</span> AUTO</h1>
+    <p class="hero-desc">
+      <span data-ko>관세·DHL 비용의 지급요청 메일을 Finance팀에 자동 생성·발송하는 파이썬 시스템. 한국 공휴일을 인식하는 2회차 결제 스케줄링과 중복 발송 방지, 그리고 이미지 메일에서 마감일을 읽어내는 OCR까지 포함.</span>
+      <span data-en>A Python system that auto-generates and sends customs &amp; DHL payment-request emails to Finance — with Korean-holiday-aware two-round scheduling, duplicate-send protection, and OCR that reads deadlines straight from image emails.</span>
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" style="color:var(--accent);">2</span><span class="stat-label" data-ko>결제 회차/월</span><span class="stat-label" data-en>Payment Rounds/mo</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent2);">0</span><span class="stat-label" data-ko>중복 발송</span><span class="stat-label" data-en>Duplicate Sends</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent3);">3</span><span class="stat-label" data-ko>연도 공휴일 인식</span><span class="stat-label" data-en>Years of Holidays</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent4);">OCR</span><span class="stat-label" data-ko>이미지 마감일 추출</span><span class="stat-label" data-en>Deadline Extraction</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Modules</div>
+    <h2 class="section-title reveal"><span data-ko>세 개의</span><span data-en>Three</span> <em><span data-ko>자동화 모듈</span><span data-en>automation modules</span></em></h2>
+    <div class="mod-grid">
+
+      <div class="mod-card c1 reveal">
+        <div class="mod-head">
+          <div class="mod-file">customs_email_generator.py</div>
+          <div class="mod-title" data-ko>관세 지급요청 생성기</div>
+          <div class="mod-title" data-en>Customs Payment Generator</div>
+        </div>
+        <div class="mod-desc" data-ko>통관 브로커가 보내는 월간 NT- 프리픽스 관세 통지 PDF를 처리해, Finance 담당자에게 보낼 한국어 지급요청 메일을 자동 생성한다.</div>
+        <div class="mod-desc" data-en>Processes the monthly NT-prefixed customs notice PDFs from the broker and auto-generates Korean payment-request emails for the Finance owner.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>State JSON으로 동일 통지 중복 처리 차단</span><span data-en>State JSON blocks re-processing the same notice</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>관련 담당자 CC 자동 지정</span><span data-en>Auto-CCs the relevant stakeholders</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>발송 전 초안 저장 모드 지원</span><span data-en>Draft-save mode before sending</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c2 reveal" style="transition-delay:0.08s">
+        <div class="mod-head">
+          <div class="mod-file">dhl_forwarder.py</div>
+          <div class="mod-title" data-ko>DHL 인보이스 포워더</div>
+          <div class="mod-title" data-en>DHL Invoice Forwarder</div>
+        </div>
+        <div class="mod-desc" data-ko>DHL 운송 인보이스를 Finance에 자동 전달. 매월 10일과 끝에서 3번째 영업일, 2회차로 묶어 보내며 미수금 독촉장은 자동 제외한다.</div>
+        <div class="mod-desc" data-en>Forwards DHL shipping invoices to Finance on a two-round schedule — the 10th and the third-to-last working day — while excluding dunning letters automatically.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>한국 공휴일 인식 (2026–2028)</span><span data-en>Korean-holiday-aware (2026–2028)</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>영업일 기준 결제 회차 자동 계산</span><span data-en>Computes payment rounds by working day</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>미수금 독촉 메일 자동 필터링</span><span data-en>Filters out dunning emails</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c3 reveal" style="transition-delay:0.16s">
+        <div class="mod-head">
+          <div class="mod-file">finance_calendar_ocr.py</div>
+          <div class="mod-title" data-ko>마감일 OCR 캘린더</div>
+          <div class="mod-title" data-en>Deadline OCR Calendar</div>
+        </div>
+        <div class="mod-desc" data-ko>이미지로 박힌 사내 메일에서 '2차 지급요청 마감' 날짜를 easyocr로 읽어내, Outlook 캘린더에 일정 3건을 자동 생성한다. 한국 영업일 계산 포함.</div>
+        <div class="mod-desc" data-en>Uses easyocr to read the "2nd payment-request deadline" date from an image-embedded email and auto-creates three Outlook calendar events, with Korean business-day math.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>이미지 메일에서 텍스트 추출 (OCR)</span><span data-en>Extracts text from image emails (OCR)</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>영업일 역산으로 알림 일정 생성</span><span data-en>Back-calculates reminders by business day</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Outlook 캘린더 이벤트 3건 자동 등록</span><span data-en>Auto-adds 3 Outlook calendar events</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="pipeline-section reveal">
+    <div class="section-label">Workflow</div>
+    <h2 class="section-title"><span data-ko>비용 인지부터</span><span data-en>From cost notice</span><br><em><span data-ko>지급요청까지</span><span data-en>to payment request</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📩</div><div class="pipe-title" data-ko>비용 통지 수신</div><div class="pipe-title" data-en>Cost Notice In</div><div class="pipe-desc" data-ko>통관 브로커 NT- PDF · DHL 인보이스 · 이미지 메일 자동 감지</div><div class="pipe-desc" data-en>Detects broker NT- PDFs, DHL invoices, and image emails</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>파싱 · OCR</div><div class="pipe-title" data-en>Parse · OCR</div><div class="pipe-desc" data-ko>PDF 금액 추출 · 이미지 마감일 OCR · 독촉장 제외</div><div class="pipe-desc" data-en>Extracts amounts, OCRs deadlines, excludes dunning</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🗓️</div><div class="pipe-title" data-ko>스케줄 판정</div><div class="pipe-title" data-en>Schedule Check</div><div class="pipe-desc" data-ko>공휴일·영업일 기준 2회차 결제 타이밍 계산</div><div class="pipe-desc" data-en>Computes 2-round timing by holiday/working day</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">✉️</div><div class="pipe-title" data-ko>메일 생성</div><div class="pipe-title" data-en>Email Build</div><div class="pipe-desc" data-ko>Finance 대상 지급요청 메일 작성 · CC 자동 지정</div><div class="pipe-desc" data-en>Drafts the Finance payment request, auto-CCs</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">✅</div><div class="pipe-title" data-ko>중복 방지 발송</div><div class="pipe-title" data-en>Dedup Send</div><div class="pipe-desc" data-ko>State JSON 대조 후 발송 · 캘린더 일정 등록</div><div class="pipe-desc" data-en>Sends after state check, adds calendar events</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="stack-emoji">🐍</div><div class="stack-name">Python</div><div class="stack-role" data-ko>파이프라인 로직</div><div class="stack-role" data-en>Pipeline logic</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일·캘린더 연동</div><div class="stack-role" data-en>Outlook mail &amp; calendar</div></div>
+      <div class="stack-item"><div class="stack-emoji">👁️</div><div class="stack-name">easyocr</div><div class="stack-role" data-ko>이미지 마감일 텍스트 추출</div><div class="stack-role" data-en>Image deadline OCR</div></div>
+      <div class="stack-item"><div class="stack-emoji">📅</div><div class="stack-name">holidays</div><div class="stack-role" data-ko>한국 공휴일·영업일 계산</div><div class="stack-role" data-en>KR holiday/working-day calc</div></div>
+      <div class="stack-item"><div class="stack-emoji">📝</div><div class="stack-name">JSON State</div><div class="stack-role" data-ko>중복 발송 방지</div><div class="stack-role" data-en>Duplicate-send guard</div></div>
+      <div class="stack-item"><div class="stack-emoji">📑</div><div class="stack-name">pdfplumber</div><div class="stack-role" data-ko>관세 통지 PDF 파싱</div><div class="stack-role" data-en>Customs notice PDF parse</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">FINANCE AUTO</div>
+    <div class="footer-note">PYTHON · WIN32COM · EASYOCR · HOLIDAYS · JSON STATE</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang');if(s)setLang(s);}catch(e){}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수입 자동화 시스템 · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f3ee; --surf: #ffffff; --surf2: #f0ede6; --border: #ddd9d0;
+      --ink: #1c1a16; --muted: #8c8679; --accent: #2d5016; --accent2: #c4621a;
+      --accent3: #1a4a6e; --accent4: #7c2d12; --gold: #b5930a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='none'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23000' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 998;
+    }
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:linear-gradient(to bottom,rgba(245,243,238,0.95),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--ink);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;background:var(--surf);}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent2);color:#fff;}
+
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--ink); }
+    .hero-left { padding: 100px 60px 80px; display: flex; flex-direction: column; justify-content: space-between; border-right: 2px solid var(--ink); }
+    .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 12px; }
+    .hero-eyebrow span.line { display: inline-block; width: 32px; height: 1px; background: var(--muted); }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 7vw, 108px); line-height: 0.88; letter-spacing: -1px; color: var(--ink); }
+    .hero-title .line-accent { color: var(--accent); }
+    .hero-title .line-accent2 { color: var(--accent2); }
+    .hero-desc { font-size: 14px; line-height: 1.85; color: var(--muted); max-width: 400px; border-left: 3px solid var(--accent2); padding-left: 18px; }
+    .hero-right { padding: 100px 60px 80px; display: flex; flex-direction: column; justify-content: flex-end; gap: 0; position: relative; overflow: hidden; background: var(--ink); }
+    .hero-right-bg { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(8, 1fr); gap: 1px; opacity: 0.08; }
+    .hero-right-bg-cell { background: white; }
+    .hero-right-bg-cell:nth-child(odd) { background: transparent; }
+    .hero-flow { position: relative; display: flex; flex-direction: column; gap: 0; }
+    .flow-step { display: flex; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); animation: fadeRight 0.6s ease both; }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.40s}.flow-step:nth-child(7){animation-delay:.46s}.flow-step:nth-child(8){animation-delay:.52s}.flow-step:nth-child(9){animation-delay:.58s}
+    .flow-num { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.25); width: 24px; flex-shrink: 0; }
+    .flow-icon { font-size: 19px; width: 34px; text-align: center; flex-shrink: 0; }
+    .flow-info { flex: 1; }
+    .flow-name { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.9); margin-bottom: 3px; }
+    .flow-role { font-size: 11px; color: rgba(255,255,255,0.4); }
+    .flow-badge { font-family: 'DM Mono', monospace; font-size: 9px; padding: 3px 9px; border-radius: 12px; letter-spacing: 1px; flex-shrink: 0; }
+    .badge-green { background: rgba(45,80,22,0.6); color: #86efac; border: 1px solid rgba(134,239,172,0.3); }
+    .badge-orange { background: rgba(196,98,26,0.4); color: #fdba74; border: 1px solid rgba(253,186,116,0.3); }
+    .badge-blue { background: rgba(26,74,110,0.5); color: #93c5fd; border: 1px solid rgba(147,197,253,0.3); }
+    .badge-red { background: rgba(124,45,18,0.5); color: #fca5a5; border: 1px solid rgba(252,165,165,0.3); }
+    .badge-gold { background: rgba(181,147,10,0.35); color: #fde68a; border: 1px solid rgba(253,230,138,0.3); }
+    .badge-purple { background: rgba(91,79,207,0.4); color: #c4b5fd; border: 1px solid rgba(196,181,253,0.3); }
+    @keyframes fadeRight { from { opacity: 0; transform: translateX(-16px);} to{opacity:1;transform:translateX(0);} }
+
+    .section { padding: 100px 60px; border-bottom: 1px solid var(--border); }
+    .label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .sec-title { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4vw, 52px); line-height: 1.1; margin-bottom: 60px; }
+    .sec-title em { font-style: italic; color: var(--accent2); }
+
+    .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 2px solid var(--ink); }
+    .module-card { background: var(--surf); padding: 32px 28px; transition: background 0.2s; position: relative; overflow: hidden; }
+    .module-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; transition: transform 0.3s ease; transform: scaleX(0); transform-origin: left; }
+    .module-card:hover::before { transform: scaleX(1); }
+    .module-card:hover { background: var(--surf2); }
+    .module-card.c1::before { background: var(--accent); }
+    .module-card.c2::before { background: var(--accent2); }
+    .module-card.c3::before { background: var(--accent3); }
+    .module-card.c4::before { background: var(--accent4); }
+    .module-card.c5::before { background: var(--gold); }
+    .module-num { font-family: 'Bebas Neue', sans-serif; font-size: 44px; line-height: 1; color: var(--border); margin-bottom: 14px; }
+    .module-icon { font-size: 26px; margin-bottom: 14px; }
+    .module-file { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; margin-bottom: 12px; background: var(--surf2); padding: 4px 10px; border-radius: 4px; display: inline-block; }
+    .module-title { font-family: 'DM Serif Display', serif; font-size: 18px; line-height: 1.3; margin-bottom: 12px; }
+    .module-desc { font-size: 12px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; }
+    .module-points { display: flex; flex-direction: column; gap: 6px; }
+    .mpoint { font-size: 11px; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; }
+    .mpoint-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+
+    .pipeline-section { padding: 100px 60px; background: var(--ink); color: white; }
+    .pipeline-section .label { color: rgba(255,255,255,0.3); }
+    .pipeline-section .sec-title { color: white; }
+    .pipeline-section .sec-title em { color: #fdba74; }
+    .pipeline { display: flex; align-items: stretch; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; }
+    .pipe-step { flex: 1; padding: 32px 24px; border-right: 1px solid rgba(255,255,255,0.08); position: relative; transition: background 0.2s; }
+    .pipe-step:last-child { border-right: none; }
+    .pipe-step:hover { background: rgba(255,255,255,0.04); }
+    .pipe-num { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.2); letter-spacing: 2px; margin-bottom: 12px; }
+    .pipe-icon { font-size: 24px; margin-bottom: 14px; }
+    .pipe-title { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+    .pipe-desc { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+    .stack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .stack-card { background: var(--surf); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; transition: transform 0.2s, box-shadow 0.2s; }
+    .stack-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .stack-emoji { font-size: 26px; }
+    .stack-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink); font-weight: 500; }
+    .stack-role { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+    .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+    .stat-block { padding: 44px 36px; border-right: 1px solid var(--border); position: relative; overflow: hidden; }
+    .stat-block:last-child { border-right: none; }
+    .stat-big { font-family: 'Bebas Neue', sans-serif; font-size: 60px; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+    .stat-sub { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+    footer { padding: 60px; display: flex; justify-content: space-between; align-items: flex-end; border-top: 2px solid var(--ink); flex-wrap:wrap; gap:20px; }
+    .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 2px; color: var(--ink); line-height: 1; }
+    .footer-brand span { color: var(--accent2); }
+    .footer-stack { text-align: right; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1.5px; line-height: 2; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+
+    @media (max-width: 900px) {
+      .topbar{padding:16px 24px;}
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 60vh; }
+      .hero-left { padding: 100px 28px 50px; }
+      .hero-right { padding: 50px 28px; }
+      .section, .pipeline-section { padding: 60px 28px; }
+      .module-grid { grid-template-columns: 1fr; }
+      .pipeline { flex-direction: column; }
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      footer { padding: 40px 28px; flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span class="line"></span>Import Automation · 2025–2026</div>
+      <div>
+        <h1 class="hero-title">
+          <span data-ko>수입</span><span data-en>IMPORT</span><br>
+          <span class="line-accent" data-ko>자동화</span><span class="line-accent" data-en>AUTO</span><br>
+          <span class="line-accent2" data-ko>시스템</span><span class="line-accent2" data-en>SUITE</span>
+        </h1>
+      </div>
+      <p class="hero-desc">
+        <span data-ko>Outlook 메일에서 파일을 받아 Excel에 자동 반영하고 내부 공유 메일까지 발송하는 End-to-End 수입 업무 자동화. 수작업 제로(Zero)를 목표로 설계된 9개 모듈 파이썬 시스템.</span>
+        <span data-en>End-to-end import automation: pulls files from Outlook, updates Excel, and sends internal emails. A 9-module Python system built to drive manual steps to zero.</span>
+      </p>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="hero-flow">
+        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📧</span><div class="flow-info"><div class="flow-name">outlook_intransit_downloader</div><div class="flow-role" data-ko>Outlook → Intransit xlsx 자동 다운로드</div><div class="flow-role" data-en>Outlook → Intransit xlsx auto-download</div></div><span class="flow-badge badge-blue">Outlook</span></div>
+        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">📄</span><div class="flow-info"><div class="flow-name">outlook_imp_pdf_saver</div><div class="flow-role" data-ko>수입신고필증 PDF 자동 저장</div><div class="flow-role" data-en>Import declaration PDF auto-save</div></div><span class="flow-badge badge-blue">Outlook</span></div>
+        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">📊</span><div class="flow-info"><div class="flow-name">intransit_to_ir_append_only</div><div class="flow-role" data-ko>Intransit → IR 신청목록 Append</div><div class="flow-role" data-en>Intransit → IR list append</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">📑</span><div class="flow-info"><div class="flow-name">pdf_auto_updater</div><div class="flow-role" data-ko>PDF → 수입신고실적 Excel + C.I. 검증</div><div class="flow-role" data-en>PDF → import-record Excel + C.I. check</div></div><span class="flow-badge badge-orange">pdfplumber</span></div>
+        <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">🔄</span><div class="flow-info"><div class="flow-name">auto_import_complete</div><div class="flow-role" data-ko>신규행 Append + Backfill</div><div class="flow-role" data-en>New-row append + backfill</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">intransit_internal_share</div><div class="flow-role" data-ko>Urgent 대조 후 내부 공유 메일</div><div class="flow-role" data-en>Urgent match → internal share email</div></div><span class="flow-badge badge-orange">win32com</span></div>
+        <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">🔁</span><div class="flow-info"><div class="flow-name">intransit_update_runner</div><div class="flow-role" data-ko>서브프로세스 실행 + State JSON</div><div class="flow-role" data-en>Subprocess run + state JSON</div></div><span class="flow-badge badge-gold">subprocess</span></div>
+        <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">🗓️</span><div class="flow-info"><div class="flow-name">finance_calendar_ocr</div><div class="flow-role" data-ko>이미지 메일 마감일 OCR → 캘린더</div><div class="flow-role" data-en>Image-email deadline OCR → calendar</div></div><span class="flow-badge badge-purple">easyocr</span></div>
+        <div class="flow-step"><span class="flow-num">09</span><span class="flow-icon">🖥️</span><div class="flow-info"><div class="flow-name">import_manager_app (6-in-1)</div><div class="flow-role" data-ko>Tkinter 통합 런처 GUI</div><div class="flow-role" data-en>Tkinter all-in-one launcher GUI</div></div><span class="flow-badge badge-red">tkinter</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar reveal">
+    <div class="stat-block">
+      <div class="stat-big" style="color:var(--accent2);">2<span style="font-size:28px;">h→</span>2<span style="font-size:28px;">m</span></div>
+      <div class="stat-label" data-ko>일일 작업 단축</div><div class="stat-label" data-en>Daily Task Cut</div>
+      <div class="stat-sub" data-ko>통관 추적 ~60× 단축</div><div class="stat-sub" data-en>customs tracking ~60× faster</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-big" style="color:var(--accent);">9</div>
+      <div class="stat-label" data-ko>파이썬 모듈</div><div class="stat-label" data-en>Python Modules</div>
+      <div class="stat-sub" data-ko>단일 런처로 통합 실행</div><div class="stat-sub" data-en>one unified launcher</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-big" style="color:var(--accent3);">C.I.</div>
+      <div class="stat-label" data-ko>가격 불일치 검증</div><div class="stat-label" data-en>Price-mismatch Check</div>
+      <div class="stat-sub" data-ko>사후심사 audit 리스크 방지</div><div class="stat-sub" data-en>cuts post-audit exposure</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-big" style="color:var(--gold);">0</div>
+      <div class="stat-label" data-ko>수동 단계</div><div class="stat-label" data-en>Manual Steps</div>
+      <div class="stat-sub" data-ko>완전 자동화 파이프라인</div><div class="stat-sub" data-en>fully automated pipeline</div>
+    </div>
+  </div>
+
+  <!-- MODULES -->
+  <section class="section reveal">
+    <div class="label">Modules</div>
+    <h2 class="sec-title"><span data-ko>9개 모듈로</span><span data-en>Nine modules,</span><br><em><span data-ko>완성된 파이프라인</span><span data-en>one pipeline</span></em></h2>
+
+    <div class="module-grid">
+
+      <div class="module-card c1 reveal">
+        <div class="module-num">01</div><div class="module-icon">🖥️</div>
+        <div class="module-file">import_manager_app_6in1.py</div>
+        <div class="module-title" data-ko>통합 런처 GUI</div><div class="module-title" data-en>All-in-one Launcher</div>
+        <div class="module-desc" data-ko>Tkinter 6-in-1 실행 패널. 최신 파일 수정시각, 신규 건수, 마지막 메일 발송 기록을 한눈에 보고 60초마다 자동 새로고침.</div>
+        <div class="module-desc" data-en>A Tkinter 6-in-1 panel showing latest file timestamps, new-row counts, and last email sent — auto-refreshing every 60s.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>주요 경로 유효성 자동 체크</span><span data-en>Auto-validates key paths</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>BAT 실행 후 5초 자동 상태 갱신</span><span data-en>Status refresh 5s after BAT run</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>상태값 색상 구분</span><span data-en>Color-coded status</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c2 reveal" style="transition-delay:0.05s">
+        <div class="module-num">02</div><div class="module-icon">📧</div>
+        <div class="module-file">outlook_intransit_downloader.py</div>
+        <div class="module-title" data-ko>Intransit 다운로더</div><div class="module-title" data-en>Intransit Downloader</div>
+        <div class="module-desc" data-ko>Outlook 하위 폴더에서 최신 APAC Intransit Report.xlsx를 찾아 날짜 suffix를 붙여 저장.</div>
+        <div class="module-desc" data-en>Finds the latest APAC Intransit Report.xlsx in an Outlook subfolder and saves it with a date suffix.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>최신 메일 1개만 선택 (중복 방지)</span><span data-en>Picks only the latest mail (no dupes)</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>폴더 계층 탐색 자동화</span><span data-en>Auto folder-tree traversal</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>파일명 날짜 suffix 자동 부여</span><span data-en>Auto date-suffix naming</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c3 reveal" style="transition-delay:0.1s">
+        <div class="module-num">03</div><div class="module-icon">📄</div>
+        <div class="module-file">outlook_imp_pdf_saver.py</div>
+        <div class="module-title" data-ko>수입신고필증 PDF 저장기</div><div class="module-title" data-en>Declaration PDF Saver</div>
+        <div class="module-desc" data-ko>통관 브로커 메일에서 IMP_ 프리픽스 PDF 첨부를 자동 저장. State JSON으로 중복 스캔 방지, 수정신고 시 덮어쓰기.</div>
+        <div class="module-desc" data-en>Auto-saves IMP_-prefixed PDF attachments from broker emails. State JSON prevents re-scans; amended filings overwrite.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>State JSON 기반 마지막 실행 추적</span><span data-en>State-JSON tracks last run</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>cutoff 이후만 스캔</span><span data-en>Scans only after cutoff</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>동일 파일명 덮어쓰기 (수정신고)</span><span data-en>Overwrites on amended filings</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c1 reveal" style="transition-delay:0.15s">
+        <div class="module-num">04</div><div class="module-icon">📊</div>
+        <div class="module-file">intransit_to_ir_append_only.py</div>
+        <div class="module-title" data-ko>Intransit → IR Append</div><div class="module-title" data-en>Intransit → IR Append</div>
+        <div class="module-desc" data-ko>최신 Intransit xlsx를 선택해 신규 데이터만 Ship Date 오름차순으로 append. 기존 행 순서는 보존.</div>
+        <div class="module-desc" data-en>Selects the latest Intransit xlsx and appends only new rows by ascending Ship Date, preserving existing order.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>중복 행 완전 차단 (Set 기반)</span><span data-en>Set-based dedup</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>선적일 / 창고 입고 예정 자동 계산</span><span data-en>Auto ship/warehouse-ETA calc</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>실행 전 타임스탬프 백업</span><span data-en>Timestamped backup before run</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c4 reveal" style="transition-delay:0.2s">
+        <div class="module-num">05</div><div class="module-icon">📑</div>
+        <div class="module-file">pdf_auto_updater.py</div>
+        <div class="module-title" data-ko>PDF → 실적 + C.I. 검증</div><div class="module-title" data-en>PDF → Record + C.I. Check</div>
+        <div class="module-desc" data-ko>pdfplumber로 수입신고필증을 파싱해 실적 Excel에 반영. Hash DB로 중복 처리 방지, C.I. 가격 불일치를 잡아 audit 리스크를 줄인다.</div>
+        <div class="module-desc" data-en>Parses declarations with pdfplumber into the record Excel. A hash DB prevents re-processing and flags C.I. price mismatches to cut audit risk.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>SHA 해시 기반 처리 DB</span><span data-en>SHA-hash processed DB</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>보호 컬럼 덮어쓰기 방지</span><span data-en>Protected-column guard</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>C.I. 가격 불일치 검증 + 통관 알림 메일</span><span data-en>C.I. price check + clearance alert</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c2 reveal" style="transition-delay:0.25s">
+        <div class="module-num">06</div><div class="module-icon">🔄</div>
+        <div class="module-file">auto_import_complete.py</div>
+        <div class="module-title" data-ko>Append + Backfill</div><div class="module-title" data-en>Append + Backfill</div>
+        <div class="module-desc" data-ko>Intransit 데이터를 실적에 추가하고 기존 행의 빈 칸(SN/Lot)을 Backfill. 유일 후보만 채워 오류 방지.</div>
+        <div class="module-desc" data-en>Appends Intransit data and backfills empty SN/Lot cells on existing rows — filling only unique candidates to avoid errors.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Delivery 번호 혼합형 통일 인식</span><span data-en>Normalizes mixed delivery IDs</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Backfill: 유일 후보만, 중복이면 스킵</span><span data-en>Backfill unique-only, skip on dupes</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>동일 Intransit 내 중복 1회만 append</span><span data-en>Appends each dup once</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c5 reveal" style="transition-delay:0.3s">
+        <div class="module-num">07</div><div class="module-icon">📮</div>
+        <div class="module-file">intransit_internal_share.py</div>
+        <div class="module-title" data-ko>내부 공유 메일 발송기</div><div class="module-title" data-en>Internal Share Mailer</div>
+        <div class="module-desc" data-ko>Urgent Item 시트와 대조해 요청 품목 선적 여부를 확인하고 서비스/영업팀에 현황 메일 발송. 상태 파일로 중복 방지.</div>
+        <div class="module-desc" data-en>Cross-checks the Urgent Item sheet for requested parts and emails status to sales/service. State file prevents dupes.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>Urgent 매칭 없으면 섹션 자동 숨김</span><span data-en>Hides Urgent section if no match</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>복수 요청 시 최신 1건만</span><span data-en>Latest request only on dupes</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>공유 드라이브 링크 포함 HTML 메일</span><span data-en>HTML mail with shared-drive link</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c3 reveal" style="transition-delay:0.35s">
+        <div class="module-num">08</div><div class="module-icon">🗓️</div>
+        <div class="module-file">finance_calendar_ocr.py</div>
+        <div class="module-title" data-ko>마감일 OCR 캘린더</div><div class="module-title" data-en>Deadline OCR Calendar</div>
+        <div class="module-desc" data-ko>이미지로 박힌 사내 메일에서 '2차 지급요청 마감' 날짜를 easyocr로 읽어 Outlook 캘린더 일정 3건을 자동 생성. 한국 영업일 계산 포함.</div>
+        <div class="module-desc" data-en>Reads the "2nd payment-request deadline" from an image email via easyocr and auto-creates 3 Outlook calendar events, with Korean business-day math.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>이미지 메일 텍스트 추출 (OCR)</span><span data-en>Image-email text extraction (OCR)</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>영업일 역산 알림 일정 생성</span><span data-en>Business-day back-calc reminders</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>Outlook 캘린더 이벤트 3건 자동 등록</span><span data-en>Auto-adds 3 calendar events</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c4 reveal" style="transition-delay:0.4s">
+        <div class="module-num">09</div><div class="module-icon">🔁</div>
+        <div class="module-file">intransit_update_runner.py</div>
+        <div class="module-title" data-ko>업데이트 러너 + 상태 추적</div><div class="module-title" data-en>Update Runner + State</div>
+        <div class="module-desc" data-ko>대상 스크립트를 subprocess로 실행하고 stdout을 파싱해 결과를 JSON으로 저장. CP949/UTF-8 자동 감지로 한글 로그가 깨지지 않는다.</div>
+        <div class="module-desc" data-en>Runs target scripts via subprocess, parses stdout, and saves results to JSON. CP949/UTF-8 auto-detect keeps Korean logs intact.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>CP949 우선 + UTF-8 fallback</span><span data-en>CP949-first, UTF-8 fallback</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>added_rows / max_ship 파싱</span><span data-en>Parses added_rows / max_ship</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>state.json 자동 갱신</span><span data-en>Auto-updates state.json</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section class="pipeline-section reveal">
+    <div class="label">Workflow</div>
+    <h2 class="sec-title"><span data-ko>자동화</span><span data-en>The</span><br><em><span data-ko>워크플로우</span><span data-en>workflow</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>Outlook 수신</div><div class="pipe-title" data-en>Outlook In</div><div class="pipe-desc" data-ko>Intransit 리포트 & 수입신고필증 PDF 자동 감지</div><div class="pipe-desc" data-en>Detects Intransit reports &amp; declaration PDFs</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">💾</div><div class="pipe-title" data-ko>파일 저장</div><div class="pipe-title" data-en>Save Files</div><div class="pipe-desc" data-ko>날짜 suffix · 중복 방지 후 공유 드라이브 저장</div><div class="pipe-desc" data-en>Date-suffix, dedup, save to shared drive</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">📊</div><div class="pipe-title" data-ko>Excel 반영</div><div class="pipe-title" data-en>Excel Update</div><div class="pipe-desc" data-ko>IR 목록 · 실적에 Append + Backfill + C.I. 검증</div><div class="pipe-desc" data-en>Append + backfill + C.I. check</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>Urgent 대조</div><div class="pipe-title" data-en>Urgent Match</div><div class="pipe-desc" data-ko>요청 품목 선적 확인 · 메일 콘텐츠 생성</div><div class="pipe-desc" data-en>Check requested parts, build mail</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>메일 발송</div><div class="pipe-title" data-en>Send Mail</div><div class="pipe-desc" data-ko>HTML 메일 자동 발송 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Auto HTML mail, update state JSON</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">🖥️</div><div class="pipe-title" data-ko>GUI 모니터링</div><div class="pipe-title" data-en>GUI Monitor</div><div class="pipe-desc" data-ko>런처 상태 패널에서 전체 결과 확인</div><div class="pipe-desc" data-en>Review results in the launcher panel</div></div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="section reveal">
+    <div class="label">Stack</div>
+    <h2 class="sec-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술 스택</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-card reveal"><div class="stack-emoji">🐍</div><div class="stack-name">Python 3.7+</div><div class="stack-role" data-ko>타입 힌트 · pathlib 경로 관리</div><div class="stack-role" data-en>Type hints · pathlib paths</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.05s"><div class="stack-emoji">📧</div><div class="stack-name">win32com (pywin32)</div><div class="stack-role" data-ko>Outlook 메일 수신/발송·캘린더</div><div class="stack-role" data-en>Outlook mail &amp; calendar</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.1s"><div class="stack-emoji">📊</div><div class="stack-name">openpyxl</div><div class="stack-role" data-ko>xlsx Append / Backfill</div><div class="stack-role" data-en>xlsx append / backfill</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.15s"><div class="stack-emoji">📑</div><div class="stack-name">pdfplumber</div><div class="stack-role" data-ko>수입신고필증 PDF 파싱</div><div class="stack-role" data-en>Declaration PDF parsing</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.2s"><div class="stack-emoji">👁️</div><div class="stack-name">easyocr</div><div class="stack-role" data-ko>이미지 메일 마감일 OCR</div><div class="stack-role" data-en>Image-email deadline OCR</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.25s"><div class="stack-emoji">🖥️</div><div class="stack-name">tkinter</div><div class="stack-role" data-ko>통합 런처 GUI</div><div class="stack-role" data-en>Unified launcher GUI</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.3s"><div class="stack-emoji">⚙️</div><div class="stack-name">subprocess</div><div class="stack-role" data-ko>스크립트 파이프라인 연결</div><div class="stack-role" data-en>Script pipeline glue</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.35s"><div class="stack-emoji">📝</div><div class="stack-name">JSON State</div><div class="stack-role" data-ko>중복 방지 · 재실행 안전성</div><div class="stack-role" data-en>Dedup · safe re-runs</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div><div class="footer-brand">IMPORT<br><span>AUTO</span></div></div>
+    <div class="footer-stack">PYTHON · WIN32COM · OPENPYXL<br>PDFPLUMBER · EASYOCR · TKINTER<br>SUBPROCESS · JSON STATE</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang');if(s)setLang(s);}catch(e){}})();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
