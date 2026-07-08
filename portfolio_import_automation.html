@@ -42,7 +42,7 @@
     .hero-flow { position: relative; display: flex; flex-direction: column; gap: 0; }
     .flow-step { display: flex; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); animation: fadeRight 0.6s ease both; }
     .flow-step:last-child { border-bottom: none; }
-    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.40s}.flow-step:nth-child(7){animation-delay:.46s}.flow-step:nth-child(8){animation-delay:.52s}.flow-step:nth-child(9){animation-delay:.58s}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.40s}.flow-step:nth-child(7){animation-delay:.46s}.flow-step:nth-child(8){animation-delay:.52s}.flow-step:nth-child(9){animation-delay:.58s}.flow-step:nth-child(10){animation-delay:.64s}
     .flow-num { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.25); width: 24px; flex-shrink: 0; }
     .flow-icon { font-size: 19px; width: 34px; text-align: center; flex-shrink: 0; }
     .flow-info { flex: 1; }
@@ -62,7 +62,7 @@
     .sec-title { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4vw, 52px); line-height: 1.1; margin-bottom: 60px; }
     .sec-title em { font-style: italic; color: var(--accent2); }
 
-    .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 2px solid var(--ink); }
+    .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; border: 2px solid var(--ink); }
     .module-card { background: var(--surf); padding: 32px 28px; transition: background 0.2s; position: relative; overflow: hidden; }
     .module-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; transition: transform 0.3s ease; transform: scaleX(0); transform-origin: left; }
     .module-card:hover::before { transform: scaleX(1); }
@@ -156,8 +156,8 @@
         </h1>
       </div>
       <p class="hero-desc">
-        <span data-ko>Outlook 메일에서 파일을 받아 Excel에 자동 반영하고 내부 공유 메일까지 발송하는 End-to-End 수입 업무 자동화. 수작업 제로(Zero)를 목표로 설계된 9개 모듈 파이썬 시스템.</span>
-        <span data-en>End-to-end import automation: pulls files from Outlook, updates Excel, and sends internal emails. A 9-module Python system built to drive manual steps to zero.</span>
+        <span data-ko>Outlook 메일에서 파일을 받아 Excel에 자동 반영하고 내부 공유 메일까지 발송하는 End-to-End 수입 업무 자동화. 수작업 제로(Zero)를 목표로 설계된 10개 모듈 파이썬 시스템.</span>
+        <span data-en>End-to-end import automation: pulls files from Outlook, updates Excel, and sends internal emails. A 10-module Python system built to drive manual steps to zero.</span>
       </p>
     </div>
 
@@ -176,6 +176,7 @@
         <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">🔁</span><div class="flow-info"><div class="flow-name">intransit_update_runner</div><div class="flow-role" data-ko>서브프로세스 실행 + State JSON</div><div class="flow-role" data-en>Subprocess run + state JSON</div></div><span class="flow-badge badge-gold">subprocess</span></div>
         <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">🗓️</span><div class="flow-info"><div class="flow-name">finance_calendar_ocr</div><div class="flow-role" data-ko>이미지 메일 마감일 OCR → 캘린더</div><div class="flow-role" data-en>Image-email deadline OCR → calendar</div></div><span class="flow-badge badge-purple">easyocr</span></div>
         <div class="flow-step"><span class="flow-num">09</span><span class="flow-icon">🖥️</span><div class="flow-info"><div class="flow-name">import_manager_app (6-in-1)</div><div class="flow-role" data-ko>Tkinter 통합 런처 GUI</div><div class="flow-role" data-en>Tkinter all-in-one launcher GUI</div></div><span class="flow-badge badge-red">tkinter</span></div>
+        <div class="flow-step"><span class="flow-num">10</span><span class="flow-icon">🧊</span><div class="flow-info"><div class="flow-name">urgent_item_freezer</div><div class="flow-role" data-ko>입고 확정 시 수식 고정 + 서비스팀 알림</div><div class="flow-role" data-en>Freezes formulas on arrival + notifies service team</div></div><span class="flow-badge badge-green">openpyxl</span></div>
       </div>
     </div>
   </section>
@@ -188,7 +189,7 @@
       <div class="stat-sub" data-ko>통관 추적 ~60× 단축</div><div class="stat-sub" data-en>customs tracking ~60× faster</div>
     </div>
     <div class="stat-block">
-      <div class="stat-big" style="color:var(--accent);">9</div>
+      <div class="stat-big" style="color:var(--accent);">10</div>
       <div class="stat-label" data-ko>파이썬 모듈</div><div class="stat-label" data-en>Python Modules</div>
       <div class="stat-sub" data-ko>단일 런처로 통합 실행</div><div class="stat-sub" data-en>one unified launcher</div>
     </div>
@@ -207,7 +208,7 @@
   <!-- MODULES -->
   <section class="section reveal">
     <div class="label">Modules</div>
-    <h2 class="sec-title"><span data-ko>9개 모듈로</span><span data-en>Nine modules,</span><br><em><span data-ko>완성된 파이프라인</span><span data-en>one pipeline</span></em></h2>
+    <h2 class="sec-title"><span data-ko>10개 모듈로</span><span data-en>Ten modules,</span><br><em><span data-ko>완성된 파이프라인</span><span data-en>one pipeline</span></em></h2>
 
     <div class="module-grid">
 
@@ -325,6 +326,19 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>CP949 우선 + UTF-8 fallback</span><span data-en>CP949-first, UTF-8 fallback</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>added_rows / max_ship 파싱</span><span data-en>Parses added_rows / max_ship</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>state.json 자동 갱신</span><span data-en>Auto-updates state.json</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c2 reveal" style="transition-delay:0.45s">
+        <div class="module-num">10</div><div class="module-icon">🧊</div>
+        <div class="module-file">urgent_item_freezer.py</div>
+        <div class="module-title" data-ko>Urgent Item 입고 확정기</div><div class="module-title" data-en>Urgent Item Freezer</div>
+        <div class="module-desc" data-ko>Urgent Item 시트에서 입고가 확인된 행의 날짜 수식(I/J/K열)을 값으로 고정하고, 서비스팀에 입고 알림 메일을 자동 발송한다.</div>
+        <div class="module-desc" data-en>Freezes the formula-driven date columns (I/J/K) to static values once an Urgent Item row is confirmed received, and auto-emails the service team an arrival notice.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>입고 확정된 행만 골라 수식 → 값 고정</span><span data-en>Freezes formulas only on rows marked received</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>같은 건 중복 알림 방지</span><span data-en>Prevents duplicate arrival notices</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>서비스팀 앞 입고 알림 메일 자동 발송</span><span data-en>Auto-sends the arrival notice to the service team</span></div>
         </div>
       </div>
 
