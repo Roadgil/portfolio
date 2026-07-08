@@ -133,6 +133,7 @@
     .proj-card.p3::after { background: #0faaa0; }
     .proj-card.p4::after { background: #b5930a; }
     .proj-card.p5::after { background: #1a4a6e; }
+    .proj-card.p6::after { background: #9f2b46; }
     .proj-card:hover::after { transform: scaleX(1); }
 
     .proj-bg-num {
@@ -160,6 +161,7 @@
     .p3 .proj-title em { color: #2dd4bf; }
     .p4 .proj-title em { color: #fde68a; }
     .p5 .proj-title em { color: #93c5fd; }
+    .p6 .proj-title em { color: #fda4af; }
     .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 22px; max-width: 360px; }
 
     .proj-impact {
@@ -182,6 +184,7 @@
     .p3:hover .proj-arrow { background: #0faaa0; }
     .p4:hover .proj-arrow { background: #b5930a; }
     .p5:hover .proj-arrow { background: #1a4a6e; }
+    .p6:hover .proj-arrow { background: #9f2b46; }
 
     footer {
       margin: 0 60px; padding: 32px 0; border-top: 1px solid var(--border);
@@ -198,6 +201,7 @@
     .proj-card.p3 { animation-delay: 0.46s; }
     .proj-card.p4 { animation-delay: 0.54s; }
     .proj-card.p5 { animation-delay: 0.62s; }
+    .proj-card.p6 { animation-delay: 0.70s; }
 
     [data-en] { display: none; }
     body.en [data-ko] { display: none; }
@@ -250,8 +254,8 @@
       <span class="t3">AUTOMATE</span>
     </h1>
     <p class="hero-sub">
-      <span data-ko>다섯 개의 프로젝트 · 하나의 목표 — 반복 업무를 코드로.</span>
-      <span data-en>Five projects · one goal — turning repetitive work into code.</span>
+      <span data-ko>여섯 개의 프로젝트 · 하나의 목표 — 반복 업무를 코드로, 그리고 AI로.</span>
+      <span data-en>Six projects · one goal — turning repetitive work into code, and code into AI.</span>
     </p>
   </div>
 
@@ -368,16 +372,39 @@
       </div>
     </a>
 
+    <!-- 06 Oracle Fusion RPA & AI Agent -->
+    <a class="proj-card p6" href="portfolio_oracle_automation.html">
+      <div class="proj-bg-num">06</div>
+      <div class="proj-num">PROJECT · 06</div>
+      <div class="proj-tags">
+        <span class="tag tag-orange">Selenium</span>
+        <span class="tag tag-blue">Oracle Fusion</span>
+        <span class="tag tag-purple">Claude + MCP</span>
+        <span class="tag tag-teal">OTBI</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>오라클 RPA</span><span data-en>Oracle RPA</span><br><em><span data-ko>+ AI 리포팅 에이전트</span><span data-en>+ AI Reporting Agent</span></em></h2>
+      <p class="proj-desc">
+        <span data-ko>Selenium으로 Oracle Fusion 화면을 직접 조작해 C.I. 송장 검증·Pick Release·OTBI 실입고 조회를 자동화하고, Claude 기반 AI 에이전트로 자연어 리포팅까지 확장.</span>
+        <span data-en>Selenium drives Oracle Fusion directly to automate C.I. invoice checks, Pick Release, and OTBI receipt lookups — extended with a Claude-based AI agent for natural-language reporting.</span>
+      </p>
+      <div class="proj-impact"><b>5/5</b> <span data-ko>라이브 검증</span><span data-en>live validation</span> · <span data-ko>AI 에이전트 신규 구축</span><span data-en>new AI agent built</span></div>
+      <div class="proj-meta">
+        <div class="proj-stack">Python · Selenium · Oracle Fusion Cloud<br>OTBI · Claude + MCP · win32com</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
   </div>
 
   <footer>
-    <div class="footer-note">5 PROJECTS · ALL RIGHTS RESERVED</div>
+    <div class="footer-note">6 PROJECTS · ALL RIGHTS RESERVED</div>
     <div class="footer-dots">
       <div class="footer-dot" style="background:var(--c1);"></div>
       <div class="footer-dot" style="background:var(--c2);"></div>
       <div class="footer-dot" style="background:#0faaa0;"></div>
       <div class="footer-dot" style="background:#b5930a;"></div>
       <div class="footer-dot" style="background:#1a4a6e;"></div>
+      <div class="footer-dot" style="background:#9f2b46;"></div>
     </div>
   </footer>
 

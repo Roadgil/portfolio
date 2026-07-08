@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oracle Fusion RPA &amp; AI Agent · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#fb7185; --accent2:#38bdf8; --accent3:#fbbf24; --accent4:#a78bfa;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 60px;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(251,113,133,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,8.5vw,116px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:620px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
+    .section-title em{font-style:italic;color:var(--accent);}
+
+    /* module cards */
+    .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .mod-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .mod-card:hover{transform:translateY(-5px);border-color:var(--accent);}
+    .mod-head{padding:26px 28px 0;}
+    .mod-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;background:var(--surf2);padding:5px 10px;border-radius:5px;display:inline-block;margin-bottom:14px;}
+    .mod-title{font-family:'DM Serif Display',serif;font-size:21px;margin-bottom:10px;}
+    .mod-desc{font-size:12.5px;color:var(--muted);line-height:1.75;padding:0 28px 18px;}
+    .mod-points{padding:0 28px 26px;display:flex;flex-direction:column;gap:8px;}
+    .mpoint{font-size:11.5px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .mpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
+    .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
+    .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+    .mod-card.c4 .mpoint-dot{background:var(--accent4);}.mod-card.c4 .mod-title{color:var(--accent4);}
+
+    /* pipeline */
+    .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pipeline{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .pipe-step{flex:1;padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+    .pipe-step:last-child{border-right:none;}
+    .pipe-step:hover{background:var(--surf2);}
+    .pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+    .pipe-icon{font-size:24px;margin-bottom:14px;}
+    .pipe-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
+    .pipe-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+
+    @media (max-width:900px){
+      .topbar{padding:16px 24px;}
+      .hero,.section,.pipeline-section{padding:90px 24px 50px;}
+      .pipeline{flex-direction:column;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-tag">Oracle Fusion RPA · AI Agent · 2026</div>
+    <h1 class="hero-title"><span class="a1">ORACLE</span><br><span class="a2">+ AI</span> OPS</h1>
+    <p class="hero-desc">
+      <span data-ko>C.I. 송장 검증부터 Pick Release 실행, OTBI 실입고 조회까지 — Selenium으로 Oracle Fusion 화면을 직접 조작하는 RPA 3종에, Claude 기반 AI 에이전트(MCP)로 자연어 리포팅까지 얹은 확장 프로젝트.</span>
+      <span data-en>From C.I. invoice verification to Pick Release execution and OTBI receipt lookups — three RPA workflows that drive Oracle Fusion directly via Selenium, extended with a Claude-based AI agent (MCP) for natural-language reporting.</span>
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" style="color:var(--accent);">5/5</span><span class="stat-label" data-ko>라이브 검증 성공</span><span class="stat-label" data-en>Live Validation Passed</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent2);">3</span><span class="stat-label" data-ko>신규 오라클 자동화</span><span class="stat-label" data-en>New Oracle Automations</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent3);">AI</span><span class="stat-label" data-ko>자연어 리포팅 에이전트</span><span class="stat-label" data-en>NL Reporting Agent</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>수동 개입</span><span class="stat-label" data-en>Manual Intervention</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Modules</div>
+    <h2 class="section-title reveal"><span data-ko>네 개의</span><span data-en>Four</span> <em><span data-ko>자동화 · AI 모듈</span><span data-en>automation &amp; AI modules</span></em></h2>
+    <div class="mod-grid">
+
+      <div class="mod-card c1 reveal">
+        <div class="mod-head">
+          <div class="mod-file">icbl_ci_watcher.py</div>
+          <div class="mod-title" data-ko>C.I. 송장 검증기</div>
+          <div class="mod-title" data-en>C.I. Invoice Watcher</div>
+        </div>
+        <div class="mod-desc" data-ko>인천관세법인 메일의 AWB/DHL 송장을 자동 감지하고, Selenium으로 Oracle Cloud ERP에 로그인해 신고 금액과 실시간 대사한다. 5회 연속 라이브 테스트에서 100% 일치.</div>
+        <div class="mod-desc" data-en>Detects AWB/DHL invoices from the customs broker's mail and drives Oracle Cloud ERP via Selenium to reconcile amounts against declared values in real time — a 100% match across 5 consecutive live runs.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>DHL 인보이스 포맷까지 지원</span><span data-en>Also supports the DHL invoice format</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>송장에서 배송번호 자동 인식</span><span data-en>Auto-extracts shipment numbers from the invoice</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>다른 자동화와 Oracle 화면 점유 충돌 방지</span><span data-en>Guards against Oracle UI conflicts with other automations</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c2 reveal" style="transition-delay:0.08s">
+        <div class="mod-head">
+          <div class="mod-file">pick_release_watcher.py</div>
+          <div class="mod-title" data-ko>출고요청 자동 처리기</div>
+          <div class="mod-title" data-en>Pick Release Watcher</div>
+        </div>
+        <div class="mod-desc" data-ko>서비스팀의 DCD/소모품 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고, 처리 결과 회신 메일까지 작성한다.</div>
+        <div class="mod-desc" data-en>Detects service-team DCD/consumables stock-request emails, executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 파싱부터 Oracle 트랜잭션 실행까지 무인 처리</span><span data-en>Unattended end to end — from parsing the email to the Oracle transaction</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>C.I. Watcher와 화면 점유가 겹치면 우선순위 조정</span><span data-en>Priority handling when it collides with the C.I. Watcher on the same Oracle screen</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>작업 스케줄러 등록 완료, 실전 검증 진행 중</span><span data-en>Registered to the task scheduler; live validation in progress</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c3 reveal" style="transition-delay:0.16s">
+        <div class="mod-head">
+          <div class="mod-file">otbi_to_receipt_report.py</div>
+          <div class="mod-title" data-ko>OTBI 실입고 리포트</div>
+          <div class="mod-title" data-en>OTBI Receipt Report</div>
+        </div>
+        <div class="mod-desc" data-ko>Oracle OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다.</div>
+        <div class="mod-desc" data-en>Pulls actual Transfer-Order receipt dates from Oracle OTBI, replacing the old "declaration date + 2 business days" estimate with verified data.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>추정치 vs 실제 입고일 variance 자동 계산</span><span data-en>Auto-computes variance between estimate and actual</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>배터리 전원 조건으로 조용히 스킵되던 실행 버그 수정</span><span data-en>Fixed a silent-skip bug tied to a battery-power condition</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>통관완료 알림 메일 기준을 실제 입고일로 재구현</span><span data-en>Rebuilt the clearance-notification trigger around actual receipt date</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c4 reveal" style="transition-delay:0.24s">
+        <div class="mod-head">
+          <div class="mod-file">import_declaration (MCP server)</div>
+          <div class="mod-title" data-ko>AI 리포팅 에이전트</div>
+          <div class="mod-title" data-en>AI Reporting Agent</div>
+        </div>
+        <div class="mod-desc" data-ko>Claude와 MCP(Model Context Protocol)로 연결한 커스텀 서버. Oracle Fusion과 내부 Excel 데이터를 자연어로 질의해 실적·리드타임·variance를 즉시 조회한다.</div>
+        <div class="mod-desc" data-en>A custom MCP (Model Context Protocol) server wired to Claude, letting stakeholders query import KPIs, lead times, and TO variance from Oracle Fusion and internal Excel data in plain language.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>코드 없이 자연어로 실적·variance 조회</span><span data-en>No-code, natural-language stats &amp; variance queries</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>매일 아침 자동 브리핑 에이전트가 동일 서버 재사용</span><span data-en>Reused by a daily automated morning-briefing agent</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>C.I.·실입고 RPA 자동화 결과를 실시간 데이터로 함께 조회</span><span data-en>Cross-references live C.I. and actual-receipt RPA results in the same query</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="pipeline-section reveal">
+    <div class="section-label">Workflow</div>
+    <h2 class="section-title"><span data-ko>화면 조작부터</span><span data-en>From UI automation</span><br><em><span data-ko>자연어 질의까지</span><span data-en>to natural-language queries</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>메일 · 리포트 감지</div><div class="pipe-title" data-en>Mail / Report In</div><div class="pipe-desc" data-ko>송장·출고요청 메일, OTBI 리포트 자동 감지</div><div class="pipe-desc" data-en>Detects invoices, stock requests, OTBI reports</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🖱️</div><div class="pipe-title" data-ko>Oracle 화면 자동 조작</div><div class="pipe-title" data-en>Oracle UI Automation</div><div class="pipe-desc" data-ko>Selenium으로 로그인·조회·트랜잭션 실행</div><div class="pipe-desc" data-en>Selenium logs in, queries, executes transactions</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">✅</div><div class="pipe-title" data-ko>대사 · 실행</div><div class="pipe-title" data-en>Reconcile / Execute</div><div class="pipe-desc" data-ko>금액 대사, Pick Release, 실입고일 반영</div><div class="pipe-desc" data-en>Reconciles amounts, releases picks, updates receipt dates</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>결과 알림</div><div class="pipe-title" data-en>Notify</div><div class="pipe-desc" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Sends confirmation email, updates state JSON</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">🤖</div><div class="pipe-title" data-ko>AI 질의 응답</div><div class="pipe-title" data-en>AI Query</div><div class="pipe-desc" data-ko>필요할 때 자연어로 실적·variance 즉시 조회</div><div class="pipe-desc" data-en>On-demand natural-language stats &amp; variance lookup</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="stack-emoji">🐍</div><div class="stack-name">Python</div><div class="stack-role" data-ko>자동화 파이프라인 로직</div><div class="stack-role" data-en>Automation pipeline logic</div></div>
+      <div class="stack-item"><div class="stack-emoji">🖱️</div><div class="stack-name">Selenium</div><div class="stack-role" data-ko>Oracle Fusion 화면 RPA</div><div class="stack-role" data-en>Oracle Fusion UI RPA</div></div>
+      <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Oracle Fusion Cloud</div><div class="stack-role" data-ko>Pick Release · OTBI 리포트</div><div class="stack-role" data-en>Pick Release · OTBI reporting</div></div>
+      <div class="stack-item"><div class="stack-emoji">🤖</div><div class="stack-name">Claude + MCP</div><div class="stack-role" data-ko>자연어 리포팅 AI 에이전트</div><div class="stack-role" data-en>Natural-language reporting agent</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 감지·발송</div><div class="stack-role" data-en>Outlook mail detect &amp; send</div></div>
+      <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">pandas</div><div class="stack-role" data-ko>Fusion·Excel 데이터 대사</div><div class="stack-role" data-en>Fusion / Excel data reconciliation</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">ORACLE + AI</div>
+    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · OTBI · MCP · CLAUDE · WIN32COM</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang');if(s)setLang(s);}catch(e){}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
