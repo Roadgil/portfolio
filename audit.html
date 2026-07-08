@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>Audit Log · Candela Korea</title>
 <script src="https://www.gstatic.com/firebasejs/12.14.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.14.0/firebase-auth-compat.js"></script>
@@ -231,7 +232,7 @@ function doLogin() {
 function doLogout() {
   auth.signOut().then(() => location.reload());
 }
-const AUDIT_VIEWER_EMAILS = ['hannap@candelamedical.com','yunap@candelamedical.com','miaej@candelamedical.com','yoongil.chae@candelamedical.com','bohyunk@candelamedical.com'];
+const AUDIT_VIEWER_EMAILS = [];
 auth.onAuthStateChanged(user => {
   if (user) {
     if (!AUDIT_VIEWER_EMAILS.includes((user.email||'').toLowerCase())) {
