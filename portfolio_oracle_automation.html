@@ -139,6 +139,7 @@
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>DHL 인보이스 포맷까지 지원</span><span data-en>Also supports the DHL invoice format</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>송장에서 배송번호 자동 인식</span><span data-en>Auto-extracts shipment numbers from the invoice</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>한 인보이스에 두 창고 물량이 섞여도 자동 분리해 각각 대사</span><span data-en>Auto-splits and reconciles invoices that bundle shipments from two different warehouses</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>다른 자동화와 Oracle 화면 점유 충돌 방지</span><span data-en>Guards against Oracle UI conflicts with other automations</span></div>
         </div>
       </div>
@@ -149,12 +150,13 @@
           <div class="mod-title" data-ko>출고요청 자동 처리기</div>
           <div class="mod-title" data-en>Pick Release Watcher</div>
         </div>
-        <div class="mod-desc" data-ko>서비스팀의 DCD/소모품 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고, 처리 결과 회신 메일까지 작성한다.</div>
-        <div class="mod-desc" data-en>Detects service-team DCD/consumables stock-request emails, executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</div>
+        <div class="mod-desc" data-ko>서비스팀의 DCD/소모품 + 불량·프로모션 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고, 처리 결과 회신 메일까지 작성한다.</div>
+        <div class="mod-desc" data-en>Detects service-team DCD/consumables and defect/promotion stock-request emails, executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</div>
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 파싱부터 Oracle 트랜잭션 실행까지 무인 처리</span><span data-en>Unattended end to end — from parsing the email to the Oracle transaction</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 1건에 병원 여러 곳(최대 25건)이 묶여도 각각 개별 자동 처리</span><span data-en>Splits and processes up to 25 bundled orders from a single email individually</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Oracle SSO 세션이 끊겨도 자동 재로그인 후 계속 진행 (라이브 검증 완료)</span><span data-en>Auto re-authenticates via SSO on session drop and resumes — verified live</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>C.I. Watcher와 화면 점유가 겹치면 우선순위 조정</span><span data-en>Priority handling when it collides with the C.I. Watcher on the same Oracle screen</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>작업 스케줄러 등록 완료, 실전 검증 진행 중</span><span data-en>Registered to the task scheduler; live validation in progress</span></div>
         </div>
       </div>
 
