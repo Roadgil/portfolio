@@ -70,15 +70,16 @@
 
     .group-label {
       grid-column: 1 / -1;
-      font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px;
-      text-transform: uppercase; color: var(--muted); margin: 50px 60px 20px;
-      display: flex; align-items: center; gap: 12px;
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(28px, 4vw, 44px); letter-spacing: 1px;
+      text-transform: uppercase; color: var(--c2); margin: 64px 60px 10px;
+      display: flex; align-items: center; gap: 16px;
     }
-    .group-label::before { content: ''; width: 28px; height: 1px; background: var(--muted); }
+    .group-label.alt { color: var(--c1); }
+    .group-label::before { content: ''; width: 36px; height: 2px; background: currentColor; flex-shrink: 0; }
     .group-desc {
       grid-column: 1 / -1;
       font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace;
-      letter-spacing: 0.5px; line-height: 1.8; margin: 0 60px 20px;
+      letter-spacing: 0.5px; line-height: 1.8; margin: 0 60px 24px;
     }
 
     .projects {
@@ -291,7 +292,7 @@
       </div>
     </a>
 
-    <div class="group-label">
+    <div class="group-label alt">
       <span data-ko>OTHER PROJECTS · 독립 툴</span>
       <span data-en>OTHER PROJECTS · Standalone Tools</span>
     </div>
