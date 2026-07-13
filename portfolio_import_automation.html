@@ -8,35 +8,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f5f3ee; --surf: #ffffff; --surf2: #f0ede6; --border: #ddd9d0;
-      --ink: #1c1a16; --muted: #8c8679; --accent: #2d5016; --accent2: #c4621a;
-      --accent3: #1a4a6e; --accent4: #7c2d12; --gold: #b5930a;
+      --bg: #0b0c10; --surf: #13151c; --surf2: #1a1d27; --border: #252836;
+      --text: #eef0f8; --muted: #6b6f84; --accent: #4ade80; --accent2: #fb923c;
+      --accent3: #38bdf8; --accent4: #f87171; --gold: #fbbf24;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--ink); font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; }
     body::after {
       content: ''; position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='none'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23000' opacity='0.025'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 998;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 998; opacity: 0.35;
     }
 
-    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:linear-gradient(to bottom,rgba(245,243,238,0.95),transparent);}
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
     .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
-    .back-link:hover{color:var(--ink);}
+    .back-link:hover{color:var(--text);}
     .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;background:var(--surf);}
     .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
     .lang-toggle button.active{background:var(--accent2);color:#fff;}
 
-    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--ink); }
-    .hero-left { padding: 100px 60px 80px; display: flex; flex-direction: column; justify-content: space-between; border-right: 2px solid var(--ink); }
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--text); }
+    .hero-left { padding: 100px 60px 80px; display: flex; flex-direction: column; justify-content: space-between; border-right: 2px solid var(--text); }
     .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 12px; }
     .hero-eyebrow span.line { display: inline-block; width: 32px; height: 1px; background: var(--muted); }
-    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 7vw, 108px); line-height: 0.88; letter-spacing: -1px; color: var(--ink); }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 7vw, 108px); line-height: 0.88; letter-spacing: -1px; color: var(--text); }
     .hero-title .line-accent { color: var(--accent); }
     .hero-title .line-accent2 { color: var(--accent2); }
     .hero-desc { font-size: 14px; line-height: 1.85; color: var(--muted); max-width: 400px; border-left: 3px solid var(--accent2); padding-left: 18px; }
-    .hero-right { padding: 100px 60px 80px; display: flex; flex-direction: column; justify-content: flex-end; gap: 0; position: relative; overflow: hidden; background: var(--ink); }
+    .hero-right { padding: 100px 60px 80px; display: flex; flex-direction: column; justify-content: flex-end; gap: 0; position: relative; overflow: hidden; background: var(--surf); }
     .hero-right-bg { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(8, 1fr); gap: 1px; opacity: 0.08; }
     .hero-right-bg-cell { background: white; }
     .hero-right-bg-cell:nth-child(odd) { background: transparent; }
@@ -63,7 +63,7 @@
     .sec-title { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4vw, 52px); line-height: 1.1; margin-bottom: 60px; }
     .sec-title em { font-style: italic; color: var(--accent2); }
 
-    .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; border: 2px solid var(--ink); }
+    .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 2px solid var(--text); }
     .module-card { background: var(--surf); padding: 32px 28px; transition: background 0.2s; position: relative; overflow: hidden; }
     .module-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; transition: transform 0.3s ease; transform: scaleX(0); transform-origin: left; }
     .module-card:hover::before { transform: scaleX(1); }
@@ -82,7 +82,7 @@
     .mpoint { font-size: 11px; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; }
     .mpoint-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
 
-    .pipeline-section { padding: 100px 60px; background: var(--ink); color: white; }
+    .pipeline-section { padding: 100px 60px; background: var(--surf); color: white; }
     .pipeline-section .label { color: rgba(255,255,255,0.3); }
     .pipeline-section .sec-title { color: white; }
     .pipeline-section .sec-title em { color: #fdba74; }
@@ -99,18 +99,18 @@
     .stack-card { background: var(--surf); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; transition: transform 0.2s, box-shadow 0.2s; }
     .stack-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
     .stack-emoji { font-size: 26px; }
-    .stack-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink); font-weight: 500; }
+    .stack-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text); font-weight: 500; }
     .stack-role { font-size: 11px; color: var(--muted); line-height: 1.5; }
 
-    .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+    .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--text); border-bottom: 2px solid var(--text); }
     .stat-block { padding: 44px 36px; border-right: 1px solid var(--border); position: relative; overflow: hidden; }
     .stat-block:last-child { border-right: none; }
     .stat-big { font-family: 'Bebas Neue', sans-serif; font-size: 60px; line-height: 1; margin-bottom: 8px; }
     .stat-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
     .stat-sub { font-size: 11px; color: var(--muted); margin-top: 6px; }
 
-    footer { padding: 60px; display: flex; justify-content: space-between; align-items: flex-end; border-top: 2px solid var(--ink); flex-wrap:wrap; gap:20px; }
-    .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 2px; color: var(--ink); line-height: 1; }
+    footer { padding: 60px; display: flex; justify-content: space-between; align-items: flex-end; border-top: 2px solid var(--text); flex-wrap:wrap; gap:20px; }
+    .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 2px; color: var(--text); line-height: 1; }
     .footer-brand span { color: var(--accent2); }
     .footer-stack { text-align: right; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1.5px; line-height: 2; }
 
