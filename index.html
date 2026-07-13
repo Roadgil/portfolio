@@ -68,6 +68,19 @@
     .divider { margin: 50px 60px 0; height: 1px; background: var(--border); animation: scaleX 0.8s ease 0.3s both; transform-origin: left; }
     @keyframes scaleX { from { transform: scaleX(0);} to{transform:scaleX(1);} }
 
+    .group-label {
+      grid-column: 1 / -1;
+      font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--muted); margin: 50px 60px 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .group-label::before { content: ''; width: 28px; height: 1px; background: var(--muted); }
+    .group-desc {
+      grid-column: 1 / -1;
+      font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace;
+      letter-spacing: 0.5px; line-height: 1.8; margin: 0 60px 20px;
+    }
+
     .projects {
       flex: 1; display: grid; grid-template-columns: 1fr 1fr; margin: 0 60px; gap: 0;
       border-left: 1px solid var(--border); border-right: 1px solid var(--border);
@@ -194,8 +207,8 @@
       <span class="t3">AUTOMATE</span>
     </h1>
     <p class="hero-sub">
-      <span data-ko>여섯 개의 프로젝트 · 하나의 목표 — 반복 업무를 코드로, 그리고 AI로.</span>
-      <span data-en>Six projects · one goal — turning repetitive work into code, and code into AI.</span>
+      <span data-ko>여섯 개의 프로젝트, 두 갈래 — 수입 운영을 잇는 자동화 흐름 하나, 그리고 각자 다른 문제를 푸는 독립 툴들.</span>
+      <span data-en>Six projects, two tracks — one automation flow connecting import operations, and standalone tools solving separate problems.</span>
     </p>
   </div>
 
@@ -203,95 +216,39 @@
 
   <div class="projects">
 
+    <div class="group-label">
+      <span data-ko>AX / DX FLOW · 수입 운영 자동화 전환</span>
+      <span data-en>AX / DX FLOW · Import Ops Transformation</span>
+    </div>
+    <p class="group-desc">
+      <span data-ko>수입 데이터 포착(01) → 비용 지급 자동화(05) → Oracle 검증·AI 리포팅(06) — 하나로 이어지는 파이프라인.</span>
+      <span data-en>Capture import data (01) → automate payment requests (05) → verify in Oracle and report via AI (06) — one connected pipeline.</span>
+    </p>
+
     <!-- 01 Import Automation -->
-    <a class="proj-card p2" href="portfolio_import_automation.html">
+    <a class="proj-card p2" href="portfolio_import_automation.html" style="animation-delay:0.30s;">
       <div class="proj-bg-num">01</div>
       <div class="proj-num">PROJECT · 01</div>
       <div class="proj-tags">
         <span class="tag tag-orange">Python</span>
         <span class="tag tag-green">openpyxl</span>
         <span class="tag tag-blue">win32com</span>
-        <span class="tag tag-teal">easyocr</span>
+        <span class="tag tag-teal">pdfplumber</span>
       </div>
       <h2 class="proj-title"><span data-ko>수입 업무</span><span data-en>Import Ops</span><br><em><span data-ko>자동화 시스템</span><span data-en>Automation Suite</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>Outlook 수신부터 Excel 반영·내부 메일 발송까지, 통관 추적을 완전 자동화한 10개 모듈 파이썬 파이프라인.</span>
-        <span data-en>A 10-module Python pipeline automating customs tracking end-to-end — from Outlook intake to Excel updates and internal email.</span>
+        <span data-ko>Outlook 수신부터 Excel 반영·내부 메일 발송까지, 통관 추적을 완전 자동화한 9개 모듈 파이썬 파이프라인.</span>
+        <span data-en>A 9-module Python pipeline automating customs tracking end-to-end — from Outlook intake to Excel updates and internal email.</span>
       </p>
       <div class="proj-impact"><span data-ko>일일</span><span data-en>Daily</span> 2h → 2min · <b>~60×</b> <span data-ko>단축</span><span data-en>faster</span></div>
       <div class="proj-meta">
-        <div class="proj-stack">Python · win32com · openpyxl<br>pdfplumber · easyocr · subprocess</div>
-        <div class="proj-arrow">→</div>
-      </div>
-    </a>
-
-    <!-- 02 Sales FCST Dashboard -->
-    <a class="proj-card p1" href="portfolio_sales_dashboard.html">
-      <div class="proj-bg-num">02</div>
-      <div class="proj-num">PROJECT · 02</div>
-      <div class="proj-tags">
-        <span class="tag tag-purple">React 18</span>
-        <span class="tag tag-teal">Firebase</span>
-        <span class="tag tag-blue">Chart.js</span>
-        <span class="tag tag-green">KO/EN</span>
-      </div>
-      <h2 class="proj-title"><span data-ko>영업 납품처</span><span data-en>Sales</span><br><em>FCST Dashboard</em></h2>
-      <p class="proj-desc">
-        <span data-ko>분기 목표 대비 실적 실시간 관리. Firebase Auth·Firestore 기반 3개 모듈 웹 대시보드 플랫폼.</span>
-        <span data-en>Real-time quarterly target-vs-actual tracking. A 3-module web platform on Firebase Auth + Firestore.</span>
-      </p>
-      <div class="proj-impact"><span data-ko>실시간 동기화</span><span data-en>Real-time sync</span> · <b>3</b> <span data-ko>모듈</span><span data-en>modules</span> · RBAC</div>
-      <div class="proj-meta">
-        <div class="proj-stack">React · Firebase Auth<br>Firestore · Chart.js · Tailwind</div>
-        <div class="proj-arrow">→</div>
-      </div>
-    </a>
-
-    <!-- 03 Inventory Dashboard -->
-    <a class="proj-card p3" href="portfolio_inventory_dashboard.html">
-      <div class="proj-bg-num">03</div>
-      <div class="proj-num">PROJECT · 03</div>
-      <div class="proj-tags">
-        <span class="tag tag-teal">SheetJS</span>
-        <span class="tag tag-blue">Oracle ERP</span>
-        <span class="tag tag-green">Forecast Check</span>
-        <span class="tag tag-purple">5 Sources</span>
-      </div>
-      <h2 class="proj-title"><span data-ko>KRP</span><span data-en>KRP</span><br><em><span data-ko>재고 대시보드</span><span data-en>Inventory Dashboard</span></em></h2>
-      <p class="proj-desc">
-        <span data-ko>5종 월간 데이터를 통합하고, 본사 SOP 예측과 실제 평균 판매를 대조해 어긋난 SKU를 자동 플래그하는 오프라인 단일 HTML 앱.</span>
-        <span data-en>An offline single-file HTML app that merges 5 monthly sources and auto-flags SKUs where HQ SOP forecast drifts from actual average sales.</span>
-      </p>
-      <div class="proj-impact"><b>5</b> <span data-ko>소스 통합</span><span data-en>sources merged</span> · <span data-ko>예측 편차 30% 자동 플래그</span><span data-en>30% forecast-drift auto-flag</span></div>
-      <div class="proj-meta">
-        <div class="proj-stack">SheetJS (xlsx) · IndexedDB<br>localStorage · Oracle ERP CSV</div>
-        <div class="proj-arrow">→</div>
-      </div>
-    </a>
-
-    <!-- 04 거래명세서 생성기 -->
-    <a class="proj-card p4" href="portfolio_invoice_generator.html">
-      <div class="proj-bg-num">04</div>
-      <div class="proj-num">PROJECT · 04</div>
-      <div class="proj-tags">
-        <span class="tag tag-gold">559 SKU DB</span>
-        <span class="tag tag-orange">Code Alias</span>
-        <span class="tag tag-green">Auto Calc</span>
-      </div>
-      <h2 class="proj-title"><span data-ko>거래명세서</span><span data-en>Transaction Statement</span><br><em><span data-ko>자동 생성기</span><span data-en>Generator</span></em></h2>
-      <p class="proj-desc">
-        <span data-ko>559개 품목 단가 DB와 코드 별칭 시스템으로, 품목코드만 입력하면 거래명세서를 자동 완성하는 HTML 툴.</span>
-        <span data-en>An HTML tool with a 559-item price DB and code-alias system that auto-builds transaction statements from item codes alone.</span>
-      </p>
-      <div class="proj-impact"><b>559</b> <span data-ko>품목 단가 DB</span><span data-en>item price DB</span> · <span data-ko>대소문자·별칭 인식</span><span data-en>alias-aware lookup</span></div>
-      <div class="proj-meta">
-        <div class="proj-stack">HTML · JS · PRICE_DB (559)<br>Code Alias · Stamp Overlay</div>
+        <div class="proj-stack">Python · win32com · openpyxl<br>pdfplumber · subprocess</div>
         <div class="proj-arrow">→</div>
       </div>
     </a>
 
     <!-- 05 Finance Automation -->
-    <a class="proj-card p5" href="portfolio_finance_automation.html">
+    <a class="proj-card p5" href="portfolio_finance_automation.html" style="animation-delay:0.38s;">
       <div class="proj-bg-num">05</div>
       <div class="proj-num">PROJECT · 05</div>
       <div class="proj-tags">
@@ -313,7 +270,7 @@
     </a>
 
     <!-- 06 Oracle Fusion RPA & AI Agent -->
-    <a class="proj-card p6" href="portfolio_oracle_automation.html">
+    <a class="proj-card p6" href="portfolio_oracle_automation.html" style="animation-delay:0.46s;">
       <div class="proj-bg-num">06</div>
       <div class="proj-num">PROJECT · 06</div>
       <div class="proj-tags">
@@ -330,6 +287,80 @@
       <div class="proj-impact"><b>5/5</b> <span data-ko>라이브 검증</span><span data-en>live validation</span> · <span data-ko>AI 에이전트 신규 구축</span><span data-en>new AI agent built</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Selenium · Oracle Fusion Cloud<br>OTBI · Claude + MCP · win32com</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
+    <div class="group-label">
+      <span data-ko>OTHER PROJECTS · 독립 툴</span>
+      <span data-en>OTHER PROJECTS · Standalone Tools</span>
+    </div>
+    <p class="group-desc">
+      <span data-ko>영업·재고·거래명세서 등 각기 다른 업무를 위해 독립적으로 만든 툴들.</span>
+      <span data-en>Standalone tools built independently for sales, inventory, and invoicing.</span>
+    </p>
+
+    <!-- 02 Sales FCST Dashboard -->
+    <a class="proj-card p1" href="portfolio_sales_dashboard.html" style="animation-delay:0.54s;">
+      <div class="proj-bg-num">02</div>
+      <div class="proj-num">PROJECT · 02</div>
+      <div class="proj-tags">
+        <span class="tag tag-purple">React 18</span>
+        <span class="tag tag-teal">Firebase</span>
+        <span class="tag tag-blue">Chart.js</span>
+        <span class="tag tag-green">KO/EN</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>영업 납품처</span><span data-en>Sales</span><br><em>FCST Dashboard</em></h2>
+      <p class="proj-desc">
+        <span data-ko>분기 목표 대비 실적 실시간 관리. Firebase Auth·Firestore 기반 3개 모듈 웹 대시보드 플랫폼.</span>
+        <span data-en>Real-time quarterly target-vs-actual tracking. A 3-module web platform on Firebase Auth + Firestore.</span>
+      </p>
+      <div class="proj-impact"><span data-ko>실시간 동기화</span><span data-en>Real-time sync</span> · <b>3</b> <span data-ko>모듈</span><span data-en>modules</span> · RBAC</div>
+      <div class="proj-meta">
+        <div class="proj-stack">React · Firebase Auth<br>Firestore · Chart.js · Tailwind</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- 03 Inventory Dashboard -->
+    <a class="proj-card p3" href="portfolio_inventory_dashboard.html" style="animation-delay:0.62s;">
+      <div class="proj-bg-num">03</div>
+      <div class="proj-num">PROJECT · 03</div>
+      <div class="proj-tags">
+        <span class="tag tag-teal">SheetJS</span>
+        <span class="tag tag-blue">Oracle ERP</span>
+        <span class="tag tag-green">Forecast Check</span>
+        <span class="tag tag-purple">5 Sources</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>KRP</span><span data-en>KRP</span><br><em><span data-ko>재고 대시보드</span><span data-en>Inventory Dashboard</span></em></h2>
+      <p class="proj-desc">
+        <span data-ko>5종 월간 데이터를 통합하고, 본사 SOP 예측과 실제 평균 판매를 대조해 어긋난 SKU를 자동 플래그하는 오프라인 단일 HTML 앱.</span>
+        <span data-en>An offline single-file HTML app that merges 5 monthly sources and auto-flags SKUs where HQ SOP forecast drifts from actual average sales.</span>
+      </p>
+      <div class="proj-impact"><b>5</b> <span data-ko>소스 통합</span><span data-en>sources merged</span> · <span data-ko>예측 편차 30% 자동 플래그</span><span data-en>30% forecast-drift auto-flag</span></div>
+      <div class="proj-meta">
+        <div class="proj-stack">SheetJS (xlsx) · IndexedDB<br>localStorage · Oracle ERP CSV</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- 04 거래명세서 생성기 -->
+    <a class="proj-card p4" href="portfolio_invoice_generator.html" style="animation-delay:0.70s;">
+      <div class="proj-bg-num">04</div>
+      <div class="proj-num">PROJECT · 04</div>
+      <div class="proj-tags">
+        <span class="tag tag-gold">559 SKU DB</span>
+        <span class="tag tag-orange">Code Alias</span>
+        <span class="tag tag-green">Auto Calc</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>거래명세서</span><span data-en>Transaction Statement</span><br><em><span data-ko>자동 생성기</span><span data-en>Generator</span></em></h2>
+      <p class="proj-desc">
+        <span data-ko>559개 품목 단가 DB와 코드 별칭 시스템으로, 품목코드만 입력하면 거래명세서를 자동 완성하는 HTML 툴.</span>
+        <span data-en>An HTML tool with a 559-item price DB and code-alias system that auto-builds transaction statements from item codes alone.</span>
+      </p>
+      <div class="proj-impact"><b>559</b> <span data-ko>품목 단가 DB</span><span data-en>item price DB</span> · <span data-ko>대소문자·별칭 인식</span><span data-en>alias-aware lookup</span></div>
+      <div class="proj-meta">
+        <div class="proj-stack">HTML · JS · PRICE_DB (559)<br>Code Alias · Stamp Overlay</div>
         <div class="proj-arrow">→</div>
       </div>
     </a>

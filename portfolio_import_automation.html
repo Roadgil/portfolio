@@ -157,8 +157,8 @@
         </h1>
       </div>
       <p class="hero-desc">
-        <span data-ko>Outlook 메일에서 파일을 받아 Excel에 자동 반영하고 내부 공유 메일까지 발송하는 End-to-End 수입 업무 자동화. 수작업 제로(Zero)를 목표로 설계된 10개 모듈 파이썬 시스템.</span>
-        <span data-en>End-to-end import automation: pulls files from Outlook, updates Excel, and sends internal emails. A 10-module Python system built to drive manual steps to zero.</span>
+        <span data-ko>Outlook 메일에서 파일을 받아 Excel에 자동 반영하고 내부 공유 메일까지 발송하는 End-to-End 수입 업무 자동화. 수작업 제로(Zero)를 목표로 설계된 9개 모듈 파이썬 시스템.</span>
+        <span data-en>End-to-end import automation: pulls files from Outlook, updates Excel, and sends internal emails. A 9-module Python system built to drive manual steps to zero.</span>
       </p>
     </div>
 
@@ -175,9 +175,8 @@
         <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">🔄</span><div class="flow-info"><div class="flow-name">auto_import_complete</div><div class="flow-role" data-ko>신규행 Append + Backfill</div><div class="flow-role" data-en>New-row append + backfill</div></div><span class="flow-badge badge-green">openpyxl</span></div>
         <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">intransit_internal_share</div><div class="flow-role" data-ko>Urgent 대조 후 내부 공유 메일</div><div class="flow-role" data-en>Urgent match → internal share email</div></div><span class="flow-badge badge-orange">win32com</span></div>
         <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">🔁</span><div class="flow-info"><div class="flow-name">intransit_update_runner</div><div class="flow-role" data-ko>서브프로세스 실행 + State JSON</div><div class="flow-role" data-en>Subprocess run + state JSON</div></div><span class="flow-badge badge-gold">subprocess</span></div>
-        <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">🗓️</span><div class="flow-info"><div class="flow-name">finance_calendar_ocr</div><div class="flow-role" data-ko>이미지 메일 마감일 OCR → 캘린더</div><div class="flow-role" data-en>Image-email deadline OCR → calendar</div></div><span class="flow-badge badge-purple">easyocr</span></div>
-        <div class="flow-step"><span class="flow-num">09</span><span class="flow-icon">🖥️</span><div class="flow-info"><div class="flow-name">import_manager_app (6-in-1)</div><div class="flow-role" data-ko>Tkinter 통합 런처 GUI</div><div class="flow-role" data-en>Tkinter all-in-one launcher GUI</div></div><span class="flow-badge badge-red">tkinter</span></div>
-        <div class="flow-step"><span class="flow-num">10</span><span class="flow-icon">🧊</span><div class="flow-info"><div class="flow-name">urgent_item_freezer</div><div class="flow-role" data-ko>입고 확정 시 수식 고정 + 서비스팀 알림</div><div class="flow-role" data-en>Freezes formulas on arrival + notifies service team</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">🖥️</span><div class="flow-info"><div class="flow-name">import_manager_app (6-in-1)</div><div class="flow-role" data-ko>Tkinter 통합 런처 GUI</div><div class="flow-role" data-en>Tkinter all-in-one launcher GUI</div></div><span class="flow-badge badge-red">tkinter</span></div>
+        <div class="flow-step"><span class="flow-num">09</span><span class="flow-icon">🧊</span><div class="flow-info"><div class="flow-name">urgent_item_freezer</div><div class="flow-role" data-ko>입고 확정 시 수식 고정 + 서비스팀 알림</div><div class="flow-role" data-en>Freezes formulas on arrival + notifies service team</div></div><span class="flow-badge badge-green">openpyxl</span></div>
       </div>
     </div>
   </section>
@@ -190,7 +189,7 @@
       <div class="stat-sub" data-ko>통관 추적 ~60× 단축</div><div class="stat-sub" data-en>customs tracking ~60× faster</div>
     </div>
     <div class="stat-block">
-      <div class="stat-big" style="color:var(--accent);">10</div>
+      <div class="stat-big" style="color:var(--accent);">9</div>
       <div class="stat-label" data-ko>파이썬 모듈</div><div class="stat-label" data-en>Python Modules</div>
       <div class="stat-sub" data-ko>단일 런처로 통합 실행</div><div class="stat-sub" data-en>one unified launcher</div>
     </div>
@@ -209,7 +208,7 @@
   <!-- MODULES -->
   <section class="section reveal">
     <div class="label">Modules</div>
-    <h2 class="sec-title"><span data-ko>10개 모듈로</span><span data-en>Ten modules,</span><br><em><span data-ko>완성된 파이프라인</span><span data-en>one pipeline</span></em></h2>
+    <h2 class="sec-title"><span data-ko>9개 모듈로</span><span data-en>Nine modules,</span><br><em><span data-ko>완성된 파이프라인</span><span data-en>one pipeline</span></em></h2>
 
     <div class="module-grid">
 
@@ -262,6 +261,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>중복 행 완전 차단 (Set 기반)</span><span data-en>Set-based dedup</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>선적일 / 창고 입고 예정 자동 계산</span><span data-en>Auto ship/warehouse-ETA calc</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>실행 전 타임스탬프 백업</span><span data-en>Timestamped backup before run</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>누적 14,000+ 건 (Intransit 시트 기준)</span><span data-en>14,000+ records accumulated (Intransit sheet)</span></div>
         </div>
       </div>
 
@@ -275,6 +275,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>SHA 해시 기반 처리 DB</span><span data-en>SHA-hash processed DB</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>보호 컬럼 덮어쓰기 방지</span><span data-en>Protected-column guard</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>C.I. 가격 불일치 검증 + 통관 알림 메일</span><span data-en>C.I. price check + clearance alert</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>상반기(H1) 154건 신고 중 151건(98%) 자동 반영</span><span data-en>151 of 154 H1 declarations (98%) auto-reflected</span></div>
         </div>
       </div>
 
@@ -304,21 +305,8 @@
         </div>
       </div>
 
-      <div class="module-card c3 reveal" style="transition-delay:0.35s">
-        <div class="module-num">08</div><div class="module-icon">🗓️</div>
-        <div class="module-file">finance_calendar_ocr.py</div>
-        <div class="module-title" data-ko>마감일 OCR 캘린더</div><div class="module-title" data-en>Deadline OCR Calendar</div>
-        <div class="module-desc" data-ko>이미지로 박힌 사내 메일에서 '2차 지급요청 마감' 날짜를 easyocr로 읽어 Outlook 캘린더 일정 3건을 자동 생성. 한국 영업일 계산 포함.</div>
-        <div class="module-desc" data-en>Reads the "2nd payment-request deadline" from an image email via easyocr and auto-creates 3 Outlook calendar events, with Korean business-day math.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>이미지 메일 텍스트 추출 (OCR)</span><span data-en>Image-email text extraction (OCR)</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>영업일 역산 알림 일정 생성</span><span data-en>Business-day back-calc reminders</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>Outlook 캘린더 이벤트 3건 자동 등록</span><span data-en>Auto-adds 3 calendar events</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c4 reveal" style="transition-delay:0.4s">
-        <div class="module-num">09</div><div class="module-icon">🔁</div>
+      <div class="module-card c4 reveal" style="transition-delay:0.35s">
+        <div class="module-num">08</div><div class="module-icon">🔁</div>
         <div class="module-file">intransit_update_runner.py</div>
         <div class="module-title" data-ko>업데이트 러너 + 상태 추적</div><div class="module-title" data-en>Update Runner + State</div>
         <div class="module-desc" data-ko>대상 스크립트를 subprocess로 실행하고 stdout을 파싱해 결과를 JSON으로 저장. CP949/UTF-8 자동 감지로 한글 로그가 깨지지 않는다.</div>
@@ -327,11 +315,12 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>CP949 우선 + UTF-8 fallback</span><span data-en>CP949-first, UTF-8 fallback</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>added_rows / max_ship 파싱</span><span data-en>Parses added_rows / max_ship</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>state.json 자동 갱신</span><span data-en>Auto-updates state.json</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>성공한 실행도 하위 프로세스의 출력(stdout)을 캡처해 로그에 남기도록 개선 — 실패 원인 추적과 일상 모니터링을 동시에 지원</span><span data-en>Now captures subprocess stdout on successful runs too, not just failures — supporting both crash diagnosis and everyday monitoring</span></div>
         </div>
       </div>
 
-      <div class="module-card c2 reveal" style="transition-delay:0.45s">
-        <div class="module-num">10</div><div class="module-icon">🧊</div>
+      <div class="module-card c2 reveal" style="transition-delay:0.4s">
+        <div class="module-num">09</div><div class="module-icon">🧊</div>
         <div class="module-file">urgent_item_freezer.py</div>
         <div class="module-title" data-ko>Urgent Item 입고 확정기</div><div class="module-title" data-en>Urgent Item Freezer</div>
         <div class="module-desc" data-ko>Urgent Item 시트에서 입고가 확인된 행의 날짜 수식(I/J/K열)을 값으로 고정하고, 서비스팀에 입고 알림 메일을 자동 발송한다.</div>
@@ -340,6 +329,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>입고 확정된 행만 골라 수식 → 값 고정</span><span data-en>Freezes formulas only on rows marked received</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>같은 건 중복 알림 방지</span><span data-en>Prevents duplicate arrival notices</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>서비스팀 앞 입고 알림 메일 자동 발송</span><span data-en>Auto-sends the arrival notice to the service team</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>입고 판정 기준을 '신고일+2영업일 추정'에서 OTBI 실입고 이벤트 기반으로 전환, 상반기 약 30건 처리</span><span data-en>Shifted arrival detection from a 'declaration + 2 business days' estimate to actual OTBI receipt events — ~30 requests processed in H1</span></div>
         </div>
       </div>
 
@@ -369,8 +359,7 @@
       <div class="stack-card reveal" style="transition-delay:0.05s"><div class="stack-emoji">📧</div><div class="stack-name">win32com (pywin32)</div><div class="stack-role" data-ko>Outlook 메일 수신/발송·캘린더</div><div class="stack-role" data-en>Outlook mail &amp; calendar</div></div>
       <div class="stack-card reveal" style="transition-delay:0.1s"><div class="stack-emoji">📊</div><div class="stack-name">openpyxl</div><div class="stack-role" data-ko>xlsx Append / Backfill</div><div class="stack-role" data-en>xlsx append / backfill</div></div>
       <div class="stack-card reveal" style="transition-delay:0.15s"><div class="stack-emoji">📑</div><div class="stack-name">pdfplumber</div><div class="stack-role" data-ko>수입신고필증 PDF 파싱</div><div class="stack-role" data-en>Declaration PDF parsing</div></div>
-      <div class="stack-card reveal" style="transition-delay:0.2s"><div class="stack-emoji">👁️</div><div class="stack-name">easyocr</div><div class="stack-role" data-ko>이미지 메일 마감일 OCR</div><div class="stack-role" data-en>Image-email deadline OCR</div></div>
-      <div class="stack-card reveal" style="transition-delay:0.25s"><div class="stack-emoji">🖥️</div><div class="stack-name">tkinter</div><div class="stack-role" data-ko>통합 런처 GUI</div><div class="stack-role" data-en>Unified launcher GUI</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.2s"><div class="stack-emoji">🖥️</div><div class="stack-name">tkinter</div><div class="stack-role" data-ko>통합 런처 GUI</div><div class="stack-role" data-en>Unified launcher GUI</div></div>
       <div class="stack-card reveal" style="transition-delay:0.3s"><div class="stack-emoji">⚙️</div><div class="stack-name">subprocess</div><div class="stack-role" data-ko>스크립트 파이프라인 연결</div><div class="stack-role" data-en>Script pipeline glue</div></div>
       <div class="stack-card reveal" style="transition-delay:0.35s"><div class="stack-emoji">📝</div><div class="stack-name">JSON State</div><div class="stack-role" data-ko>중복 방지 · 재실행 안전성</div><div class="stack-role" data-en>Dedup · safe re-runs</div></div>
     </div>
@@ -378,7 +367,7 @@
 
   <footer>
     <div><div class="footer-brand">IMPORT<br><span>AUTO</span></div></div>
-    <div class="footer-stack">PYTHON · WIN32COM · OPENPYXL<br>PDFPLUMBER · EASYOCR · TKINTER<br>SUBPROCESS · JSON STATE</div>
+    <div class="footer-stack">PYTHON · WIN32COM · OPENPYXL<br>PDFPLUMBER · TKINTER<br>SUBPROCESS · JSON STATE</div>
   </footer>
 
   <script>
