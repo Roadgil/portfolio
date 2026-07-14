@@ -157,8 +157,8 @@
         </h1>
       </div>
       <p class="hero-desc">
-        <span data-ko>본사 Intransit 리포트 수신부터 인천관세법인 C.I. 대사(Oracle), 수입신고필증 파싱, Finance 월 대사(Report_202606)까지 — 인바운드 전 구간을 잇는 12개 모듈 파이썬 시스템. 처리 건의 98% 이상은 무인으로 처리되며, 사람은 예외 케이스만 개입한다.</span>
-        <span data-en>From HQ's Intransit report, through customs-broker C.I. reconciliation on Oracle and declaration parsing, to the monthly Finance reconciliation against Report_202606 (an internal Oracle tax-by-org report) — a 12-module Python system spanning the entire inbound cycle. 98%+ of cases run with zero human touch; people step in only for exceptions.</span>
+        <span data-ko>본사 Intransit 리포트 수신부터 인천관세법인 C.I. 대사(Oracle), 수입신고필증 파싱, Finance 월 대사(Report_202606)까지 — 인바운드 전 구간을 잇는 11개 모듈 파이썬 시스템(+ 수동 트리거용 런처 GUI 1개). 처리 건의 98% 이상은 무인으로 처리되며, 사람은 예외 케이스만 개입한다.</span>
+        <span data-en>From HQ's Intransit report, through customs-broker C.I. reconciliation on Oracle and declaration parsing, to the monthly Finance reconciliation against Report_202606 (an internal Oracle tax-by-org report) — an 11-module Python system spanning the entire inbound cycle (plus a launcher GUI for manual triggers). 98%+ of cases run with zero human touch; people step in only for exceptions.</span>
       </p>
     </div>
 
@@ -178,8 +178,7 @@
         <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">intransit_internal_share</div><div class="flow-role" data-ko>Urgent 대조 후 내부 공유 메일</div><div class="flow-role" data-en>Urgent match → internal share email</div></div><span class="flow-badge badge-orange">win32com</span></div>
         <div class="flow-step"><span class="flow-num">09</span><span class="flow-icon">🧊</span><div class="flow-info"><div class="flow-name">urgent_item_freezer</div><div class="flow-role" data-ko>입고 확정 시 수식 고정 + 서비스팀 알림</div><div class="flow-role" data-en>Freezes formulas on arrival + notifies service team</div></div><span class="flow-badge badge-green">openpyxl</span></div>
         <div class="flow-step"><span class="flow-num">10</span><span class="flow-icon">🔁</span><div class="flow-info"><div class="flow-name">intransit_update_runner</div><div class="flow-role" data-ko>서브프로세스 실행 + State JSON</div><div class="flow-role" data-en>Subprocess run + state JSON</div></div><span class="flow-badge badge-gold">subprocess</span></div>
-        <div class="flow-step"><span class="flow-num">11</span><span class="flow-icon">🖥️</span><div class="flow-info"><div class="flow-name">import_manager_app (6-in-1)</div><div class="flow-role" data-ko>Tkinter 통합 런처 GUI</div><div class="flow-role" data-en>Tkinter all-in-one launcher GUI</div></div><span class="flow-badge badge-red">tkinter</span></div>
-        <div class="flow-step"><span class="flow-num">12</span><span class="flow-icon">🤖</span><div class="flow-info"><div class="flow-name">import_declaration (MCP server)</div><div class="flow-role" data-ko>자연어 질의 AI 에이전트</div><div class="flow-role" data-en>Natural-language AI query agent</div></div><span class="flow-badge badge-purple">Claude + MCP</span></div>
+        <div class="flow-step"><span class="flow-num">11</span><span class="flow-icon">🤖</span><div class="flow-info"><div class="flow-name">import_declaration (MCP server)</div><div class="flow-role" data-ko>자연어 질의 AI 에이전트</div><div class="flow-role" data-en>Natural-language AI query agent</div></div><span class="flow-badge badge-purple">Claude + MCP</span></div>
       </div>
     </div>
   </section>
@@ -197,9 +196,9 @@
       <div class="stat-sub" data-ko>통관 추적 ~60× 단축</div><div class="stat-sub" data-en>customs tracking ~60× faster</div>
     </div>
     <div class="stat-block">
-      <div class="stat-big" style="color:var(--accent);">12</div>
+      <div class="stat-big" style="color:var(--accent);">11</div>
       <div class="stat-label" data-ko>파이썬 모듈</div><div class="stat-label" data-en>Python Modules</div>
-      <div class="stat-sub" data-ko>단일 런처로 통합 실행</div><div class="stat-sub" data-en>one unified launcher</div>
+      <div class="stat-sub" data-ko>+ 런처 GUI 1개</div><div class="stat-sub" data-en>+ 1 launcher GUI</div>
     </div>
     <div class="stat-block">
       <div class="stat-big" style="color:var(--accent3);">C.I.</div>
@@ -216,134 +215,39 @@
   <!-- MODULES -->
   <section class="section reveal">
     <div class="label">Modules</div>
-    <h2 class="sec-title"><span data-ko>12개 모듈로</span><span data-en>Twelve modules,</span><br><em><span data-ko>완성된 파이프라인</span><span data-en>one pipeline</span></em></h2>
+    <h2 class="sec-title"><span data-ko>11개 모듈이</span><span data-en>Eleven modules,</span><br><em><span data-ko>흐름대로 잇는 파이프라인</span><span data-en>one pipeline, in flow order</span></em></h2>
 
     <div class="module-grid">
 
       <div class="module-card c1 reveal">
-        <div class="module-num">01</div><div class="module-icon">🖥️</div>
-        <div class="module-file">import_manager_app_6in1.py</div>
-        <div class="module-title" data-ko>통합 런처 GUI</div><div class="module-title" data-en>All-in-one Launcher</div>
-        <div class="module-desc" data-ko>Tkinter 6-in-1 실행 패널. 최신 파일 수정시각, 신규 건수, 마지막 메일 발송 기록을 한눈에 보고 60초마다 자동 새로고침.</div>
-        <div class="module-desc" data-en>A Tkinter 6-in-1 panel showing latest file timestamps, new-row counts, and last sent email — auto-refreshing every 60s.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>주요 경로 유효성 자동 체크</span><span data-en>Auto-validates key paths</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>BAT 실행 후 5초 자동 상태 갱신</span><span data-en>Status refresh 5s after BAT run</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>상태값 색상 구분</span><span data-en>Color-coded status</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c2 reveal" style="transition-delay:0.05s">
-        <div class="module-num">02</div><div class="module-icon">📧</div>
+        <div class="module-num">01</div><div class="module-icon">📧</div>
         <div class="module-file">outlook_intransit_downloader.py</div>
         <div class="module-title" data-ko>Intransit 다운로더</div><div class="module-title" data-en>Intransit Downloader</div>
         <div class="module-desc" data-ko>Outlook 하위 폴더에서 최신 APAC Intransit Report.xlsx를 찾아 날짜 suffix를 붙여 저장.</div>
         <div class="module-desc" data-en>Finds the latest APAC Intransit Report.xlsx in an Outlook subfolder and saves it with a date suffix.</div>
         <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>최신 메일 1개만 선택 (중복 방지)</span><span data-en>Picks only the latest mail (no dupes)</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>폴더 계층 탐색 자동화</span><span data-en>Auto folder-tree traversal</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>파일명 날짜 suffix 자동 부여</span><span data-en>Auto date-suffix naming</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>최신 메일 1개만 선택 (중복 방지)</span><span data-en>Picks only the latest mail (no dupes)</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>폴더 계층 탐색 자동화</span><span data-en>Auto folder-tree traversal</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>파일명 날짜 suffix 자동 부여</span><span data-en>Auto date-suffix naming</span></div>
         </div>
       </div>
 
-      <div class="module-card c3 reveal" style="transition-delay:0.1s">
-        <div class="module-num">03</div><div class="module-icon">📄</div>
-        <div class="module-file">outlook_imp_pdf_saver.py</div>
-        <div class="module-title" data-ko>수입신고필증 PDF 저장기</div><div class="module-title" data-en>Declaration PDF Saver</div>
-        <div class="module-desc" data-ko>인천관세법인 메일에서 IMP_ 프리픽스 PDF 첨부를 자동 저장. State JSON으로 중복 스캔 방지, 수정신고 시 덮어쓰기.</div>
-        <div class="module-desc" data-en>Auto-saves IMP_-prefixed PDF attachments from the customs broker's mail. State JSON prevents re-scans; amended filings overwrite the existing PDF.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>State JSON 기반 마지막 실행 추적</span><span data-en>State-JSON tracks last run</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>cutoff 이후만 스캔</span><span data-en>Scans only after cutoff</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>동일 파일명 덮어쓰기 (수정신고)</span><span data-en>Overwrites on amended filings</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c1 reveal" style="transition-delay:0.15s">
-        <div class="module-num">04</div><div class="module-icon">📊</div>
+      <div class="module-card c2 reveal" style="transition-delay:0.05s">
+        <div class="module-num">02</div><div class="module-icon">📊</div>
         <div class="module-file">intransit_to_ir_append_only.py</div>
         <div class="module-title" data-ko>Intransit → IR Append</div><div class="module-title" data-en>Intransit → IR Append</div>
         <div class="module-desc" data-ko>최신 Intransit xlsx를 선택해 신규 데이터만 Ship Date 오름차순으로 append. 기존 행 순서는 보존.</div>
         <div class="module-desc" data-en>Selects the latest Intransit xlsx and appends only new rows by ascending Ship Date, preserving existing order.</div>
         <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>중복 행 완전 차단 (Set 기반)</span><span data-en>Set-based dedup</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>선적일 / 창고 입고 예정 자동 계산</span><span data-en>Auto-calc: ship date &amp; warehouse ETA</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>실행 전 타임스탬프 백업</span><span data-en>Timestamped backup before run</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>누적 14,000+ 건 (Intransit 시트 기준)</span><span data-en>14,000+ records accumulated (Intransit sheet)</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>중복 행 완전 차단 (Set 기반)</span><span data-en>Set-based dedup</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>선적일 / 창고 입고 예정 자동 계산</span><span data-en>Auto-calc: ship date &amp; warehouse ETA</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>실행 전 타임스탬프 백업</span><span data-en>Timestamped backup before run</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>누적 14,000+ 건 (Intransit 시트 기준)</span><span data-en>14,000+ records accumulated (Intransit sheet)</span></div>
         </div>
       </div>
 
-      <div class="module-card c4 reveal" style="transition-delay:0.2s">
-        <div class="module-num">05</div><div class="module-icon">📑</div>
-        <div class="module-file">pdf_auto_updater.py</div>
-        <div class="module-title" data-ko>PDF → 실적 + C.I. 검증</div><div class="module-title" data-en>PDF → Record + C.I. Check</div>
-        <div class="module-desc" data-ko>pdfplumber로 수입신고필증을 파싱해 실적 Excel에 반영. Hash DB로 중복 처리 방지, C.I. 가격 불일치를 잡아 audit 리스크를 줄인다.</div>
-        <div class="module-desc" data-en>Parses declarations with pdfplumber into the record Excel. A hash DB prevents re-processing and flags C.I. price mismatches to cut audit risk.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>SHA 해시 기반 처리 DB</span><span data-en>SHA-hash processed DB</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>보호 컬럼 덮어쓰기 방지</span><span data-en>Protected-column guard</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>C.I. 가격 불일치 검증 + 통관 알림 메일</span><span data-en>C.I. price check + clearance alert</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>상반기(H1) 154건 신고 중 151건(98%) 자동 반영</span><span data-en>151 of 154 H1 declarations (98%) auto-reflected</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>파싱은 되는데 실적에 조용히 안 채워지는 사례를 단계별로 진단 — float 표기 Delivery Number 매칭 함정을 재확인하고, 동일 파일을 저장하는 다른 스크립트와의 race condition 가능성도 식별</span><span data-en>Diagnosed a silent parse-succeeds-but-never-writes case step by step — reconfirmed a float-formatted Delivery Number matching pitfall and flagged a possible race condition with another script saving the same file</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c2 reveal" style="transition-delay:0.25s">
-        <div class="module-num">06</div><div class="module-icon">🔄</div>
-        <div class="module-file">auto_import_complete.py</div>
-        <div class="module-title" data-ko>Append + Backfill</div><div class="module-title" data-en>Append + Backfill</div>
-        <div class="module-desc" data-ko>Intransit 데이터를 실적에 추가하고 기존 행의 빈 칸(SN/Lot)을 Backfill. 유일 후보만 채워 오류 방지.</div>
-        <div class="module-desc" data-en>Appends Intransit data and backfills empty SN/Lot cells on existing rows — filling only unique candidates to avoid errors.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Delivery 번호 혼합형 통일 인식</span><span data-en>Normalizes mixed delivery IDs</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Backfill: 유일 후보만, 중복이면 스킵</span><span data-en>Backfill unique-only, skip on dupes</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>동일 Intransit 내 중복 1회만 append</span><span data-en>Appends each dup once</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c5 reveal" style="transition-delay:0.3s">
-        <div class="module-num">07</div><div class="module-icon">📮</div>
-        <div class="module-file">intransit_internal_share.py</div>
-        <div class="module-title" data-ko>내부 공유 메일 발송기</div><div class="module-title" data-en>Internal Share Mailer</div>
-        <div class="module-desc" data-ko>Urgent Item 시트와 대조해 요청 품목 선적 여부를 확인하고 서비스/영업팀에 현황 메일 발송. 상태 파일로 중복 방지.</div>
-        <div class="module-desc" data-en>Cross-checks the Urgent Item sheet for requested parts and emails status to sales/service. State file prevents dupes.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>Urgent 매칭 없으면 섹션 자동 숨김</span><span data-en>Hides Urgent section if no match</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>복수 요청 시 최신 1건만</span><span data-en>Latest request only on dupes</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>공유 드라이브 링크 포함 HTML 메일</span><span data-en>HTML mail with shared-drive link</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c4 reveal" style="transition-delay:0.35s">
-        <div class="module-num">08</div><div class="module-icon">🔁</div>
-        <div class="module-file">intransit_update_runner.py</div>
-        <div class="module-title" data-ko>업데이트 러너 + 상태 추적</div><div class="module-title" data-en>Update Runner + State</div>
-        <div class="module-desc" data-ko>대상 스크립트를 subprocess로 실행하고 stdout을 파싱해 결과를 JSON으로 저장. CP949/UTF-8 자동 감지로 한글 로그가 깨지지 않는다.</div>
-        <div class="module-desc" data-en>Runs target scripts via subprocess, parses stdout, and saves results to JSON. CP949/UTF-8 auto-detect keeps Korean logs intact.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>CP949 우선 + UTF-8 fallback</span><span data-en>CP949-first, UTF-8 fallback</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>added_rows / max_ship 파싱</span><span data-en>Parses added_rows / max_ship</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>state.json 자동 갱신</span><span data-en>Auto-updates state.json</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>성공한 실행도 하위 프로세스의 출력(stdout)을 캡처해 로그에 남기도록 개선 — 실패 원인 추적과 일상 모니터링을 동시에 지원</span><span data-en>Now captures subprocess stdout on successful runs too, not just failures — supporting both crash diagnosis and everyday monitoring</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c2 reveal" style="transition-delay:0.4s">
-        <div class="module-num">09</div><div class="module-icon">🧊</div>
-        <div class="module-file">urgent_item_freezer.py</div>
-        <div class="module-title" data-ko>Urgent Item 입고 확정기</div><div class="module-title" data-en>Urgent Item Freezer</div>
-        <div class="module-desc" data-ko>Urgent Item 시트에서 입고가 확인된 행의 날짜 수식(I/J/K열)을 값으로 고정하고, 서비스팀에 입고 알림 메일을 자동 발송한다.</div>
-        <div class="module-desc" data-en>Freezes the formula-driven date columns (I/J/K) to static values once an Urgent Item row is confirmed received, and auto-emails the service team an arrival notice.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>입고 확정된 행만 골라 수식 → 값 고정</span><span data-en>Freezes formulas only on rows marked received</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>같은 건 중복 알림 방지</span><span data-en>Prevents duplicate arrival notices</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>서비스팀 앞 입고 알림 메일 자동 발송</span><span data-en>Auto-sends the arrival notice to the service team</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>입고 판정 기준을 '신고일+2영업일 추정'에서 OTBI 실입고 이벤트 기반으로 전환 — 상반기 약 30건 처리</span><span data-en>Shifted arrival detection from a 'declaration + 2 business days' estimate to actual OTBI receipt events — ~30 requests processed in H1</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c3 reveal" style="transition-delay:0.45s">
-        <div class="module-num">10</div><div class="module-icon">✅</div>
+      <div class="module-card c3 reveal" style="transition-delay:0.1s">
+        <div class="module-num">03</div><div class="module-icon">✅</div>
         <div class="module-file">icbl_ci_watcher.py</div>
         <div class="module-title" data-ko>C.I. 송장 검증기</div><div class="module-title" data-en>C.I. Invoice Watcher</div>
         <div class="module-desc" data-ko>인천관세법인 메일의 AWB/DHL 송장을 자동 감지하고, Selenium으로 Oracle Cloud ERP에 로그인해 신고 금액과 실시간 대사한다. 5회 연속 라이브 테스트에서 100% 일치.</div>
@@ -356,8 +260,36 @@
         </div>
       </div>
 
-      <div class="module-card c1 reveal" style="transition-delay:0.5s">
-        <div class="module-num">11</div><div class="module-icon">📦</div>
+      <div class="module-card c4 reveal" style="transition-delay:0.15s">
+        <div class="module-num">04</div><div class="module-icon">📄</div>
+        <div class="module-file">outlook_imp_pdf_saver.py</div>
+        <div class="module-title" data-ko>수입신고필증 PDF 저장기</div><div class="module-title" data-en>Declaration PDF Saver</div>
+        <div class="module-desc" data-ko>인천관세법인 메일에서 IMP_ 프리픽스 PDF 첨부를 자동 저장. State JSON으로 중복 스캔 방지, 수정신고 시 덮어쓰기.</div>
+        <div class="module-desc" data-en>Auto-saves IMP_-prefixed PDF attachments from the customs broker's mail. State JSON prevents re-scans; amended filings overwrite the existing PDF.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>State JSON 기반 마지막 실행 추적</span><span data-en>State-JSON tracks last run</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>cutoff 이후만 스캔</span><span data-en>Scans only after cutoff</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>동일 파일명 덮어쓰기 (수정신고)</span><span data-en>Overwrites on amended filings</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c5 reveal" style="transition-delay:0.2s">
+        <div class="module-num">05</div><div class="module-icon">📑</div>
+        <div class="module-file">pdf_auto_updater.py</div>
+        <div class="module-title" data-ko>PDF → 실적 + C.I. 검증</div><div class="module-title" data-en>PDF → Record + C.I. Check</div>
+        <div class="module-desc" data-ko>pdfplumber로 수입신고필증을 파싱해 실적 Excel에 반영. Hash DB로 중복 처리 방지, C.I. 가격 불일치를 잡아 audit 리스크를 줄인다.</div>
+        <div class="module-desc" data-en>Parses declarations with pdfplumber into the record Excel. A hash DB prevents re-processing and flags C.I. price mismatches to cut audit risk.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>SHA 해시 기반 처리 DB</span><span data-en>SHA-hash processed DB</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>보호 컬럼 덮어쓰기 방지</span><span data-en>Protected-column guard</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>C.I. 가격 불일치 검증 + 통관 알림 메일</span><span data-en>C.I. price check + clearance alert</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>상반기(H1) 154건 신고 중 151건(98%) 자동 반영</span><span data-en>151 of 154 H1 declarations (98%) auto-reflected</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>파싱은 되는데 실적에 조용히 안 채워지는 사례를 단계별로 진단 — float 표기 Delivery Number 매칭 함정을 재확인하고, 동일 파일을 저장하는 다른 스크립트와의 race condition 가능성도 식별</span><span data-en>Diagnosed a silent parse-succeeds-but-never-writes case step by step — reconfirmed a float-formatted Delivery Number matching pitfall and flagged a possible race condition with another script saving the same file</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c1 reveal" style="transition-delay:0.25s">
+        <div class="module-num">06</div><div class="module-icon">📦</div>
         <div class="module-file">otbi_to_receipt_report.py</div>
         <div class="module-title" data-ko>OTBI 실입고 리포트</div><div class="module-title" data-en>OTBI Receipt Report</div>
         <div class="module-desc" data-ko>Oracle OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다.</div>
@@ -369,16 +301,93 @@
         </div>
       </div>
 
-      <div class="module-card c5 reveal" style="transition-delay:0.55s">
-        <div class="module-num">12</div><div class="module-icon">🤖</div>
+      <div class="module-card c2 reveal" style="transition-delay:0.3s">
+        <div class="module-num">07</div><div class="module-icon">🔄</div>
+        <div class="module-file">auto_import_complete.py</div>
+        <div class="module-title" data-ko>Append + Backfill</div><div class="module-title" data-en>Append + Backfill</div>
+        <div class="module-desc" data-ko>Intransit 데이터를 실적에 추가하고 기존 행의 빈 칸(SN/Lot)을 Backfill. 유일 후보만 채워 오류 방지.</div>
+        <div class="module-desc" data-en>Appends Intransit data and backfills empty SN/Lot cells on existing rows — filling only unique candidates to avoid errors.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Delivery 번호 혼합형 통일 인식</span><span data-en>Normalizes mixed delivery IDs</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Backfill: 유일 후보만, 중복이면 스킵</span><span data-en>Backfill unique-only, skip on dupes</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>동일 Intransit 내 중복 1회만 append</span><span data-en>Appends each dup once</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c3 reveal" style="transition-delay:0.35s">
+        <div class="module-num">08</div><div class="module-icon">📮</div>
+        <div class="module-file">intransit_internal_share.py</div>
+        <div class="module-title" data-ko>내부 공유 메일 발송기</div><div class="module-title" data-en>Internal Share Mailer</div>
+        <div class="module-desc" data-ko>Urgent Item 시트와 대조해 요청 품목 선적 여부를 확인하고 서비스/영업팀에 현황 메일 발송. 상태 파일로 중복 방지.</div>
+        <div class="module-desc" data-en>Cross-checks the Urgent Item sheet for requested parts and emails status to sales/service. State file prevents dupes.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>Urgent 매칭 없으면 섹션 자동 숨김</span><span data-en>Hides Urgent section if no match</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>복수 요청 시 최신 1건만</span><span data-en>Latest request only on dupes</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>공유 드라이브 링크 포함 HTML 메일</span><span data-en>HTML mail with shared-drive link</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c4 reveal" style="transition-delay:0.4s">
+        <div class="module-num">09</div><div class="module-icon">🧊</div>
+        <div class="module-file">urgent_item_freezer.py</div>
+        <div class="module-title" data-ko>Urgent Item 입고 확정기</div><div class="module-title" data-en>Urgent Item Freezer</div>
+        <div class="module-desc" data-ko>Urgent Item 시트에서 입고가 확인된 행의 날짜 수식(I/J/K열)을 값으로 고정하고, 서비스팀에 입고 알림 메일을 자동 발송한다.</div>
+        <div class="module-desc" data-en>Freezes the formula-driven date columns (I/J/K) to static values once an Urgent Item row is confirmed received, and auto-emails the service team an arrival notice.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>입고 확정된 행만 골라 수식 → 값 고정</span><span data-en>Freezes formulas only on rows marked received</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>같은 건 중복 알림 방지</span><span data-en>Prevents duplicate arrival notices</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>서비스팀 앞 입고 알림 메일 자동 발송</span><span data-en>Auto-sends the arrival notice to the service team</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>입고 판정 기준을 '신고일+2영업일 추정'에서 OTBI 실입고 이벤트 기반으로 전환 — 상반기 약 30건 처리</span><span data-en>Shifted arrival detection from a 'declaration + 2 business days' estimate to actual OTBI receipt events — ~30 requests processed in H1</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c5 reveal" style="transition-delay:0.45s">
+        <div class="module-num">10</div><div class="module-icon">🔁</div>
+        <div class="module-file">intransit_update_runner.py</div>
+        <div class="module-title" data-ko>업데이트 러너 + 상태 추적</div><div class="module-title" data-en>Update Runner + State</div>
+        <div class="module-desc" data-ko>대상 스크립트를 subprocess로 실행하고 stdout을 파싱해 결과를 JSON으로 저장. CP949/UTF-8 자동 감지로 한글 로그가 깨지지 않는다.</div>
+        <div class="module-desc" data-en>Runs target scripts via subprocess, parses stdout, and saves results to JSON. CP949/UTF-8 auto-detect keeps Korean logs intact.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>CP949 우선 + UTF-8 fallback</span><span data-en>CP949-first, UTF-8 fallback</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>added_rows / max_ship 파싱</span><span data-en>Parses added_rows / max_ship</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>state.json 자동 갱신</span><span data-en>Auto-updates state.json</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>성공한 실행도 하위 프로세스의 출력(stdout)을 캡처해 로그에 남기도록 개선 — 실패 원인 추적과 일상 모니터링을 동시에 지원</span><span data-en>Now captures subprocess stdout on successful runs too, not just failures — supporting both crash diagnosis and everyday monitoring</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c1 reveal" style="transition-delay:0.5s">
+        <div class="module-num">11</div><div class="module-icon">🤖</div>
         <div class="module-file">import_declaration (MCP server)</div>
         <div class="module-title" data-ko>AI 리포팅 에이전트</div><div class="module-title" data-en>AI Reporting Agent</div>
         <div class="module-desc" data-ko>Claude와 MCP(Model Context Protocol)로 연결한 커스텀 서버. 12개의 운영 데이터 도구로 Oracle Fusion과 내부 Excel 데이터를 자연어로 질의해 실적·리드타임·variance를 즉시 조회한다.</div>
         <div class="module-desc" data-en>A custom MCP (Model Context Protocol) server wired to Claude, exposing 12 operational data tools that let stakeholders query import KPIs, lead times, and TO variance from Oracle Fusion and internal Excel data in plain language.</div>
         <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>코드 없이 자연어로 실적·variance 조회, Urgent Item 조회로 입고 지연·Customer Down 등 특이사항 선제 파악</span><span data-en>No-code, natural-language stats &amp; variance queries, plus early flags on shipment delays, Customer Down cases, and other Urgent Item exceptions</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>이 AI 하나로 필요할 때 직접 물어보기도 하고, 매일 아침 자동 브리핑도 똑같이 처리</span><span data-en>One AI, two jobs — answers on-demand questions and writes the daily morning briefing automatically</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>이 인바운드 파이프라인 전체(C.I. 대사, 실입고, Finance 대사) 데이터를 한 곳에서 교차 조회</span><span data-en>Cross-references data from across this entire inbound pipeline — C.I. reconciliation, actual receipt, Finance reconciliation — in one place</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>코드 없이 자연어로 실적·variance 조회, Urgent Item 조회로 입고 지연·Customer Down 등 특이사항 선제 파악</span><span data-en>No-code, natural-language stats &amp; variance queries, plus early flags on shipment delays, Customer Down cases, and other Urgent Item exceptions</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>이 AI 하나로 필요할 때 직접 물어보기도 하고, 매일 아침 자동 브리핑도 똑같이 처리</span><span data-en>One AI, two jobs — answers on-demand questions and writes the daily morning briefing automatically</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>이 인바운드 파이프라인 전체(C.I. 대사, 실입고, Finance 대사) 데이터를 한 곳에서 교차 조회</span><span data-en>Cross-references data from across this entire inbound pipeline — C.I. reconciliation, actual receipt, Finance reconciliation — in one place</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SUPPORTING TOOL -->
+  <section class="section reveal">
+    <div class="label">Supporting Tool · Not part of the automated flow</div>
+    <h2 class="sec-title"><span data-ko>흐름 밖에서,</span><span data-en>Outside the flow,</span><br><em><span data-ko>수동 트리거용 런처</span><span data-en>a launcher for manual triggers</span></em></h2>
+
+    <div class="module-grid" style="max-width:420px;">
+
+      <div class="module-card c2 reveal">
+        <div class="module-num">GUI</div><div class="module-icon">🖥️</div>
+        <div class="module-file">import_manager_app_6in1.py</div>
+        <div class="module-title" data-ko>통합 런처 GUI</div><div class="module-title" data-en>All-in-one Launcher</div>
+        <div class="module-desc" data-ko>위 11개 모듈은 작업 스케줄러로 자동 실행되지만, 필요할 때 상태를 직접 보고 수동으로 트리거하기 위해 만든 Tkinter 6-in-1 패널. 최신 파일 수정시각, 신규 건수, 마지막 메일 발송 기록을 한눈에 보고 60초마다 자동 새로고침.</div>
+        <div class="module-desc" data-en>The 11 modules above run automatically via Task Scheduler — this Tkinter 6-in-1 panel is a self-made control surface for checking status and manually triggering them on demand. Shows latest file timestamps, new-row counts, and last sent email, auto-refreshing every 60s.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>주요 경로 유효성 자동 체크</span><span data-en>Auto-validates key paths</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>BAT 실행 후 5초 자동 상태 갱신</span><span data-en>Status refresh 5s after BAT run</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>상태값 색상 구분</span><span data-en>Color-coded status</span></div>
         </div>
       </div>
 
