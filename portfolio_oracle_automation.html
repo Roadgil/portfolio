@@ -40,8 +40,11 @@
     .section{padding:90px 60px;}
     .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
     .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-label.ax{color:var(--accent4);}
+    .section-label.ax::after{background:var(--accent4);}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
     .section-title em{font-style:italic;color:var(--accent);}
+    .section-title.ax em{color:var(--accent4);}
 
     /* module cards */
     .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
@@ -116,16 +119,16 @@
       <span data-en>From C.I. invoice verification to Pick Release execution and OTBI receipt lookups — three RPA workflows that drive Oracle Fusion directly via Selenium, extended with a Claude-based AI agent (MCP) for natural-language reporting.</span>
     </p>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num" style="color:var(--accent);">5/5</span><span class="stat-label" data-ko>라이브 검증 성공</span><span class="stat-label" data-en>Live Validation Passed</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent2);">3</span><span class="stat-label" data-ko>신규 오라클 자동화</span><span class="stat-label" data-en>New Oracle Automations</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent3);">AI</span><span class="stat-label" data-ko>자연어 리포팅 에이전트</span><span class="stat-label" data-en>NL Reporting Agent</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>수동 개입</span><span class="stat-label" data-en>Manual Intervention</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent);">5/5</span><span class="stat-label" data-ko>RPA 라이브 검증(DX)</span><span class="stat-label" data-en>RPA Live Validations (DX)</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent2);">3</span><span class="stat-label" data-ko>신규 오라클 자동화(DX)</span><span class="stat-label" data-en>New Oracle Automations (DX)</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent4);">12</span><span class="stat-label" data-ko>MCP 도구(AX)</span><span class="stat-label" data-en>MCP Tools (AX)</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent3);">0</span><span class="stat-label" data-ko>수동 개입</span><span class="stat-label" data-en>Manual Intervention</span></div>
     </div>
   </section>
 
   <section class="section">
-    <div class="section-label">Modules</div>
-    <h2 class="section-title reveal"><span data-ko>네 개의</span><span data-en>Four</span> <em><span data-ko>자동화 · AI 모듈</span><span data-en>automation &amp; AI modules</span></em></h2>
+    <div class="section-label">Modules · DX</div>
+    <h2 class="section-title reveal"><span data-ko>세 개의</span><span data-en>Three</span> <em><span data-ko>RPA 자동화 (DX)</span><span data-en>RPA Automations (DX)</span></em></h2>
     <div class="mod-grid">
 
       <div class="mod-card c1 reveal">
@@ -178,14 +181,22 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="section-label ax">Module · AX</div>
+    <h2 class="section-title ax reveal"><span data-ko>그 위에 얹은</span><span data-en>Layered on Top:</span> <em><span data-ko>AI 에이전트 (AX)</span><span data-en>An AI Agent (AX)</span></em></h2>
+    <div class="mod-grid" style="max-width:640px">
+
       <div class="mod-card c4 reveal" style="transition-delay:0.24s">
         <div class="mod-head">
           <div class="mod-file">import_declaration (MCP server)</div>
           <div class="mod-title" data-ko>AI 리포팅 에이전트</div>
           <div class="mod-title" data-en>AI Reporting Agent</div>
         </div>
-        <div class="mod-desc" data-ko>Claude와 MCP(Model Context Protocol)로 연결한 커스텀 서버. Oracle Fusion과 내부 Excel 데이터를 자연어로 질의해 실적·리드타임·variance를 즉시 조회한다.</div>
-        <div class="mod-desc" data-en>A custom MCP (Model Context Protocol) server wired to Claude, letting stakeholders query import KPIs, lead times, and TO variance from Oracle Fusion and internal Excel data in plain language.</div>
+        <div class="mod-desc" data-ko>Claude와 MCP(Model Context Protocol)로 연결한 커스텀 서버. 12개의 운영 데이터 도구로 Oracle Fusion과 내부 Excel 데이터를 자연어로 질의해 실적·리드타임·variance를 즉시 조회한다.</div>
+        <div class="mod-desc" data-en>A custom MCP (Model Context Protocol) server wired to Claude, exposing 12 operational data tools that let stakeholders query import KPIs, lead times, and TO variance from Oracle Fusion and internal Excel data in plain language.</div>
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>코드 없이 자연어로 실적·variance 조회</span><span data-en>No-code, natural-language stats &amp; variance queries</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Urgent Item 조회로 입고 지연·Customer Down 등 특이사항 선제 파악</span><span data-en>Flags shipment delays, Customer Down cases, and other exceptions early via Urgent Item lookups</span></div>

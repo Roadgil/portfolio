@@ -123,6 +123,14 @@
     .tag-blue   { color: #93c5fd; border-color: rgba(147,197,253,0.25); background: rgba(147,197,253,0.07); }
     .tag-gold   { color: #fde68a; border-color: rgba(253,230,138,0.25); background: rgba(253,230,138,0.07); }
 
+    .proj-type { display: flex; gap: 6px; margin-bottom: 14px; }
+    .type-pill {
+      font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 2px;
+      padding: 3px 9px; border-radius: 4px; text-transform: uppercase;
+    }
+    .type-pill.dx { color: #93c5fd; background: rgba(147,197,253,0.14); }
+    .type-pill.ax { color: #a78bfa; background: rgba(167,139,250,0.14); }
+
     .proj-title { font-family: 'DM Serif Display', serif; font-size: clamp(22px, 2.6vw, 32px); line-height: 1.15; margin-bottom: 14px; }
     .proj-title em { font-style: italic; }
     .p1 .proj-title em { color: var(--c1); }
@@ -218,18 +226,19 @@
   <div class="projects">
 
     <div class="group-label">
-      <span data-ko>AX / DX FLOW · 수입 운영 자동화 전환</span>
-      <span data-en>AX / DX FLOW · Import Ops Transformation</span>
+      <span data-ko>DX → AX FLOW · 수입 운영 자동화 전환</span>
+      <span data-en>DX → AX FLOW · Import Ops Transformation</span>
     </div>
     <p class="group-desc">
-      <span data-ko>수입 데이터 포착(01) → 비용 지급 자동화(05) → Oracle 검증·AI 리포팅(06) — 하나로 이어지는 파이프라인.</span>
-      <span data-en>Capture import data (01) → automate payment requests (05) → verify in Oracle and report via AI (06) — one connected pipeline.</span>
+      <span data-ko>01·05는 규칙 기반 자동화(DX)로 데이터를 모아 흘려보내고, 06에서 AI 에이전트(AX)가 그 데이터에 스스로 질의하고 판단한다 — 하나로 이어지는 파이프라인.</span>
+      <span data-en>01 and 05 move data by fixed rules (DX); 06 adds an AI agent (AX) that queries and reasons over the same data on its own — one connected pipeline.</span>
     </p>
 
     <!-- 01 Import Automation -->
     <a class="proj-card p2" href="portfolio_import_automation.html" style="animation-delay:0.30s;">
       <div class="proj-bg-num">01</div>
       <div class="proj-num">PROJECT · 01</div>
+      <div class="proj-type"><span class="type-pill dx">DX</span></div>
       <div class="proj-tags">
         <span class="tag tag-orange">Python</span>
         <span class="tag tag-green">openpyxl</span>
@@ -252,6 +261,7 @@
     <a class="proj-card p5" href="portfolio_finance_automation.html" style="animation-delay:0.38s;">
       <div class="proj-bg-num">05</div>
       <div class="proj-num">PROJECT · 05</div>
+      <div class="proj-type"><span class="type-pill dx">DX</span></div>
       <div class="proj-tags">
         <span class="tag tag-blue">Python</span>
         <span class="tag tag-orange">win32com</span>
@@ -274,6 +284,7 @@
     <a class="proj-card p6" href="portfolio_oracle_automation.html" style="animation-delay:0.46s;">
       <div class="proj-bg-num">06</div>
       <div class="proj-num">PROJECT · 06</div>
+      <div class="proj-type"><span class="type-pill dx">DX</span><span class="type-pill ax">AX</span></div>
       <div class="proj-tags">
         <span class="tag tag-orange">Selenium</span>
         <span class="tag tag-blue">Oracle Fusion</span>
@@ -285,7 +296,7 @@
         <span data-ko>Selenium으로 Oracle Fusion 화면을 직접 조작해 C.I. 송장 검증·Pick Release·OTBI 실입고 조회를 자동화하고, Claude 기반 AI 에이전트로 자연어 리포팅까지 확장.</span>
         <span data-en>Selenium drives Oracle Fusion directly to automate C.I. invoice checks, Pick Release, and OTBI receipt lookups — extended with a Claude-based AI agent for natural-language reporting.</span>
       </p>
-      <div class="proj-impact"><b>5/5</b> <span data-ko>라이브 검증</span><span data-en>live validation</span> · <span data-ko>AI 에이전트 신규 구축</span><span data-en>new AI agent built</span></div>
+      <div class="proj-impact"><b>5/5</b> <span data-ko>라이브 검증(DX)</span><span data-en>live validation (DX)</span> · <b>12</b> <span data-ko>MCP 도구(AX)</span><span data-en>MCP tools (AX)</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Selenium · Oracle Fusion Cloud<br>OTBI · Claude + MCP · win32com</div>
         <div class="proj-arrow">→</div>
