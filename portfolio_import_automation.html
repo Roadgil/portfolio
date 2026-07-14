@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>수입 자동화 시스템 · Portfolio</title>
+  <title>Inbound 풀사이클 자동화 · Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -102,7 +102,7 @@
     .stack-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text); font-weight: 500; }
     .stack-role { font-size: 11px; color: var(--muted); line-height: 1.5; }
 
-    .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--text); border-bottom: 2px solid var(--text); }
+    .stats-bar { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 2px solid var(--text); border-bottom: 2px solid var(--text); }
     .stat-block { padding: 44px 36px; border-right: 1px solid var(--border); position: relative; overflow: hidden; }
     .stat-block:last-child { border-right: none; }
     .stat-big { font-family: 'Bebas Neue', sans-serif; font-size: 60px; line-height: 1; margin-bottom: 8px; }
@@ -148,17 +148,17 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <div class="hero-eyebrow"><span class="line"></span>Import Automation · 2025–2026</div>
+      <div class="hero-eyebrow"><span class="line"></span>Inbound Full-Cycle · 2025–2026</div>
       <div>
         <h1 class="hero-title">
-          <span data-ko>수입</span><span data-en>IMPORT</span><br>
-          <span class="line-accent" data-ko>자동화</span><span class="line-accent" data-en>AUTO</span><br>
-          <span class="line-accent2" data-ko>시스템</span><span class="line-accent2" data-en>SUITE</span>
+          <span data-ko>인바운드</span><span data-en>INBOUND</span><br>
+          <span class="line-accent" data-ko>풀사이클</span><span class="line-accent" data-en>FULL-CYCLE</span><br>
+          <span class="line-accent2" data-ko>자동화</span><span class="line-accent2" data-en>AUTOMATION</span>
         </h1>
       </div>
       <p class="hero-desc">
-        <span data-ko>Outlook 메일에서 파일을 받아 Excel에 자동 반영하고 내부 공유 메일까지 발송하는 End-to-End 수입 업무 자동화. 수작업 제로(Zero)를 목표로 설계된 9개 모듈 파이썬 시스템.</span>
-        <span data-en>End-to-end import automation: pulls files from Outlook, updates Excel, and sends internal emails. A 9-module Python system built to drive manual steps to zero.</span>
+        <span data-ko>본사 Intransit 리포트 수신부터 인천관세법인 C.I. 대사(Oracle), 수입신고필증 파싱, Finance 월 대사(Report_202606)까지 — 인바운드 전 구간을 잇는 12개 모듈 파이썬 시스템. 처리 건의 98% 이상은 무인으로 처리되며, 사람은 예외 케이스만 개입한다.</span>
+        <span data-en>From HQ's Intransit report, through customs-broker C.I. reconciliation on Oracle and declaration parsing, to the monthly Finance reconciliation against Report_202606 (an internal Oracle tax-by-org report) — a 12-module Python system spanning the entire inbound cycle. 98%+ of cases run with zero human touch; people step in only for exceptions.</span>
       </p>
     </div>
 
@@ -169,14 +169,17 @@
       </div>
       <div class="hero-flow">
         <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📧</span><div class="flow-info"><div class="flow-name">outlook_intransit_downloader</div><div class="flow-role" data-ko>Outlook → Intransit xlsx 자동 다운로드</div><div class="flow-role" data-en>Outlook → Intransit xlsx auto-download</div></div><span class="flow-badge badge-blue">Outlook</span></div>
-        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">📄</span><div class="flow-info"><div class="flow-name">outlook_imp_pdf_saver</div><div class="flow-role" data-ko>수입신고필증 PDF 자동 저장</div><div class="flow-role" data-en>Import declaration PDF auto-save</div></div><span class="flow-badge badge-blue">Outlook</span></div>
-        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">📊</span><div class="flow-info"><div class="flow-name">intransit_to_ir_append_only</div><div class="flow-role" data-ko>Intransit → IR 신청목록 Append</div><div class="flow-role" data-en>Intransit → IR list append</div></div><span class="flow-badge badge-green">openpyxl</span></div>
-        <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">📑</span><div class="flow-info"><div class="flow-name">pdf_auto_updater</div><div class="flow-role" data-ko>PDF → 수입신고실적 Excel + C.I. 검증</div><div class="flow-role" data-en>PDF → import-record Excel + C.I. check</div></div><span class="flow-badge badge-orange">pdfplumber</span></div>
-        <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">🔄</span><div class="flow-info"><div class="flow-name">auto_import_complete</div><div class="flow-role" data-ko>신규행 Append + Backfill</div><div class="flow-role" data-en>New-row append + backfill</div></div><span class="flow-badge badge-green">openpyxl</span></div>
-        <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">intransit_internal_share</div><div class="flow-role" data-ko>Urgent 대조 후 내부 공유 메일</div><div class="flow-role" data-en>Urgent match → internal share email</div></div><span class="flow-badge badge-orange">win32com</span></div>
-        <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">🔁</span><div class="flow-info"><div class="flow-name">intransit_update_runner</div><div class="flow-role" data-ko>서브프로세스 실행 + State JSON</div><div class="flow-role" data-en>Subprocess run + state JSON</div></div><span class="flow-badge badge-gold">subprocess</span></div>
-        <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">🖥️</span><div class="flow-info"><div class="flow-name">import_manager_app (6-in-1)</div><div class="flow-role" data-ko>Tkinter 통합 런처 GUI</div><div class="flow-role" data-en>Tkinter all-in-one launcher GUI</div></div><span class="flow-badge badge-red">tkinter</span></div>
+        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">📊</span><div class="flow-info"><div class="flow-name">intransit_to_ir_append_only</div><div class="flow-role" data-ko>Intransit → IR 신청목록 Append</div><div class="flow-role" data-en>Intransit → IR list append</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">✅</span><div class="flow-info"><div class="flow-name">icbl_ci_watcher</div><div class="flow-role" data-ko>인천관세법인 C.I. 대사(Oracle)</div><div class="flow-role" data-en>Customs-broker C.I. reconciliation (Oracle)</div></div><span class="flow-badge badge-purple">Selenium</span></div>
+        <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">📄</span><div class="flow-info"><div class="flow-name">outlook_imp_pdf_saver</div><div class="flow-role" data-ko>수입신고필증 PDF 자동 저장</div><div class="flow-role" data-en>Import declaration PDF auto-save</div></div><span class="flow-badge badge-blue">Outlook</span></div>
+        <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">📑</span><div class="flow-info"><div class="flow-name">pdf_auto_updater</div><div class="flow-role" data-ko>PDF → 수입신고실적 Excel + C.I. 검증</div><div class="flow-role" data-en>PDF → import-record Excel + C.I. check</div></div><span class="flow-badge badge-orange">pdfplumber</span></div>
+        <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">📦</span><div class="flow-info"><div class="flow-name">otbi_to_receipt_report</div><div class="flow-role" data-ko>OTBI 실입고 확인 + variance 계산</div><div class="flow-role" data-en>OTBI actual-receipt check + variance</div></div><span class="flow-badge badge-gold">OTBI</span></div>
+        <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">🔄</span><div class="flow-info"><div class="flow-name">auto_import_complete</div><div class="flow-role" data-ko>신규행 Append + Backfill</div><div class="flow-role" data-en>New-row append + backfill</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">intransit_internal_share</div><div class="flow-role" data-ko>Urgent 대조 후 내부 공유 메일</div><div class="flow-role" data-en>Urgent match → internal share email</div></div><span class="flow-badge badge-orange">win32com</span></div>
         <div class="flow-step"><span class="flow-num">09</span><span class="flow-icon">🧊</span><div class="flow-info"><div class="flow-name">urgent_item_freezer</div><div class="flow-role" data-ko>입고 확정 시 수식 고정 + 서비스팀 알림</div><div class="flow-role" data-en>Freezes formulas on arrival + notifies service team</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">10</span><span class="flow-icon">🔁</span><div class="flow-info"><div class="flow-name">intransit_update_runner</div><div class="flow-role" data-ko>서브프로세스 실행 + State JSON</div><div class="flow-role" data-en>Subprocess run + state JSON</div></div><span class="flow-badge badge-gold">subprocess</span></div>
+        <div class="flow-step"><span class="flow-num">11</span><span class="flow-icon">🖥️</span><div class="flow-info"><div class="flow-name">import_manager_app (6-in-1)</div><div class="flow-role" data-ko>Tkinter 통합 런처 GUI</div><div class="flow-role" data-en>Tkinter all-in-one launcher GUI</div></div><span class="flow-badge badge-red">tkinter</span></div>
+        <div class="flow-step"><span class="flow-num">12</span><span class="flow-icon">🤖</span><div class="flow-info"><div class="flow-name">import_declaration (MCP server)</div><div class="flow-role" data-ko>자연어 질의 AI 에이전트</div><div class="flow-role" data-en>Natural-language AI query agent</div></div><span class="flow-badge badge-purple">Claude + MCP</span></div>
       </div>
     </div>
   </section>
@@ -184,12 +187,17 @@
   <!-- STATS -->
   <div class="stats-bar reveal">
     <div class="stat-block">
+      <div class="stat-big" style="color:var(--accent4);">98<span style="font-size:28px;">%+</span></div>
+      <div class="stat-label" data-ko>인바운드 무인 처리</div><div class="stat-label" data-en>Inbound Autonomy</div>
+      <div class="stat-sub" data-ko>사람은 예외 케이스만 개입</div><div class="stat-sub" data-en>people step in for exceptions only</div>
+    </div>
+    <div class="stat-block">
       <div class="stat-big" style="color:var(--accent2);">2<span style="font-size:28px;">h→</span>2<span style="font-size:28px;">m</span></div>
       <div class="stat-label" data-ko>일일 작업 단축</div><div class="stat-label" data-en>Daily Task Cut</div>
       <div class="stat-sub" data-ko>통관 추적 ~60× 단축</div><div class="stat-sub" data-en>customs tracking ~60× faster</div>
     </div>
     <div class="stat-block">
-      <div class="stat-big" style="color:var(--accent);">9</div>
+      <div class="stat-big" style="color:var(--accent);">12</div>
       <div class="stat-label" data-ko>파이썬 모듈</div><div class="stat-label" data-en>Python Modules</div>
       <div class="stat-sub" data-ko>단일 런처로 통합 실행</div><div class="stat-sub" data-en>one unified launcher</div>
     </div>
@@ -208,7 +216,7 @@
   <!-- MODULES -->
   <section class="section reveal">
     <div class="label">Modules</div>
-    <h2 class="sec-title"><span data-ko>9개 모듈로</span><span data-en>Nine modules,</span><br><em><span data-ko>완성된 파이프라인</span><span data-en>one pipeline</span></em></h2>
+    <h2 class="sec-title"><span data-ko>12개 모듈로</span><span data-en>Twelve modules,</span><br><em><span data-ko>완성된 파이프라인</span><span data-en>one pipeline</span></em></h2>
 
     <div class="module-grid">
 
@@ -334,6 +342,46 @@
         </div>
       </div>
 
+      <div class="module-card c3 reveal" style="transition-delay:0.45s">
+        <div class="module-num">10</div><div class="module-icon">✅</div>
+        <div class="module-file">icbl_ci_watcher.py</div>
+        <div class="module-title" data-ko>C.I. 송장 검증기</div><div class="module-title" data-en>C.I. Invoice Watcher</div>
+        <div class="module-desc" data-ko>인천관세법인 메일의 AWB/DHL 송장을 자동 감지하고, Selenium으로 Oracle Cloud ERP에 로그인해 신고 금액과 실시간 대사한다. 5회 연속 라이브 테스트에서 100% 일치.</div>
+        <div class="module-desc" data-en>Detects AWB/DHL invoices from the customs broker's mail and drives Oracle Cloud ERP via Selenium to reconcile amounts against declared values in real time — a 100% match across 5 consecutive live runs.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>DHL 인보이스 포맷까지 지원, 두 창고 물량이 섞인 인보이스도 자동 분리해 각각 대사</span><span data-en>Also supports the DHL format and auto-splits invoices that bundle shipments from two different warehouses</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>송장에서 배송번호 자동 인식</span><span data-en>Auto-extracts shipment numbers from the invoice</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>금액 일치 시 원본 그대로, 불일치 시 오라클 기준 인보이스로 답장 초안 자동 작성</span><span data-en>Drafts the reply automatically — original invoice on a match, Oracle-sourced invoice on a mismatch</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>Outbound(Pick Release) 자동화와 오라클 화면이 겹치면 새 탭에서 독립 처리</span><span data-en>Runs in an isolated tab when it overlaps with the outbound Pick Release automation</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c1 reveal" style="transition-delay:0.5s">
+        <div class="module-num">11</div><div class="module-icon">📦</div>
+        <div class="module-file">otbi_to_receipt_report.py</div>
+        <div class="module-title" data-ko>OTBI 실입고 리포트</div><div class="module-title" data-en>OTBI Receipt Report</div>
+        <div class="module-desc" data-ko>Oracle OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다.</div>
+        <div class="module-desc" data-en>Pulls actual Transfer-Order receipt dates from Oracle OTBI, replacing the old "declaration date + 2 business days" estimate with verified data.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>추정치 vs 실제 입고일 variance 자동 계산</span><span data-en>Auto-computes variance between estimate and actual</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>실제 입고가 확인되는 순간 Urgent Item 알림·통관완료 알림까지 자동 연쇄 발동</span><span data-en>The moment actual receipt is confirmed, it automatically triggers a chain of Urgent Item and clearance-complete notifications</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>배터리 전원 조건으로 조용히 스킵되던 실행 버그 수정</span><span data-en>Fixed a silent-skip bug tied to a battery-power condition</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c5 reveal" style="transition-delay:0.55s">
+        <div class="module-num">12</div><div class="module-icon">🤖</div>
+        <div class="module-file">import_declaration (MCP server)</div>
+        <div class="module-title" data-ko>AI 리포팅 에이전트</div><div class="module-title" data-en>AI Reporting Agent</div>
+        <div class="module-desc" data-ko>Claude와 MCP(Model Context Protocol)로 연결한 커스텀 서버. 12개의 운영 데이터 도구로 Oracle Fusion과 내부 Excel 데이터를 자연어로 질의해 실적·리드타임·variance를 즉시 조회한다.</div>
+        <div class="module-desc" data-en>A custom MCP (Model Context Protocol) server wired to Claude, exposing 12 operational data tools that let stakeholders query import KPIs, lead times, and TO variance from Oracle Fusion and internal Excel data in plain language.</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>코드 없이 자연어로 실적·variance 조회, Urgent Item 조회로 입고 지연·Customer Down 등 특이사항 선제 파악</span><span data-en>No-code, natural-language stats &amp; variance queries, plus early flags on shipment delays, Customer Down cases, and other Urgent Item exceptions</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>이 AI 하나로 필요할 때 직접 물어보기도 하고, 매일 아침 자동 브리핑도 똑같이 처리</span><span data-en>One AI, two jobs — answers on-demand questions and writes the daily morning briefing automatically</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>이 인바운드 파이프라인 전체(C.I. 대사, 실입고, Finance 대사) 데이터를 한 곳에서 교차 조회</span><span data-en>Cross-references data from across this entire inbound pipeline — C.I. reconciliation, actual receipt, Finance reconciliation — in one place</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -344,10 +392,13 @@
     <div class="pipeline">
       <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>Outlook 수신</div><div class="pipe-title" data-en>Outlook In</div><div class="pipe-desc" data-ko>Intransit 리포트 & 수입신고필증 PDF 자동 감지</div><div class="pipe-desc" data-en>Detects Intransit reports &amp; declaration PDFs</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">💾</div><div class="pipe-title" data-ko>파일 저장</div><div class="pipe-title" data-en>Save Files</div><div class="pipe-desc" data-ko>날짜 suffix · 중복 방지 후 공유 드라이브 저장</div><div class="pipe-desc" data-en>Date-suffix, dedup, save to shared drive</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">📊</div><div class="pipe-title" data-ko>Excel 반영</div><div class="pipe-title" data-en>Excel Update</div><div class="pipe-desc" data-ko>IR 목록 · 실적에 Append + Backfill + C.I. 검증</div><div class="pipe-desc" data-en>Append + backfill + C.I. check</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>Urgent 대조</div><div class="pipe-title" data-en>Urgent Match</div><div class="pipe-desc" data-ko>요청 품목 선적 확인 · 메일 콘텐츠 생성</div><div class="pipe-desc" data-en>Check requested parts, build mail</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>메일 발송</div><div class="pipe-title" data-en>Send Mail</div><div class="pipe-desc" data-ko>HTML 메일 자동 발송 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Auto HTML mail, update state JSON</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">🖥️</div><div class="pipe-title" data-ko>GUI 모니터링</div><div class="pipe-title" data-en>GUI Monitor</div><div class="pipe-desc" data-ko>런처 상태 패널에서 전체 결과 확인</div><div class="pipe-desc" data-en>Review results in the launcher panel</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">✅</div><div class="pipe-title" data-ko>C.I. 대사</div><div class="pipe-title" data-en>C.I. Reconcile</div><div class="pipe-desc" data-ko>인천관세법인 송장을 Oracle과 실시간 대사(통관 전)</div><div class="pipe-desc" data-en>Reconciles broker invoices against Oracle, before clearance</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📊</div><div class="pipe-title" data-ko>Excel 반영</div><div class="pipe-title" data-en>Excel Update</div><div class="pipe-desc" data-ko>IR 목록 · 실적에 Append + Backfill + C.I. 검증</div><div class="pipe-desc" data-en>Append + backfill + C.I. check</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📦</div><div class="pipe-title" data-ko>실입고 확인</div><div class="pipe-title" data-en>Actual Receipt</div><div class="pipe-desc" data-ko>OTBI로 실제 입고일 확인, 추정치 variance 계산</div><div class="pipe-desc" data-en>Confirms actual receipt via OTBI, computes variance</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>Urgent 대조</div><div class="pipe-title" data-en>Urgent Match</div><div class="pipe-desc" data-ko>요청 품목 선적/입고 확인 · 메일 콘텐츠 생성</div><div class="pipe-desc" data-en>Check requested parts, build mail</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 07</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>메일 발송</div><div class="pipe-title" data-en>Send Mail</div><div class="pipe-desc" data-ko>HTML 메일 자동 발송 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Auto HTML mail, update state JSON</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 08</div><div class="pipe-icon">🖥️</div><div class="pipe-title" data-ko>GUI 모니터링</div><div class="pipe-title" data-en>GUI Monitor</div><div class="pipe-desc" data-ko>런처 상태 패널에서 전체 결과 확인</div><div class="pipe-desc" data-en>Review results in the launcher panel</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 09</div><div class="pipe-icon">🏦</div><div class="pipe-title" data-ko>Finance 월 대사</div><div class="pipe-title" data-en>Finance Reconcile</div><div class="pipe-desc" data-ko>Report_202606 기준 월 1회 검토, 컴플라이언스·감사 리스크 관리</div><div class="pipe-desc" data-en>Reviews monthly against Report_202606, managing compliance &amp; audit risk</div></div>
     </div>
   </section>
 
@@ -363,12 +414,15 @@
       <div class="stack-card reveal" style="transition-delay:0.2s"><div class="stack-emoji">🖥️</div><div class="stack-name">tkinter</div><div class="stack-role" data-ko>통합 런처 GUI</div><div class="stack-role" data-en>Unified launcher GUI</div></div>
       <div class="stack-card reveal" style="transition-delay:0.3s"><div class="stack-emoji">⚙️</div><div class="stack-name">subprocess</div><div class="stack-role" data-ko>스크립트 파이프라인 연결</div><div class="stack-role" data-en>Script pipeline glue</div></div>
       <div class="stack-card reveal" style="transition-delay:0.35s"><div class="stack-emoji">📝</div><div class="stack-name">JSON State</div><div class="stack-role" data-ko>중복 방지 · 재실행 안전성</div><div class="stack-role" data-en>Dedup · safe re-runs</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.4s"><div class="stack-emoji">🖱️</div><div class="stack-name">Selenium</div><div class="stack-role" data-ko>Oracle Fusion 화면 C.I. 대사</div><div class="stack-role" data-en>Oracle Fusion C.I. reconciliation</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.45s"><div class="stack-emoji">☁️</div><div class="stack-name">Oracle Fusion / OTBI</div><div class="stack-role" data-ko>실입고 조회 · Report_202606 대사</div><div class="stack-role" data-en>Actual-receipt lookup · Report_202606 reconciliation</div></div>
+      <div class="stack-card reveal" style="transition-delay:0.5s"><div class="stack-emoji">🤖</div><div class="stack-name">Claude + MCP</div><div class="stack-role" data-ko>자연어 리포팅 AI 에이전트</div><div class="stack-role" data-en>Natural-language reporting agent</div></div>
     </div>
   </section>
 
   <footer>
-    <div><div class="footer-brand">IMPORT<br><span>AUTO</span></div></div>
-    <div class="footer-stack">PYTHON · WIN32COM · OPENPYXL<br>PDFPLUMBER · TKINTER<br>SUBPROCESS · JSON STATE</div>
+    <div><div class="footer-brand">INBOUND<br><span>FULL-CYCLE</span></div></div>
+    <div class="footer-stack">PYTHON · WIN32COM · OPENPYXL<br>PDFPLUMBER · TKINTER · SUBPROCESS<br>JSON STATE · SELENIUM · ORACLE FUSION · CLAUDE + MCP</div>
   </footer>
 
   <script>

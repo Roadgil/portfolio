@@ -226,33 +226,33 @@
   <div class="projects">
 
     <div class="group-label">
-      <span data-ko>DX → AX FLOW · 수입 운영 자동화 전환</span>
-      <span data-en>DX → AX FLOW · Import Ops Transformation</span>
+      <span data-ko>DX + AX FLOW · 수입 운영 자동화 전환</span>
+      <span data-en>DX + AX FLOW · Import Ops Transformation</span>
     </div>
     <p class="group-desc">
-      <span data-ko>01·05는 규칙 기반 자동화(DX)로 데이터를 모아 흘려보내고, 06에서 AI 에이전트(AX)가 그 데이터에 스스로 질의하고 판단한다 — 하나로 이어지는 파이프라인.</span>
-      <span data-en>01 and 05 move data by fixed rules (DX); 06 adds an AI agent (AX) that queries and reasons over the same data on its own — one connected pipeline.</span>
+      <span data-ko>01은 입고 추적부터 통관 C.I. 대사·Finance 월 대사까지 인바운드 전 구간을 자동화하며 AI 에이전트(AX)까지 포함한다. 05는 지급요청을, 06은 출고(Pick Release)를 각각 규칙 기반(DX)으로 자동화한다.</span>
+      <span data-en>01 automates the entire inbound cycle end to end — tracking, customs C.I. reconciliation, and the monthly Finance review — and folds in an AI agent (AX). 05 automates payment requests and 06 automates outbound stock release, both rule-based (DX).</span>
     </p>
 
     <!-- 01 Import Automation -->
     <a class="proj-card p2" href="portfolio_import_automation.html" style="animation-delay:0.30s;">
       <div class="proj-bg-num">01</div>
       <div class="proj-num">PROJECT · 01</div>
-      <div class="proj-type"><span class="type-pill dx">DX</span></div>
+      <div class="proj-type"><span class="type-pill dx">DX</span><span class="type-pill ax">AX</span></div>
       <div class="proj-tags">
         <span class="tag tag-orange">Python</span>
+        <span class="tag tag-blue">Selenium</span>
         <span class="tag tag-green">openpyxl</span>
-        <span class="tag tag-blue">win32com</span>
-        <span class="tag tag-teal">pdfplumber</span>
+        <span class="tag tag-purple">Claude + MCP</span>
       </div>
-      <h2 class="proj-title"><span data-ko>수입 업무</span><span data-en>Import Ops</span><br><em><span data-ko>자동화 시스템</span><span data-en>Automation Suite</span></em></h2>
+      <h2 class="proj-title"><span data-ko>인바운드</span><span data-en>Inbound</span><br><em><span data-ko>풀사이클 자동화</span><span data-en>Full-Cycle Automation</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>Outlook 수신부터 Excel 반영·내부 메일 발송까지, 통관 추적을 완전 자동화한 9개 모듈 파이썬 파이프라인.</span>
-        <span data-en>A 9-module Python pipeline automating customs tracking end-to-end — from Outlook intake to Excel updates and internal email.</span>
+        <span data-ko>Outlook 수신부터 Oracle 기반 통관 C.I. 대사, 수입신고필증 파싱, Finance 월 대사까지 12개 모듈로 완전 자동화한 인바운드 파이프라인. 처리 건의 98% 이상을 사람 개입 없이 처리한다.</span>
+        <span data-en>A 12-module pipeline automating the inbound cycle end-to-end — Outlook intake, Oracle-based C.I. reconciliation, declaration parsing, and the monthly Finance review. 98%+ of cases run with zero human touch.</span>
       </p>
-      <div class="proj-impact"><span data-ko>일일</span><span data-en>Daily</span> 2h → 2min · <b>~60×</b> <span data-ko>단축</span><span data-en>faster</span></div>
+      <div class="proj-impact"><b>98%+</b> <span data-ko>무인 처리</span><span data-en>hands-off</span> · <b>12</b> <span data-ko>모듈</span><span data-en>modules</span></div>
       <div class="proj-meta">
-        <div class="proj-stack">Python · win32com · openpyxl<br>pdfplumber · subprocess</div>
+        <div class="proj-stack">Python · Selenium · win32com · openpyxl<br>pdfplumber · Oracle Fusion · Claude + MCP</div>
         <div class="proj-arrow">→</div>
       </div>
     </a>
@@ -284,21 +284,21 @@
     <a class="proj-card p6" href="portfolio_oracle_automation.html" style="animation-delay:0.46s;">
       <div class="proj-bg-num">06</div>
       <div class="proj-num">PROJECT · 06</div>
-      <div class="proj-type"><span class="type-pill dx">DX</span><span class="type-pill ax">AX</span></div>
+      <div class="proj-type"><span class="type-pill dx">DX</span></div>
       <div class="proj-tags">
         <span class="tag tag-orange">Selenium</span>
         <span class="tag tag-blue">Oracle Fusion</span>
-        <span class="tag tag-purple">Claude + MCP</span>
-        <span class="tag tag-teal">OTBI</span>
+        <span class="tag tag-green">win32com</span>
+        <span class="tag tag-gold">Auto Re-login</span>
       </div>
-      <h2 class="proj-title"><span data-ko>오라클 RPA</span><span data-en>Oracle RPA</span><br><em><span data-ko>+ AI 리포팅 에이전트</span><span data-en>+ AI Reporting Agent</span></em></h2>
+      <h2 class="proj-title"><span data-ko>출고 자동화</span><span data-en>Outbound Ops</span><br><em><span data-ko>Pick Release RPA</span><span data-en>Pick Release RPA</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>Selenium으로 Oracle Fusion 화면을 직접 조작해 C.I. 송장 검증·Pick Release·OTBI 실입고 조회를 자동화하고, Claude 기반 AI 에이전트로 자연어 리포팅까지 확장.</span>
-        <span data-en>Selenium drives Oracle Fusion directly to automate C.I. invoice checks, Pick Release, and OTBI receipt lookups — extended with a Claude-based AI agent for natural-language reporting.</span>
+        <span data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고 처리 결과 회신까지 작성하는 출고 자동화.</span>
+        <span data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</span>
       </p>
-      <div class="proj-impact"><b>5/5</b> <span data-ko>라이브 검증(DX)</span><span data-en>live validation (DX)</span> · <b>12</b> <span data-ko>MCP 도구(AX)</span><span data-en>MCP tools (AX)</span></div>
+      <div class="proj-impact"><b>25</b> <span data-ko>건/메일 동시 처리</span><span data-en>orders per email</span> · <span data-ko>SSO 자동 재로그인</span><span data-en>SSO auto re-login</span></div>
       <div class="proj-meta">
-        <div class="proj-stack">Python · Selenium · Oracle Fusion Cloud<br>OTBI · Claude + MCP · win32com</div>
+        <div class="proj-stack">Python · Selenium · Oracle Fusion Cloud<br>win32com</div>
         <div class="proj-arrow">→</div>
       </div>
     </a>
