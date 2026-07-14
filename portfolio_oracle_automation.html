@@ -118,7 +118,7 @@
     <div class="hero-stats">
       <div class="stat"><span class="stat-num" style="color:var(--accent);">25</span><span class="stat-label" data-ko>건/메일 동시 처리</span><span class="stat-label" data-en>Orders per Email</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인(검증완료)</span><span class="stat-label" data-en>Auto Re-login (Verified)</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent3);">5–30<span style="font-size:20px;">min</span></span><span class="stat-label" data-ko>피크/한산 폴링 튜닝</span><span class="stat-label" data-en>Peak/Off-peak Polling</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent3);">5<span style="font-size:20px;">/20-30</span><span style="font-size:20px;">min</span></span><span class="stat-label" data-ko>피크/한산 폴링 튜닝</span><span class="stat-label" data-en>Peak/Off-peak Polling</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>수동 개입</span><span class="stat-label" data-en>Manual Intervention</span></div>
     </div>
   </section>
@@ -138,7 +138,7 @@
         <div class="mod-desc" data-en>Detects service-team DCD/consumables and defect/promotion stock-request emails, executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</div>
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 파싱부터 Oracle 트랜잭션 실행까지 무인 처리</span><span data-en>Unattended end to end — from parsing the email to the Oracle transaction</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 1건에 병원 여러 곳(최대 25건)이 묶여도 각각 개별 자동 처리</span><span data-en>Splits and processes up to 25 bundled orders from a single email individually</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 1건에 병원 여러 곳(최대 25건)이 묶여도 각각 개별 자동 처리</span><span data-en>Splits up to 25 bundled orders from a single email and processes each individually</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Oracle SSO 세션이 끊겨도 자동 재로그인 후 계속 진행 (라이브 검증 완료)</span><span data-en>Auto re-authenticates via SSO on session drop and resumes — verified live</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>2026년 실제 메일 도착 시간대 데이터를 분석해 체크 주기를 피크 구간 5분, 한산한 구간 20~30분으로 튜닝</span><span data-en>Tuned polling intervals (5 min at peak, 20–30 min off-peak) from an analysis of real 2026 mail-arrival timestamps</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Inbound 쪽 C.I. 대사 자동화와 오라클 화면이 겹치면 새 탭에서 독립 처리 (양방향 라이브 시뮬레이션으로 검증)</span><span data-en>Runs in an isolated tab when it overlaps with the inbound C.I. reconciliation automation — verified via live two-way simulation</span></div>

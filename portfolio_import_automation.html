@@ -43,7 +43,7 @@
     .hero-flow { position: relative; display: flex; flex-direction: column; gap: 0; }
     .flow-step { display: flex; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); animation: fadeRight 0.6s ease both; }
     .flow-step:last-child { border-bottom: none; }
-    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.40s}.flow-step:nth-child(7){animation-delay:.46s}.flow-step:nth-child(8){animation-delay:.52s}.flow-step:nth-child(9){animation-delay:.58s}.flow-step:nth-child(10){animation-delay:.64s}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.40s}.flow-step:nth-child(7){animation-delay:.46s}.flow-step:nth-child(8){animation-delay:.52s}.flow-step:nth-child(9){animation-delay:.58s}.flow-step:nth-child(10){animation-delay:.64s}.flow-step:nth-child(11){animation-delay:.70s}.flow-step:nth-child(12){animation-delay:.76s}
     .flow-num { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.25); width: 24px; flex-shrink: 0; }
     .flow-icon { font-size: 19px; width: 34px; text-align: center; flex-shrink: 0; }
     .flow-info { flex: 1; }
@@ -225,7 +225,7 @@
         <div class="module-file">import_manager_app_6in1.py</div>
         <div class="module-title" data-ko>통합 런처 GUI</div><div class="module-title" data-en>All-in-one Launcher</div>
         <div class="module-desc" data-ko>Tkinter 6-in-1 실행 패널. 최신 파일 수정시각, 신규 건수, 마지막 메일 발송 기록을 한눈에 보고 60초마다 자동 새로고침.</div>
-        <div class="module-desc" data-en>A Tkinter 6-in-1 panel showing latest file timestamps, new-row counts, and last email sent — auto-refreshing every 60s.</div>
+        <div class="module-desc" data-en>A Tkinter 6-in-1 panel showing latest file timestamps, new-row counts, and last sent email — auto-refreshing every 60s.</div>
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>주요 경로 유효성 자동 체크</span><span data-en>Auto-validates key paths</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>BAT 실행 후 5초 자동 상태 갱신</span><span data-en>Status refresh 5s after BAT run</span></div>
@@ -250,8 +250,8 @@
         <div class="module-num">03</div><div class="module-icon">📄</div>
         <div class="module-file">outlook_imp_pdf_saver.py</div>
         <div class="module-title" data-ko>수입신고필증 PDF 저장기</div><div class="module-title" data-en>Declaration PDF Saver</div>
-        <div class="module-desc" data-ko>통관 브로커 메일에서 IMP_ 프리픽스 PDF 첨부를 자동 저장. State JSON으로 중복 스캔 방지, 수정신고 시 덮어쓰기.</div>
-        <div class="module-desc" data-en>Auto-saves IMP_-prefixed PDF attachments from broker emails. State JSON prevents re-scans; amended filings overwrite.</div>
+        <div class="module-desc" data-ko>인천관세법인 메일에서 IMP_ 프리픽스 PDF 첨부를 자동 저장. State JSON으로 중복 스캔 방지, 수정신고 시 덮어쓰기.</div>
+        <div class="module-desc" data-en>Auto-saves IMP_-prefixed PDF attachments from the customs broker's mail. State JSON prevents re-scans; amended filings overwrite the existing PDF.</div>
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>State JSON 기반 마지막 실행 추적</span><span data-en>State-JSON tracks last run</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>cutoff 이후만 스캔</span><span data-en>Scans only after cutoff</span></div>
@@ -267,7 +267,7 @@
         <div class="module-desc" data-en>Selects the latest Intransit xlsx and appends only new rows by ascending Ship Date, preserving existing order.</div>
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>중복 행 완전 차단 (Set 기반)</span><span data-en>Set-based dedup</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>선적일 / 창고 입고 예정 자동 계산</span><span data-en>Auto ship/warehouse-ETA calc</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>선적일 / 창고 입고 예정 자동 계산</span><span data-en>Auto-calc: ship date &amp; warehouse ETA</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>실행 전 타임스탬프 백업</span><span data-en>Timestamped backup before run</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>누적 14,000+ 건 (Intransit 시트 기준)</span><span data-en>14,000+ records accumulated (Intransit sheet)</span></div>
         </div>
@@ -338,7 +338,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>입고 확정된 행만 골라 수식 → 값 고정</span><span data-en>Freezes formulas only on rows marked received</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>같은 건 중복 알림 방지</span><span data-en>Prevents duplicate arrival notices</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>서비스팀 앞 입고 알림 메일 자동 발송</span><span data-en>Auto-sends the arrival notice to the service team</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>입고 판정 기준을 '신고일+2영업일 추정'에서 OTBI 실입고 이벤트 기반으로 전환, 상반기 약 30건 처리</span><span data-en>Shifted arrival detection from a 'declaration + 2 business days' estimate to actual OTBI receipt events — ~30 requests processed in H1</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>입고 판정 기준을 '신고일+2영업일 추정'에서 OTBI 실입고 이벤트 기반으로 전환 — 상반기 약 30건 처리</span><span data-en>Shifted arrival detection from a 'declaration + 2 business days' estimate to actual OTBI receipt events — ~30 requests processed in H1</span></div>
         </div>
       </div>
 
@@ -347,7 +347,7 @@
         <div class="module-file">icbl_ci_watcher.py</div>
         <div class="module-title" data-ko>C.I. 송장 검증기</div><div class="module-title" data-en>C.I. Invoice Watcher</div>
         <div class="module-desc" data-ko>인천관세법인 메일의 AWB/DHL 송장을 자동 감지하고, Selenium으로 Oracle Cloud ERP에 로그인해 신고 금액과 실시간 대사한다. 5회 연속 라이브 테스트에서 100% 일치.</div>
-        <div class="module-desc" data-en>Detects AWB/DHL invoices from the customs broker's mail and drives Oracle Cloud ERP via Selenium to reconcile amounts against declared values in real time — a 100% match across 5 consecutive live runs.</div>
+        <div class="module-desc" data-en>Detects AWB/DHL invoices from the customs broker's mail and drives the Oracle Cloud ERP UI via Selenium to reconcile amounts against declared values in real time — a 100% match across 5 consecutive live runs.</div>
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>DHL 인보이스 포맷까지 지원, 두 창고 물량이 섞인 인보이스도 자동 분리해 각각 대사</span><span data-en>Also supports the DHL format and auto-splits invoices that bundle shipments from two different warehouses</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>송장에서 배송번호 자동 인식</span><span data-en>Auto-extracts shipment numbers from the invoice</span></div>
