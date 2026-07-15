@@ -174,8 +174,8 @@
         <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">✅</span><div class="flow-info"><div class="flow-name">icbl_ci_watcher</div><div class="flow-role" data-ko>인천관세법인 C.I. 대사(Oracle)</div><div class="flow-role" data-en>Customs-broker C.I. reconciliation (Oracle)</div></div><span class="flow-badge badge-purple">Selenium</span></div>
         <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">📄</span><div class="flow-info"><div class="flow-name">outlook_imp_pdf_saver</div><div class="flow-role" data-ko>수입신고필증 PDF 자동 저장</div><div class="flow-role" data-en>Import declaration PDF auto-save</div></div><span class="flow-badge badge-blue">Outlook</span></div>
         <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">📑</span><div class="flow-info"><div class="flow-name">pdf_auto_updater</div><div class="flow-role" data-ko>PDF → 수입신고실적 Excel + C.I. 검증</div><div class="flow-role" data-en>PDF → import-record Excel + C.I. check</div></div><span class="flow-badge badge-orange">pdfplumber</span></div>
-        <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">📦</span><div class="flow-info"><div class="flow-name">otbi_to_receipt_report</div><div class="flow-role" data-ko>OTBI 실입고 확인 + variance 계산</div><div class="flow-role" data-en>OTBI actual-receipt check + variance</div></div><span class="flow-badge badge-gold">OTBI</span></div>
-        <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">🔄</span><div class="flow-info"><div class="flow-name">auto_import_complete</div><div class="flow-role" data-ko>신규행 Append + Backfill</div><div class="flow-role" data-en>New-row append + backfill</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">🔄</span><div class="flow-info"><div class="flow-name">auto_import_complete</div><div class="flow-role" data-ko>신규행 Append + Backfill</div><div class="flow-role" data-en>New-row append + backfill</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">📦</span><div class="flow-info"><div class="flow-name">otbi_to_receipt_report</div><div class="flow-role" data-ko>OTBI 실입고 확인 + variance 계산</div><div class="flow-role" data-en>OTBI actual-receipt check + variance</div></div><span class="flow-badge badge-gold">OTBI</span></div>
         <div class="flow-step"><span class="flow-num">09</span><span class="flow-icon">🧊</span><div class="flow-info"><div class="flow-name">urgent_item_freezer</div><div class="flow-role" data-ko>입고 확정 시 수식 고정 + 서비스팀 알림</div><div class="flow-role" data-en>Freezes formulas on arrival + notifies service team</div></div><span class="flow-badge badge-green">openpyxl</span></div>
         <div class="flow-step"><span class="flow-num">10</span><span class="flow-icon">🤖</span><div class="flow-info"><div class="flow-name">import_declaration (MCP server)</div><div class="flow-role" data-ko>자연어 질의 AI 에이전트</div><div class="flow-role" data-en>Natural-language AI query agent</div></div><span class="flow-badge badge-purple">Claude + MCP</span></div>
       </div>
@@ -301,28 +301,28 @@
       </div>
 
       <div class="module-card c2 reveal" style="transition-delay:0.3s">
-        <div class="module-num">07</div><div class="module-icon">📦</div>
-        <div class="module-file">otbi_to_receipt_report.py</div>
-        <div class="module-title" data-ko>OTBI 실입고 리포트</div><div class="module-title" data-en>OTBI Receipt Report</div>
-        <div class="module-desc" data-ko>Oracle OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다.</div>
-        <div class="module-desc" data-en>Pulls actual Transfer-Order receipt dates from Oracle OTBI, replacing the old "declaration date + 2 business days" estimate with verified data.</div>
-        <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>추정치 vs 실제 입고일 variance 자동 계산</span><span data-en>Auto-computes variance between estimate and actual</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>실제 입고가 확인되는 순간 Urgent Item 알림·통관완료 알림까지 자동 연쇄 발동</span><span data-en>The moment actual receipt is confirmed, it automatically triggers a chain of Urgent Item and clearance-complete notifications</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>배터리 전원 조건으로 조용히 스킵되던 실행 버그 수정</span><span data-en>Fixed a silent-skip bug tied to a battery-power condition</span></div>
-        </div>
-      </div>
-
-      <div class="module-card c3 reveal" style="transition-delay:0.35s">
-        <div class="module-num">08</div><div class="module-icon">🔄</div>
+        <div class="module-num">07</div><div class="module-icon">🔄</div>
         <div class="module-file">auto_import_complete.py</div>
         <div class="module-title" data-ko>Append + Backfill</div><div class="module-title" data-en>Append + Backfill</div>
         <div class="module-desc" data-ko>Intransit 데이터를 실적에 추가하고 기존 행의 빈 칸(SN/Lot)을 Backfill. 유일 후보만 채워 오류 방지.</div>
         <div class="module-desc" data-en>Appends Intransit data and backfills empty SN/Lot cells on existing rows — filling only unique candidates to avoid errors.</div>
         <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>Delivery 번호 혼합형 통일 인식</span><span data-en>Normalizes mixed delivery IDs</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>Backfill: 유일 후보만, 중복이면 스킵</span><span data-en>Backfill unique-only, skip on dupes</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>동일 Intransit 내 중복 1회만 append</span><span data-en>Appends each dup once</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Delivery 번호 혼합형 통일 인식</span><span data-en>Normalizes mixed delivery IDs</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Backfill: 유일 후보만, 중복이면 스킵</span><span data-en>Backfill unique-only, skip on dupes</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>동일 Intransit 내 중복 1회만 append</span><span data-en>Appends each dup once</span></div>
+        </div>
+      </div>
+
+      <div class="module-card c3 reveal" style="transition-delay:0.35s">
+        <div class="module-num">08</div><div class="module-icon">📦</div>
+        <div class="module-file">otbi_to_receipt_report.py</div>
+        <div class="module-title" data-ko>OTBI 실입고 리포트</div><div class="module-title" data-en>OTBI Receipt Report</div>
+        <div class="module-desc" data-ko>Oracle OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다. 통관·실적 반영이 끝난 건만 매칭 대상이라, 이 리포트는 반드시 위 07번(Append + Backfill) 다음에 돌아야 한다.</div>
+        <div class="module-desc" data-en>Pulls actual Transfer-Order receipt dates from Oracle OTBI, replacing the old "declaration date + 2 business days" estimate with verified data. Only matches items already reflected in the record after customs clearance, so this must run after step 07 (Append + Backfill).</div>
+        <div class="module-points">
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>추정치 vs 실제 입고일 variance 자동 계산</span><span data-en>Auto-computes variance between estimate and actual</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>실제 입고가 확인되는 순간 Urgent Item 알림·통관완료 알림까지 자동 연쇄 발동</span><span data-en>The moment actual receipt is confirmed, it automatically triggers a chain of Urgent Item and clearance-complete notifications</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>배터리 전원 조건으로 조용히 스킵되던 실행 버그 수정</span><span data-en>Fixed a silent-skip bug tied to a battery-power condition</span></div>
         </div>
       </div>
 
@@ -400,13 +400,12 @@
     <div class="pipeline">
       <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>Outlook 수신</div><div class="pipe-title" data-en>Outlook In</div><div class="pipe-desc" data-ko>Intransit 리포트 & 수입신고필증 PDF 자동 감지</div><div class="pipe-desc" data-en>Detects Intransit reports &amp; declaration PDFs</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">💾</div><div class="pipe-title" data-ko>파일 저장</div><div class="pipe-title" data-en>Save Files</div><div class="pipe-desc" data-ko>날짜 suffix · 중복 방지 후 공유 드라이브 저장</div><div class="pipe-desc" data-en>Date-suffix, dedup, save to shared drive</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">✅</div><div class="pipe-title" data-ko>C.I. 대사</div><div class="pipe-title" data-en>C.I. Reconcile</div><div class="pipe-desc" data-ko>인천관세법인 송장을 Oracle과 실시간 대사(통관 전)</div><div class="pipe-desc" data-en>Reconciles broker invoices against Oracle, before clearance</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📊</div><div class="pipe-title" data-ko>Excel 반영</div><div class="pipe-title" data-en>Excel Update</div><div class="pipe-desc" data-ko>IR 목록 · 실적에 Append + Backfill + C.I. 검증</div><div class="pipe-desc" data-en>Append + backfill + C.I. check</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📦</div><div class="pipe-title" data-ko>실입고 확인</div><div class="pipe-title" data-en>Actual Receipt</div><div class="pipe-desc" data-ko>OTBI로 실제 입고일 확인, 추정치 variance 계산</div><div class="pipe-desc" data-en>Confirms actual receipt via OTBI, computes variance</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>Urgent 대조</div><div class="pipe-title" data-en>Urgent Match</div><div class="pipe-desc" data-ko>요청 품목 선적/입고 확인 · 메일 콘텐츠 생성</div><div class="pipe-desc" data-en>Check requested parts, build mail</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 07</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>메일 발송</div><div class="pipe-title" data-en>Send Mail</div><div class="pipe-desc" data-ko>HTML 메일 자동 발송 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Auto HTML mail, update state JSON</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 08</div><div class="pipe-icon">🖥️</div><div class="pipe-title" data-ko>GUI 모니터링</div><div class="pipe-title" data-en>GUI Monitor</div><div class="pipe-desc" data-ko>런처 상태 패널에서 전체 결과 확인</div><div class="pipe-desc" data-en>Review results in the launcher panel</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 09</div><div class="pipe-icon">🏦</div><div class="pipe-title" data-ko>Finance 월 대사</div><div class="pipe-title" data-en>Finance Reconcile</div><div class="pipe-desc" data-ko>Report_202606 기준 월 1회 검토, 컴플라이언스·감사 리스크 관리</div><div class="pipe-desc" data-en>Reviews monthly against Report_202606, managing compliance &amp; audit risk</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>Urgent 대조</div><div class="pipe-title" data-en>Urgent Match</div><div class="pipe-desc" data-ko>요청 품목 선적 확인 · 내부 공유 메일 발송</div><div class="pipe-desc" data-en>Checks requested parts shipped, sends internal share mail</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">✅</div><div class="pipe-title" data-ko>C.I. 대사</div><div class="pipe-title" data-en>C.I. Reconcile</div><div class="pipe-desc" data-ko>인천관세법인 송장을 Oracle과 실시간 대사(통관 전)</div><div class="pipe-desc" data-en>Reconciles broker invoices against Oracle, before clearance</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📊</div><div class="pipe-title" data-ko>Excel 반영</div><div class="pipe-title" data-en>Excel Update</div><div class="pipe-desc" data-ko>수입면장 저장 · 실적에 Append + Backfill + C.I. 검증</div><div class="pipe-desc" data-en>Saves declaration, appends + backfills + C.I. check</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">📦</div><div class="pipe-title" data-ko>실입고 확인</div><div class="pipe-title" data-en>Actual Receipt</div><div class="pipe-desc" data-ko>OTBI로 실제 입고일 확인, 추정치 variance 계산</div><div class="pipe-desc" data-en>Confirms actual receipt via OTBI, computes variance</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 07</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>Urgent 입고확정</div><div class="pipe-title" data-en>Urgent Arrival</div><div class="pipe-desc" data-ko>수식 고정 + 서비스팀 입고 알림 메일 자동 발송</div><div class="pipe-desc" data-en>Freezes formulas, auto-emails service team on arrival</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 08</div><div class="pipe-icon">🤖</div><div class="pipe-title" data-ko>AI 질의 응답</div><div class="pipe-title" data-en>AI Query</div><div class="pipe-desc" data-ko>필요할 때 자연어로 실적·variance 즉시 조회</div><div class="pipe-desc" data-en>On-demand natural-language stats &amp; variance lookup</div></div>
     </div>
   </section>
 
