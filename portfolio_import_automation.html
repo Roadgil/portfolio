@@ -173,8 +173,8 @@
         <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">intransit_internal_share</div><div class="flow-role" data-ko>Urgent 대조 후 내부 공유 메일</div><div class="flow-role" data-en>Urgent match → internal share email</div></div><span class="flow-badge badge-orange">win32com</span></div>
         <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">✅</span><div class="flow-info"><div class="flow-name">icbl_ci_watcher</div><div class="flow-role" data-ko>인천관세법인 C.I. 대사(Oracle)</div><div class="flow-role" data-en>Customs-broker C.I. reconciliation (Oracle)</div></div><span class="flow-badge badge-purple">Selenium</span></div>
         <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">📄</span><div class="flow-info"><div class="flow-name">outlook_imp_pdf_saver</div><div class="flow-role" data-ko>수입신고필증 PDF 자동 저장</div><div class="flow-role" data-en>Import declaration PDF auto-save</div></div><span class="flow-badge badge-blue">Outlook</span></div>
-        <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">📑</span><div class="flow-info"><div class="flow-name">pdf_auto_updater</div><div class="flow-role" data-ko>PDF → 수입신고실적 Excel + C.I. 검증</div><div class="flow-role" data-en>PDF → import-record Excel + C.I. check</div></div><span class="flow-badge badge-orange">pdfplumber</span></div>
-        <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">🔄</span><div class="flow-info"><div class="flow-name">auto_import_complete</div><div class="flow-role" data-ko>신규행 Append + Backfill</div><div class="flow-role" data-en>New-row append + backfill</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">🔄</span><div class="flow-info"><div class="flow-name">auto_import_complete</div><div class="flow-role" data-ko>신규행 Append + Backfill</div><div class="flow-role" data-en>New-row append + backfill</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">07</span><span class="flow-icon">📑</span><div class="flow-info"><div class="flow-name">pdf_auto_updater</div><div class="flow-role" data-ko>PDF → 수입신고실적 Excel + C.I. 검증</div><div class="flow-role" data-en>PDF → import-record Excel + C.I. check</div></div><span class="flow-badge badge-orange">pdfplumber</span></div>
         <div class="flow-step"><span class="flow-num">08</span><span class="flow-icon">📦</span><div class="flow-info"><div class="flow-name">otbi_to_receipt_report</div><div class="flow-role" data-ko>OTBI 실입고 확인 + variance 계산</div><div class="flow-role" data-en>OTBI actual-receipt check + variance</div></div><span class="flow-badge badge-gold">OTBI</span></div>
         <div class="flow-step"><span class="flow-num">09</span><span class="flow-icon">🧊</span><div class="flow-info"><div class="flow-name">urgent_item_freezer</div><div class="flow-role" data-ko>입고 확정 시 수식 고정 + 서비스팀 알림</div><div class="flow-role" data-en>Freezes formulas on arrival + notifies service team</div></div><span class="flow-badge badge-green">openpyxl</span></div>
         <div class="flow-step"><span class="flow-num">10</span><span class="flow-icon">🤖</span><div class="flow-info"><div class="flow-name">import_declaration (MCP server)</div><div class="flow-role" data-ko>자연어 질의 AI 에이전트</div><div class="flow-role" data-en>Natural-language AI query agent</div></div><span class="flow-badge badge-purple">Claude + MCP</span></div>
@@ -286,30 +286,30 @@
       </div>
 
       <div class="module-card c1 reveal" style="transition-delay:0.25s">
-        <div class="module-num">06</div><div class="module-icon">📑</div>
-        <div class="module-file">pdf_auto_updater.py</div>
-        <div class="module-title" data-ko>PDF → 실적 + C.I. 검증</div><div class="module-title" data-en>PDF → Record + C.I. Check</div>
-        <div class="module-desc" data-ko>pdfplumber로 수입신고필증을 파싱해 실적 Excel에 반영. Hash DB로 중복 처리 방지, C.I. 가격 불일치를 잡아 audit 리스크를 줄인다.</div>
-        <div class="module-desc" data-en>Parses declarations with pdfplumber into the record Excel. A hash DB prevents re-processing and flags C.I. price mismatches to cut audit risk.</div>
+        <div class="module-num">06</div><div class="module-icon">🔄</div>
+        <div class="module-file">auto_import_complete.py</div>
+        <div class="module-title" data-ko>Append + Backfill</div><div class="module-title" data-en>Append + Backfill</div>
+        <div class="module-desc" data-ko>수입될 품목을 Intransit 데이터 기준으로 실적에 먼저 기입(Append)하고, 기존 행의 빈 칸(SN/Lot)을 Backfill. 유일 후보만 채워 오류 방지. 통관정보(C.I./신고필증)는 이 시점엔 아직 없고, 다음 단계(07)에서 통관 완료 후 채워진다.</div>
+        <div class="module-desc" data-en>Appends items to be imported into the record from Intransit data first, then backfills empty SN/Lot cells on existing rows — filling only unique candidates to avoid errors. Customs/declaration info isn't in these rows yet; the next module (07) fills that in once clearance is complete.</div>
         <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>SHA 해시 기반 처리 DB</span><span data-en>SHA-hash processed DB</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>보호 컬럼 덮어쓰기 방지</span><span data-en>Protected-column guard</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>C.I. 가격 불일치 검증 + 통관 알림 메일</span><span data-en>C.I. price check + clearance alert</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>상반기(H1) 154건 신고 중 151건(98%) 자동 반영</span><span data-en>151 of 154 H1 declarations (98%) auto-reflected</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>파싱은 되는데 실적에 조용히 안 채워지는 사례를 단계별로 진단 — float 표기 Delivery Number 매칭 함정을 재확인하고, 동일 파일을 저장하는 다른 스크립트와의 race condition 가능성도 식별</span><span data-en>Diagnosed a silent parse-succeeds-but-never-writes case step by step — reconfirmed a float-formatted Delivery Number matching pitfall and flagged a possible race condition with another script saving the same file</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>Delivery 번호 혼합형 통일 인식</span><span data-en>Normalizes mixed delivery IDs</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>Backfill: 유일 후보만, 중복이면 스킵</span><span data-en>Backfill unique-only, skip on dupes</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>동일 Intransit 내 중복 1회만 append</span><span data-en>Appends each dup once</span></div>
         </div>
       </div>
 
       <div class="module-card c2 reveal" style="transition-delay:0.3s">
-        <div class="module-num">07</div><div class="module-icon">🔄</div>
-        <div class="module-file">auto_import_complete.py</div>
-        <div class="module-title" data-ko>Append + Backfill</div><div class="module-title" data-en>Append + Backfill</div>
-        <div class="module-desc" data-ko>Intransit 데이터를 실적에 추가하고 기존 행의 빈 칸(SN/Lot)을 Backfill. 유일 후보만 채워 오류 방지.</div>
-        <div class="module-desc" data-en>Appends Intransit data and backfills empty SN/Lot cells on existing rows — filling only unique candidates to avoid errors.</div>
+        <div class="module-num">07</div><div class="module-icon">📑</div>
+        <div class="module-file">pdf_auto_updater.py</div>
+        <div class="module-title" data-ko>PDF → 실적 + C.I. 검증</div><div class="module-title" data-en>PDF → Record + C.I. Check</div>
+        <div class="module-desc" data-ko>통관 완료 후 pdfplumber로 수입신고필증을 파싱해, 06번이 먼저 만들어둔 실적 행에 통관정보를 반영한다. Hash DB로 중복 처리 방지, C.I. 가격 불일치를 잡아 audit 리스크를 줄인다.</div>
+        <div class="module-desc" data-en>After clearance, parses the declaration with pdfplumber and fills customs info into the record row that Module 06 already created. A hash DB prevents re-processing and flags C.I. price mismatches to cut audit risk.</div>
         <div class="module-points">
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Delivery 번호 혼합형 통일 인식</span><span data-en>Normalizes mixed delivery IDs</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>Backfill: 유일 후보만, 중복이면 스킵</span><span data-en>Backfill unique-only, skip on dupes</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>동일 Intransit 내 중복 1회만 append</span><span data-en>Appends each dup once</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>SHA 해시 기반 처리 DB</span><span data-en>SHA-hash processed DB</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>보호 컬럼 덮어쓰기 방지</span><span data-en>Protected-column guard</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>C.I. 가격 불일치 검증 + 통관 알림 메일</span><span data-en>C.I. price check + clearance alert</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>상반기(H1) 154건 신고 중 151건(98%) 자동 반영</span><span data-en>151 of 154 H1 declarations (98%) auto-reflected</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>파싱은 되는데 실적에 조용히 안 채워지는 사례를 단계별로 진단 — float 표기 Delivery Number 매칭 함정을 재확인하고, 동일 파일을 저장하는 다른 스크립트와의 race condition 가능성도 식별</span><span data-en>Diagnosed a silent parse-succeeds-but-never-writes case step by step — reconfirmed a float-formatted Delivery Number matching pitfall and flagged a possible race condition with another script saving the same file</span></div>
         </div>
       </div>
 
@@ -317,8 +317,8 @@
         <div class="module-num">08</div><div class="module-icon">📦</div>
         <div class="module-file">otbi_to_receipt_report.py</div>
         <div class="module-title" data-ko>OTBI 실입고 리포트</div><div class="module-title" data-en>OTBI Receipt Report</div>
-        <div class="module-desc" data-ko>Oracle OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다. 통관·실적 반영이 끝난 건만 매칭 대상이라, 이 리포트는 반드시 위 07번(Append + Backfill) 다음에 돌아야 한다.</div>
-        <div class="module-desc" data-en>Pulls actual Transfer-Order receipt dates from Oracle OTBI, replacing the old "declaration date + 2 business days" estimate with verified data. Only matches items already reflected in the record after customs clearance, so this must run after Module 07 (Append + Backfill).</div>
+        <div class="module-desc" data-ko>Oracle OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다. 통관정보 반영이 끝난 건만 매칭 대상이라, 이 리포트는 반드시 위 07번(PDF → 실적 + C.I. 검증) 다음에 돌아야 한다.</div>
+        <div class="module-desc" data-en>Pulls actual Transfer-Order receipt dates from Oracle OTBI, replacing the old "declaration date + 2 business days" estimate with verified data. Only matches items whose customs info has already been reflected, so this must run after Module 07 (PDF → Record + C.I. Check).</div>
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>추정치 vs 실제 입고일 variance 자동 계산</span><span data-en>Auto-computes variance between estimate and actual</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>실제 입고가 확인되는 순간 Urgent Item 알림·통관완료 알림까지 자동 연쇄 발동</span><span data-en>The moment actual receipt is confirmed, it automatically triggers a chain of Urgent Item and clearance-complete notifications</span></div>
