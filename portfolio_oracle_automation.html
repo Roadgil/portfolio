@@ -134,8 +134,8 @@
           <div class="mod-title" data-ko>출고요청 자동 처리기</div>
           <div class="mod-title" data-en>Pick Release Watcher</div>
         </div>
-        <div class="mod-desc" data-ko>서비스팀의 DCD/소모품 + 불량·프로모션 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고, 처리 결과 회신 메일까지 작성한다.</div>
-        <div class="mod-desc" data-en>Detects service-team DCD/consumables and defect/promotion stock-request emails, executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</div>
+        <div class="mod-desc" data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고, 처리 결과 회신 메일까지 작성한다.</div>
+        <div class="mod-desc" data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</div>
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 파싱부터 Oracle 트랜잭션 실행까지 무인 처리</span><span data-en>Unattended end to end — from parsing the email to the Oracle transaction</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 1건에 병원 여러 곳(최대 25건)이 묶여도 각각 개별 자동 처리</span><span data-en>Splits up to 25 bundled orders from a single email and processes each individually</span></div>
@@ -156,7 +156,7 @@
     <div class="pipeline">
       <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>출고요청 메일 감지</div><div class="pipe-title" data-en>Mail In</div><div class="pipe-desc" data-ko>DCD/소모품·불량프로모션·챗봇 주문 자동 감지</div><div class="pipe-desc" data-en>Detects DCD/consumables, defect/promotion, and chatbot orders</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🖱️</div><div class="pipe-title" data-ko>Oracle 화면 자동 조작</div><div class="pipe-title" data-en>Oracle UI Automation</div><div class="pipe-desc" data-ko>Selenium으로 로그인·조회·Pick Release 실행</div><div class="pipe-desc" data-en>Selenium logs in and executes Pick Release</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🔀</div><div class="pipe-title" data-ko>병렬 개별 처리</div><div class="pipe-title" data-en>Split &amp; Process</div><div class="pipe-desc" data-ko>1건에 최대 25건 병원이 묶여도 각각 처리</div><div class="pipe-desc" data-en>Splits up to 25 bundled hospital orders</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🔀</div><div class="pipe-title" data-ko>병렬 개별 처리</div><div class="pipe-title" data-en>Split &amp; Process</div><div class="pipe-desc" data-ko>메일 1건에 병원 최대 25곳이 묶여도 각각 처리</div><div class="pipe-desc" data-en>Splits up to 25 bundled hospital orders</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>결과 알림</div><div class="pipe-title" data-en>Notify</div><div class="pipe-desc" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Sends confirmation email, updates state JSON</div></div>
     </div>
   </section>
