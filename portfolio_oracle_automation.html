@@ -24,7 +24,8 @@
     .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
     .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
 
-    .hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 60px;position:relative;overflow:hidden;}
+    .hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;}
+    .hero-left{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
     .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(251,113,133,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
     @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
     .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
@@ -36,6 +37,28 @@
     .stat{display:flex;flex-direction:column;gap:4px;}
     .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
     .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
+    .hero-right-bg-cell{background:white;}
+    .hero-right-bg-cell:nth-child(odd){background:transparent;}
+    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
+    .flow-step{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}
+    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
+    .flow-icon{font-size:19px;width:34px;text-align:center;flex-shrink:0;}
+    .flow-info{flex:1;}
+    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+    .flow-role{font-size:11px;color:rgba(255,255,255,0.4);}
+    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
+    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
+    .badge-orange{background:rgba(196,98,26,0.4);color:#fdba74;border:1px solid rgba(253,186,116,0.3);}
+    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
+    .badge-red{background:rgba(124,45,18,0.5);color:#fca5a5;border:1px solid rgba(252,165,165,0.3);}
+    .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
+    .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
 
     .section{padding:90px 60px;}
     .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
@@ -91,7 +114,10 @@
 
     @media (max-width:900px){
       .topbar{padding:16px 24px;}
-      .hero,.section,.pipeline-section{padding:90px 24px 50px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-left,.hero-right{padding:90px 24px 50px;}
+      .hero-right{min-height:60vh;}
+      .section,.pipeline-section{padding:90px 24px 50px;}
       .pipeline{flex-direction:column;}
       footer{padding:40px 24px;}
     }
@@ -108,18 +134,33 @@
   </div>
 
   <section class="hero">
-    <div class="hero-bg-glow"></div>
-    <div class="hero-tag">Outbound RPA · Pick Release · 2026</div>
-    <h1 class="hero-title"><span class="a1">OUTBOUND</span><br><span class="a2">RELEASE</span> OPS</h1>
-    <p class="hero-desc">
-      <span data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해, Selenium으로 Oracle Fusion 화면을 직접 조작해 Pick Release를 자동 실행하고 처리 결과 회신까지 작성하는 출고(Outbound) RPA.</span>
-      <span data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — drives Oracle Fusion directly via Selenium to execute Pick Release, and drafts the confirmation reply — outbound RPA end to end.</span>
-    </p>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num" style="color:var(--accent);">25</span><span class="stat-label" data-ko>건/메일 동시 처리</span><span class="stat-label" data-en>Orders per Email</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인(검증완료)</span><span class="stat-label" data-en>Auto Re-login (Verified)</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent3);">5<span style="font-size:20px;">/20-30</span><span style="font-size:20px;">min</span></span><span class="stat-label" data-ko>피크/한산 폴링 튜닝</span><span class="stat-label" data-en>Peak/Off-peak Polling</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>수동 개입</span><span class="stat-label" data-en>Manual Intervention</span></div>
+    <div class="hero-left">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-tag">Outbound RPA · Pick Release · 2026</div>
+      <h1 class="hero-title"><span class="a1">OUTBOUND</span><br><span class="a2">RELEASE</span> OPS</h1>
+      <p class="hero-desc">
+        <span data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해, Selenium으로 Oracle Fusion 화면을 직접 조작해 Pick Release를 자동 실행하고 처리 결과 회신까지 작성하는 출고(Outbound) RPA.</span>
+        <span data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — drives Oracle Fusion directly via Selenium to execute Pick Release, and drafts the confirmation reply — outbound RPA end to end.</span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">25</span><span class="stat-label" data-ko>건/메일 동시 처리</span><span class="stat-label" data-en>Orders per Email</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인(검증완료)</span><span class="stat-label" data-en>Auto Re-login (Verified)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">5<span style="font-size:20px;">/20-30</span><span style="font-size:20px;">min</span></span><span class="stat-label" data-ko>피크/한산 폴링 튜닝</span><span class="stat-label" data-en>Peak/Off-peak Polling</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>수동 개입</span><span class="stat-label" data-en>Manual Intervention</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="hero-flow">
+        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📧</span><div class="flow-info"><div class="flow-name">Mail Detect</div><div class="flow-role" data-ko>pick_release_watcher.py — 출고요청 메일 자동 감지</div><div class="flow-role" data-en>pick_release_watcher.py — detects stock-request emails</div></div><span class="flow-badge badge-blue">Outlook</span></div>
+        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">🖱️</span><div class="flow-info"><div class="flow-name">Oracle Automation</div><div class="flow-role" data-ko>Selenium 로그인 · Pick Release 실행</div><div class="flow-role" data-en>Selenium login, executes Pick Release</div></div><span class="flow-badge badge-orange">Selenium</span></div>
+        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">🔀</span><div class="flow-info"><div class="flow-name">Split &amp; Process</div><div class="flow-role" data-ko>병원 최대 25곳 개별 처리</div><div class="flow-role" data-en>Splits up to 25 hospitals, processes each</div></div><span class="flow-badge badge-green">Oracle Fusion</span></div>
+        <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">Notify</div><div class="flow-role" data-ko>회신 메일 · 상태 JSON 갱신</div><div class="flow-role" data-en>Confirmation reply, state JSON update</div></div><span class="flow-badge badge-purple">win32com</span></div>
+      </div>
     </div>
   </section>
 
@@ -141,7 +182,7 @@
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 1건에 병원 여러 곳(최대 25건)이 묶여도 각각 개별 자동 처리</span><span data-en>Splits up to 25 bundled orders from a single email and processes each individually</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Oracle SSO 세션이 끊겨도 자동 재로그인 후 계속 진행 (라이브 검증 완료)</span><span data-en>Auto re-authenticates via SSO on session drop and resumes — verified live</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>2026년 실제 메일 도착 시간대 데이터를 분석해 체크 주기를 피크 구간 5분, 한산한 구간 20~30분으로 튜닝</span><span data-en>Tuned polling intervals (5 min at peak, 20–30 min off-peak) from an analysis of real 2026 mail-arrival timestamps</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>인바운드 C.I. 대사 자동화와 Oracle 화면이 겹치면 새 탭에서 독립 처리 (양방향 라이브 시뮬레이션으로 검증)</span><span data-en>Runs in an isolated tab when it overlaps with the inbound C.I. reconciliation automation — verified via live two-way simulation</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>수입/통관 C.I. 대사 자동화와 Oracle 화면이 겹치면 새 탭에서 독립 처리 (양방향 라이브 시뮬레이션으로 검증)</span><span data-en>Runs in an isolated tab when it overlaps with the inbound C.I. reconciliation automation — verified via live two-way simulation</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>정형 제목이 없는 챗봇("CareBot") 주문도 본문 키워드로 감지해 동일하게 처리</span><span data-en>Detects chatbot ("CareBot") orders with no fixed subject line by matching body content, and handles them the same way</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>브라우저 재시작 직후의 화면 전환 실패를 자동 재시도로 흡수해 무인 처리율 향상</span><span data-en>Self-heals post-restart navigation glitches with automatic retries, raising unattended success rate</span></div>
         </div>
@@ -184,7 +225,7 @@
       document.getElementById('btn-en').classList.toggle('active',l==='en');
       try{localStorage.setItem('pf_lang',l);}catch(e){}
     }
-    (function(){try{const s=localStorage.getItem('pf_lang');if(s)setLang(s);}catch(e){}})();
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
     const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
     document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
   </script>

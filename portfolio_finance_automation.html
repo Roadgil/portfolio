@@ -24,7 +24,8 @@
     .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
     .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
 
-    .hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 60px;position:relative;overflow:hidden;}
+    .hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;}
+    .hero-left{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
     .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(147,197,253,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
     @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
     .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
@@ -36,6 +37,28 @@
     .stat{display:flex;flex-direction:column;gap:4px;}
     .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
     .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
+    .hero-right-bg-cell{background:white;}
+    .hero-right-bg-cell:nth-child(odd){background:transparent;}
+    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
+    .flow-step{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}
+    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
+    .flow-icon{font-size:19px;width:34px;text-align:center;flex-shrink:0;}
+    .flow-info{flex:1;}
+    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+    .flow-role{font-size:11px;color:rgba(255,255,255,0.4);}
+    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
+    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
+    .badge-orange{background:rgba(196,98,26,0.4);color:#fdba74;border:1px solid rgba(253,186,116,0.3);}
+    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
+    .badge-red{background:rgba(124,45,18,0.5);color:#fca5a5;border:1px solid rgba(252,165,165,0.3);}
+    .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
+    .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
 
     .section{padding:90px 60px;}
     .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
@@ -90,7 +113,10 @@
 
     @media (max-width:900px){
       .topbar{padding:16px 24px;}
-      .hero,.section,.pipeline-section{padding:90px 24px 50px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-left,.hero-right{padding:90px 24px 50px;}
+      .hero-right{min-height:60vh;}
+      .section,.pipeline-section{padding:90px 24px 50px;}
       .pipeline{flex-direction:column;}
       footer{padding:40px 24px;}
     }
@@ -107,18 +133,32 @@
   </div>
 
   <section class="hero">
-    <div class="hero-bg-glow"></div>
-    <div class="hero-tag">Finance Workflow · Automation</div>
-    <h1 class="hero-title"><span class="a1">PAYMENT</span><br><span class="a2">REQUEST</span> AUTO</h1>
-    <p class="hero-desc">
-      <span data-ko>관세·DHL 비용의 지급요청 메일을 Finance팀에 자동 생성·발송하는 파이썬 시스템. 한국 공휴일을 인식하는 2회차 결제 스케줄링과 중복 발송 방지, 그리고 이미지 메일에서 마감일을 읽어내는 OCR까지 포함.</span>
-      <span data-en>A Python system that auto-generates and sends customs &amp; DHL payment-request emails to Finance — with Korean-holiday-aware two-round scheduling, duplicate-send protection, and OCR that reads deadlines straight from image emails.</span>
-    </p>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num" style="color:var(--accent);">2</span><span class="stat-label" data-ko>결제 회차/월</span><span class="stat-label" data-en>Payment Rounds/mo</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent2);">0</span><span class="stat-label" data-ko>중복 발송</span><span class="stat-label" data-en>Duplicate Sends</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent3);">3</span><span class="stat-label" data-ko>연도 공휴일 인식</span><span class="stat-label" data-en>Years of Holidays</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent4);">OCR</span><span class="stat-label" data-ko>이미지 마감일 추출</span><span class="stat-label" data-en>Deadline Extraction</span></div>
+    <div class="hero-left">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-tag">Finance Workflow · Automation</div>
+      <h1 class="hero-title"><span class="a1">PAYMENT</span><br><span class="a2">REQUEST</span> AUTO</h1>
+      <p class="hero-desc">
+        <span data-ko>관세·DHL 비용의 지급요청 메일을 Finance팀에 자동 생성·발송하는 파이썬 시스템. 한국 공휴일을 인식하는 2회차 결제 스케줄링과 중복 발송 방지, 그리고 이미지 메일에서 마감일을 읽어내는 OCR까지 포함.</span>
+        <span data-en>A Python system that auto-generates and sends customs &amp; DHL payment-request emails to Finance — with Korean-holiday-aware two-round scheduling, duplicate-send protection, and OCR that reads deadlines straight from image emails.</span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">2</span><span class="stat-label" data-ko>결제 회차/월</span><span class="stat-label" data-en>Payment Rounds/mo</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">0</span><span class="stat-label" data-ko>중복 발송</span><span class="stat-label" data-en>Duplicate Sends</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">3</span><span class="stat-label" data-ko>연도 공휴일 인식</span><span class="stat-label" data-en>Years of Holidays</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">OCR</span><span class="stat-label" data-ko>이미지 마감일 추출</span><span class="stat-label" data-en>Deadline Extraction</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="hero-flow">
+        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📩</span><div class="flow-info"><div class="flow-name">customs_email_generator</div><div class="flow-role" data-ko>관세 통지 PDF → 지급요청 메일</div><div class="flow-role" data-en>Customs notice PDF → payment-request mail</div></div><span class="flow-badge badge-blue">pdfplumber</span></div>
+        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">dhl_forwarder</div><div class="flow-role" data-ko>DHL 인보이스 2회차 배치 전달</div><div class="flow-role" data-en>DHL invoices, 2-round batch forwarding</div></div><span class="flow-badge badge-orange">win32com</span></div>
+        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">🗓️</span><div class="flow-info"><div class="flow-name">finance_calendar_ocr</div><div class="flow-role" data-ko>이미지 마감일 OCR → 캘린더 등록</div><div class="flow-role" data-en>OCRs image deadlines → calendar events</div></div><span class="flow-badge badge-purple">easyocr</span></div>
+      </div>
     </div>
   </section>
 
@@ -215,7 +255,7 @@
       document.getElementById('btn-en').classList.toggle('active',l==='en');
       try{localStorage.setItem('pf_lang',l);}catch(e){}
     }
-    (function(){try{const s=localStorage.getItem('pf_lang');if(s)setLang(s);}catch(e){}})();
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
     const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
     document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
   </script>
