@@ -64,6 +64,7 @@
     .sec-title em { font-style: italic; color: var(--accent2); }
 
     .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 2px solid var(--text); }
+    .module-grid.supporting-grid { grid-template-columns: repeat(2, 1fr); width: 66.66%; }
     .module-card { background: var(--surf); padding: 32px 28px; transition: background 0.2s; position: relative; overflow: hidden; }
     .module-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; transition: transform 0.3s ease; transform: scaleX(0); transform-origin: left; }
     .module-card:hover::before { transform: scaleX(1); }
@@ -129,6 +130,7 @@
       .hero-right { padding: 50px 28px; }
       .section, .pipeline-section { padding: 60px 28px; }
       .module-grid { grid-template-columns: 1fr; }
+      .module-grid.supporting-grid { width: 100%; }
       .pipeline { flex-direction: column; }
       .stats-bar { grid-template-columns: 1fr 1fr; }
       footer { padding: 40px 28px; flex-direction: column; gap: 20px; }
@@ -361,7 +363,7 @@
     <div class="label">Supporting Tools · Not part of the automated flow</div>
     <h2 class="sec-title"><span data-ko>흐름 밖에서,</span><span data-en>Outside the flow,</span><br><em><span data-ko>파이프라인을 굴리는 도구들</span><span data-en>the tooling that runs it</span></em></h2>
 
-    <div class="module-grid" style="grid-template-columns:repeat(2,1fr);">
+    <div class="module-grid supporting-grid">
 
       <div class="module-card c2 reveal">
         <div class="module-num">GUI</div><div class="module-icon">🖥️</div>
