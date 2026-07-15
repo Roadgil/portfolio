@@ -267,8 +267,8 @@
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>DHL 인보이스 포맷까지 지원, 두 창고 물량이 섞인 인보이스도 자동 분리해 각각 대사</span><span data-en>Also supports the DHL format and auto-splits invoices that bundle shipments from two different warehouses</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>송장에서 배송번호 자동 인식</span><span data-en>Auto-extracts shipment numbers from the invoice</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>금액 일치 시 원본 그대로, 불일치 시 오라클 기준 인보이스로 답장 초안 자동 작성</span><span data-en>Drafts the reply automatically — original invoice on a match, Oracle-sourced invoice on a mismatch</span></div>
-          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>Outbound(Pick Release) 자동화와 오라클 화면이 겹치면 새 탭에서 독립 처리</span><span data-en>Runs in an isolated tab when it overlaps with the outbound Pick Release automation</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>금액 일치 시 원본 그대로, 불일치 시 Oracle 기준 인보이스로 답장 초안 자동 작성</span><span data-en>Drafts the reply automatically — original invoice on a match, Oracle-sourced invoice on a mismatch</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>출고(Outbound) 자동화와 Oracle 화면이 겹치면 새 탭에서 독립 처리</span><span data-en>Runs in an isolated tab when it overlaps with the outbound Pick Release automation</span></div>
         </div>
       </div>
 
@@ -289,8 +289,8 @@
         <div class="module-num">06</div><div class="module-icon">🔄</div>
         <div class="module-file">auto_import_complete.py</div>
         <div class="module-title" data-ko>Append + Backfill</div><div class="module-title" data-en>Append + Backfill</div>
-        <div class="module-desc" data-ko>수입될 품목을 Intransit 데이터 기준으로 실적에 먼저 기입(Append)하고, 기존 행의 빈 칸(SN/Lot)을 Backfill. 유일 후보만 채워 오류 방지. 통관정보(C.I./신고필증)는 이 시점엔 아직 없고, 다음 단계(07)에서 통관 완료 후 채워진다.</div>
-        <div class="module-desc" data-en>Appends items to be imported into the record from Intransit data first, then backfills empty SN/Lot cells on existing rows — filling only unique candidates to avoid errors. Customs/declaration info isn't in these rows yet; the next module (07) fills that in once clearance is complete.</div>
+        <div class="module-desc" data-ko>수입될 품목을 Intransit 데이터 기준으로 실적에 먼저 기입(Append)하고, 기존 행의 빈 칸(SN/Lot)을 Backfill. 유일 후보만 채워 오류 방지. 통관정보(C.I./신고필증)는 이 시점엔 아직 없고, 07번에서 통관 완료 후 채워진다.</div>
+        <div class="module-desc" data-en>First appends items pending import to the record using Intransit data, then backfills empty SN/Lot cells on existing rows — filling only unique candidates to avoid errors. Customs/declaration info isn't in these rows yet; Module 07 fills that in once clearance is complete.</div>
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>Delivery 번호 혼합형 통일 인식</span><span data-en>Normalizes mixed delivery IDs</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent);"></div><span data-ko>Backfill: 유일 후보만, 중복이면 스킵</span><span data-en>Backfill unique-only, skip on dupes</span></div>
@@ -302,7 +302,7 @@
         <div class="module-num">07</div><div class="module-icon">📑</div>
         <div class="module-file">pdf_auto_updater.py</div>
         <div class="module-title" data-ko>PDF → 실적 + C.I. 검증</div><div class="module-title" data-en>PDF → Record + C.I. Check</div>
-        <div class="module-desc" data-ko>통관 완료 후 pdfplumber로 수입신고필증을 파싱해, 06번이 먼저 만들어둔 실적 행에 통관정보를 반영한다. Hash DB로 중복 처리 방지, C.I. 가격 불일치를 잡아 audit 리스크를 줄인다.</div>
+        <div class="module-desc" data-ko>통관 완료 후 pdfplumber로 수입신고필증을 파싱해, 06번이 먼저 만들어둔 실적 행에 통관정보를 반영한다. Hash DB로 중복 처리를 방지하고, C.I. 가격 불일치를 잡아 audit 리스크를 줄인다.</div>
         <div class="module-desc" data-en>After clearance, parses the declaration with pdfplumber and fills customs info into the record row that Module 06 already created. A hash DB prevents re-processing and flags C.I. price mismatches to cut audit risk.</div>
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>SHA 해시 기반 처리 DB</span><span data-en>SHA-hash processed DB</span></div>
@@ -317,8 +317,8 @@
         <div class="module-num">08</div><div class="module-icon">📦</div>
         <div class="module-file">otbi_to_receipt_report.py</div>
         <div class="module-title" data-ko>OTBI 실입고 리포트</div><div class="module-title" data-en>OTBI Receipt Report</div>
-        <div class="module-desc" data-ko>Oracle OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다. 통관정보 반영이 끝난 건만 매칭 대상이라, 이 리포트는 반드시 위 07번(PDF → 실적 + C.I. 검증) 다음에 돌아야 한다.</div>
-        <div class="module-desc" data-en>Pulls actual Transfer-Order receipt dates from Oracle OTBI, replacing the old "declaration date + 2 business days" estimate with verified data. Only matches items whose customs info has already been reflected, so this must run after Module 07 (PDF → Record + C.I. Check).</div>
+        <div class="module-desc" data-ko>OTBI에서 Transfer Order의 실제 입고일을 조회해, 기존 '신고일+2영업일' 추정치를 검증된 실제 데이터로 대체한다. 통관정보 반영이 끝난 건만 매칭 대상이라, 이 리포트는 반드시 07번 다음에 돌아야 한다.</div>
+        <div class="module-desc" data-en>Pulls actual Transfer-Order receipt dates from OTBI, replacing the old "declaration date + 2 business days" estimate with verified data. Only matches items whose customs info has already been reflected, so this must run after Module 07.</div>
         <div class="module-points">
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>추정치 vs 실제 입고일 variance 자동 계산</span><span data-en>Auto-computes variance between estimate and actual</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>실제 입고가 확인되는 순간 Urgent Item 알림·통관완료 알림까지 자동 연쇄 발동</span><span data-en>The moment actual receipt is confirmed, it automatically triggers a chain of Urgent Item and clearance-complete notifications</span></div>
