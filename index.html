@@ -216,8 +216,8 @@
       <span class="t3">AUTOMATE</span>
     </h1>
     <p class="hero-sub">
-      <span data-ko>여섯 개의 프로젝트, 두 갈래 — 수입 운영을 잇는 자동화 흐름 하나, 그리고 각자 다른 문제를 푸는 독립 툴들.</span>
-      <span data-en>Six projects, two tracks — one automation flow connecting import operations, and standalone tools solving separate problems.</span>
+      <span data-ko>일곱 개의 프로젝트, 두 갈래 — Supply Chain·Customer &amp; Order Management로 묶은 핵심 운영, 그리고 각자 다른 문제를 푸는 독립 툴들.</span>
+      <span data-en>Seven projects, two tracks — core operations grouped into Supply Chain and Customer &amp; Order Management, and standalone tools solving separate problems.</span>
     </p>
   </div>
 
@@ -226,18 +226,18 @@
   <div class="projects">
 
     <div class="group-label">
-      <span data-ko>DX + AX FLOW · 수입/통관 운영 자동화 전환</span>
-      <span data-en>DX + AX FLOW · Import Ops Transformation</span>
+      <span data-ko>핵심 운영 흐름</span>
+      <span data-en>Core Operations</span>
     </div>
     <p class="group-desc">
-      <span data-ko>01은 입고 추적부터 통관 C.I. 대사·Finance 월 대사까지 수입/통관 전 구간을 자동화하며 AI 에이전트(AX)까지 포함한다. 02는 지급요청을, 03은 출고(Outbound)를 각각 규칙 기반(DX)으로 자동화한다.</span>
-      <span data-en>01 automates the entire import/customs clearance cycle end to end — tracking, customs C.I. reconciliation, and the monthly Finance reconciliation — and folds in an AI agent (AX). 02 automates payment requests and 03 automates outbound stock release, both rule-based (DX).</span>
+      <span data-ko>01 Supply Chain은 수입/통관과 그 지급요청 처리를, 02 Customer &amp; Order Management는 출고(주문 이행)와 반품(RMA) 처리를 각각 묶어서 보여준다 — 방향은 반대(들어오는 것 vs 나가는 것/돌아오는 것)라 프로젝트는 따로 두되, 업무 영역으로 묶었다.</span>
+      <span data-en>01 Supply Chain groups import/customs clearance and its payment-request processing; 02 Customer &amp; Order Management groups outbound order fulfillment and returns (RMA). The physical directions are opposite (in vs. out/back in), so the projects stay separate underneath — grouped here by business domain instead.</span>
     </p>
 
-    <!-- 01 Import Automation -->
-    <a class="proj-card p2" href="portfolio_import_automation.html" style="animation-delay:0.30s;">
+    <!-- 01 Supply Chain -->
+    <a class="proj-card p2" href="portfolio_supply_chain.html" style="animation-delay:0.30s;">
       <div class="proj-bg-num">01</div>
-      <div class="proj-num">PROJECT · 01</div>
+      <div class="proj-num">CATEGORY · 01</div>
       <div class="proj-type"><span class="type-pill dx">DX</span><span class="type-pill ax">AX</span></div>
       <div class="proj-tags">
         <span class="tag tag-orange">Python</span>
@@ -245,60 +245,37 @@
         <span class="tag tag-green">openpyxl</span>
         <span class="tag tag-purple">Claude + MCP</span>
       </div>
-      <h2 class="proj-title"><span data-ko>수입/통관</span><span data-en>Import/Customs Clearance</span><br><em><span data-ko>풀사이클 자동화</span><span data-en>Full-Cycle Automation</span></em></h2>
+      <h2 class="proj-title"><span data-ko>Supply Chain</span><span data-en>Supply Chain</span><br><em><span data-ko>수입/통관 + 지급요청 자동화</span><span data-en>Import/Customs + Payment-Request Automation</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>Outlook 수신부터 Oracle 기반 통관 C.I. 대사, 수입신고필증 파싱, Finance 월 대사까지 10개 모듈로 완전 자동화한 수입/통관 파이프라인. 처리 건의 98% 이상을 사람 개입 없이 처리한다.</span>
-        <span data-en>A 10-module pipeline automating the entire import/customs clearance cycle end to end — Outlook intake, Oracle-based C.I. reconciliation, declaration parsing, and the monthly Finance reconciliation. 98%+ of cases run hands-off.</span>
+        <span data-ko>수입/통관 풀사이클 자동화(10개 모듈, AI 에이전트 포함)와 관세·DHL 지급요청 자동화, 2개 프로젝트를 묶은 카테고리.</span>
+        <span data-en>A category bundling 2 projects: the 10-module import/customs clearance pipeline (with an AI agent) and customs &amp; DHL payment-request automation.</span>
       </p>
-      <div class="proj-impact"><b>98%+</b> <span data-ko>무인 처리</span><span data-en>hands-off</span> · <b>10</b> <span data-ko>모듈</span><span data-en>modules</span></div>
+      <div class="proj-impact"><b>2</b> <span data-ko>프로젝트</span><span data-en>projects</span> · <b>98%+</b> <span data-ko>무인 처리</span><span data-en>hands-off</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Selenium · win32com · openpyxl<br>pdfplumber · Oracle Fusion · Claude + MCP</div>
         <div class="proj-arrow">→</div>
       </div>
     </a>
 
-    <!-- 02 Finance Automation -->
-    <a class="proj-card p5" href="portfolio_finance_automation.html" style="animation-delay:0.38s;">
+    <!-- 02 Customer & Order Management -->
+    <a class="proj-card p6" href="portfolio_customer_order_management.html" style="animation-delay:0.38s;">
       <div class="proj-bg-num">02</div>
-      <div class="proj-num">PROJECT · 02</div>
-      <div class="proj-type"><span class="type-pill dx">DX</span></div>
-      <div class="proj-tags">
-        <span class="tag tag-blue">Python</span>
-        <span class="tag tag-orange">win32com</span>
-        <span class="tag tag-green">Holiday-aware</span>
-        <span class="tag tag-purple">Dedup</span>
-      </div>
-      <h2 class="proj-title"><span data-ko>Finance 연계</span><span data-en>Finance Workflow</span><br><em><span data-ko>지급요청 자동화</span><span data-en>Payment Request Automation</span></em></h2>
-      <p class="proj-desc">
-        <span data-ko>관세·DHL 비용 지급요청 메일을 자동 생성·발송. 한국 공휴일 인식 2회차 스케줄링과 중복 방지 로직 내장.</span>
-        <span data-en>Auto-generates and sends customs &amp; DHL payment-request emails to Finance, with Korean-holiday-aware scheduling and dedup.</span>
-      </p>
-      <div class="proj-impact"><span data-ko>공휴일 인식 스케줄링</span><span data-en>Holiday-aware scheduling</span> · <span data-ko>중복 발송 0</span><span data-en>zero duplicate sends</span></div>
-      <div class="proj-meta">
-        <div class="proj-stack">Python · win32com · holidays<br>State JSON · easyocr (OCR)</div>
-        <div class="proj-arrow">→</div>
-      </div>
-    </a>
-
-    <!-- 03 Oracle Fusion RPA & AI Agent -->
-    <a class="proj-card p6" href="portfolio_oracle_automation.html" style="animation-delay:0.46s;">
-      <div class="proj-bg-num">03</div>
-      <div class="proj-num">PROJECT · 03</div>
+      <div class="proj-num">CATEGORY · 02</div>
       <div class="proj-type"><span class="type-pill dx">DX</span></div>
       <div class="proj-tags">
         <span class="tag tag-orange">Selenium</span>
         <span class="tag tag-blue">Oracle Fusion</span>
+        <span class="tag tag-teal">Salesforce</span>
         <span class="tag tag-green">win32com</span>
-        <span class="tag tag-gold">Auto Re-login</span>
       </div>
-      <h2 class="proj-title"><span data-ko>출고 자동화</span><span data-en>Outbound Ops</span><br><em><span data-ko>Pick Release RPA</span><span data-en>Pick Release RPA</span></em></h2>
+      <h2 class="proj-title"><span data-ko>Customer &amp; Order</span><span data-en>Customer &amp; Order</span><br><em><span data-ko>Management</span><span data-en>Management</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고 처리 결과 회신까지 작성하는 출고(Outbound) 자동화.</span>
-        <span data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</span>
+        <span data-ko>Oracle Fusion 기반 출고(Pick Release) 자동화와 Salesforce 기반 반품(RMA) 자동화, 2개 프로젝트를 묶은 카테고리.</span>
+        <span data-en>A category bundling 2 projects: Oracle Fusion-based outbound Pick Release automation and Salesforce-based RMA/returns automation.</span>
       </p>
-      <div class="proj-impact"><b>25</b> <span data-ko>건/메일 동시 처리</span><span data-en>orders per email</span> · <span data-ko>SSO 자동 재로그인</span><span data-en>SSO auto re-login</span></div>
+      <div class="proj-impact"><b>2</b> <span data-ko>프로젝트</span><span data-en>projects</span> · <span data-ko>출고 + 반품</span><span data-en>outbound + returns</span></div>
       <div class="proj-meta">
-        <div class="proj-stack">Python · Selenium · Oracle Fusion Cloud<br>win32com</div>
+        <div class="proj-stack">Python · Selenium · Oracle Fusion · Salesforce<br>win32com</div>
         <div class="proj-arrow">→</div>
       </div>
     </a>
@@ -312,10 +289,10 @@
       <span data-en>Standalone tools built independently for sales, inventory, and invoicing.</span>
     </p>
 
-    <!-- 04 Sales FCST Dashboard -->
+    <!-- 03 Sales FCST Dashboard -->
     <a class="proj-card p1" href="portfolio_sales_dashboard.html" style="animation-delay:0.54s;">
-      <div class="proj-bg-num">04</div>
-      <div class="proj-num">PROJECT · 04</div>
+      <div class="proj-bg-num">05</div>
+      <div class="proj-num">PROJECT · 05</div>
       <div class="proj-tags">
         <span class="tag tag-purple">React 18</span>
         <span class="tag tag-teal">Firebase</span>
@@ -334,10 +311,10 @@
       </div>
     </a>
 
-    <!-- 05 Inventory Dashboard -->
+    <!-- 04 Inventory Dashboard -->
     <a class="proj-card p3" href="portfolio_inventory_dashboard.html" style="animation-delay:0.62s;">
-      <div class="proj-bg-num">05</div>
-      <div class="proj-num">PROJECT · 05</div>
+      <div class="proj-bg-num">06</div>
+      <div class="proj-num">PROJECT · 06</div>
       <div class="proj-tags">
         <span class="tag tag-teal">SheetJS</span>
         <span class="tag tag-blue">Oracle ERP</span>
@@ -356,10 +333,10 @@
       </div>
     </a>
 
-    <!-- 06 거래명세서 생성기 -->
+    <!-- 05 거래명세서 생성기 -->
     <a class="proj-card p4" href="portfolio_invoice_generator.html" style="animation-delay:0.70s;">
-      <div class="proj-bg-num">06</div>
-      <div class="proj-num">PROJECT · 06</div>
+      <div class="proj-bg-num">07</div>
+      <div class="proj-num">PROJECT · 07</div>
       <div class="proj-tags">
         <span class="tag tag-gold">559 SKU DB</span>
         <span class="tag tag-orange">Code Alias</span>
@@ -380,7 +357,7 @@
   </div>
 
   <footer>
-    <div class="footer-note">6 PROJECTS · ALL RIGHTS RESERVED</div>
+    <div class="footer-note">7 PROJECTS · 2 CATEGORIES · ALL RIGHTS RESERVED</div>
     <div class="footer-dots">
       <div class="footer-dot" style="background:var(--c1);"></div>
       <div class="footer-dot" style="background:var(--c2);"></div>
@@ -388,6 +365,7 @@
       <div class="footer-dot" style="background:#b5930a;"></div>
       <div class="footer-dot" style="background:#1a4a6e;"></div>
       <div class="footer-dot" style="background:#9f2b46;"></div>
+      <div class="footer-dot" style="background:#0f9c8c;"></div>
     </div>
   </footer>
 

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Supply Chain · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e0e; --surf: #161616; --border: #2a2a2a; --text: #f0ede6; --muted: #666;
+      --c1: #5b4fcf; --c2: #c4621a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 100;
+    }
+
+    header { padding: 48px 60px 0; display: flex; justify-content: space-between; align-items: flex-start; animation: fadeDown 0.7s ease both; }
+    .back-link { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .back-link:hover { color: var(--text); }
+    .lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; }
+    .lang-toggle button { background: none; border: none; color: var(--muted); padding: 6px 12px; cursor: pointer; transition: all 0.2s; letter-spacing: 1px; }
+    .lang-toggle button.active { background: var(--c1); color: #fff; }
+
+    .hero { padding: 70px 60px 0; animation: fadeUp 0.8s ease 0.1s both; }
+    .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--muted); }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px, 8vw, 100px); line-height: 0.88; letter-spacing: -1px; margin-bottom: 28px; color: var(--c2); }
+    .hero-sub { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 1px; line-height: 1.8; max-width: 640px; }
+
+    .divider { margin: 50px 60px 0; height: 1px; background: var(--border); animation: scaleX 0.8s ease 0.3s both; transform-origin: left; }
+    @keyframes scaleX { from { transform: scaleX(0);} to{transform:scaleX(1);} }
+
+    .projects { flex: 1; display: grid; grid-template-columns: 1fr 1fr; margin: 0 60px; gap: 0; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .proj-card { display: block; text-decoration: none; color: inherit; padding: 48px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; transition: background 0.3s ease; animation: fadeUp 0.8s ease both; cursor: pointer; }
+    .proj-card:hover { background: var(--surf); }
+    .proj-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
+    .proj-card.p2::after { background: var(--c2); }
+    .proj-card.p5::after { background: #1a4a6e; }
+    .proj-card:hover::after { transform: scaleX(1); }
+
+    .proj-bg-num { position: absolute; bottom: -20px; right: 20px; font-family: 'Bebas Neue', sans-serif; font-size: 150px; line-height: 1; color: rgba(255,255,255,0.025); pointer-events: none; transition: color 0.3s; }
+    .proj-card:hover .proj-bg-num { color: rgba(255,255,255,0.04); }
+    .proj-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 3px; margin-bottom: 20px; }
+    .proj-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px; padding: 4px 10px; border-radius: 20px; border: 1px solid; text-transform: uppercase; }
+    .tag-purple { color: #a78bfa; border-color: rgba(167,139,250,0.25); background: rgba(167,139,250,0.07); }
+    .tag-orange { color: #fdba74; border-color: rgba(253,186,116,0.25); background: rgba(253,186,116,0.07); }
+    .tag-teal   { color: #2dd4bf; border-color: rgba(45,212,191,0.25);  background: rgba(45,212,191,0.07); }
+    .tag-green  { color: #86efac; border-color: rgba(134,239,172,0.25); background: rgba(134,239,172,0.07); }
+    .tag-blue   { color: #93c5fd; border-color: rgba(147,197,253,0.25); background: rgba(147,197,253,0.07); }
+    .tag-gold   { color: #fde68a; border-color: rgba(253,230,138,0.25); background: rgba(253,230,138,0.07); }
+
+    .proj-type { display: flex; gap: 6px; margin-bottom: 14px; }
+    .type-pill { font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 2px; padding: 3px 9px; border-radius: 4px; text-transform: uppercase; }
+    .type-pill.dx { color: #93c5fd; background: rgba(147,197,253,0.14); }
+    .type-pill.ax { color: #a78bfa; background: rgba(167,139,250,0.14); }
+
+    .proj-title { font-family: 'DM Serif Display', serif; font-size: clamp(22px, 2.6vw, 32px); line-height: 1.15; margin-bottom: 14px; }
+    .proj-title em { font-style: italic; }
+    .p2 .proj-title em { color: var(--c2); }
+    .p5 .proj-title em { color: #93c5fd; }
+    .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 22px; max-width: 400px; }
+
+    .proj-impact { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.5px; color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; margin-bottom: 28px; }
+    .proj-impact b { color: #86efac; }
+
+    .proj-meta { display: flex; align-items: center; justify-content: space-between; }
+    .proj-stack { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1px; line-height: 1.8; }
+    .proj-arrow { width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--muted); transition: all 0.25s ease; flex-shrink: 0; }
+    .proj-card:hover .proj-arrow { border-color: transparent; color: #fff; transform: rotate(-45deg); }
+    .p2:hover .proj-arrow { background: var(--c2); }
+    .p5:hover .proj-arrow { background: #1a4a6e; }
+
+    footer { margin: 0 60px; padding: 32px 0; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; animation: fadeUp 0.8s ease 0.5s both; }
+    .footer-note { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px);} to{opacity:1;transform:translateY(0);} }
+    .proj-card.p2 { animation-delay: 0.30s; }
+    .proj-card.p5 { animation-delay: 0.38s; }
+
+    [data-en] { display: none; }
+    body.en [data-ko] { display: none; }
+    body.en [data-en] { display: inline; }
+
+    @media (max-width: 768px) {
+      header { padding: 36px 24px 0; flex-direction: column; gap: 16px; }
+      .hero  { padding: 48px 24px 0; }
+      .divider { margin: 36px 24px 0; }
+      .projects { grid-template-columns: 1fr; margin: 0 24px; }
+      .proj-card { padding: 36px 28px; border-right: none; }
+      footer { margin: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="back-link" href="index.html">← <span data-ko>전체 프로젝트</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Category · 2025–2026</div>
+    <h1 class="hero-title">SUPPLY CHAIN</h1>
+    <p class="hero-sub">
+      <span data-ko>해외 공급망 쪽 — 수입/통관과 그 지급요청 처리를 자동화한 2개 프로젝트.</span>
+      <span data-en>The supplier-side of the chain — 2 projects automating international import/customs clearance and its payment-request processing.</span>
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="projects">
+
+    <!-- 01 Import/Customs Clearance -->
+    <a class="proj-card p2" href="portfolio_import_automation.html" style="animation-delay:0.30s;">
+      <div class="proj-bg-num">01</div>
+      <div class="proj-num">PROJECT · 01</div>
+      <div class="proj-type"><span class="type-pill dx">DX</span><span class="type-pill ax">AX</span></div>
+      <div class="proj-tags">
+        <span class="tag tag-orange">Python</span>
+        <span class="tag tag-blue">Selenium</span>
+        <span class="tag tag-green">openpyxl</span>
+        <span class="tag tag-purple">Claude + MCP</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>수입/통관</span><span data-en>Import/Customs Clearance</span><br><em><span data-ko>풀사이클 자동화</span><span data-en>Full-Cycle Automation</span></em></h2>
+      <p class="proj-desc">
+        <span data-ko>Outlook 수신부터 Oracle 기반 통관 C.I. 대사, 수입신고필증 파싱, Finance 월 대사까지 10개 모듈로 완전 자동화한 수입/통관 파이프라인. 처리 건의 98% 이상을 사람 개입 없이 처리한다.</span>
+        <span data-en>A 10-module pipeline automating the entire import/customs clearance cycle end to end — Outlook intake, Oracle-based C.I. reconciliation, declaration parsing, and the monthly Finance reconciliation. 98%+ of cases run hands-off.</span>
+      </p>
+      <div class="proj-impact"><b>98%+</b> <span data-ko>무인 처리</span><span data-en>hands-off</span> · <b>10</b> <span data-ko>모듈</span><span data-en>modules</span></div>
+      <div class="proj-meta">
+        <div class="proj-stack">Python · Selenium · win32com · openpyxl<br>pdfplumber · Oracle Fusion · Claude + MCP</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- 02 Finance Automation -->
+    <a class="proj-card p5" href="portfolio_finance_automation.html" style="animation-delay:0.38s;">
+      <div class="proj-bg-num">02</div>
+      <div class="proj-num">PROJECT · 02</div>
+      <div class="proj-type"><span class="type-pill dx">DX</span></div>
+      <div class="proj-tags">
+        <span class="tag tag-blue">Python</span>
+        <span class="tag tag-orange">win32com</span>
+        <span class="tag tag-green">Holiday-aware</span>
+        <span class="tag tag-purple">Dedup</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>Finance 연계</span><span data-en>Finance Workflow</span><br><em><span data-ko>지급요청 자동화</span><span data-en>Payment Request Automation</span></em></h2>
+      <p class="proj-desc">
+        <span data-ko>관세·DHL 비용 지급요청 메일을 자동 생성·발송. 한국 공휴일 인식 2회차 스케줄링과 중복 방지 로직 내장.</span>
+        <span data-en>Auto-generates and sends customs &amp; DHL payment-request emails to Finance, with Korean-holiday-aware scheduling and dedup.</span>
+      </p>
+      <div class="proj-impact"><span data-ko>공휴일 인식 스케줄링</span><span data-en>Holiday-aware scheduling</span> · <span data-ko>중복 발송 0</span><span data-en>zero duplicate sends</span></div>
+      <div class="proj-meta">
+        <div class="proj-stack">Python · win32com · holidays<br>State JSON · easyocr (OCR)</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    <div class="footer-note">SUPPLY CHAIN · 2 PROJECTS</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en', l==='en');
+      document.getElementById('btn-ko').classList.toggle('active', l==='ko');
+      document.getElementById('btn-en').classList.toggle('active', l==='en');
+      try { localStorage.setItem('pf_lang', l); } catch(e){}
+    }
+    (function(){ try { const s = localStorage.getItem('pf_lang') || 'en'; setLang(s); } catch(e){ setLang('en'); } })();
+  </script>
+
+</body>
+</html>
