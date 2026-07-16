@@ -154,20 +154,7 @@
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
       </div>
-      <div class="hero-flow">
-        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📩</span><div class="flow-info"><div class="flow-name">customs_email_generator</div><div class="flow-role" data-ko>관세 통지 PDF → 지급요청 메일</div><div class="flow-role" data-en>Customs notice PDF → payment-request mail</div></div><span class="flow-badge badge-blue">pdfplumber</span></div>
-        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name">dhl_forwarder</div><div class="flow-role" data-ko>DHL 인보이스 2회차 배치 전달</div><div class="flow-role" data-en>DHL invoices, 2-round batch forwarding</div></div><span class="flow-badge badge-orange">win32com</span></div>
-        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">🗓️</span><div class="flow-info"><div class="flow-name">finance_calendar_ocr</div><div class="flow-role" data-ko>이미지 마감일 OCR → 캘린더 등록</div><div class="flow-role" data-en>OCRs image deadlines → calendar events</div></div><span class="flow-badge badge-purple">easyocr</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-label">Modules</div>
-    <h2 class="section-title reveal"><span data-ko>세 개의</span><span data-en>Three</span> <em><span data-ko>자동화 모듈</span><span data-en>automation modules</span></em></h2>
-    <div class="mod-grid">
-
-      <div class="mod-card c1 reveal">
+      <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);">
         <div class="mod-head">
           <div class="mod-file">customs_email_generator.py</div>
           <div class="mod-title" data-ko>관세 지급요청 생성기</div>
@@ -183,7 +170,7 @@
         </div>
       </div>
 
-      <div class="mod-card c2 reveal" style="transition-delay:0.08s">
+      <div class="mod-card c2 reveal" style="position:relative;background:var(--surf2);transition-delay:0.08s">
         <div class="mod-head">
           <div class="mod-file">dhl_forwarder.py</div>
           <div class="mod-title" data-ko>DHL 인보이스 포워더</div>
@@ -200,7 +187,7 @@
         </div>
       </div>
 
-      <div class="mod-card c3 reveal" style="transition-delay:0.16s">
+      <div class="mod-card c3 reveal" style="position:relative;background:var(--surf2);transition-delay:0.16s">
         <div class="mod-head">
           <div class="mod-file">finance_calendar_ocr.py</div>
           <div class="mod-title" data-ko>마감일 OCR 캘린더</div>
@@ -214,7 +201,6 @@
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Outlook 캘린더 이벤트 3건 자동 등록</span><span data-en>Auto-adds 3 Outlook calendar events</span></div>
         </div>
       </div>
-
     </div>
   </section>
 

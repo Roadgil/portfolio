@@ -155,21 +155,7 @@
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
       </div>
-      <div class="hero-flow">
-        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📧</span><div class="flow-info"><div class="flow-name">Mail Detect</div><div class="flow-role" data-ko>rma_auto_reply.py — "New RMA" 메일 자동 감지</div><div class="flow-role" data-en>rma_auto_reply.py — detects "New RMA" emails</div></div><span class="flow-badge badge-blue">Outlook</span></div>
-        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">🔎</span><div class="flow-info"><div class="flow-name">Salesforce Lookup</div><div class="flow-role" data-ko>Order Number · Disposition 조회</div><div class="flow-role" data-en>Looks up Order Number &amp; Disposition</div></div><span class="flow-badge badge-orange">Selenium</span></div>
-        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">🏷️</span><div class="flow-info"><div class="flow-name">Classify</div><div class="flow-role" data-ko>Unused vs Defective 자동 판정</div><div class="flow-role" data-en>Auto-classifies Unused vs Defective</div></div><span class="flow-badge badge-green">Salesforce</span></div>
-        <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">✉️</span><div class="flow-info"><div class="flow-name">Draft Reply</div><div class="flow-role" data-ko>FSE 존칭 매칭 + 회신 초안 작성</div><div class="flow-role" data-en>Matches FSE honorific, drafts the reply</div></div><span class="flow-badge badge-purple">win32com</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-label">Module</div>
-    <h2 class="section-title reveal"><span data-ko>Salesforce에서 판정까지,</span><span data-en>From Salesforce to a verdict,</span> <em><span data-ko>RMA 회신 자동화</span><span data-en>automated in one script</span></em></h2>
-    <div class="mod-grid" style="max-width:640px">
-
-      <div class="mod-card c1 reveal">
+      <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);">
         <div class="mod-head">
           <div class="mod-file">rma_auto_reply.py</div>
           <div class="mod-title" data-ko>RMA 자동 회신기</div>
@@ -185,7 +171,6 @@
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>안정화 전까지 Draft만 생성, Send() 호출 없음 — 실제 라이브 2건(RMA#00593366 Defective, RMA#00593486 Unused) 검증 완료</span><span data-en>Creates drafts only, no Send() calls until stabilized — verified live on 2 real cases (RMA#00593366 Defective, RMA#00593486 Unused)</span></div>
         </div>
       </div>
-
     </div>
   </section>
 
