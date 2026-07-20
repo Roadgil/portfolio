@@ -133,12 +133,12 @@
         <span class="tag tag-green">win32com</span>
         <span class="tag tag-gold">Auto Re-login</span>
       </div>
-      <h2 class="proj-title"><span data-ko>출고 자동화</span><span data-en>Outbound Ops</span><br><em><span data-ko>Pick Release RPA</span><span data-en>Pick Release RPA</span></em></h2>
+      <h2 class="proj-title"><span data-ko>출고 자동화</span><span data-en>Outbound Ops</span><br><em><span data-ko>Pick Release + Ship Confirm RPA</span><span data-en>Pick Release + Ship Confirm RPA</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고 처리 결과 회신까지 작성하는 출고(Outbound) 자동화.</span>
-        <span data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</span>
+        <span data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Pick Release를, 장비납품이동 메일을 감지해 Ship Confirm까지 자동 실행하는 출고(Outbound) 자동화. 같은 Oracle 세션을 공유하는 2개 모듈.</span>
+        <span data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — for Pick Release, and equipment-delivery-transfer emails for Ship Confirm. Two modules sharing the same Oracle session.</span>
       </p>
-      <div class="proj-impact"><b>25</b> <span data-ko>건/메일 동시 처리</span><span data-en>orders per email</span> · <span data-ko>SSO 자동 재로그인</span><span data-en>SSO auto re-login</span></div>
+      <div class="proj-impact"><b>2</b> <span data-ko>모듈</span><span data-en>modules</span> · <span data-ko>SSO 자동 재로그인</span><span data-en>SSO auto re-login</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Selenium · Oracle Fusion Cloud<br>win32com</div>
         <div class="proj-arrow">→</div>

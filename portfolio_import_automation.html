@@ -271,6 +271,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>송장에서 배송번호 자동 인식</span><span data-en>Auto-extracts shipment numbers from the invoice</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>금액 일치 시 원본 그대로, 불일치 시 Oracle 기준 인보이스로 답장 초안 자동 작성</span><span data-en>Drafts the reply automatically — original invoice on a match, Oracle-sourced invoice on a mismatch</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>출고(Outbound) 자동화와 Oracle 화면이 겹치면 새 탭에서 독립 처리</span><span data-en>Runs in an isolated tab when it overlaps with the outbound Pick Release automation</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>일본(JPP)/중국(CHP)/홍콩(ILH)발 재고 재배치(Rebalance) 건은 실적 파일에 매칭 정보가 없어 SharePoint에서 사람이 직접 조회해 처리하던 마지막 예외였는데, SharePoint 자동 조회 + Oracle 인보이스의 Ship From 주소를 발송국 주소로 PDF 자체를 패치하는 단계까지 붙여 완전 자동화</span><span data-en>Rebalance shipments from Japan (JPP)/China (CHP)/Hong Kong (ILH) were the last manual exception — no match data exists yet in the record file, so someone had to look them up in SharePoint by hand. Now fully automated: an automatic SharePoint lookup plus a PDF patch that rewrites the Oracle invoice's Ship-From address to the actual origin country</span></div>
         </div>
       </div>
 
@@ -325,6 +326,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>추정치 vs 실제 입고일 variance 자동 계산</span><span data-en>Auto-computes variance between estimate and actual</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>실제 입고가 확인되는 순간 Urgent Item 알림·통관완료 알림까지 자동 연쇄 발동</span><span data-en>The moment actual receipt is confirmed, it automatically triggers a chain of Urgent Item and clearance-complete notifications</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>배터리 전원 조건으로 조용히 스킵되던 실행 버그 수정</span><span data-en>Fixed a silent-skip bug tied to a battery-power condition</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>TO 번호가 재사용되는 케이스에서 가장 오래된 입고일 하나만 남기던 매칭 로직을 고쳐, 신고일자 이후 가장 이른 실입고일을 찾도록 개선 — 전에는 영영 공란으로 남던 재사용 TO 건까지 채워짐</span><span data-en>Fixed a matching bug where TO-number reuse kept only the single oldest receipt date — now finds the earliest actual-receipt date on or after the declaration date, filling in reused-TO rows that used to stay permanently blank</span></div>
         </div>
       </div>
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Outbound RPA · Pick Release · Portfolio</title>
+  <title>Outbound RPA · Pick Release & Ship Confirm · Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -136,16 +136,16 @@
   <section class="hero">
     <div class="hero-left">
       <div class="hero-bg-glow"></div>
-      <div class="hero-tag">Outbound RPA · Pick Release · 2026</div>
-      <h1 class="hero-title"><span class="a1" data-ko>출고</span><span class="a1" data-en>OUTBOUND</span><br><span class="a2" data-ko>Pick Release 운영</span><span class="a2" data-en>RELEASE OPS</span></h1>
+      <div class="hero-tag">Outbound RPA · Pick Release &amp; Ship Confirm · 2026</div>
+      <h1 class="hero-title"><span class="a1" data-ko>출고</span><span class="a1" data-en>OUTBOUND</span><br><span class="a2" data-ko>Oracle RPA</span><span class="a2" data-en>ORACLE RPA</span></h1>
       <p class="hero-desc">
-        <span data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해, Selenium으로 Oracle Fusion 화면을 직접 조작해 Pick Release를 자동 실행하고 처리 결과 회신까지 작성하는 출고(Outbound) RPA.</span>
-        <span data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — drives Oracle Fusion directly via Selenium to execute Pick Release, and drafts the confirmation reply — outbound RPA end to end.</span>
+        <span data-ko>같은 Oracle 로그인 세션을 공유하는 2개 모듈로 구성된 출고(Outbound) RPA. 서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Pick Release를 자동 실행하고, 장비납품이동 메일을 감지해 Ship Confirm까지 자동 실행 — 두 모듈 모두 처리 결과 회신 메일 작성까지 완결한다.</span>
+        <span data-en>Outbound RPA built from two modules sharing the same Oracle login session — one detects service-team stock-request emails (DCD/consumables, defect/promotion, chatbot orders) and executes Pick Release; the other detects equipment-delivery-transfer emails and executes Ship Confirm. Both draft the confirmation reply as the final step.</span>
       </p>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" style="color:var(--accent);">25</span><span class="stat-label" data-ko>건/메일 동시 처리</span><span class="stat-label" data-en>Orders per Email</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인(검증완료)</span><span class="stat-label" data-en>Auto Re-login (Verified)</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent3);">5<span style="font-size:20px;">/20-30</span><span style="font-size:20px;">min</span></span><span class="stat-label" data-ko>피크/한산 폴링 튜닝</span><span class="stat-label" data-en>Peak/Off-peak Polling</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">2</span><span class="stat-label" data-ko>모듈 (Pick Release + Ship Confirm)</span><span class="stat-label" data-en>Modules (Pick Release + Ship Confirm)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인(공유 세션)</span><span class="stat-label" data-en>Auto Re-login (Shared Session)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">25</span><span class="stat-label" data-ko>건/메일 동시 처리(Pick Release)</span><span class="stat-label" data-en>Orders per Email (Pick Release)</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>수동 개입</span><span class="stat-label" data-en>Manual Intervention</span></div>
       </div>
     </div>
@@ -155,7 +155,19 @@
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
       </div>
-      <div class="mod-card c2 reveal" style="position:relative;background:var(--surf2);">
+      <div class="hero-flow">
+        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📦</span><div class="flow-info"><div class="flow-name">pick_release_watcher</div><div class="flow-role" data-ko>DCD/소모품·불량프로모션·챗봇 → Pick Release</div><div class="flow-role" data-en>DCD/consumables, defect/promotion, chatbot → Pick Release</div></div><span class="flow-badge badge-blue">Oracle</span></div>
+        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">🚚</span><div class="flow-info"><div class="flow-name">ship_confirm_watcher</div><div class="flow-role" data-ko>장비납품이동 메일 → Ship Confirm</div><div class="flow-role" data-en>Equipment-delivery-transfer mail → Ship Confirm</div></div><span class="flow-badge badge-orange">Oracle</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Modules</div>
+    <h2 class="section-title"><span data-ko>같은 세션을 공유하는</span><span data-en>Two modules,</span><br><em><span data-ko>2개 모듈</span><span data-en>one shared session</span></em></h2>
+    <div class="mod-grid">
+
+      <div class="mod-card c2 reveal">
         <div class="mod-head">
           <div class="mod-file">pick_release_watcher.py</div>
           <div class="mod-title" data-ko>출고요청 자동 처리기</div>
@@ -173,6 +185,25 @@
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>브라우저 재시작 직후의 화면 전환 실패를 자동 재시도로 흡수해 무인 처리율 향상</span><span data-en>Self-heals post-restart navigation glitches with automatic retries, raising unattended success rate</span></div>
         </div>
       </div>
+
+      <div class="mod-card c1 reveal" style="transition-delay:0.05s">
+        <div class="mod-head">
+          <div class="mod-file">ship_confirm_watcher.py</div>
+          <div class="mod-title" data-ko>쉽컨펌 자동 처리기</div>
+          <div class="mod-title" data-en>Ship Confirm Watcher</div>
+        </div>
+        <div class="mod-desc" data-ko>장비납품이동 메일에서 주문번호를 뽑아 Oracle Fusion에서 해당 Shipment의 Ship Confirm Rule을 변경하고 Ship Confirm까지 실행한 뒤, 완료 회신 메일을 작성한다.</div>
+        <div class="mod-desc" data-en>Extracts the order number from equipment-delivery-transfer emails, changes the Ship Confirm Rule on the matching Oracle Fusion shipment, executes Ship Confirm, and drafts the completion reply.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>주문번호 1건에 Shipment가 여러 개 묶여도 중복 제거 후 각각 순차 처리</span><span data-en>Dedupes and processes each shipment in turn when one order maps to multiple shipments</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>pick_release_watcher와 동일한 Oracle 로그인/세션(같은 디버그 포트 Edge 인스턴스)을 그대로 재사용</span><span data-en>Reuses the exact same Oracle login/session as pick_release_watcher (same debug-port Edge instance)</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>실제 주문(쁘띠365의원 Picoway)으로 전체 흐름을 실측 검증 — Shipment Open→Closed, Packing Slip 발급까지 확인</span><span data-en>Verified end to end against a real order (Picoway shipment) — confirmed the shipment moving Open→Closed with a packing slip issued</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Edge 콜드 스타트 직후 검색 결과 렌더링 지연으로 생기던 오탐(0건 오판)을 고정 대기 대신 폴링 방식으로 해결</span><span data-en>Fixed a false-negative (reporting zero results) caused by slow rendering right after a cold Edge start, by polling instead of a fixed wait</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Oracle ADF가 버튼 텍스트를 여러 자식 노드로 쪼개 놓는 경우까지 처리하도록 JS textContent 매칭으로 클릭 로직 교체</span><span data-en>Replaced brittle button-click logic with JS textContent matching to handle Oracle ADF splitting button labels across multiple child nodes</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>완전 자동화 — 메일 감지부터 Oracle 트랜잭션, 완료 회신까지 사람 개입 없이 처리</span><span data-en>Fully automated — from mail detection through the Oracle transaction to the completion reply, with zero human touch</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -180,9 +211,9 @@
     <div class="section-label">Workflow</div>
     <h2 class="section-title"><span data-ko>메일 감지부터</span><span data-en>From mail detection</span><br><em><span data-ko>회신 발송까지</span><span data-en>to the confirmation reply</span></em></h2>
     <div class="pipeline">
-      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>출고요청 메일 감지</div><div class="pipe-title" data-en>Mail In</div><div class="pipe-desc" data-ko>DCD/소모품·불량프로모션·챗봇 주문 자동 감지</div><div class="pipe-desc" data-en>Detects DCD/consumables, defect/promotion, and chatbot orders</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🖱️</div><div class="pipe-title" data-ko>Oracle 화면 자동 조작</div><div class="pipe-title" data-en>Oracle UI Automation</div><div class="pipe-desc" data-ko>Selenium으로 로그인·조회·Pick Release 실행</div><div class="pipe-desc" data-en>Selenium logs in and executes Pick Release</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🔀</div><div class="pipe-title" data-ko>병렬 개별 처리</div><div class="pipe-title" data-en>Split &amp; Process</div><div class="pipe-desc" data-ko>메일 1건에 병원 최대 25곳이 묶여도 각각 처리</div><div class="pipe-desc" data-en>Splits up to 25 bundled hospital orders</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>출고/이동 메일 감지</div><div class="pipe-title" data-en>Mail In</div><div class="pipe-desc" data-ko>DCD/소모품·불량프로모션·챗봇 주문 또는 장비납품이동 메일 자동 감지</div><div class="pipe-desc" data-en>Detects DCD/consumables, defect/promotion, chatbot orders, or equipment-delivery-transfer mail</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🖱️</div><div class="pipe-title" data-ko>Oracle 화면 자동 조작</div><div class="pipe-title" data-en>Oracle UI Automation</div><div class="pipe-desc" data-ko>Selenium으로 로그인·조회 후 Pick Release 또는 Ship Confirm 실행</div><div class="pipe-desc" data-en>Selenium logs in and executes Pick Release or Ship Confirm</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🔀</div><div class="pipe-title" data-ko>병렬 개별 처리</div><div class="pipe-title" data-en>Split &amp; Process</div><div class="pipe-desc" data-ko>메일 1건에 여러 건(병원 최대 25곳, 또는 Shipment 여러 개)이 묶여도 각각 처리</div><div class="pipe-desc" data-en>Splits bundled items (up to 25 hospital orders, or multiple shipments) and processes each individually</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>결과 알림</div><div class="pipe-title" data-en>Notify</div><div class="pipe-desc" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Sends confirmation email, updates state JSON</div></div>
     </div>
   </section>
@@ -200,7 +231,7 @@
 
   <footer>
     <div class="footer-brand">OUTBOUND</div>
-    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · WIN32COM</div>
+    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · WIN32COM<br>PICK RELEASE · SHIP CONFIRM</div>
   </footer>
 
   <script>
