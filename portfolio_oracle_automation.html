@@ -139,14 +139,14 @@
       <div class="hero-tag">Outbound RPA · Pick Release &amp; Ship Confirm · 2026</div>
       <h1 class="hero-title"><span class="a1" data-ko>출고</span><span class="a1" data-en>OUTBOUND</span><br><span class="a2" data-ko>Oracle RPA</span><span class="a2" data-en>ORACLE RPA</span></h1>
       <p class="hero-desc">
-        <span data-ko>같은 Oracle 로그인 세션을 공유하는 2개 모듈로 구성된 출고(Outbound) RPA. 서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Pick Release를 자동 실행하고, 장비납품이동 메일을 감지해 Ship Confirm까지 자동 실행 — 두 모듈 모두 처리 결과 회신 메일 작성까지 완결한다.</span>
-        <span data-en>Outbound RPA built from two modules sharing the same Oracle login session — one detects service-team stock-request emails (DCD/consumables, defect/promotion, chatbot orders) and executes Pick Release; the other detects equipment-delivery-transfer emails and executes Ship Confirm. Both draft the confirmation reply as the final step.</span>
+        <span data-ko>같은 Oracle 로그인 세션을 공유하는 2개 모듈로 구성된 출고(Outbound) RPA. 서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Pick Release를 자동 실행하고 성공 건은 회신까지 자동 발송하며, 장비납품이동 메일을 감지해 Ship Confirm까지 자동 실행한다(Ship Confirm 회신은 아직 초안 전용, 발송은 사람이 확인 후 직접 함).</span>
+        <span data-en>Outbound RPA built from two modules sharing the same Oracle login session — one detects service-team stock-request emails (DCD/consumables, defect/promotion, chatbot orders), executes Pick Release, and auto-sends the confirmation reply on success; the other detects equipment-delivery-transfer emails and executes Ship Confirm (its reply is still draft-only — a person reviews and sends it).</span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">2</span><span class="stat-label" data-ko>모듈 (Pick Release + Ship Confirm)</span><span class="stat-label" data-en>Modules (Pick Release + Ship Confirm)</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인(공유 세션)</span><span class="stat-label" data-en>Auto Re-login (Shared Session)</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent3);">25</span><span class="stat-label" data-ko>건/메일 동시 처리(Pick Release)</span><span class="stat-label" data-en>Orders per Email (Pick Release)</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>수동 개입</span><span class="stat-label" data-en>Manual Intervention</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">Auto</span><span class="stat-label" data-ko>성공 건 회신 자동발송(Pick Release)</span><span class="stat-label" data-en>Auto-sends Reply on Success (Pick Release)</span></div>
       </div>
     </div>
 
@@ -173,10 +173,10 @@
           <div class="mod-title" data-ko>출고요청 자동 처리기</div>
           <div class="mod-title" data-en>Pick Release Watcher</div>
         </div>
-        <div class="mod-desc" data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고, 처리 결과 회신 메일까지 작성한다.</div>
-        <div class="mod-desc" data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — executes Pick Release directly in Oracle Fusion, and drafts the confirmation reply.</div>
+        <div class="mod-desc" data-ko>서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Oracle Fusion에서 Pick Release를 자동 실행하고, 성공한 건에 대해서만 완료 회신을 그 자리에서 자동 발송한다.</div>
+        <div class="mod-desc" data-en>Detects service-team stock-request emails — DCD/consumables, defect/promotion, and chatbot orders — executes Pick Release directly in Oracle Fusion, and auto-sends the completion reply immediately, but only for successful releases.</div>
         <div class="mod-points">
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 파싱부터 Oracle 트랜잭션 실행까지 무인 처리</span><span data-en>Unattended end to end — from parsing the email to the Oracle transaction</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 파싱부터 Oracle 트랜잭션 실행, 회신 발송까지 무인 처리 — 재로그인 필요 등 애매한 케이스만 사람 확인용 초안으로 남김</span><span data-en>Unattended end to end — from parsing the email through the Oracle transaction to sending the reply; only ambiguous cases (e.g. re-login required) fall back to a draft for human review</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 1건에 병원 여러 곳(최대 25건)이 묶여도 각각 개별 자동 처리</span><span data-en>Splits up to 25 bundled orders from a single email and processes each individually</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Oracle SSO 세션이 끊겨도 자동 재로그인 후 계속 진행 (라이브 검증 완료)</span><span data-en>Auto re-authenticates via SSO on session drop and resumes — verified live</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>2026년 실제 메일 도착 시간대 데이터를 분석해 체크 주기를 피크 구간 5분, 한산한 구간 20~30분으로 튜닝</span><span data-en>Tuned polling intervals (5 min at peak, 20–30 min off-peak) from an analysis of real 2026 mail-arrival timestamps</span></div>
@@ -200,7 +200,7 @@
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>실제 주문(쁘띠365의원 Picoway)으로 전체 흐름을 실측 검증 — Shipment Open→Closed, Packing Slip 발급까지 확인</span><span data-en>Verified end to end against a real order (Picoway shipment) — confirmed the shipment moving Open→Closed with a packing slip issued</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Edge 콜드 스타트 직후 검색 결과 렌더링 지연으로 생기던 오탐(0건 오판)을 고정 대기 대신 폴링 방식으로 해결</span><span data-en>Fixed a false-negative (reporting zero results) caused by slow rendering right after a cold Edge start, by polling instead of a fixed wait</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Oracle ADF가 버튼 텍스트를 여러 자식 노드로 쪼개 놓는 경우까지 처리하도록 JS textContent 매칭으로 클릭 로직 교체</span><span data-en>Replaced brittle button-click logic with JS textContent matching to handle Oracle ADF splitting button labels across multiple child nodes</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>완전 자동화 — 메일 감지부터 Oracle 트랜잭션, 완료 회신까지 사람 개입 없이 처리</span><span data-en>Fully automated — from mail detection through the Oracle transaction to the completion reply, with zero human touch</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 감지부터 Oracle 트랜잭션까지는 무인 처리, 완료 회신은 아직 초안 전용 — 사람이 검토 후 직접 발송</span><span data-en>Unattended from mail detection through the Oracle transaction; the completion reply is still draft-only — a person reviews and sends it</span></div>
         </div>
       </div>
 

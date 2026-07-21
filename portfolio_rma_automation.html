@@ -139,14 +139,14 @@
       <div class="hero-tag">RMA Automation · Salesforce · 2026</div>
       <h1 class="hero-title"><span class="a1" data-ko>반품</span><span class="a1" data-en>RETURNS</span><br><span class="a2" data-ko>RMA 자동화</span><span class="a2" data-en>RMA AUTO</span></h1>
       <p class="hero-desc">
-        <span data-ko>Salesforce에서 오는 신규 RMA 메일을 감지해 Order Number와 Disposition(Unused/Defective)을 자동 판정하고, 담당 엔지니어(FSE) 존칭까지 정확히 맞춰 회신 초안을 작성하는 반품 자동화. 안정화 전까지는 초안만 생성하고 자동발송하지 않는다.</span>
-        <span data-en>Detects new RMA emails linking to Salesforce, auto-classifies each by Order Number and Disposition (Unused/Defective), and drafts a reply addressed to the right field engineer by name and title — draft-only, no auto-send until fully stabilized.</span>
+        <span data-ko>Salesforce에서 오는 신규 RMA 메일을 감지해 Order Number와 Disposition(Unused/Defective)을 자동 판정하고, 확실한 정상 케이스는 회신까지 자동 발송하는 반품 자동화. 로그인 필요·판정 애매 등 예외 케이스만 사람 확인용 초안으로 남긴다.</span>
+        <span data-en>Detects new RMA emails linking to Salesforce, auto-classifies each by Order Number and Disposition (Unused/Defective), and auto-sends the reply on confirmed cases — only ambiguous exceptions (login required, unclear classification, etc.) are left as a draft for human review.</span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">2/2</span><span class="stat-label" data-ko>라이브 검증 성공</span><span class="stat-label" data-en>Live Validations Passed</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent2);">8/10</span><span class="stat-label" data-ko>FSE 존칭 매핑 완료</span><span class="stat-label" data-en>FSE Honorifics Mapped</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">10/10</span><span class="stat-label" data-ko>판정 규칙 전수 검증</span><span class="stat-label" data-en>Classification Rule Verified</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent3);">Classic</span><span class="stat-label" data-ko>Salesforce UI(실측 확인)</span><span class="stat-label" data-en>Salesforce UI (Verified)</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>자동발송(초안 전용)</span><span class="stat-label" data-en>Auto-sends (Draft Only)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">Auto</span><span class="stat-label" data-ko>정상 건 회신 자동발송</span><span class="stat-label" data-en>Auto-sends on Confirmed Cases</span></div>
       </div>
     </div>
 
@@ -161,14 +161,13 @@
           <div class="mod-title" data-ko>RMA 자동 회신기</div>
           <div class="mod-title" data-en>RMA Auto-Reply</div>
         </div>
-        <div class="mod-desc" data-ko>Outlook에서 "New RMA" 메일을 감지해 본문의 "Link to Parts Order"를 열고, Salesforce Classic 화면에서 Order Number와 Parts Order Lines(Disposition 포함)를 파싱한다. Disposition에 따라 Unused RMA/Defective RMA로 자동 분류해 담당 엔지니어(FSE) 앞으로 회신 초안을 작성한다.</div>
-        <div class="mod-desc" data-en>Detects "New RMA" emails in Outlook, opens the body's "Link to Parts Order," and parses the Order Number and Parts Order Lines (including Disposition) from the Salesforce Classic screen. Auto-classifies each as Unused RMA or Defective RMA by Disposition and drafts a reply addressed to the field engineer (FSE).</div>
+        <div class="mod-desc" data-ko>Outlook에서 "New RMA" 메일을 감지해 본문의 "Link to Parts Order"를 열고, Salesforce Classic 화면에서 Order Number와 Parts Order Lines(Disposition 포함)를 파싱한다. Disposition에 따라 Unused RMA/Defective RMA로 자동 분류하고, 정상 판정된 건은 회신을 그 자리에서 자동 발송한다.</div>
+        <div class="mod-desc" data-en>Detects "New RMA" emails in Outlook, opens the body's "Link to Parts Order," and parses the Order Number and Parts Order Lines (including Disposition) from the Salesforce Classic screen. Auto-classifies each as Unused RMA or Defective RMA by Disposition and auto-sends the reply on confirmed cases.</div>
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Unused RMA는 Oracle Order Number가 항상 7로 시작한다는 규칙까지 교차 검증 — 10건 전수 확인, 예외 없음</span><span data-en>Cross-checks the rule that Unused RMA always has an Oracle Order Number starting with 7 — verified across all 10 test cases, no exceptions</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Parts Order Lines 표에서 빈 컬럼(Work Order/Fulfillment Qty)으로 뒤 컬럼이 한 칸씩 밀리는 파싱 버그 발견·수정 — 고정 줄 수 가정 대신 Disposition 리터럴 앵커링으로 해결</span><span data-en>Found and fixed a parsing bug where empty columns (Work Order/Fulfillment Qty) shifted later columns by one — replaced a fixed-line-count assumption with anchoring on the Disposition literal instead</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>FSE 한글 존칭 매칭: 성이 겹치는 인원이 있어(로마자 성만으로는 구분 불가) 실제 관측된 영문 표기만으로 매핑 — 목록에 없는 발신자는 추측하지 않고 사람 확인으로 안전하게 넘김</span><span data-en>Matches Korean honorifics for each FSE — since some share a surname (romanized surname alone can't disambiguate them), names are mapped only from actually-observed English spellings; unrecognized senders are routed to a human check rather than guessed</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>pick_release_watcher와 동일한 CC 고정 패턴(용마로지스)을 그대로 재사용</span><span data-en>Reuses the same fixed CC pattern (Yongma Logis) as pick_release_watcher</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>안정화 전까지 Draft만 생성, Send() 호출 없음 — 실제 라이브 2건(RMA#00593366 Defective, RMA#00593486 Unused) 검증 완료</span><span data-en>Creates drafts only, no Send() calls until stabilized — verified live on 2 real cases (RMA#00593366 Defective, RMA#00593486 Unused)</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>로그인 필요·파싱 실패·판정 이상 등 애매한 케이스만 사람 확인용 초안(Save())으로 남기고, 정상 케이스는 reply.Send()로 즉시 자동발송 — 실제 라이브 2건(RMA#00593366 Defective, RMA#00593486 Unused)을 사람이 검토해 정확함을 확인한 뒤 자동발송으로 전환</span><span data-en>Ambiguous cases (login required, parse failure, classification mismatch) fall back to a draft (Save()) for human review; confirmed cases send immediately via reply.Send() — switched to auto-send after a human verified 2 real live cases were accurate (RMA#00593366 Defective, RMA#00593486 Unused)</span></div>
         </div>
       </div>
     </div>
@@ -176,12 +175,12 @@
 
   <section class="pipeline-section reveal">
     <div class="section-label">Workflow</div>
-    <h2 class="section-title"><span data-ko>메일 감지부터</span><span data-en>From mail detection</span><br><em><span data-ko>회신 초안까지</span><span data-en>to the reply draft</span></em></h2>
+    <h2 class="section-title"><span data-ko>메일 감지부터</span><span data-en>From mail detection</span><br><em><span data-ko>회신 발송까지</span><span data-en>to the reply</span></em></h2>
     <div class="pipeline">
       <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>메일 감지</div><div class="pipe-title" data-en>Mail In</div><div class="pipe-desc" data-ko>"New RMA" 메일 자동 감지</div><div class="pipe-desc" data-en>Detects "New RMA" emails</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🔎</div><div class="pipe-title" data-ko>Salesforce 조회</div><div class="pipe-title" data-en>Salesforce Lookup</div><div class="pipe-desc" data-ko>Order Number · Parts Order Lines 파싱</div><div class="pipe-desc" data-en>Parses Order Number &amp; Parts Order Lines</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🏷️</div><div class="pipe-title" data-ko>판정</div><div class="pipe-title" data-en>Classify</div><div class="pipe-desc" data-ko>Disposition 기준 Unused/Defective 분류</div><div class="pipe-desc" data-en>Classifies by Disposition: Unused/Defective</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">✉️</div><div class="pipe-title" data-ko>초안 작성</div><div class="pipe-title" data-en>Draft &amp; CC</div><div class="pipe-desc" data-ko>FSE 존칭 회신 초안 + 용마로지스 CC</div><div class="pipe-desc" data-en>FSE-addressed draft, CCs Yongma Logis</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">✉️</div><div class="pipe-title" data-ko>회신 발송</div><div class="pipe-title" data-en>Send Reply</div><div class="pipe-desc" data-ko>정상 건 자동 발송 + 용마로지스 CC</div><div class="pipe-desc" data-en>Auto-sends on confirmed cases, CCs Yongma Logis</div></div>
     </div>
   </section>
 
@@ -192,7 +191,7 @@
       <div class="stack-item"><div class="stack-emoji">🐍</div><div class="stack-name">Python</div><div class="stack-role" data-ko>자동화 파이프라인 로직</div><div class="stack-role" data-en>Automation pipeline logic</div></div>
       <div class="stack-item"><div class="stack-emoji">🖱️</div><div class="stack-name">Selenium</div><div class="stack-role" data-ko>Salesforce 화면 자동 조회</div><div class="stack-role" data-en>Salesforce UI automation</div></div>
       <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Salesforce Classic</div><div class="stack-role" data-ko>Order Number · Disposition 조회</div><div class="stack-role" data-en>Order Number &amp; Disposition lookup</div></div>
-      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 감지·초안 작성</div><div class="stack-role" data-en>Outlook mail detect &amp; draft</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 감지·회신 발송</div><div class="stack-role" data-en>Outlook mail detect &amp; send</div></div>
     </div>
   </section>
 

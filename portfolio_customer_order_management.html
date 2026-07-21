@@ -157,10 +157,10 @@
       </div>
       <h2 class="proj-title"><span data-ko>반품</span><span data-en>Returns</span><br><em><span data-ko>RMA 자동화</span><span data-en>RMA Automation</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>Salesforce에서 오는 신규 RMA 메일을 감지해 Order Number와 Disposition(Unused/Defective)을 자동 판정하고, 담당 엔지니어(FSE) 존칭까지 맞춰 회신 초안을 작성하는 반품 자동화.</span>
-        <span data-en>Detects new RMA emails, auto-classifies each by Order Number and Disposition (Unused/Defective), and drafts a reply addressed to the right field engineer by name.</span>
+        <span data-ko>Salesforce에서 오는 신규 RMA 메일을 감지해 Order Number와 Disposition(Unused/Defective)을 자동 판정하고, 정상 판정된 건은 회신까지 자동 발송하는 반품 자동화.</span>
+        <span data-en>Detects new RMA emails, auto-classifies each by Order Number and Disposition (Unused/Defective), and auto-sends the reply on confirmed cases.</span>
       </p>
-      <div class="proj-impact"><b>2/2</b> <span data-ko>라이브 검증</span><span data-en>live validations</span> · <span data-ko>초안 전용</span><span data-en>draft-only</span></div>
+      <div class="proj-impact"><b>2/2</b> <span data-ko>라이브 검증</span><span data-en>live validations</span> · <span data-ko>정상 건 자동발송</span><span data-en>auto-sends on confirmed cases</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Selenium · Salesforce<br>win32com</div>
         <div class="proj-arrow">→</div>
