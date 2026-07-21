@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Export CI Generator · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f5f3ee; --surf:#ffffff; --surf2:#f0ede6; --border:#ddd9d0;
+      --ink:#1c1a16; --muted:#8c8679; --accent:#1d7a5f; --accent2:#b5390a;
+      --accent3:#5b4fcf; --accent4:#1a4a6e;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='none'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23000' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:998;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:linear-gradient(to bottom,rgba(245,243,238,0.95),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--ink);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;background:var(--surf);}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#fff;}
+
+    .hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--ink);}
+    .hero-left{padding:120px 60px 80px;display:flex;flex-direction:column;justify-content:space-between;border-right:2px solid var(--ink);}
+    .hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px;}
+    .hero-eyebrow span.line{display:inline-block;width:32px;height:1px;background:var(--muted);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,7vw,104px);line-height:0.88;letter-spacing:-1px;color:var(--ink);}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:14px;line-height:1.85;color:var(--muted);max-width:420px;border-left:3px solid var(--accent);padding-left:18px;}
+    .hero-right{padding:120px 60px 80px;display:flex;flex-direction:column;justify-content:center;background:var(--ink);gap:14px;}
+
+    .demo-row{display:flex;align-items:center;gap:14px;font-family:'DM Mono',monospace;animation:fadeRight 0.6s ease both;}
+    .demo-row:nth-child(1){animation-delay:0.1s;}.demo-row:nth-child(2){animation-delay:0.2s;}
+    .demo-row:nth-child(3){animation-delay:0.3s;}.demo-row:nth-child(4){animation-delay:0.4s;}
+    .demo-in{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 14px;font-size:12px;color:#fde68a;min-width:90px;text-align:center;}
+    .demo-arrow{color:rgba(255,255,255,0.3);font-size:14px;}
+    .demo-out{flex:1;}
+    .demo-out-name{font-size:11px;color:rgba(255,255,255,0.85);margin-bottom:2px;}
+    .demo-out-price{font-size:11px;color:#86efac;}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:none;}}
+    .demo-caption{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-top:10px;}
+
+    .section{padding:90px 60px;border-bottom:1px solid var(--border);}
+    .label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+    .sec-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,48px);line-height:1.1;margin-bottom:50px;}
+    .sec-title em{font-style:italic;color:var(--accent2);}
+
+    .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border:2px solid var(--ink);}
+    .feat-card{background:var(--surf);padding:32px 28px;position:relative;overflow:hidden;transition:background 0.2s;}
+    .feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease;}
+    .feat-card:hover::before{transform:scaleX(1);}
+    .feat-card:hover{background:var(--surf2);}
+    .feat-card.c1::before{background:var(--accent);}.feat-card.c2::before{background:var(--accent2);}
+    .feat-card.c3::before{background:var(--accent3);}.feat-card.c4::before{background:var(--accent4);}
+    .feat-card.c5::before{background:var(--accent);}.feat-card.c6::before{background:var(--accent2);}
+    .feat-icon{font-size:26px;margin-bottom:16px;}
+    .feat-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:10px;}
+    .feat-desc{font-size:12px;color:var(--muted);line-height:1.75;}
+
+    .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+    .stat-block{padding:44px 36px;border-right:1px solid var(--border);}
+    .stat-block:last-child{border-right:none;}
+    .stat-big{font-family:'Bebas Neue',sans-serif;font-size:60px;line-height:1;margin-bottom:8px;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+    .stat-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+
+    footer{padding:60px;display:flex;justify-content:space-between;align-items:flex-end;border-top:2px solid var(--ink);flex-wrap:wrap;gap:20px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:2px;color:var(--ink);line-height:1;}
+    .footer-brand span{color:var(--accent2);}
+    .footer-stack{text-align:right;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;line-height:2;}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .hero-left{padding:110px 28px 50px;}
+      .hero-right{padding:50px 28px;}
+      .section{padding:60px 28px;}
+      .feat-grid{grid-template-columns:1fr;}
+      .stats-bar{grid-template-columns:1fr 1fr;}
+      footer{padding:40px 28px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span class="line"></span>Export Commercial Invoice · Desktop Tool · 2026</div>
+      <div>
+        <h1 class="hero-title"><span data-ko>수출</span><span data-en>EXPORT</span><br><span class="a1" data-ko>인보이스</span><span class="a1" data-en>INVOICE</span><br><span class="a2" data-ko>자동생성</span><span class="a2" data-en>AUTOBUILD</span></h1>
+      </div>
+      <p class="hero-desc">
+        <span data-ko>Tkinter 데스크톱 앱. 자재코드와 수량만 입력하면 수입 실적 파일에서 품명·원산지·HTS·단가를 자동으로 찾아오고, 국가별 HTML 인보이스 템플릿 8종 중 해당 시트만 채워 PDF Commercial Invoice를 만든 뒤, 같은 데이터를 수출신고실적 엑셀에도 그대로 기입한다.</span>
+        <span data-en>A Tkinter desktop app — enter just an item code and quantity, and it looks up description/origin/HTS/price from the import record, fills the matching country sheet out of 8 HTML invoice templates to build a PDF Commercial Invoice, then writes that same data straight into the export declaration Excel.</span>
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="demo-row"><div class="demo-in">3414-00-0247  10</div><div class="demo-arrow">→</div><div class="demo-out"><div class="demo-out-name" data-ko>Pump, 5.3GPM…</div><div class="demo-out-name" data-en>Pump, 5.3GPM…</div><div class="demo-out-price" data-ko>품명·HTS·단가 자동조회</div><div class="demo-out-price" data-en>description/HTS/price auto-looked-up</div></div></div>
+      <div class="demo-row"><div class="demo-in">AU</div><div class="demo-arrow">→</div><div class="demo-out"><div class="demo-out-name" data-ko>AUP 시트</div><div class="demo-out-name" data-en>AUP sheet</div><div class="demo-out-price" data-ko>국가 코드 자동 매칭</div><div class="demo-out-price" data-en>country code auto-matched</div></div></div>
+      <div class="demo-row"><div class="demo-in">RMA</div><div class="demo-arrow">→</div><div class="demo-out"><div class="demo-out-name" data-ko>FA LAB 고정</div><div class="demo-out-name" data-en>Locked to FA LAB</div><div class="demo-out-price" data-ko>단가 10% + HTS 9801.00.1090</div><div class="demo-out-price" data-en>10% price + fixed HTS</div></div></div>
+      <div class="demo-row"><div class="demo-in" data-ko>PDF 생성</div><div class="demo-in" data-en>Build PDF</div><div class="demo-arrow">→</div><div class="demo-out"><div class="demo-out-name" data-ko>수출신고실적</div><div class="demo-out-name" data-en>Export record</div><div class="demo-out-price" data-ko>동일 데이터 동시 기입</div><div class="demo-out-price" data-en>same data logged at once</div></div></div>
+      <div class="demo-caption" data-ko>// 입력 → 자동 처리 예시</div>
+      <div class="demo-caption" data-en>// input → auto-processing examples</div>
+    </div>
+  </section>
+
+  <div class="stats-bar reveal">
+    <div class="stat-block"><div class="stat-big" style="color:var(--accent);">8</div><div class="stat-label" data-ko>국가별 인보이스 템플릿</div><div class="stat-label" data-en>Country Invoice Templates</div><div class="stat-sub" data-ko>CHP/JPP/AUP/ILH/FBC/FA LAB/Refurb/US</div><div class="stat-sub" data-en>CHP/JPP/AUP/ILH/FBC/FA LAB/Refurb/US</div></div>
+    <div class="stat-block"><div class="stat-big" style="color:var(--accent2);">73<span style="font-size:28px;">+</span></div><div class="stat-label" data-ko>실사용 처리 건수</div><div class="stat-label" data-en>Real Invoices Processed</div><div class="stat-sub" data-ko>2025-12~2026-07 누적</div><div class="stat-sub" data-en>accumulated since Dec 2025</div></div>
+    <div class="stat-block"><div class="stat-big" style="color:var(--accent3);">2</div><div class="stat-label" data-ko>모드 자동 전환</div><div class="stat-label" data-en>Auto-switching Modes</div><div class="stat-sub" data-ko>Rebalance / RMA</div><div class="stat-sub" data-en>Rebalance / RMA</div></div>
+    <div class="stat-block"><div class="stat-big" style="color:var(--accent4);">0</div><div class="stat-label" data-ko>수동 재입력</div><div class="stat-label" data-en>Manual Re-entry</div><div class="stat-sub" data-ko>PDF + 실적 한 번에 완성</div><div class="stat-sub" data-en>PDF + record in one pass</div></div>
+  </div>
+
+  <section class="section reveal">
+    <div class="label">Features</div>
+    <h2 class="sec-title"><span data-ko>자재코드 하나로,</span><span data-en>One item code,</span><br><em><span data-ko>인보이스와 실적을 한 번에</span><span data-en>invoice and record together</span></em></h2>
+    <div class="feat-grid">
+      <div class="feat-card c1 reveal"><div class="feat-icon">🔎</div><div class="feat-title" data-ko>자재코드 자동 조회</div><div class="feat-title" data-en>Item Code Lookup</div><div class="feat-desc" data-ko>수입 실적 파일을 캐시로 읽어, 자재코드 하나로 품명·원산지코드·HS Code·단가를 한 번에 채운다.</div><div class="feat-desc" data-en>Caches the import record so a single material code fills in description, origin code, HS code, and price at once.</div></div>
+      <div class="feat-card c2 reveal"><div class="feat-icon">📄</div><div class="feat-title" data-ko>HTML 인보이스 엔진</div><div class="feat-title" data-en>HTML Invoice Engine</div><div class="feat-desc" data-ko>8개국 탭이 담긴 HTML 템플릿에서 BeautifulSoup으로 해당 시트만 남기고, 헤더(Delivery/Date)와 품목 행을 원본 서식 그대로 복제해 동적으로 재구성한다.</div><div class="feat-desc" data-en>Uses BeautifulSoup to isolate the right country tab from an 8-sheet HTML template, then fills the headers and rebuilds item rows dynamically while cloning the original formatting.</div></div>
+      <div class="feat-card c3 reveal"><div class="feat-icon">🖨️</div><div class="feat-title" data-ko>PDF 자동 변환</div><div class="feat-title" data-en>PDF Auto-render</div><div class="feat-desc" data-ko>Playwright를 우선 사용하고 없으면 헤드리스 Edge/Chrome로 자동 폴백해 A4 인보이스 PDF를 렌더링하고, 작업용 임시 HTML은 자동 삭제한다.</div><div class="feat-desc" data-en>Renders the A4 invoice PDF with Playwright first, auto-falling back to headless Edge/Chrome if unavailable, and deletes the working HTML afterward.</div></div>
+      <div class="feat-card c4 reveal"><div class="feat-icon">🔀</div><div class="feat-title" data-ko>Rebalance / RMA 모드</div><div class="feat-title" data-en>Rebalance / RMA Modes</div><div class="feat-desc" data-ko>RMA 모드는 시트를 FA LAB으로 고정하고 단가를 10%로, HTS를 반송품 고정 코드(9801.00.1090)로 자동 전환한다.</div><div class="feat-desc" data-en>RMA mode locks the sheet to FA LAB, cuts the price to 10%, and switches the HTS code to the fixed returned-goods code (9801.00.1090).</div></div>
+      <div class="feat-card c5 reveal"><div class="feat-icon">✏️</div><div class="feat-title" data-ko>즉시 수정되는 미리보기</div><div class="feat-title" data-en>Editable Live Preview</div><div class="feat-desc" data-ko>생성 전 표를 더블클릭으로 바로 고칠 수 있고, 수정 즉시 금액과 합계가 재계산된다.</div><div class="feat-desc" data-en>Double-click any cell in the preview table to fix it — amounts and totals recalculate instantly.</div></div>
+      <div class="feat-card c6 reveal"><div class="feat-icon">📊</div><div class="feat-title" data-ko>수출신고실적 동시 기입</div><div class="feat-title" data-en>Export Record, in Sync</div><div class="feat-desc" data-ko>PDF를 만든 것과 같은 데이터를 그대로 수출신고실적 엑셀에 append — 같은 정보를 두 번 입력할 필요가 없다.</div><div class="feat-desc" data-en>Appends the exact same data used for the PDF into the export declaration Excel — no need to type the same information twice.</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div><div class="footer-brand"><span data-ko>수출</span><span data-en>EXPORT</span><br><span data-ko>CI 생성기</span><span data-en>CI GEN</span></div></div>
+    <div class="footer-stack">PYTHON · TKINTER · BEAUTIFULSOUP<br>PLAYWRIGHT · OPENPYXL · PANDAS</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
