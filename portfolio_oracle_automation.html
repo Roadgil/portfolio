@@ -139,12 +139,12 @@
       <div class="hero-tag">Outbound RPA · Pick Release &amp; Ship Confirm · 2026</div>
       <h1 class="hero-title"><span class="a1" data-ko>출고</span><span class="a1" data-en>OUTBOUND</span><br><span class="a2" data-ko>Oracle RPA</span><span class="a2" data-en>ORACLE RPA</span></h1>
       <p class="hero-desc">
-        <span data-ko>같은 Oracle 로그인 세션을 공유하는 2개 모듈로 구성된 출고(Outbound) RPA. 서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Pick Release를 자동 실행하고 성공 건은 회신까지 자동 발송하며, 장비납품이동 메일을 감지해 Ship Confirm까지 자동 실행한다. Ship Confirm 회신은 아직 초안 전용이라 사람이 검토 후 직접 발송한다.</span>
-        <span data-en>Outbound RPA built from two modules sharing the same Oracle login session — one detects service-team stock-request emails (DCD/consumables, defect/promotion, chatbot orders), executes Pick Release, and auto-sends the confirmation reply on success; the other detects equipment-delivery-transfer emails and executes Ship Confirm (its reply is still draft-only — a person reviews and sends it).</span>
+        <span data-ko>출고(Outbound) RPA. Pick Release와 Ship Confirm 2개 모듈이 하나의 Oracle 로그인을 그대로 이어 쓴다. 서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Pick Release를 자동 실행하고 성공 건은 회신까지 자동 발송하며, 장비납품이동 메일을 감지해 Ship Confirm까지 자동 실행한다. Ship Confirm 회신은 아직 초안 전용이라 사람이 검토 후 직접 발송한다.</span>
+        <span data-en>Outbound RPA built from two modules that reuse the same Oracle login — one detects service-team stock-request emails (DCD/consumables, defect/promotion, chatbot orders), executes Pick Release, and auto-sends the confirmation reply on success; the other detects equipment-delivery-transfer emails and executes Ship Confirm (its reply is still draft-only — a person reviews and sends it).</span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">2</span><span class="stat-label" data-ko>모듈 (Pick Release + Ship Confirm)</span><span class="stat-label" data-en>Modules (Pick Release + Ship Confirm)</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인(공유 세션)</span><span class="stat-label" data-en>Auto Re-login (Shared Session)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인</span><span class="stat-label" data-en>Auto Re-login</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent3);">25</span><span class="stat-label" data-ko>건/메일 동시 처리(Pick Release)</span><span class="stat-label" data-en>Orders per Email (Pick Release)</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent4);">Auto</span><span class="stat-label" data-ko>성공 건 회신 자동발송(Pick Release)</span><span class="stat-label" data-en>Auto-sends Reply on Success (Pick Release)</span></div>
       </div>
@@ -155,19 +155,7 @@
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
       </div>
-      <div class="hero-flow">
-        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📦</span><div class="flow-info"><div class="flow-name">pick_release_watcher</div><div class="flow-role" data-ko>DCD/소모품·불량프로모션·챗봇 → Pick Release</div><div class="flow-role" data-en>DCD/consumables, defect/promotion, chatbot → Pick Release</div></div><span class="flow-badge badge-blue">Oracle</span></div>
-        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">🚚</span><div class="flow-info"><div class="flow-name">ship_confirm_watcher</div><div class="flow-role" data-ko>장비납품이동 메일 → Ship Confirm</div><div class="flow-role" data-en>Equipment-delivery-transfer mail → Ship Confirm</div></div><span class="flow-badge badge-orange">Oracle</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section reveal">
-    <div class="section-label">Modules</div>
-    <h2 class="section-title"><span data-ko>같은 세션을 공유하는</span><span data-en>Two modules,</span><br><em><span data-ko>2개 모듈</span><span data-en>one shared session</span></em></h2>
-    <div class="mod-grid">
-
-      <div class="mod-card c2 reveal">
+      <div class="mod-card c2 reveal" style="position:relative;background:var(--surf2);">
         <div class="mod-head">
           <div class="mod-file">pick_release_watcher.py</div>
           <div class="mod-title" data-ko>출고요청 자동 처리기</div>
@@ -186,7 +174,7 @@
         </div>
       </div>
 
-      <div class="mod-card c1 reveal" style="transition-delay:0.05s">
+      <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);transition-delay:0.08s">
         <div class="mod-head">
           <div class="mod-file">ship_confirm_watcher.py</div>
           <div class="mod-title" data-ko>쉽컨펌 자동 처리기</div>
@@ -203,7 +191,6 @@
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 감지부터 Oracle 트랜잭션까지는 무인 처리, 완료 회신은 아직 초안 전용 — 사람이 검토 후 직접 발송</span><span data-en>Unattended from mail detection through the Oracle transaction; the completion reply is still draft-only — a person reviews and sends it</span></div>
         </div>
       </div>
-
     </div>
   </section>
 
