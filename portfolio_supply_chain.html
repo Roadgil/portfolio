@@ -42,6 +42,7 @@
     .proj-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
     .proj-card.p2::after { background: var(--c2); }
     .proj-card.p5::after { background: #1a4a6e; }
+    .proj-card.p7::after { background: #0fa878; }
     .proj-card:hover::after { transform: scaleX(1); }
 
     .proj-bg-num { position: absolute; bottom: -20px; right: 20px; font-family: 'Bebas Neue', sans-serif; font-size: 150px; line-height: 1; color: rgba(255,255,255,0.025); pointer-events: none; transition: color 0.3s; }
@@ -65,6 +66,7 @@
     .proj-title em { font-style: italic; }
     .p2 .proj-title em { color: var(--c2); }
     .p5 .proj-title em { color: #93c5fd; }
+    .p7 .proj-title em { color: #0fa878; }
     .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 22px; max-width: 400px; }
 
     .proj-impact { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.5px; color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; margin-bottom: 28px; }
@@ -76,6 +78,7 @@
     .proj-card:hover .proj-arrow { border-color: transparent; color: #fff; transform: rotate(-45deg); }
     .p2:hover .proj-arrow { background: var(--c2); }
     .p5:hover .proj-arrow { background: #1a4a6e; }
+    .p7:hover .proj-arrow { background: #0fa878; }
 
     footer { margin: 0 60px; padding: 32px 0; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; animation: fadeUp 0.8s ease 0.5s both; }
     .footer-note { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; }
@@ -84,6 +87,7 @@
     @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px);} to{opacity:1;transform:translateY(0);} }
     .proj-card.p2 { animation-delay: 0.30s; }
     .proj-card.p5 { animation-delay: 0.38s; }
+    .proj-card.p7 { animation-delay: 0.46s; }
 
     [data-en] { display: none; }
     body.en [data-ko] { display: none; }
@@ -113,8 +117,8 @@
     <div class="hero-eyebrow">Category · 2025–2026</div>
     <h1 class="hero-title">SUPPLY CHAIN</h1>
     <p class="hero-sub">
-      <span data-ko>해외 공급망 쪽 — 수입/통관과 그 지급요청 처리를 자동화한 2개 프로젝트.</span>
-      <span data-en>The supplier-side of the chain — 2 projects automating international import/customs clearance and its payment-request processing.</span>
+      <span data-ko>해외 공급망 쪽 — 수입/통관, 그 지급요청 처리, 그리고 비용 리포트 트래킹까지 자동화한 3개 프로젝트.</span>
+      <span data-en>The supplier-side of the chain — 3 projects automating international import/customs clearance, its payment-request processing, and cost report tracking.</span>
     </p>
   </div>
 
@@ -168,10 +172,33 @@
       </div>
     </a>
 
+    <!-- 03 W&D Cost Report Tracking -->
+    <a class="proj-card p7" href="portfolio_wd_cost_tracking.html" style="animation-delay:0.46s;">
+      <div class="proj-bg-num">03</div>
+      <div class="proj-num">PROJECT · 03</div>
+      <div class="proj-type"><span class="type-pill dx">DX</span></div>
+      <div class="proj-tags">
+        <span class="tag tag-blue">Python</span>
+        <span class="tag tag-orange">win32com</span>
+        <span class="tag tag-green">openpyxl</span>
+        <span class="tag tag-purple">Regex Dedup</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>W&amp;D 비용</span><span data-en>W&amp;D Cost</span><br><em><span data-ko>리포트 트래킹 자동화</span><span data-en>Report Tracking Automation</span></em></h2>
+      <p class="proj-desc">
+        <span data-ko>Oracle 인보이스 승인 메일에서 8개 벤더 비용을 자동 집계해 W&amp;D Cost 리포트에 반영. 검증 과정에서 과거 수기 입력 오류 2건도 함께 찾아 정정했다.</span>
+        <span data-en>Auto-aggregates costs across 8 vendors from Oracle invoice-approval emails into the W&amp;D Cost report — the verification pass also caught and fixed 2 pre-existing manual-entry errors.</span>
+      </p>
+      <div class="proj-impact"><b>8</b> <span data-ko>벤더 자동 매핑</span><span data-en>vendors mapped</span> · <b>2</b> <span data-ko>오류 정정</span><span data-en>errors fixed</span></div>
+      <div class="proj-meta">
+        <div class="proj-stack">Python · win32com · openpyxl<br>Regex Dedup · Task Scheduler</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
   </div>
 
   <footer>
-    <div class="footer-note">SUPPLY CHAIN · 2 PROJECTS</div>
+    <div class="footer-note">SUPPLY CHAIN · 3 PROJECTS</div>
   </footer>
 
   <script>

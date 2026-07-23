@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>W&amp;D Report Tracking System · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#93c5fd; --accent2:#0faaa0; --accent3:#e09c10; --accent4:#5b4fcf;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;}
+    .hero-left{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(147,197,253,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,8.5vw,116px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:600px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
+    .hero-right-bg-cell{background:white;}
+    .hero-right-bg-cell:nth-child(odd){background:transparent;}
+    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
+    .flow-step{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.40s}
+    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
+    .flow-icon{font-size:19px;width:34px;text-align:center;flex-shrink:0;}
+    .flow-info{flex:1;}
+    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+    .flow-role{font-size:11px;color:rgba(255,255,255,0.4);}
+    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
+    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
+    .badge-orange{background:rgba(196,98,26,0.4);color:#fdba74;border:1px solid rgba(253,186,116,0.3);}
+    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
+    .badge-red{background:rgba(124,45,18,0.5);color:#fca5a5;border:1px solid rgba(252,165,165,0.3);}
+    .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
+    .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
+    .section-title em{font-style:italic;color:var(--accent);}
+
+    .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .mod-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .mod-card:hover{transform:translateY(-5px);border-color:var(--accent);}
+    .mod-head{padding:26px 28px 0;}
+    .mod-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;background:var(--surf2);padding:5px 10px;border-radius:5px;display:inline-block;margin-bottom:14px;}
+    .mod-title{font-family:'DM Serif Display',serif;font-size:21px;margin-bottom:10px;}
+    .mod-desc{font-size:12.5px;color:var(--muted);line-height:1.75;padding:0 28px 18px;}
+    .mod-points{padding:0 28px 26px;display:flex;flex-direction:column;gap:8px;}
+    .mpoint{font-size:11.5px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .mpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
+    .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
+    .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+    .mod-card.c4 .mpoint-dot{background:var(--accent4);}.mod-card.c4 .mod-title{color:var(--accent4);}
+
+    .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pipeline{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .pipe-step{flex:1;padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+    .pipe-step:last-child{border-right:none;}
+    .pipe-step:hover{background:var(--surf2);}
+    .pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+    .pipe-icon{font-size:24px;margin-bottom:14px;}
+    .pipe-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
+    .pipe-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+
+    @media (max-width:900px){
+      .topbar{padding:16px 24px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-left,.hero-right{padding:90px 24px 50px;}
+      .hero-right{min-height:60vh;}
+      .section,.pipeline-section{padding:90px 24px 50px;}
+      .pipeline{flex-direction:column;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="portfolio_supply_chain.html">← <span data-ko>Supply Chain</span><span data-en>Supply Chain</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-tag">Cost Reconciliation · E2E Automation</div>
+      <h1 class="hero-title"><span class="a1" data-ko>W&amp;D 비용</span><span class="a1" data-en>W&amp;D COST</span><br><span class="a2" data-ko>리포트 트래킹</span><span class="a2" data-en>REPORT TRACKING</span></h1>
+      <p class="hero-desc">
+        <span data-ko>Oracle Fusion의 인보이스 승인 메일(Approval of Invoice)을 소스로, 물류·폐기 8개 벤더의 월별 비용을 자동으로 집계해 W&amp;D Cost 리포트에 채워 넣는 E2E 시스템. 사람이 하던 "메일 열어서 금액 옮겨 적기"를 없애면서, 그 과정에서 과거 수기 입력 오류 2건도 함께 찾아냈다.</span>
+        <span data-en>An end-to-end system that sources Oracle Fusion's Approval-of-Invoice emails to auto-aggregate monthly costs across 8 logistics/disposal vendors and write them straight into the W&amp;D Cost report. It removes the manual "open the email, copy the number" step — and in the process caught 2 pre-existing manual-entry errors in the historical data.</span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">8</span><span class="stat-label" data-ko>벤더 자동 매핑</span><span class="stat-label" data-en>Vendors Mapped</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">30</span><span class="stat-label" data-ko>실행일 사전 예약(~2028)</span><span class="stat-label" data-en>Run Dates Pre-set (thru 2028)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">2</span><span class="stat-label" data-ko>과거 오류 발견·정정</span><span class="stat-label" data-en>Legacy Errors Caught</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>불필요한 일일 실행</span><span class="stat-label" data-en>Unnecessary Daily Runs</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="hero-flow">
+        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📥</span><div class="flow-info"><div class="flow-name" data-ko>Finance 폴더 스캔</div><div class="flow-name" data-en>Finance Folder Scan</div><div class="flow-role" data-ko>Oracle Approval of Invoice 메일 수집</div><div class="flow-role" data-en>Collects Oracle Approval-of-Invoice mail</div></div><span class="flow-badge badge-blue">win32com</span></div>
+        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">🏷️</span><div class="flow-info"><div class="flow-name" data-ko>벤더 → 카테고리 매핑</div><div class="flow-name" data-en>Vendor → Category Map</div><div class="flow-role" data-ko>8개 벤더명을 리포트 행에 매칭</div><div class="flow-role" data-en>Matches 8 vendor names to report rows</div></div><span class="flow-badge badge-purple">Regex</span></div>
+        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">🧹</span><div class="flow-info"><div class="flow-name" data-ko>중복 인보이스 제거</div><div class="flow-name" data-en>Dedup Engine</div><div class="flow-role" data-ko>재발송·별칭 벤더명 중복 제거</div><div class="flow-role" data-en>Collapses resends &amp; vendor-alias dupes</div></div><span class="flow-badge badge-orange">Dedup</span></div>
+        <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">📊</span><div class="flow-info"><div class="flow-name" data-ko>월별 합산 · 시트 반영</div><div class="flow-name" data-en>Monthly Sum → Sheet</div><div class="flow-role" data-ko>수신월 = 사용월 규칙으로 셀 기입</div><div class="flow-role" data-en>Writes cells using received-month = usage-month rule</div></div><span class="flow-badge badge-green">openpyxl</span></div>
+        <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">🗄️</span><div class="flow-info"><div class="flow-name" data-ko>백업 후 반영</div><div class="flow-name" data-en>Backup Before Write</div><div class="flow-role" data-ko>OneDrive 락 대응 + 타임스탬프 백업</div><div class="flow-role" data-en>OneDrive-lock retry + timestamped backup</div></div><span class="flow-badge badge-gold">Safety</span></div>
+        <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">🗓️</span><div class="flow-info"><div class="flow-name" data-ko>월말 D-1 영업일 실행</div><div class="flow-name" data-en>Month-End D-1 Trigger</div><div class="flow-role" data-ko>2028년까지 실행일 30개 사전 등록</div><div class="flow-role" data-en>30 exact run-dates pre-registered thru 2028</div></div><span class="flow-badge badge-red">Scheduler</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Design</div>
+    <h2 class="section-title"><span data-ko>메일 하나에서</span><span data-en>From one inbox</span><br><em><span data-ko>리포트 셀까지</span><span data-en>to the report cell</span></em></h2>
+    <div class="mod-grid">
+
+      <div class="mod-card c1 reveal">
+        <div class="mod-head">
+          <div class="mod-file">wd_cost_monthly_updater.py</div>
+          <div class="mod-title" data-ko>인보이스 → 코스트 시트</div>
+          <div class="mod-title" data-en>Invoice → Cost Sheet</div>
+        </div>
+        <div class="mod-desc" data-ko>Outlook Finance 폴더에서 Oracle Fusion이 보낸 "Approval of Invoice" 메일 제목을 정규식으로 파싱해 벤더명·금액·인보이스 코드를 추출하고, 해당 월 컬럼에 자동 기입한다.</div>
+        <div class="mod-desc" data-en>Regex-parses the subject line of Oracle Fusion's "Approval of Invoice" emails in the Outlook Finance folder to pull vendor, amount, and invoice code, then writes the total into that month's column.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>YONGMA LOGIS · INCHEON LOGIS · DHL · FEDEX · SEOUL LOGIS · JMEDI LOGIS · WECANDO · EZPUB 8개 벤더 매핑</span><span data-en>Maps 8 vendors — YONGMA LOGIS, INCHEON LOGIS, DHL, FEDEX, SEOUL LOGIS, JMEDI LOGIS, WECANDO, EZPUB</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>관세/부가세(PDF 분리 필요)·라인아이템 필터링이 필요한 항목은 자동화 범위에서 명시적으로 제외</span><span data-en>Explicitly excludes items needing PDF-level splitting or line-item filtering, rather than guessing</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>OneDrive에서 파일이 열려있으면 쓰기가 막히는 문제 — 복사 후 편집·되돌리기 + 실패 시 다음 실행 자동 재시도</span><span data-en>Handles OneDrive write-locks (file open in Excel) via copy-edit-restore, auto-retrying on the next run if it fails</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c2 reveal" style="transition-delay:0.08s">
+        <div class="mod-head">
+          <div class="mod-file">Dedup Engine</div>
+          <div class="mod-title" data-ko>중복 인보이스 제거</div>
+          <div class="mod-title" data-en>Duplicate-Invoice Guard</div>
+        </div>
+        <div class="mod-desc" data-ko>같은 인보이스가 재발송되거나 벤더명이 살짝 다르게(예: "DHL KOREA" vs "DHL global forwarding Korea") 찍혀도 이중 집계되지 않도록, 인보이스 코드에 박힌 8자리 날짜를 기준으로 중복을 판별한다.</div>
+        <div class="mod-desc" data-en>Prevents double-counting when the same invoice is resent, or logged under a slightly different vendor-name variant (e.g. "DHL KOREA" vs "DHL global forwarding Korea"), by deduping on the 8-digit date embedded in the invoice code.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>같은 날짜·같은 금액의 서로 다른 인보이스는 정상적으로 별건 처리(단순 날짜+금액 매칭이 아님)</span><span data-en>Distinct invoices sharing a date and amount still count separately — not a naive date+amount match</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>DHL 5월 합계를 역산해 계산식을 검증 — 기존 수기 입력값과 원 단위로 정확히 일치</span><span data-en>Validated by back-computing DHL's May total — matched the pre-existing manual figure to the exact won</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c3 reveal" style="transition-delay:0.16s">
+        <div class="mod-head">
+          <div class="mod-file">Data Quality Pass</div>
+          <div class="mod-title" data-ko>검증 · 오류 정정</div>
+          <div class="mod-title" data-en>Verification &amp; Correction</div>
+        </div>
+        <div class="mod-desc" data-ko>자동화를 붙이기 전, 5개월치 실제 입력값과 계산값을 전부 대조했다. 이 과정에서 위캔두(WECANDO) 4월 값이 실제로는 5월 인보이스였고 6월 건 자체가 누락돼 있던 것을 발견해 함께 정정했다.</div>
+        <div class="mod-desc" data-en>Before wiring up the automation, cross-checked 5 months of existing entries against the computed totals — surfacing that WECANDO's "April" figure was actually May's invoice, and June's invoice was missing entirely. Both were corrected.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>FedEx 행 라벨도 실제 용도(rebalance)와 다르게 붙어있던 것을 정정 — DHL="HQ+Zimmer", FedEx="Rebalance"</span><span data-en>Also corrected the FedEx row label, which didn't match its real use — DHL = "HQ+Zimmer", FedEx = "Rebalance"</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>수정 전 매번 타임스탬프 백업 생성, 실거래 데이터라 자동 삭제 대상에서 제외</span><span data-en>Timestamped backup before every write; excluded from any auto-cleanup since it's live financial data</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c4 reveal" style="transition-delay:0.24s">
+        <div class="mod-head">
+          <div class="mod-file">Windows Task Scheduler</div>
+          <div class="mod-title" data-ko>정밀 실행일 스케줄링</div>
+          <div class="mod-title" data-en>Precision-Date Scheduling</div>
+        </div>
+        <div class="mod-desc" data-ko>처음엔 매일 오후 4시에 실행하되 스크립트 안에서 "오늘이 월말 D-1 영업일인가"만 체크하는 방식으로 만들었지만, 1년에 실제로 필요한 12번을 위해 365번 도는 게 불필요하다는 피드백을 받고 재설계했다.</div>
+        <div class="mod-desc" data-en>First built as a daily 4pm trigger that internally checks "is today the month-end D-1 business day?" — then redesigned after feedback that running 365 times a year for 12 real executions was wasteful overhead.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>한국 공휴일 캘린더(2026~2028)로 매달 영업일 D-1 날짜를 미리 계산해, 실행 1회짜리 트리거 30개를 한 작업에 등록</span><span data-en>Pre-computes each month's D-1 business day from a Korean holiday calendar (2026–2028) and registers 30 one-time triggers on a single task</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>등록 직후 실제 트리거 실패(액세스 거부)를 로그로 잡아내 원인 파악 후 재등록해 검증까지 완료</span><span data-en>Caught a real launch failure (access denied) from the log right after registering, diagnosed it, and re-registered with verification</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="pipeline-section reveal">
+    <div class="section-label">Workflow</div>
+    <h2 class="section-title"><span data-ko>메일 수신부터</span><span data-en>From mail in</span><br><em><span data-ko>리포트 반영까지</span><span data-en>to report reflected</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📥</div><div class="pipe-title" data-ko>메일 수집</div><div class="pipe-title" data-en>Collect Mail</div><div class="pipe-desc" data-ko>Finance 폴더에서 Oracle 인보이스 승인 메일 스캔</div><div class="pipe-desc" data-en>Scans Oracle invoice-approval mail in Finance folder</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🏷️</div><div class="pipe-title" data-ko>벤더 매칭</div><div class="pipe-title" data-en>Match Vendor</div><div class="pipe-desc" data-ko>제목의 벤더명을 리포트 카테고리로 매핑</div><div class="pipe-desc" data-en>Maps the subject's vendor name to a report category</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🧹</div><div class="pipe-title" data-ko>중복 제거</div><div class="pipe-title" data-en>Dedup</div><div class="pipe-desc" data-ko>재발송·별칭 인보이스 중복 집계 방지</div><div class="pipe-desc" data-en>Prevents double-counting resends &amp; alias vendors</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">➕</div><div class="pipe-title" data-ko>월별 합산</div><div class="pipe-title" data-en>Sum by Month</div><div class="pipe-desc" data-ko>수신월 = 사용월 규칙으로 벤더별 총액 계산</div><div class="pipe-desc" data-en>Computes per-vendor totals under received-month = usage-month</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📊</div><div class="pipe-title" data-ko>시트 반영</div><div class="pipe-title" data-en>Write Sheet</div><div class="pipe-desc" data-ko>백업 생성 후 W&amp;D Cost 리포트 셀 갱신</div><div class="pipe-desc" data-en>Backs up, then updates the W&amp;D Cost report cells</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">🗓️</div><div class="pipe-title" data-ko>다음 실행 대기</div><div class="pipe-title" data-en>Wait for Next Run</div><div class="pipe-desc" data-ko>다음 달 D-1 영업일 트리거까지 대기</div><div class="pipe-desc" data-en>Idles until next month's pre-set D-1 trigger</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="stack-emoji">🐍</div><div class="stack-name">Python</div><div class="stack-role" data-ko>파싱 · 집계 로직</div><div class="stack-role" data-en>Parsing &amp; aggregation logic</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook Finance 폴더 스캔</div><div class="stack-role" data-en>Outlook Finance-folder scan</div></div>
+      <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">openpyxl</div><div class="stack-role" data-ko>Cost 리포트 셀 기입</div><div class="stack-role" data-en>Cost-report cell writes</div></div>
+      <div class="stack-item"><div class="stack-emoji">🔤</div><div class="stack-name">Regex</div><div class="stack-role" data-ko>인보이스 제목 파싱 · 중복 판별</div><div class="stack-role" data-en>Invoice-subject parsing &amp; dedup keys</div></div>
+      <div class="stack-item"><div class="stack-emoji">📅</div><div class="stack-name">Task Scheduler</div><div class="stack-role" data-ko>영업일 기준 정밀 트리거 30건</div><div class="stack-role" data-en>30 precision business-day triggers</div></div>
+      <div class="stack-item"><div class="stack-emoji">🗄️</div><div class="stack-name">Timestamped Backup</div><div class="stack-role" data-ko>실거래 파일 쓰기 전 백업</div><div class="stack-role" data-en>Backup before every live-file write</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">W&amp;D COST TRACKING</div>
+    <div class="footer-note">PYTHON · WIN32COM · OPENPYXL · REGEX · TASK SCHEDULER</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
