@@ -110,6 +110,7 @@
     .highlight-card.c3::after { background: var(--accent3); }
     .highlight-card.c4::after { background: var(--accent4); }
     .highlight-card.c5::after { background: var(--green); }
+    .highlight-card.c6::after { background: var(--accent2); }
     .highlight-num { font-family: 'Bebas Neue', sans-serif; font-size: 52px; line-height: 1; opacity: 0.15; position: absolute; top: 16px; right: 20px; }
     .highlight-icon { font-size: 26px; margin-bottom: 16px; }
     .highlight-title { font-family: 'DM Serif Display', serif; font-size: 17px; margin-bottom: 10px; }
@@ -176,8 +177,8 @@
   <!-- TICKER -->
   <div class="ticker">
     <div class="ticker-inner">
-      <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span>
-      <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span>
+      <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span><span class="ticker-item">Salesforce Sync</span>
+      <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span><span class="ticker-item">Salesforce Sync</span>
     </div>
   </div>
 
@@ -216,6 +217,7 @@
             <div class="feature"><div class="feature-dot" style="background:#5b4fcf;"></div><span data-ko>이메일/비밀번호 로그인 + 비밀번호 리셋</span><span data-en>Email/password login + reset</span></div>
             <div class="feature"><div class="feature-dot" style="background:#0faaa0;"></div><span data-ko>분기·팀원 필터 + 상태별 테이블 분리</span><span data-en>Quarter/member filter + status tables</span></div>
             <div class="feature"><div class="feature-dot" style="background:#0fa878;"></div><span data-ko>드래그로 행 순서 변경 · CSV 내보내기</span><span data-en>Drag-reorder rows · CSV export</span></div>
+            <div class="feature"><div class="feature-dot" style="background:#2dd4bf;"></div><span data-ko>Salesforce 리포트 주 1회 검증·자동 반영</span><span data-en>Weekly verified Salesforce sync</span></div>
           </div>
         </div>
         <div class="card-footer"><span class="card-footer-info">MODULE 01 · MAIN</span><div class="card-arrow">→</div></div>
@@ -311,6 +313,7 @@
       <div class="stack-item"><div class="stack-icon">📊</div><div class="stack-name">Chart.js 4.4</div><div class="stack-role" data-ko>데이터 시각화</div><div class="stack-role" data-en>Data visualization</div></div>
       <div class="stack-item"><div class="stack-icon">🎨</div><div class="stack-name">Tailwind CSS</div><div class="stack-role" data-ko>유틸리티 CSS</div><div class="stack-role" data-en>Utility CSS</div></div>
       <div class="stack-item"><div class="stack-icon">🌐</div><div class="stack-name">KO / EN</div><div class="stack-role" data-ko>다국어 전환</div><div class="stack-role" data-en>Language switch</div></div>
+      <div class="stack-item"><div class="stack-icon">☁️</div><div class="stack-name">Salesforce Reports</div><div class="stack-role" data-ko>CRM 딜 데이터 소스</div><div class="stack-role" data-en>CRM deal data source</div></div>
     </div>
   </div>
 
@@ -328,6 +331,13 @@
         <div class="arch-arrow">→</div>
         <div class="arch-node"><div class="arch-node-icon">🔥</div><div class="arch-node-name">Firestore</div><div class="arch-node-sub">Real-time Sync</div></div>
       </div>
+      <div class="arch-flow" style="margin-top:24px; padding-top:24px; border-top:1px dashed var(--border);">
+        <div class="arch-node"><div class="arch-node-icon">☁️</div><div class="arch-node-name">Salesforce</div><div class="arch-node-sub" data-ko>Korea Opportunity 리포트</div><div class="arch-node-sub" data-en>Korea Opportunity report</div></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node highlight"><div class="arch-node-icon">🐍</div><div class="arch-node-name" data-ko>Python 동기화</div><div class="arch-node-name" data-en>Python Sync</div><div class="arch-node-sub" data-ko>주간 Excel Export → 파싱</div><div class="arch-node-sub" data-en>Weekly Excel export → parse</div></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node"><div class="arch-node-icon">🔥</div><div class="arch-node-name">Firestore</div><div class="arch-node-sub" data-ko>SO번호·Dealer·계약구분 자동 반영</div><div class="arch-node-sub" data-en>Auto-fills SO #, dealer, contract type</div></div>
+      </div>
     </div>
 
     <div class="highlights">
@@ -336,6 +346,7 @@
       <div class="highlight-card c3 reveal" style="transition-delay:0.2s"><div class="highlight-num">03</div><div class="highlight-icon">↕️</div><div class="highlight-title" data-ko>드래그 앤 드롭 정렬</div><div class="highlight-title" data-en>Drag &amp; Drop Sort</div><div class="highlight-desc" data-ko>상태별 테이블에서 행을 드래그해 우선순위를 바꾸고 Firestore에 자동 저장.</div><div class="highlight-desc" data-en>Drag rows in status tables to reorder priority, auto-saved to Firestore.</div></div>
       <div class="highlight-card c4 reveal" style="transition-delay:0.3s"><div class="highlight-num">04</div><div class="highlight-icon">🌏</div><div class="highlight-title" data-ko>완전한 다국어 지원</div><div class="highlight-title" data-en>Full Multilingual</div><div class="highlight-desc" data-ko>버튼 하나로 KO ↔ EN 전환. localStorage에 선호 언어를 기억.</div><div class="highlight-desc" data-en>One button toggles KO ↔ EN; preference remembered in localStorage.</div></div>
       <div class="highlight-card c5 reveal" style="transition-delay:0.4s"><div class="highlight-num">05</div><div class="highlight-icon">📈</div><div class="highlight-title" data-ko>분기 목표 추적 자동화</div><div class="highlight-title" data-en>Auto Target Tracking</div><div class="highlight-desc" data-ko>입력 데이터로 분기 달성률·Back up 비율·미납 현황을 KPI·차트로 자동 계산.</div><div class="highlight-desc" data-en>Auto-computes quarter attainment, back-up ratio, and outstanding into KPIs and charts.</div></div>
+      <div class="highlight-card c6 reveal" style="transition-delay:0.5s"><div class="highlight-num">06</div><div class="highlight-icon">☁️</div><div class="highlight-title" data-ko>Salesforce 연동 · CRM ↔ 대시보드 간극 해소</div><div class="highlight-title" data-en>Salesforce Sync · Closing the CRM-Dashboard Gap</div><div class="highlight-desc" data-ko>Salesforce Korea Opportunity 리포트를 주 1회 자동 Export → 검증 후 SO번호·Dealer·계약구분(Sales Type)을 Firestore에 반영. 영업팀 수기 입력을 대체해 CRM 예측치와 대시보드 실적 간 간극을 줄인다.</div><div class="highlight-desc" data-en>A custom Salesforce Korea Opportunity report is exported weekly and, after verification, its SO number, dealer, and contract type (Sales Type) are synced into Firestore — replacing manual entry and closing the gap between CRM forecasts and dashboard actuals.</div></div>
     </div>
   </section>
 
