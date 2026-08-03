@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Returns / RMA Automation · Portfolio</title>
+  <title>SCO Cancellation / Backorder Automation · Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -38,27 +38,10 @@
     .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
     .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
 
-    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:var(--surf);}
     .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
     .hero-right-bg-cell{background:white;}
     .hero-right-bg-cell:nth-child(odd){background:transparent;}
-    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
-    .flow-step{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
-    .flow-step:last-child{border-bottom:none;}
-    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}
-    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
-    .flow-icon{font-size:19px;width:34px;text-align:center;flex-shrink:0;}
-    .flow-info{flex:1;}
-    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
-    .flow-role{font-size:11px;color:rgba(255,255,255,0.4);}
-    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
-    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
-    .badge-orange{background:rgba(196,98,26,0.4);color:#fdba74;border:1px solid rgba(253,186,116,0.3);}
-    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
-    .badge-red{background:rgba(124,45,18,0.5);color:#fca5a5;border:1px solid rgba(252,165,165,0.3);}
-    .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
-    .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
-    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
 
     .section{padding:90px 60px;}
     .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
@@ -117,7 +100,7 @@
       .topbar{padding:16px 24px;}
       .hero{grid-template-columns:1fr;}
       .hero-left,.hero-right{padding:90px 24px 50px;}
-      .hero-right{min-height:60vh;}
+      .hero-right{min-height:40vh;}
       .section,.pipeline-section{padding:90px 24px 50px;}
       .pipeline{flex-direction:column;}
       footer{padding:40px 24px;}
@@ -127,7 +110,7 @@
 <body>
 
   <div class="topbar">
-    <a class="back-link" href="portfolio_customer_order_management.html">← <span data-ko>Customer &amp; Order Management</span><span data-en>Customer &amp; Order Management</span></a>
+    <a class="back-link" href="portfolio_supply_chain.html">← <span data-ko>Supply Chain</span><span data-en>Supply Chain</span></a>
     <div class="lang-toggle">
       <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
       <button id="btn-en" onclick="setLang('en')">EN</button>
@@ -137,17 +120,17 @@
   <section class="hero">
     <div class="hero-left">
       <div class="hero-bg-glow"></div>
-      <div class="hero-tag">RMA Automation · Salesforce · 2026</div>
-      <h1 class="hero-title"><span class="a1" data-ko>반품</span><span class="a1" data-en>RETURNS</span><br><span class="a2" data-ko>RMA 자동화</span><span class="a2" data-en>RMA AUTO</span></h1>
+      <div class="hero-tag">SCO Cancellation · Oracle Fusion · 2026</div>
+      <h1 class="hero-title"><span class="a1" data-ko>백오더</span><span class="a1" data-en>BACKORDER</span><br><span class="a2" data-ko>취소 자동화</span><span class="a2" data-en>CANCELLATION</span></h1>
       <p class="hero-desc">
-        <span data-ko>Salesforce에서 오는 신규 RMA 메일을 감지해 Order Number와 Disposition(Unused/Defective)을 자동 판정하고, 확실한 정상 케이스는 회신까지 자동 발송하는 반품 자동화. 로그인 필요·판정 애매 등 예외 케이스만 사람 확인용 초안으로 남긴다.</span>
-        <span data-en>Detects new RMA emails linking to Salesforce, auto-classifies each by Order Number and Disposition (Unused/Defective), and auto-sends the reply on confirmed cases — only ambiguous exceptions (login required, unclear classification, etc.) are left as a draft for human review.</span>
+        <span data-ko>Oracle BI Publisher가 매달 말일 자동 발송하는 Open Sales/Transfer Order 리포트에서 30~90일째 열려 있는 SCO 라인만 골라내, Oracle Fusion Transfer Order 화면에서 직접 취소하거나 수량을 실제 처리분에 맞게 정정한다. Shipped/Received/Delivered 값이 서로 안 맞는 애매한 케이스만 사람 확인 알림으로 남긴다.</span>
+        <span data-en>Filters the monthly, auto-emailed Oracle BI Publisher Open Sales/Transfer Order report down to SCO lines that have sat open for 30–90 days, then either cancels them or corrects the requested quantity to match what's already been fulfilled — directly inside Oracle Fusion's Transfer Order screen. Only cases where Shipped/Received/Delivered disagree with each other are left as an alert for manual review.</span>
       </p>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" style="color:var(--accent);">2/2</span><span class="stat-label" data-ko>라이브 검증 성공</span><span class="stat-label" data-en>Live Validations Passed</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent2);">10/10</span><span class="stat-label" data-ko>판정 규칙 전수 검증</span><span class="stat-label" data-en>Classification Rule Verified</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent3);">Classic</span><span class="stat-label" data-ko>Salesforce UI(실측 확인)</span><span class="stat-label" data-en>Salesforce UI (Verified)</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent4);">Auto</span><span class="stat-label" data-ko>정상 건 회신 자동발송</span><span class="stat-label" data-en>Auto-sends on Confirmed Cases</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">7</span><span class="stat-label" data-ko>라인 자동 취소/정정</span><span class="stat-label" data-en>Lines Auto-Processed</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">4</span><span class="stat-label" data-ko>TO 제출 완료(첫 실행)</span><span class="stat-label" data-en>TOs Submitted (First Run)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">0</span><span class="stat-label" data-ko>에러/확인필요</span><span class="stat-label" data-en>Errors / Needs-Review</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">30–90d</span><span class="stat-label" data-ko>처리 대상 구간</span><span class="stat-label" data-en>Target Open Window</span></div>
       </div>
     </div>
 
@@ -158,18 +141,17 @@
       </div>
       <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);">
         <div class="mod-head">
-          <div class="mod-file">rma_auto_reply.py</div>
-          <div class="mod-title" data-ko>RMA 자동 회신기</div>
-          <div class="mod-title" data-en>RMA Auto-Reply</div>
+          <div class="mod-file">sco_cancel_watcher.py</div>
+          <div class="mod-title" data-ko>SCO 취소 자동화</div>
+          <div class="mod-title" data-en>SCO Cancel Watcher</div>
         </div>
-        <div class="mod-desc" data-ko>Outlook에서 "New RMA" 메일을 감지해 본문의 "Link to Parts Order"를 열고, Salesforce Classic 화면에서 Order Number와 Parts Order Lines(Disposition 포함)를 파싱한다. Disposition에 따라 Unused RMA/Defective RMA로 자동 분류하고, 정상 판정된 건은 회신을 그 자리에서 자동 발송한다.</div>
-        <div class="mod-desc" data-en>Detects "New RMA" emails in Outlook, opens the body's "Link to Parts Order," and parses the Order Number and Parts Order Lines (including Disposition) from the Salesforce Classic screen. Auto-classifies each as Unused RMA or Defective RMA by Disposition and auto-sends the reply on confirmed cases.</div>
+        <div class="mod-desc" data-ko>매달 영업일 말일, Oracle BI Publisher가 자동 발송하는 Open Sales/Transfer Order 리포트에서 Ship From=KRP · Line Type=SCO · Days Open 30~90일 조건에 맞는 라인만 추려낸다. 각 Transfer Order를 Oracle Fusion에서 열어, 처리 이력이 없는 라인은 취소하고 이미 부분 처리된 라인은 Requested 수량만 실제 처리분에 맞게 정정한다.</div>
+        <div class="mod-desc" data-en>On the last business day of each month, filters the auto-emailed Oracle BI Publisher Open Sales/Transfer Order report down to lines matching Ship From = KRP, Line Type = SCO, and a 30–90 day open window. Opens each Transfer Order in Oracle Fusion and either cancels lines with no fulfillment history, or corrects the requested quantity on lines already partially fulfilled.</div>
         <div class="mod-points">
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Unused RMA는 Oracle Order Number가 항상 7로 시작한다는 규칙까지 교차 검증 — 10건 전수 확인, 예외 없음</span><span data-en>Cross-checks the rule that Unused RMA always has an Oracle Order Number starting with 7 — verified across all 10 test cases, no exceptions</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Parts Order Lines 표에서 빈 컬럼(Work Order/Fulfillment Qty)으로 뒤 컬럼이 한 칸씩 밀리는 파싱 버그 발견·수정 — 고정 줄 수 가정 대신 Disposition 리터럴 앵커링으로 해결</span><span data-en>Found and fixed a parsing bug where empty columns (Work Order/Fulfillment Qty) shifted later columns by one — replaced a fixed-line-count assumption with anchoring on the Disposition literal instead</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>pick_release_watcher와 동일한 CC 고정 패턴(용마로지스)을 그대로 재사용</span><span data-en>Reuses the same fixed CC pattern (Yongma Logis) as pick_release_watcher</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>로그인 필요·파싱 실패·판정 이상 등 애매한 케이스만 사람 확인용 초안(Save())으로 남기고, 정상 케이스는 reply.Send()로 즉시 자동발송 — 실제 라이브 2건(RMA#00593366 Defective, RMA#00593486 Unused)을 사람이 검토해 정확함을 확인한 뒤 자동발송으로 전환</span><span data-en>Ambiguous cases (login required, parse failure, classification mismatch) fall back to a draft (Save()) for human review; confirmed cases send immediately via reply.Send() — switched to auto-send after a human verified 2 real live cases were accurate (RMA#00593366 Defective, RMA#00593486 Unused)</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Disposition 값으로 "Failed During Testing (DOA)"가 새로 관측돼 대응 추가 — Defective 계열로 판정하되, 답장 문구는 뭉뚱그리지 않고 실제 Disposition 값을 그대로 살려서 발송</span><span data-en>Added support for a newly observed Disposition value, "Failed During Testing (DOA)" — classified as a Defective variant, but the reply now quotes the exact Disposition wording instead of generalizing it to "Defective RMA"</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Shipped/Received/Delivered가 전부 비어있으면 라인을 취소(Cancel Line), 이미 서로 같은 수량이 들어있으면 Requested를 그 수량으로 정정 — 값이 서로 다르면(부분 입고 등 애매한 상태) 자동 처리 대신 확인 알림만 발송</span><span data-en>Cancels a line outright when Shipped/Received/Delivered are all empty; corrects the Requested quantity when they already agree on a number — if they disagree (e.g. a partial receipt), skips automation and sends an alert for manual review instead</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>"Cancel Line" 클릭 후 뜨는 확인 다이얼로그(Yes/No)를 놓치면 화면상 아무 변화 없이 조용히 무시된 것처럼 보이는 버그를 실측으로 발견 — Yes까지 눌러야 실제 취소 대상으로 반영됨을 확인해 로직에 반영</span><span data-en>Found — by direct observation — that missing the Yes/No confirmation dialog after clicking "Cancel Line" makes the click silently appear to do nothing; fixed by explicitly confirming the dialog before treating a line as cancelled</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Requested Delivery Date가 비어있으면 날짜피커의 숨은 DOM 때문에 행마다 셀 개수가 달라져, 고정 인덱스로 읽으면 엉뚱한 컬럼을 읽는 버그를 발견 — Requested 입력칸을 기준으로 그다음 세 칸을 상대 위치로 읽는 방식으로 수정</span><span data-en>Found a bug where an empty Requested Delivery Date pulls in a hidden date-picker DOM that shifts the cell count per row, so a fixed column index silently reads the wrong field — fixed by anchoring on the Requested input and reading the next three cells by relative offset</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>2026-08-03 첫 실제 실행에서 Transfer Order 4건 · 라인 7건을 전부 정상 제출 — 확인 필요/에러 0건</span><span data-en>First live run (2026-08-03) submitted all 4 Transfer Orders / 7 lines cleanly — zero cases needing review, zero errors</span></div>
         </div>
       </div>
     </div>
@@ -177,12 +159,12 @@
 
   <section class="pipeline-section reveal">
     <div class="section-label">Workflow</div>
-    <h2 class="section-title"><span data-ko>메일 감지부터</span><span data-en>From mail detection</span><br><em><span data-ko>회신 발송까지</span><span data-en>to the reply</span></em></h2>
+    <h2 class="section-title"><span data-ko>리포트 감지부터</span><span data-en>From report detection</span><br><em><span data-ko>Oracle 제출까지</span><span data-en>to Oracle submission</span></em></h2>
     <div class="pipeline">
-      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>메일 감지</div><div class="pipe-title" data-en>Mail In</div><div class="pipe-desc" data-ko>"New RMA" 메일 자동 감지</div><div class="pipe-desc" data-en>Detects "New RMA" emails</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🔎</div><div class="pipe-title" data-ko>Salesforce 조회</div><div class="pipe-title" data-en>Salesforce Lookup</div><div class="pipe-desc" data-ko>Order Number · Parts Order Lines 파싱</div><div class="pipe-desc" data-en>Parses Order Number &amp; Parts Order Lines</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🏷️</div><div class="pipe-title" data-ko>판정</div><div class="pipe-title" data-en>Classify</div><div class="pipe-desc" data-ko>Disposition 기준 Unused/Defective 분류</div><div class="pipe-desc" data-en>Classifies by Disposition: Unused/Defective</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">✉️</div><div class="pipe-title" data-ko>회신 발송</div><div class="pipe-title" data-en>Send Reply</div><div class="pipe-desc" data-ko>정상 건 자동 발송 + 용마로지스 CC</div><div class="pipe-desc" data-en>Auto-sends on confirmed cases, CCs Yongma Logis</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>리포트 감지</div><div class="pipe-title" data-en>Report In</div><div class="pipe-desc" data-ko>월간 Open TO 리포트 메일 자동 감지</div><div class="pipe-desc" data-en>Detects the monthly Open TO report email</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>조건 필터링</div><div class="pipe-title" data-en>Filter Lines</div><div class="pipe-desc" data-ko>KRP · SCO · Days Open 30~90일 조건으로 필터링</div><div class="pipe-desc" data-en>Filters by Ship From=KRP, Line Type=SCO, 30–90 days open</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🏷️</div><div class="pipe-title" data-ko>Oracle 판정</div><div class="pipe-title" data-en>Classify in Oracle</div><div class="pipe-desc" data-ko>TO별 라인을 취소 대상/정정 대상으로 판정</div><div class="pipe-desc" data-en>Classifies each TO's lines as cancel or correct</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">✅</div><div class="pipe-title" data-ko>자동 처리</div><div class="pipe-title" data-en>Auto Submit</div><div class="pipe-desc" data-ko>Cancel Line 또는 수량 정정 후 Submit</div><div class="pipe-desc" data-en>Cancels or corrects quantity, then submits</div></div>
     </div>
   </section>
 
@@ -191,15 +173,15 @@
     <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
     <div class="stack-grid">
       <div class="stack-item"><div class="stack-emoji">🐍</div><div class="stack-name">Python</div><div class="stack-role" data-ko>자동화 파이프라인 로직</div><div class="stack-role" data-en>Automation pipeline logic</div></div>
-      <div class="stack-item"><div class="stack-emoji">🖱️</div><div class="stack-name">Selenium</div><div class="stack-role" data-ko>Salesforce 화면 자동 조회</div><div class="stack-role" data-en>Salesforce UI automation</div></div>
-      <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Salesforce Classic</div><div class="stack-role" data-ko>Order Number · Disposition 조회</div><div class="stack-role" data-en>Order Number &amp; Disposition lookup</div></div>
-      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 감지·회신 발송</div><div class="stack-role" data-en>Outlook mail detect &amp; send</div></div>
+      <div class="stack-item"><div class="stack-emoji">🖱️</div><div class="stack-name">Selenium</div><div class="stack-role" data-ko>Oracle Fusion Transfer Order 화면 자동화</div><div class="stack-role" data-en>Oracle Fusion Transfer Order UI automation</div></div>
+      <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Oracle Fusion / BI Publisher</div><div class="stack-role" data-ko>Open TO 리포트 · Transfer Order 화면</div><div class="stack-role" data-en>Open TO report &amp; Transfer Order screen</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>리포트 메일 감지 · 결과 알림</div><div class="stack-role" data-en>Report mail detect &amp; result alert</div></div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-brand">RETURNS / RMA</div>
-    <div class="footer-note">PYTHON · SELENIUM · SALESFORCE · WIN32COM</div>
+    <div class="footer-brand">SCO CANCELLATION</div>
+    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · WIN32COM</div>
   </footer>
 
   <script>

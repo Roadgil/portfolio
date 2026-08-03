@@ -43,6 +43,7 @@
     .proj-card.p2::after { background: var(--c2); }
     .proj-card.p5::after { background: #1a4a6e; }
     .proj-card.p7::after { background: #0fa878; }
+    .proj-card.p8::after { background: var(--c1); }
     .proj-card:hover::after { transform: scaleX(1); }
 
     .proj-bg-num { position: absolute; bottom: -20px; right: 20px; font-family: 'Bebas Neue', sans-serif; font-size: 150px; line-height: 1; color: rgba(255,255,255,0.025); pointer-events: none; transition: color 0.3s; }
@@ -67,6 +68,7 @@
     .p2 .proj-title em { color: var(--c2); }
     .p5 .proj-title em { color: #93c5fd; }
     .p7 .proj-title em { color: #0fa878; }
+    .p8 .proj-title em { color: var(--c1); }
     .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 22px; max-width: 400px; }
 
     .proj-impact { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.5px; color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; margin-bottom: 28px; }
@@ -79,6 +81,7 @@
     .p2:hover .proj-arrow { background: var(--c2); }
     .p5:hover .proj-arrow { background: #1a4a6e; }
     .p7:hover .proj-arrow { background: #0fa878; }
+    .p8:hover .proj-arrow { background: var(--c1); }
 
     footer { margin: 0 60px; padding: 32px 0; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; animation: fadeUp 0.8s ease 0.5s both; }
     .footer-note { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; }
@@ -88,6 +91,7 @@
     .proj-card.p2 { animation-delay: 0.30s; }
     .proj-card.p5 { animation-delay: 0.38s; }
     .proj-card.p7 { animation-delay: 0.46s; }
+    .proj-card.p8 { animation-delay: 0.54s; }
 
     [data-en] { display: none; }
     body.en [data-ko] { display: none; }
@@ -118,8 +122,8 @@
     <div class="hero-eyebrow">Category · 2025–2026</div>
     <h1 class="hero-title">SUPPLY CHAIN</h1>
     <p class="hero-sub">
-      <span data-ko>해외 공급망 쪽 — 수입/통관, 그 지급요청 처리, 그리고 비용 리포트 트래킹까지 자동화한 3개 프로젝트.</span>
-      <span data-en>The supplier-side of the chain — 3 projects automating international import/customs clearance, its payment-request processing, and cost report tracking.</span>
+      <span data-ko>해외 공급망 쪽 — 수입/통관, 그 지급요청 처리, 비용 리포트 트래킹, 그리고 재고 백오더 정리까지 자동화한 4개 프로젝트.</span>
+      <span data-en>The supplier-side of the chain — 4 projects automating international import/customs clearance, its payment-request processing, cost report tracking, and inventory backorder cleanup.</span>
     </p>
   </div>
 
@@ -196,10 +200,32 @@
       </div>
     </a>
 
+    <!-- 04 SCO Cancellation / Backorder Automation -->
+    <a class="proj-card p8" href="portfolio_sco_cancellation.html" style="animation-delay:0.54s;">
+      <div class="proj-bg-num">04</div>
+      <div class="proj-num">PROJECT · 04</div>
+      <div class="proj-type"><span class="type-pill dx">DX</span></div>
+      <div class="proj-tags">
+        <span class="tag tag-purple">Python</span>
+        <span class="tag tag-blue">Selenium</span>
+        <span class="tag tag-teal">Oracle Fusion</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>백오더</span><span data-en>Backorder</span><br><em><span data-ko>SCO 취소 자동화</span><span data-en>Cancellation Automation</span></em></h2>
+      <p class="proj-desc">
+        <span data-ko>매달 자동 발송되는 Open Transfer Order 리포트에서 30~90일째 열려 있는 SCO 라인만 골라, Oracle Fusion 화면에서 직접 취소하거나 수량을 정정한다. 애매한 케이스만 사람 확인 알림으로 남긴다.</span>
+        <span data-en>Filters the monthly Open Transfer Order report down to SCO lines open 30–90 days, then cancels or corrects them directly inside Oracle Fusion — only ambiguous cases are left as an alert for review.</span>
+      </p>
+      <div class="proj-impact"><b>7</b> <span data-ko>라인 자동 처리</span><span data-en>lines auto-processed</span> · <b>0</b> <span data-ko>에러(첫 실행)</span><span data-en>errors (first run)</span></div>
+      <div class="proj-meta">
+        <div class="proj-stack">Python · Selenium · Oracle Fusion<br>BI Publisher · win32com</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
   </div>
 
   <footer>
-    <div class="footer-note">SUPPLY CHAIN · 3 PROJECTS</div>
+    <div class="footer-note">SUPPLY CHAIN · 4 PROJECTS</div>
   </footer>
 
   <script>
