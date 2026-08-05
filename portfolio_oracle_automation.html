@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Outbound RPA · Pick Release & Ship Confirm · Portfolio</title>
+  <title>Outbound & Export RPA · Pick Release, Ship Confirm & Cross-Border Rebalance · Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -137,15 +137,15 @@
   <section class="hero">
     <div class="hero-left">
       <div class="hero-bg-glow"></div>
-      <div class="hero-tag">Outbound RPA · Pick Release &amp; Ship Confirm · 2026</div>
-      <h1 class="hero-title"><span class="a1" data-ko>출고</span><span class="a1" data-en>OUTBOUND</span><br><span class="a2" data-ko>Oracle RPA</span><span class="a2" data-en>ORACLE RPA</span></h1>
+      <div class="hero-tag">Outbound &amp; Export RPA · Pick Release · Ship Confirm · Cross-Border Rebalance · 2026</div>
+      <h1 class="hero-title"><span class="a1" data-ko>출고&amp;수출</span><span class="a1" data-en>OUTBOUND</span><br><span class="a2" data-ko>Oracle RPA</span><span class="a2" data-en>&amp; EXPORT RPA</span></h1>
       <p class="hero-desc">
-        <span data-ko>출고(Outbound) RPA. Pick Release와 Ship Confirm 2개 모듈이 하나의 Oracle 로그인을 그대로 이어 쓴다. 서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Pick Release를 자동 실행하고 성공 건은 회신까지 자동 발송하며, 장비납품이동 메일을 감지해 Ship Confirm까지 자동 실행한다. Ship Confirm 회신은 아직 초안 전용이라 사람이 검토 후 직접 발송한다.</span>
-        <span data-en>Outbound RPA built from two modules that reuse the same Oracle login — one detects service-team stock-request emails (DCD/consumables, defect/promotion, chatbot orders), executes Pick Release, and auto-sends the confirmation reply on success; the other detects equipment-delivery-transfer emails and executes Ship Confirm (its reply is still draft-only — a person reviews and sends it).</span>
+        <span data-ko>출고(Outbound)와 국가간 재고 재배치 수출(Export) RPA. 3개 모듈이 하나의 Oracle 로그인을 그대로 이어 쓴다. 서비스팀의 DCD/소모품·불량프로모션·챗봇 출고요청 메일을 감지해 Pick Release를 자동 실행하고 성공 건은 회신까지 자동 발송하며, 장비납품이동 메일을 감지해 Ship Confirm까지 자동 실행한다. 세 번째 모듈은 SharePoint의 국가간 Transfer Order 변경 알림을 감지해 3PL 창고와의 위치정보 조율, Oracle Create Pick Wave·Confirm Pick Slips·Ship Confirm, 통관 Commercial Invoice 발급, PDF 보정, 수출신고실적 기입까지 14단계 SOP 전체를 코드화했다 — 시스템으로 처리되는 구간은 전부 자동화됐고, 유일하게 남는 사람 개입은 시스템 밖의 물리적 행위(FedEx/DHL 실제 픽업 예약)뿐이다.</span>
+        <span data-en>Outbound and cross-border inventory-rebalance export RPA — three modules sharing the same Oracle login. One detects service-team stock-request emails (DCD/consumables, defect/promotion, chatbot orders), executes Pick Release, and auto-sends the confirmation reply on success; another detects equipment-delivery-transfer emails and executes Ship Confirm. The third detects SharePoint alerts for cross-border Transfer Order changes, coordinates pick-location details with the 3PL warehouse by email, drives Oracle Create Pick Wave → Confirm Pick Slips → Ship Confirm, generates the customs commercial invoice, corrects it, and files the export declaration — coding all 14 steps of what used to be a fully manual, multi-system procedure. Every system-side step is automated; the only work left outside the system entirely is physically booking the FedEx/DHL pickup.</span>
       </p>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" style="color:var(--accent);">2</span><span class="stat-label" data-ko>모듈 (Pick Release + Ship Confirm)</span><span class="stat-label" data-en>Modules (Pick Release + Ship Confirm)</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent2);">SSO</span><span class="stat-label" data-ko>자동 재로그인</span><span class="stat-label" data-en>Auto Re-login</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">3</span><span class="stat-label" data-ko>모듈 (Pick Release + Ship Confirm + Rebalance)</span><span class="stat-label" data-en>Modules (Pick Release + Ship Confirm + Rebalance)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">14/14</span><span class="stat-label" data-ko>수출 SOP 단계 코드화(Rebalance)</span><span class="stat-label" data-en>Export SOP Steps Coded (Rebalance)</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent3);">25</span><span class="stat-label" data-ko>건/메일 동시 처리(Pick Release)</span><span class="stat-label" data-en>Orders per Email (Pick Release)</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent4);">Auto</span><span class="stat-label" data-ko>성공 건 회신 자동발송(Pick Release)</span><span class="stat-label" data-en>Auto-sends Reply on Success (Pick Release)</span></div>
       </div>
@@ -192,6 +192,24 @@
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 감지부터 Oracle 트랜잭션까지는 무인 처리, 완료 회신은 아직 초안 전용 — 사람이 검토 후 직접 발송</span><span data-en>Unattended from mail detection through the Oracle transaction; the completion reply is still draft-only — a person reviews and sends it</span></div>
         </div>
       </div>
+
+      <div class="mod-card c3 reveal" style="position:relative;background:var(--surf2);transition-delay:0.16s">
+        <div class="mod-head">
+          <div class="mod-file">rebalance_watcher.py</div>
+          <div class="mod-title" data-ko>국가간 재배치 수출 자동화</div>
+          <div class="mod-title" data-en>Cross-Border Rebalance Export</div>
+        </div>
+        <div class="mod-desc" data-ko>한국 창고에서 해외 법인으로 재고를 옮기는 국가간 Transfer Order(Rebalance)를, 알림 감지부터 통관 서류 발급까지 14단계 SOP 전체 코드화했다.</div>
+        <div class="mod-desc" data-en>Codes all 14 steps of the cross-border Transfer Order (inventory rebalance) procedure — from the first system alert through customs paperwork — for stock moving from the Korea warehouse to sister companies abroad.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>SharePoint의 TO 변경 알림 메일을 감지해 대상 파트/수량을 조회하고, 3PL 창고에 위치정보를 요청하는 메일까지 자동 발송</span><span data-en>Detects SharePoint TO-change alert emails, looks up the affected part/quantity, and auto-sends the pick-location request to the 3PL warehouse</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>3PL 회신을 파싱해 Oracle Fusion에서 Create Pick Wave(Transfer Order)→Confirm Pick Slips→Ship Confirm까지 실행하고 SharePoint에 결과를 다시 기입</span><span data-en>Parses the 3PL reply and drives Oracle Fusion through Create Pick Wave (Transfer Order) → Confirm Pick Slips → Ship Confirm, then writes the result back to SharePoint</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>수입 통관 C.I. 대사 자동화(icbl_ci_watcher.py)와 같은 Oracle 리포트·다운로드 파이프라인을 그대로 재사용해 Ship From을 반대 방향(KRP)으로 돌려 통관 Commercial Invoice를 발급</span><span data-en>Reuses the exact same Oracle report/download pipeline as the import-side C.I. reconciliation automation, just pointed the opposite way (Ship From = KRP), to issue the customs commercial invoice</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PyMuPDF로 오라클이 뽑은 PDF의 빈 여백에만 국가별 담당자 정보·HTS 코드를 직접 삽입 — 서식을 다시 만들지 않아 원본 인쇄 레이아웃이 그대로 유지됨</span><span data-en>Uses PyMuPDF to insert country-specific contact details and the HTS code straight into blank space on Oracle's generated PDF — no template re-export, so the original print layout is never disturbed</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>실제 라이브 케이스로 14단계 전체(메일 트리거 → SharePoint → 3PL 조율 → Oracle 3단계 → 통관 인보이스 → PDF 보정 → 수출신고실적)를 실측 검증 후 코드화</span><span data-en>All 14 steps — mail trigger → SharePoint → 3PL coordination → the 3-stage Oracle transaction → customs invoice → PDF correction → export ledger — were verified against a real live case before being coded</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>재고를 실제로 움직이는 Oracle 트랜잭션 구간은 3PL 위치정보 확인 후 단일 명령으로 실행 — 이 프로젝트의 다른 자동화들처럼 실측 검증을 거쳐야 무인 실행으로 전환하는 원칙을 그대로 적용한 의도적 체크포인트</span><span data-en>The stage that commits real inventory movement runs from a single command once the 3PL confirms pick locations — a deliberate checkpoint, following this project's own practice of only granting unattended execution after live validation</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -199,10 +217,11 @@
     <div class="section-label">Workflow</div>
     <h2 class="section-title"><span data-ko>메일 감지부터</span><span data-en>From mail detection</span><br><em><span data-ko>회신 발송까지</span><span data-en>to the confirmation reply</span></em></h2>
     <div class="pipeline">
-      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>출고/이동 메일 감지</div><div class="pipe-title" data-en>Mail In</div><div class="pipe-desc" data-ko>DCD/소모품·불량프로모션·챗봇 주문 또는 장비납품이동 메일 자동 감지</div><div class="pipe-desc" data-en>Detects DCD/consumables, defect/promotion, chatbot orders, or equipment-delivery-transfer mail</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🖱️</div><div class="pipe-title" data-ko>Oracle 화면 자동 조작</div><div class="pipe-title" data-en>Oracle UI Automation</div><div class="pipe-desc" data-ko>Selenium으로 로그인·조회 후 Pick Release 또는 Ship Confirm 실행</div><div class="pipe-desc" data-en>Selenium logs in and executes Pick Release or Ship Confirm</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🔀</div><div class="pipe-title" data-ko>병렬 개별 처리</div><div class="pipe-title" data-en>Split &amp; Process</div><div class="pipe-desc" data-ko>메일 1건에 여러 건(병원 최대 25곳, 또는 Shipment 여러 개)이 묶여도 각각 처리</div><div class="pipe-desc" data-en>Splits bundled items (up to 25 hospital orders, or multiple shipments) and processes each individually</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>결과 알림</div><div class="pipe-title" data-en>Notify</div><div class="pipe-desc" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Sends confirmation email, updates state JSON</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📧</div><div class="pipe-title" data-ko>출고/이동/재배치 감지</div><div class="pipe-title" data-en>Mail &amp; Alert In</div><div class="pipe-desc" data-ko>DCD/소모품·불량프로모션·챗봇 주문, 장비납품이동 메일, 또는 SharePoint TO 변경 알림 자동 감지</div><div class="pipe-desc" data-en>Detects DCD/consumables, defect/promotion, chatbot orders, equipment-delivery-transfer mail, or SharePoint TO-change alerts</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🤝</div><div class="pipe-title" data-ko>3PL 조율 (재배치만)</div><div class="pipe-title" data-en>3PL Coordination (Rebalance only)</div><div class="pipe-desc" data-ko>재배치 건은 3PL 창고에 위치정보를 요청하고 회신을 파싱한 뒤 다음 단계로 진행</div><div class="pipe-desc" data-en>For rebalance cases, requests pick-location details from the 3PL warehouse and parses the reply before proceeding</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🖱️</div><div class="pipe-title" data-ko>Oracle 화면 자동 조작</div><div class="pipe-title" data-en>Oracle UI Automation</div><div class="pipe-desc" data-ko>Selenium으로 로그인·조회 후 Pick Release, Ship Confirm, 또는 Create Pick Wave→Confirm Pick Slips→Ship Confirm(Transfer Order) 실행</div><div class="pipe-desc" data-en>Selenium logs in and executes Pick Release, Ship Confirm, or Create Pick Wave → Confirm Pick Slips → Ship Confirm (Transfer Order)</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">🧾</div><div class="pipe-title" data-ko>통관 서류 (재배치만)</div><div class="pipe-title" data-en>Customs Paperwork (Rebalance only)</div><div class="pipe-desc" data-ko>Commercial Invoice 발급 후 PyMuPDF로 담당자 정보·HTS 코드 보정, 수출신고실적 기입</div><div class="pipe-desc" data-en>Issues the commercial invoice, corrects contact info and HTS code with PyMuPDF, and files the export declaration</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>결과 알림</div><div class="pipe-title" data-en>Notify</div><div class="pipe-desc" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Sends confirmation email, updates state JSON</div></div>
     </div>
   </section>
 
@@ -214,12 +233,14 @@
       <div class="stack-item"><div class="stack-emoji">🖱️</div><div class="stack-name">Selenium</div><div class="stack-role" data-ko>Oracle Fusion 화면 RPA</div><div class="stack-role" data-en>Oracle Fusion UI RPA</div></div>
       <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Oracle Fusion Cloud</div><div class="stack-role" data-ko>Pick Release 트랜잭션</div><div class="stack-role" data-en>Pick Release transactions</div></div>
       <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 감지·발송</div><div class="stack-role" data-en>Outlook mail detect &amp; send</div></div>
+      <div class="stack-item"><div class="stack-emoji">📋</div><div class="stack-name">SharePoint</div><div class="stack-role" data-ko>재고 재배치 알림·기입</div><div class="stack-role" data-en>Rebalance alerts &amp; write-back</div></div>
+      <div class="stack-item"><div class="stack-emoji">📄</div><div class="stack-name">PyMuPDF</div><div class="stack-role" data-ko>통관 인보이스 PDF 보정</div><div class="stack-role" data-en>Customs invoice PDF correction</div></div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-brand">OUTBOUND</div>
-    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · WIN32COM<br>PICK RELEASE · SHIP CONFIRM</div>
+    <div class="footer-brand">OUTBOUND &amp; EXPORT</div>
+    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · WIN32COM · SHAREPOINT · PYMUPDF<br>PICK RELEASE · SHIP CONFIRM · CROSS-BORDER REBALANCE</div>
   </footer>
 
   <script>
