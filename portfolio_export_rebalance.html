@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Cross-Border Rebalance Export Automation · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#5b4fcf; --accent2:#38bdf8; --accent3:#fbbf24; --accent4:#4ade80;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#fff;}
+
+    .hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;}
+    .hero-left{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(91,79,207,0.16) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7.5vw,100px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:620px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
+    .hero-right-bg-cell{background:white;}
+    .hero-right-bg-cell:nth-child(odd){background:transparent;}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
+    .section-title em{font-style:italic;color:var(--accent);}
+
+    /* module cards */
+    .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .mod-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .mod-card:hover{transform:translateY(-5px);border-color:var(--accent);}
+    .mod-head{padding:26px 28px 0;}
+    .mod-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;background:var(--surf2);padding:5px 10px;border-radius:5px;display:inline-block;margin-bottom:14px;}
+    .mod-title{font-family:'DM Serif Display',serif;font-size:21px;margin-bottom:10px;}
+    .mod-desc{font-size:12.5px;color:var(--muted);line-height:1.75;padding:0 28px 18px;}
+    .mod-points{padding:0 28px 26px;display:flex;flex-direction:column;gap:8px;}
+    .mpoint{font-size:11.5px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .mpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
+    .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
+    .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+    .mod-card.c4 .mpoint-dot{background:var(--accent4);}.mod-card.c4 .mod-title{color:var(--accent4);}
+
+    /* pipeline */
+    .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pipeline{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .pipe-step{flex:1;padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+    .pipe-step:last-child{border-right:none;}
+    .pipe-step:hover{background:var(--surf2);}
+    .pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+    .pipe-icon{font-size:24px;margin-bottom:14px;}
+    .pipe-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
+    .pipe-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+    body.en div[data-en]{display:block;}
+
+    @media (max-width:900px){
+      .topbar{padding:16px 24px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-left,.hero-right{padding:90px 24px 50px;}
+      .hero-right{min-height:40vh;}
+      .section,.pipeline-section{padding:90px 24px 50px;}
+      .pipeline{flex-direction:column;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="portfolio_supply_chain.html">← <span data-ko>Supply Chain</span><span data-en>Supply Chain</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-tag">Cross-Border Rebalance Export · Oracle Fusion · SharePoint · 2026</div>
+      <h1 class="hero-title"><span class="a1" data-ko>국가간 재배치</span><span class="a1" data-en>CROSS-BORDER</span><br><span class="a2" data-ko>수출 자동화</span><span class="a2" data-en>REBALANCE EXPORT</span></h1>
+      <p class="hero-desc">
+        <span data-ko>한국(KRP) 창고에서 해외 법인(호주·홍콩·중국·일본·미국·스페인)으로 재고를 옮기는 국가간 Transfer Order(Rebalance)를, 알림 감지부터 3PL 창고 조율, Oracle 트랜잭션, 통관 Commercial Invoice 발급, 수출신고실적 기입까지 14단계 SOP 전체 코드화했다. 시스템으로 처리되는 구간은 전부 자동화됐고, 유일하게 남는 사람 개입은 시스템 밖의 물리적 행위(FedEx/DHL 실제 픽업 예약)뿐이다.</span>
+        <span data-en>Codes all 14 steps of the cross-border Transfer Order (inventory rebalance) procedure — from the first system alert, through 3PL warehouse coordination, the Oracle transaction, the customs commercial invoice, to the export declaration — for stock moving from the Korea (KRP) warehouse to sister companies in Australia, Hong Kong, China, Japan, the US, and Spain. Every system-side step is automated; the only work left outside the system entirely is physically booking the FedEx/DHL pickup.</span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">14/14</span><span class="stat-label" data-ko>수출 SOP 단계 코드화</span><span class="stat-label" data-en>Export SOP Steps Coded</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">6</span><span class="stat-label" data-ko>목적지 법인</span><span class="stat-label" data-en>Destination Entities</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">1</span><span class="stat-label" data-ko>라이브 케이스 실측 검증</span><span class="stat-label" data-en>Live Case Validated</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">Hourly</span><span class="stat-label" data-ko>트리거 스캔 주기(9시~18시)</span><span class="stat-label" data-en>Trigger Scan Interval (9am–6pm)</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);">
+        <div class="mod-head">
+          <div class="mod-file">rebalance_watcher.py</div>
+          <div class="mod-title" data-ko>국가간 재배치 수출 자동화</div>
+          <div class="mod-title" data-en>Cross-Border Rebalance Export</div>
+        </div>
+        <div class="mod-desc" data-ko>한국 창고에서 해외 법인으로 재고를 옮기는 국가간 Transfer Order(Rebalance)를, 알림 감지부터 통관 서류 발급까지 14단계 SOP 전체 코드화했다.</div>
+        <div class="mod-desc" data-en>Codes all 14 steps of the cross-border Transfer Order (inventory rebalance) procedure — from the first system alert through customs paperwork — for stock moving from the Korea warehouse to sister companies abroad.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>SharePoint의 TO 변경 알림 메일을 감지해 대상 파트/수량을 조회하고, 3PL 창고에 위치정보를 요청하는 메일까지 자동 발송</span><span data-en>Detects SharePoint TO-change alert emails, looks up the affected part/quantity, and auto-sends the pick-location request to the 3PL warehouse</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>3PL 회신을 파싱해 Oracle Fusion에서 Create Pick Wave(Transfer Order)→Confirm Pick Slips→Ship Confirm까지 실행하고 SharePoint에 결과를 다시 기입</span><span data-en>Parses the 3PL reply and drives Oracle Fusion through Create Pick Wave (Transfer Order) → Confirm Pick Slips → Ship Confirm, then writes the result back to SharePoint</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>수입 통관 C.I. 대사 자동화(icbl_ci_watcher.py)와 같은 Oracle 리포트·다운로드 파이프라인을 그대로 재사용해 Ship From을 반대 방향(KRP)으로 돌려 통관 Commercial Invoice를 발급</span><span data-en>Reuses the exact same Oracle report/download pipeline as the import-side C.I. reconciliation automation, just pointed the opposite way (Ship From = KRP), to issue the customs commercial invoice</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PyMuPDF로 오라클이 뽑은 PDF의 빈 여백에만 국가별 담당자 정보·HTS 코드를 직접 삽입 — 서식을 다시 만들지 않아 원본 인쇄 레이아웃이 그대로 유지됨</span><span data-en>Uses PyMuPDF to insert country-specific contact details and the HTS code straight into blank space on Oracle's generated PDF — no template re-export, so the original print layout is never disturbed</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>실제 라이브 케이스로 14단계 전체(메일 트리거 → SharePoint → 3PL 조율 → Oracle 3단계 → 통관 인보이스 → PDF 보정 → 수출신고실적)를 실측 검증 후 코드화</span><span data-en>All 14 steps — mail trigger → SharePoint → 3PL coordination → the 3-stage Oracle transaction → customs invoice → PDF correction → export ledger — were verified against a real live case before being coded</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>재고를 실제로 움직이는 Oracle 트랜잭션 구간은 3PL 위치정보 확인 후 단일 명령으로 실행 — 이 프로젝트의 다른 자동화들처럼 실측 검증을 거쳐야 무인 실행으로 전환하는 원칙을 그대로 적용한 의도적 체크포인트</span><span data-en>The stage that commits real inventory movement runs from a single command once the 3PL confirms pick locations — a deliberate checkpoint, following this project's own practice of only granting unattended execution after live validation</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pipeline-section reveal">
+    <div class="section-label">Workflow</div>
+    <h2 class="section-title"><span data-ko>알림 감지부터</span><span data-en>From alert detection</span><br><em><span data-ko>수출신고실적까지</span><span data-en>to the export declaration</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📋</div><div class="pipe-title" data-ko>TO 변경 감지</div><div class="pipe-title" data-en>Alert In</div><div class="pipe-desc" data-ko>SharePoint의 국가간 TO 변경 알림 메일 자동 감지</div><div class="pipe-desc" data-en>Detects SharePoint cross-border TO-change alert emails</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🤝</div><div class="pipe-title" data-ko>3PL 조율</div><div class="pipe-title" data-en>3PL Coordination</div><div class="pipe-desc" data-ko>3PL 창고에 위치정보를 요청하고 회신을 파싱</div><div class="pipe-desc" data-en>Requests pick-location details from the 3PL warehouse and parses the reply</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🖱️</div><div class="pipe-title" data-ko>Oracle 3단계 실행</div><div class="pipe-title" data-en>Oracle UI Automation</div><div class="pipe-desc" data-ko>Create Pick Wave→Confirm Pick Slips→Ship Confirm(Transfer Order)</div><div class="pipe-desc" data-en>Create Pick Wave → Confirm Pick Slips → Ship Confirm (Transfer Order)</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">🧾</div><div class="pipe-title" data-ko>통관 서류</div><div class="pipe-title" data-en>Customs Paperwork</div><div class="pipe-desc" data-ko>Commercial Invoice 발급 후 PyMuPDF로 담당자 정보·HTS 코드 보정, 수출신고실적 기입</div><div class="pipe-desc" data-en>Issues the commercial invoice, corrects contact info and HTS code with PyMuPDF, and files the export declaration</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>결과 알림</div><div class="pipe-title" data-en>Notify</div><div class="pipe-desc" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Sends confirmation email, updates state JSON</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="stack-emoji">🐍</div><div class="stack-name">Python</div><div class="stack-role" data-ko>자동화 파이프라인 로직</div><div class="stack-role" data-en>Automation pipeline logic</div></div>
+      <div class="stack-item"><div class="stack-emoji">🖱️</div><div class="stack-name">Selenium</div><div class="stack-role" data-ko>Oracle Fusion 화면 RPA</div><div class="stack-role" data-en>Oracle Fusion UI RPA</div></div>
+      <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Oracle Fusion Cloud</div><div class="stack-role" data-ko>Create Pick Wave·Ship Confirm 트랜잭션</div><div class="stack-role" data-en>Create Pick Wave &amp; Ship Confirm transactions</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 감지·발송</div><div class="stack-role" data-en>Outlook mail detect &amp; send</div></div>
+      <div class="stack-item"><div class="stack-emoji">📋</div><div class="stack-name">SharePoint</div><div class="stack-role" data-ko>재고 재배치 알림·기입</div><div class="stack-role" data-en>Rebalance alerts &amp; write-back</div></div>
+      <div class="stack-item"><div class="stack-emoji">📄</div><div class="stack-name">PyMuPDF</div><div class="stack-role" data-ko>통관 인보이스 PDF 보정</div><div class="stack-role" data-en>Customs invoice PDF correction</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">REBALANCE EXPORT</div>
+    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · WIN32COM · SHAREPOINT · PYMUPDF</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>

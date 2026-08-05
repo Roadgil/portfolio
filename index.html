@@ -248,8 +248,8 @@
       </div>
       <h2 class="proj-title"><span data-ko>Supply Chain</span><span data-en>Supply Chain</span><br><em><span data-ko>수입/통관 + 지급요청 자동화</span><span data-en>Import/Customs + Payment-Request Automation</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>수입/통관 풀사이클 자동화(10개 모듈, AI 에이전트 포함), 관세·DHL 지급요청 자동화, W&amp;D 비용 리포트 트래킹, 재고 백오더(SCO) 취소 자동화까지 4개 프로젝트를 묶은 카테고리.</span>
-        <span data-en>A category bundling 4 projects: the 10-module import/customs clearance pipeline (with an AI agent), customs &amp; DHL payment-request automation, W&amp;D cost report tracking, and inventory backorder (SCO) cancellation.</span>
+        <span data-ko>Import/Export Customs(수입/통관 풀사이클 10개 모듈 + 국가간 재배치 수출 14단계)와 Payment &amp; Operation(관세·DHL 지급요청 자동화 + W&amp;D 비용 리포트 트래킹)으로 묶은 4개 프로젝트 카테고리.</span>
+        <span data-en>A category bundling 4 projects into Import/Export Customs (the 10-module import/customs pipeline plus the 14-step cross-border rebalance export) and Payment &amp; Operation (customs &amp; DHL payment-request automation plus W&amp;D cost report tracking).</span>
       </p>
       <div class="proj-impact"><b>4</b> <span data-ko>프로젝트</span><span data-en>projects</span> · <b>100%</b> <span data-ko>무인 처리</span><span data-en>hands-off</span></div>
       <div class="proj-meta">
@@ -271,10 +271,10 @@
       </div>
       <h2 class="proj-title"><span data-ko>Customer &amp; Order</span><span data-en>Customer &amp; Order</span><br><em><span data-ko>Management</span><span data-en>Management</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>Oracle Fusion 기반 출고&amp;수출(Pick Release + Ship Confirm + 국가간 재배치) 자동화와 Salesforce 기반 반품(RMA) 자동화, 2개 프로젝트를 묶은 카테고리.</span>
-        <span data-en>A category bundling 2 projects: Oracle Fusion-based outbound &amp; export automation (Pick Release + Ship Confirm + cross-border rebalance) and Salesforce-based RMA/returns automation.</span>
+        <span data-ko>Oracle Fusion 기반 출고(Pick Release + Ship Confirm) 자동화, Salesforce 기반 반품(RMA) 자동화, 그리고 재고 백오더(SCO) 취소 자동화까지 3개 프로젝트를 묶은 카테고리.</span>
+        <span data-en>A category bundling 3 projects: Oracle Fusion-based outbound automation (Pick Release + Ship Confirm), Salesforce-based RMA/returns automation, and inventory backorder (SCO) cancellation.</span>
       </p>
-      <div class="proj-impact"><b>2</b> <span data-ko>프로젝트</span><span data-en>projects</span> · <span data-ko>출고 + 반품</span><span data-en>outbound + returns</span></div>
+      <div class="proj-impact"><b>3</b> <span data-ko>프로젝트</span><span data-en>projects</span> · <span data-ko>출고 + 반품 + 백오더</span><span data-en>outbound + returns + backorder</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Selenium · Oracle Fusion · Salesforce<br>win32com</div>
         <div class="proj-arrow">→</div>
@@ -355,32 +355,10 @@
       </div>
     </a>
 
-    <!-- 08 Export CI Generator -->
-    <a class="proj-card p5" href="portfolio_export_ci_generator.html" style="animation-delay:0.78s;">
-      <div class="proj-bg-num">08</div>
-      <div class="proj-num">PROJECT · 08</div>
-      <div class="proj-tags">
-        <span class="tag tag-blue">BeautifulSoup</span>
-        <span class="tag tag-orange">Playwright</span>
-        <span class="tag tag-green">openpyxl</span>
-        <span class="tag tag-gold">8 Country Templates</span>
-      </div>
-      <h2 class="proj-title"><span data-ko>수출 인보이스</span><span data-en>Export CI</span><br><em><span data-ko>자동 생성기</span><span data-en>Generator</span></em></h2>
-      <p class="proj-desc">
-        <span data-ko>자재코드만 입력하면 수입 실적에서 단가·HTS를 자동 조회해 8개국 HTML 템플릿으로 PDF Commercial Invoice를 만들고, 같은 데이터를 수출신고실적에도 동시 기입하는 Tkinter 데스크톱 앱.</span>
-        <span data-en>A Tkinter desktop app that looks up price/HTS from the import record by item code, builds a PDF Commercial Invoice from 8 country HTML templates, and logs the same data to the export declaration record at once.</span>
-      </p>
-      <div class="proj-impact"><b>8</b> <span data-ko>국가 템플릿</span><span data-en>country templates</span> · <span data-ko>PDF+실적 동시 완성</span><span data-en>PDF + record in one pass</span></div>
-      <div class="proj-meta">
-        <div class="proj-stack">Python · Tkinter · BeautifulSoup<br>Playwright · openpyxl · pandas</div>
-        <div class="proj-arrow">→</div>
-      </div>
-    </a>
-
   </div>
 
   <footer>
-    <div class="footer-note">8 PROJECTS · 2 CATEGORIES · ALL RIGHTS RESERVED</div>
+    <div class="footer-note">10 PROJECTS · 2 CATEGORIES · ALL RIGHTS RESERVED</div>
     <div class="footer-dots">
       <div class="footer-dot" style="background:var(--c1);"></div>
       <div class="footer-dot" style="background:var(--c2);"></div>
@@ -389,7 +367,6 @@
       <div class="footer-dot" style="background:#1a4a6e;"></div>
       <div class="footer-dot" style="background:#9f2b46;"></div>
       <div class="footer-dot" style="background:#0f9c8c;"></div>
-      <div class="footer-dot" style="background:#1d7a5f;"></div>
     </div>
   </footer>
 
