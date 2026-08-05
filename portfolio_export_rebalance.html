@@ -38,10 +38,27 @@
     .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
     .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
 
-    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;gap:28px;position:relative;overflow:hidden;background:var(--surf);}
     .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
     .hero-right-bg-cell{background:white;}
     .hero-right-bg-cell:nth-child(odd){background:transparent;}
+    .hero-flow-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px;position:relative;}
+    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
+    .flow-step{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}
+    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
+    .flow-icon{font-size:18px;width:32px;text-align:center;flex-shrink:0;}
+    .flow-info{flex:1;}
+    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+    .flow-role{font-size:11px;color:rgba(255,255,255,0.4);}
+    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
+    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
+    .badge-orange{background:rgba(196,98,26,0.4);color:#fdba74;border:1px solid rgba(253,186,116,0.3);}
+    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
+    .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
+    .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
 
     .section{padding:90px 60px;}
     .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
@@ -138,6 +155,15 @@
       <div class="hero-right-bg">
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="hero-flow-label" data-ko>// 알림 감지 → 수출신고실적, 5단계 워크플로우</div>
+      <div class="hero-flow-label" data-en>// From alert to export declaration, in 5 steps</div>
+      <div class="hero-flow">
+        <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📋</span><div class="flow-info"><div class="flow-name" data-ko>TO 변경 감지</div><div class="flow-name" data-en>Alert In</div><div class="flow-role" data-ko>SharePoint TO 변경 알림 메일 자동 감지</div><div class="flow-role" data-en>Detects SharePoint TO-change alerts</div></div><span class="flow-badge badge-blue">SharePoint</span></div>
+        <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">🤝</span><div class="flow-info"><div class="flow-name" data-ko>3PL 조율</div><div class="flow-name" data-en>3PL Coordination</div><div class="flow-role" data-ko>위치정보 요청 메일 발송 · 회신 파싱</div><div class="flow-role" data-en>Sends pick-location request, parses the reply</div></div><span class="flow-badge badge-orange">win32com</span></div>
+        <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">🖱️</span><div class="flow-info"><div class="flow-name" data-ko>Oracle 3단계 실행</div><div class="flow-name" data-en>Oracle UI Automation</div><div class="flow-role" data-ko>Create Pick Wave→Confirm Pick Slips→Ship Confirm</div><div class="flow-role" data-en>Create Pick Wave → Confirm Pick Slips → Ship Confirm</div></div><span class="flow-badge badge-purple">Selenium</span></div>
+        <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">🧾</span><div class="flow-info"><div class="flow-name" data-ko>통관 서류</div><div class="flow-name" data-en>Customs Paperwork</div><div class="flow-role" data-ko>Commercial Invoice 발급 + PDF 보정 + 수출신고실적</div><div class="flow-role" data-en>Commercial invoice + PDF correction + export declaration</div></div><span class="flow-badge badge-green">PyMuPDF</span></div>
+        <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name" data-ko>결과 알림</div><div class="flow-name" data-en>Notify</div><div class="flow-role" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="flow-role" data-en>Confirmation email &amp; state JSON update</div></div><span class="flow-badge badge-gold">Auto</span></div>
       </div>
       <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);">
         <div class="mod-head">
