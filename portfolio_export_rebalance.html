@@ -104,6 +104,56 @@
     .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
     .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
 
+    /* ── animated worksheet ── */
+    .meter-bar{height:4px;background:var(--bg);border-radius:2px;overflow:hidden;}
+    .meter-fill{height:100%;border-radius:2px;display:block;transition:width .4s ease;}
+    .xl-wrap{border:1px solid var(--border);border-radius:14px;background:var(--bg);overflow:hidden;margin-bottom:26px;}
+    .xl-top{display:flex;align-items:center;gap:16px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surf2);flex-wrap:wrap;}
+    .xl-file{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text);letter-spacing:0.5px;}
+    .xl-file span{color:var(--muted);}
+    .xl-stage{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);flex:1;min-width:230px;}
+    .xl-count{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;display:flex;align-items:center;gap:9px;}
+    .xl-count .meter-bar{width:104px;}
+    .xl-replay{display:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);background:none;border:1px solid var(--border);border-radius:20px;padding:5px 13px;cursor:pointer;transition:color .2s,border-color .2s;}
+    .xl-replay:hover{color:var(--text);border-color:var(--muted);}
+    .xl-wrap.xl-anim .xl-replay{display:inline-block;}
+
+    .xl-src{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
+    .xl-srcbox{background:var(--bg);padding:13px 14px;opacity:0.3;transition:opacity .35s ease,background .35s ease;display:flex;align-items:flex-start;gap:10px;}
+    .xl-srcicon{font-family:'Noto Sans KR',sans-serif;font-size:16px;line-height:1.2;flex-shrink:0;}
+    .xl-wrap:not(.xl-anim) .xl-srcbox{opacity:1;}
+    .xl-srcbox.on{opacity:1;background:var(--surf2);}
+    .xl-srcbox.waiting{opacity:0.75;background:rgba(124,45,18,0.14);}
+    .xl-srcname{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--text);margin-bottom:4px;}
+    .xl-srcsub{font-size:9px;color:var(--muted);line-height:1.45;}
+    .xl-srcbox.waiting .xl-srcname{color:#fca5a5;}
+
+    .xl-scroll{overflow-x:auto;}
+    table.xl{border-collapse:collapse;width:100%;min-width:1240px;font-family:'DM Mono',monospace;}
+    table.xl th,table.xl td{border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:9px 9px;text-align:left;white-space:nowrap;}
+    table.xl th{font-weight:400;background:var(--surf);transition:background .45s ease;vertical-align:top;}
+    table.xl th.lit{background:var(--surf2);}
+    .hn{display:block;font-size:9px;letter-spacing:.5px;color:var(--muted);margin-bottom:6px;transition:color .45s ease;}
+    th.lit .hn{color:var(--text);}
+    .hs{display:inline-block;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.5px;padding:2px 5px;border-radius:3px;border:1px solid;opacity:.35;transition:opacity .45s ease;}
+    th.lit .hs{opacity:1;}
+    table.xl td{font-size:9.5px;color:rgba(238,240,248,0.72);height:33px;transition:background .45s ease;}
+    table.xl tr:last-child td{border-bottom:none;}
+    th.rn,td.rn{width:32px;text-align:center;color:var(--muted);background:var(--surf);font-size:9px;}
+    td.c .v{display:inline-block;transition:opacity .3s ease,transform .3s ease;}
+    .xl-anim td.c .v{opacity:0;transform:translateY(-3px);}
+    .xl-anim td.c.filled .v{opacity:1;transform:none;}
+    td.c.m.flash{background:rgba(147,197,253,0.16);}
+    td.c.sp.flash{background:rgba(196,181,253,0.16);}
+    td.c.or.flash{background:rgba(253,230,138,0.16);}
+    td.c.ci.flash{background:rgba(134,239,172,0.16);}
+    td.c.lg.flash{background:rgba(253,186,116,0.16);}
+    td.c.pd .pv{font-size:8.5px;letter-spacing:1px;color:#fca5a5;}
+    .xl-anim td.c.pd .pv{opacity:0;transition:opacity .35s ease;}
+    .xl-anim td.c.pd.pending .pv{opacity:1;}
+    td.c.pd.pending{background:rgba(124,45,18,0.16);box-shadow:inset 0 0 0 1px rgba(252,165,165,0.3);}
+    .xl-foot{padding:11px 18px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);background:var(--surf2);}
+
     /* ── case timeline ── */
     .df-note{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);border:1px dashed var(--border);padding:7px 12px;border-radius:4px;display:inline-block;margin-bottom:38px;}
     .tl{position:relative;padding-left:32px;}
@@ -146,11 +196,6 @@
     .field-v{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
     .pp-note{font-size:11px;color:var(--muted);line-height:1.75;}
 
-    .led{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-    .led-col{background:var(--surf2);padding:16px 9px;display:flex;flex-direction:column;gap:8px;min-height:158px;}
-    .led-n{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--muted);letter-spacing:1px;}
-    .led-name{font-size:10.5px;color:var(--text);line-height:1.4;}
-    .led-src{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.5px;padding:5px 4px;border-radius:3px;margin-top:auto;text-align:center;border:1px solid;}
     .s-mail{color:#93c5fd;border-color:rgba(147,197,253,0.3);background:rgba(26,74,110,0.3);}
     .s-sp{color:#c4b5fd;border-color:rgba(196,181,253,0.3);background:rgba(91,79,207,0.25);}
     .s-ora{color:#fde68a;border-color:rgba(253,230,138,0.3);background:rgba(181,147,10,0.25);}
@@ -170,10 +215,11 @@
     body.en [data-en]{display:inline;}
     body.en div[data-en]{display:block;}
 
-    @media (max-width:1280px){
-      .led{grid-template-columns:repeat(5,minmax(0,1fr));}
+    @media (max-width:1100px){
+      .xl-src{grid-template-columns:repeat(3,1fr);}
     }
     @media (max-width:900px){
+      .xl-src{grid-template-columns:repeat(2,1fr);}
       .topbar{padding:16px 24px;}
       .hero{grid-template-columns:1fr;}
       .hero-left,.hero-right{padding:90px 24px 50px;}
@@ -181,8 +227,6 @@
       .section,.pipeline-section{padding:90px 24px 50px;}
       .pipeline{flex-direction:column;}
       .pp-grid{grid-template-columns:1fr;}
-      .led{grid-template-columns:repeat(2,minmax(0,1fr));}
-      .led-col{min-height:0;}
       footer{padding:40px 24px;}
     }
   </style>
@@ -404,20 +448,100 @@
     <div class="section-label">Ledger Column Map</div>
     <h2 class="section-title"><span data-ko>실적 13개 컬럼이</span><span data-en>Where each of the 13</span><br><em><span data-ko>어디서 오는가</span><span data-en>ledger columns comes from</span></em></h2>
 
-    <div class="led">
-      <div class="led-col"><div class="led-n">01</div><div class="led-name">Destination</div><div class="led-src s-mail">MAIL</div></div>
-      <div class="led-col"><div class="led-n">02</div><div class="led-name">Purpose</div><div class="led-src s-fix">FIXED</div></div>
-      <div class="led-col"><div class="led-n">03</div><div class="led-name" data-ko>수출일자</div><div class="led-name" data-en>Ship Date</div><div class="led-src s-fix">RUNTIME</div></div>
-      <div class="led-col"><div class="led-n">04</div><div class="led-name">B/L No</div><div class="led-src s-wait">PENDING</div></div>
-      <div class="led-col"><div class="led-n">05</div><div class="led-name">HS Code</div><div class="led-src s-imp">IMPORT</div></div>
-      <div class="led-col"><div class="led-n">06</div><div class="led-name" data-ko>자재코드</div><div class="led-name" data-en>Item Code</div><div class="led-src s-sp">SHAREPOINT</div></div>
-      <div class="led-col"><div class="led-n">07</div><div class="led-name" data-ko>자재명</div><div class="led-name" data-en>Item Desc</div><div class="led-src s-ci">CI PDF</div></div>
-      <div class="led-col"><div class="led-n">08</div><div class="led-name" data-ko>수량</div><div class="led-name" data-en>Qty</div><div class="led-src s-ci">CI PDF</div></div>
-      <div class="led-col"><div class="led-n">09</div><div class="led-name" data-ko>단가</div><div class="led-name" data-en>Unit Price</div><div class="led-src s-ci">CI PDF</div></div>
-      <div class="led-col"><div class="led-n">10</div><div class="led-name" data-ko>금액</div><div class="led-name" data-en>Amount</div><div class="led-src s-ci">CI PDF</div></div>
-      <div class="led-col"><div class="led-n">11</div><div class="led-name">SO (TO#)</div><div class="led-src s-mail">MAIL</div></div>
-      <div class="led-col"><div class="led-n">12</div><div class="led-name">Delivery No</div><div class="led-src s-ora">ORACLE</div></div>
-      <div class="led-col"><div class="led-n">13</div><div class="led-name" data-ko>원산지</div><div class="led-name" data-en>Origin</div><div class="led-src s-ci">CI PDF</div></div>
+    <div class="xl-wrap" id="xlDemo">
+      <div class="xl-top">
+        <div class="xl-file"><span data-ko>수출신고실적.xlsx</span><span data-en>export_ledger.xlsx</span> <span data-ko>— 예시 서식</span><span data-en>— schematic</span></div>
+        <div class="xl-stage" id="xlStage"><span data-ko>12/13 자동 기입 — 남은 하나는 시스템 밖</span><span data-en>12 of 13 filled automatically — the last one lives outside the system</span></div>
+        <div class="xl-count"><span data-ko>채워진 컬럼</span><span data-en>filled</span> <span id="xlCount">12/13</span><span class="meter-bar"><span class="meter-fill" id="xlBar" style="width:92%;background:var(--accent2);"></span></span></div>
+        <button class="xl-replay" id="xlReplay">↻ <span data-ko>다시 재생</span><span data-en>replay</span></button>
+      </div>
+
+      <div class="xl-src">
+        <div class="xl-srcbox"><span class="xl-srcicon">📧</span><div><div class="xl-srcname"><span data-ko>트리거 메일</span><span data-en>trigger mail</span></div><div class="xl-srcsub" data-ko>TO 번호 · 목적지</div><div class="xl-srcsub" data-en>TO number, destination</div></div></div>
+        <div class="xl-srcbox"><span class="xl-srcicon">📋</span><div><div class="xl-srcname">SharePoint</div><div class="xl-srcsub" data-ko>대상 파트</div><div class="xl-srcsub" data-en>the part to ship</div></div></div>
+        <div class="xl-srcbox"><span class="xl-srcicon">☁️</span><div><div class="xl-srcname">Oracle</div><div class="xl-srcsub" data-ko>Ship Confirm 결과</div><div class="xl-srcsub" data-en>Ship Confirm result</div></div></div>
+        <div class="xl-srcbox"><span class="xl-srcicon">🧾</span><div><div class="xl-srcname"><span data-ko>발행 인보이스</span><span data-en>issued invoice</span></div><div class="xl-srcsub" data-ko>금액 · 수량 · 원산지</div><div class="xl-srcsub" data-en>amounts, qty, origin</div></div></div>
+        <div class="xl-srcbox"><span class="xl-srcicon">📒</span><div><div class="xl-srcname"><span data-ko>실적 기입</span><span data-en>ledger write</span></div><div class="xl-srcsub" data-ko>고정값 · 처리시점 · HS 재사용</div><div class="xl-srcsub" data-en>fixed value, run time, reused HS</div></div></div>
+        <div class="xl-srcbox"><span class="xl-srcicon">🚚</span><div><div class="xl-srcname"><span data-ko>픽업 예약</span><span data-en>courier pickup</span></div><div class="xl-srcsub" data-ko>시스템 밖 — 사람이 하는 유일한 일</div><div class="xl-srcsub" data-en>outside the system — the only human step</div></div></div>
+      </div>
+
+      <div class="xl-scroll">
+        <table class="xl">
+          <thead>
+            <tr>
+              <th class="rn"></th>
+              <th class="col m"><span class="hn">Destination</span><span class="hs s-mail">MAIL</span></th>
+              <th class="col lg"><span class="hn">Purpose</span><span class="hs s-fix">FIXED</span></th>
+              <th class="col lg"><span class="hn"><span data-ko>수출일자</span><span data-en>Ship Date</span></span><span class="hs s-fix">RUNTIME</span></th>
+              <th class="col pd"><span class="hn">B/L No</span><span class="hs s-wait">PENDING</span></th>
+              <th class="col lg"><span class="hn">HS code</span><span class="hs s-imp">IMPORT</span></th>
+              <th class="col sp"><span class="hn"><span data-ko>자재코드</span><span data-en>Item Code</span></span><span class="hs s-sp">SHAREPOINT</span></th>
+              <th class="col ci"><span class="hn"><span data-ko>자재명</span><span data-en>Item Desc</span></span><span class="hs s-ci">CI PDF</span></th>
+              <th class="col ci"><span class="hn"><span data-ko>수량</span><span data-en>Qty</span></span><span class="hs s-ci">CI PDF</span></th>
+              <th class="col ci"><span class="hn"><span data-ko>단가</span><span data-en>Unit Price</span></span><span class="hs s-ci">CI PDF</span></th>
+              <th class="col ci"><span class="hn"><span data-ko>금액</span><span data-en>Amount</span></span><span class="hs s-ci">CI PDF</span></th>
+              <th class="col m"><span class="hn">SO (TO#)</span><span class="hs s-mail">MAIL</span></th>
+              <th class="col or"><span class="hn">Delivery No</span><span class="hs s-ora">ORACLE</span></th>
+              <th class="col ci"><span class="hn"><span data-ko>원산지</span><span data-en>Origin</span></span><span class="hs s-ci">CI PDF</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rn">2</td>
+              <td class="c m"><span class="v">###</span></td>
+              <td class="c lg"><span class="v">Rebalance</span></td>
+              <td class="c lg"><span class="v">20##-##-##</span></td>
+              <td class="c pd pending"><span class="pv" data-ko>픽업 후</span><span class="pv" data-en>after pickup</span></td>
+              <td class="c lg"><span class="v">####.##-####</span></td>
+              <td class="c sp"><span class="v">####-##-####</span></td>
+              <td class="c ci"><span class="v">••••••••</span></td>
+              <td class="c ci"><span class="v">1</span></td>
+              <td class="c ci"><span class="v">#,###,###</span></td>
+              <td class="c ci"><span class="v">#,###,###</span></td>
+              <td class="c m"><span class="v">78#####</span></td>
+              <td class="c or"><span class="v">99#####</span></td>
+              <td class="c ci"><span class="v">##</span></td>
+            </tr>
+            <tr>
+              <td class="rn">3</td>
+              <td class="c m"><span class="v">###</span></td>
+              <td class="c lg"><span class="v">Rebalance</span></td>
+              <td class="c lg"><span class="v">20##-##-##</span></td>
+              <td class="c pd pending"><span class="pv" data-ko>픽업 후</span><span class="pv" data-en>after pickup</span></td>
+              <td class="c lg"><span class="v">####.##-####</span></td>
+              <td class="c sp"><span class="v">####-##-####</span></td>
+              <td class="c ci"><span class="v">••••••••</span></td>
+              <td class="c ci"><span class="v">2</span></td>
+              <td class="c ci"><span class="v">#,###,###</span></td>
+              <td class="c ci"><span class="v">#,###,###</span></td>
+              <td class="c m"><span class="v">78#####</span></td>
+              <td class="c or"><span class="v">99#####</span></td>
+              <td class="c ci"><span class="v">##</span></td>
+            </tr>
+            <tr>
+              <td class="rn">4</td>
+              <td class="c m"><span class="v">###</span></td>
+              <td class="c lg"><span class="v">Rebalance</span></td>
+              <td class="c lg"><span class="v">20##-##-##</span></td>
+              <td class="c pd pending"><span class="pv" data-ko>픽업 후</span><span class="pv" data-en>after pickup</span></td>
+              <td class="c lg"><span class="v">####.##-####</span></td>
+              <td class="c sp"><span class="v">####-##-####</span></td>
+              <td class="c ci"><span class="v">••••••••</span></td>
+              <td class="c ci"><span class="v">1</span></td>
+              <td class="c ci"><span class="v">#,###,###</span></td>
+              <td class="c ci"><span class="v">#,###,###</span></td>
+              <td class="c m"><span class="v">78#####</span></td>
+              <td class="c or"><span class="v">99#####</span></td>
+              <td class="c ci"><span class="v">##</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="xl-foot">
+        <span data-ko>컬럼 순서대로가 아니라 정보가 확보되는 순서대로 채워진다 · 숫자는 #, 문자는 • 로 마스킹한 예시 값</span>
+        <span data-en>Columns fill in the order the information becomes available, not left to right · digits masked as #, letters as •</span>
+      </div>
     </div>
 
     <div class="led-legend">
@@ -463,6 +587,98 @@
     (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
     const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
     document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+    // Animated ledger: fills each column at the moment its source hands the
+    // value over. Falls back to a static, finished sheet without JS.
+    (function(){
+      var wrap = document.getElementById('xlDemo');
+      if (!wrap) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var stageEl = document.getElementById('xlStage');
+      var countEl = document.getElementById('xlCount');
+      var barEl   = document.getElementById('xlBar');
+      var srcs    = wrap.querySelectorAll('.xl-srcbox');
+      var rows    = wrap.querySelectorAll('table.xl tbody tr');
+      var heads   = wrap.querySelectorAll('table.xl thead th');
+      var timers  = [];
+
+      var TXT = {
+        idle: ['처리 대기', 'idle'],
+        s1:   ['① 트리거 알림 메일 → TO 번호 · 목적지', '① trigger alert → TO number, destination'],
+        s2:   ['② SharePoint 조회 → 대상 파트', '② SharePoint lookup → the part'],
+        s3:   ['③ Oracle Ship Confirm → Delivery 번호', '③ Oracle Ship Confirm → delivery number'],
+        s4:   ['④ 발행된 인보이스에서 그대로 읽음', '④ read straight off the issued invoice'],
+        s5:   ['⑤ 실적 기입 — 고정값 · 처리시점 · HS 재사용', '⑤ ledger write — fixed value, run time, reused HS code'],
+        s6:   ['⑥ B/L(트래킹)은 픽업을 잡아야 생기는 번호', '⑥ the tracking number only exists once pickup is booked'],
+        end:  ['12/13 자동 기입 — 남은 하나는 시스템 밖', '12 of 13 filled automatically — the last one lives outside the system']
+      };
+
+      function stage(k){ stageEl.innerHTML = '<span data-ko>' + TXT[k][0] + '</span><span data-en>' + TXT[k][1] + '</span>'; }
+      function count(n){ countEl.textContent = n + '/13'; barEl.style.width = (n / 13 * 100) + '%'; }
+      function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
+      function only(i, cls){
+        srcs.forEach(function(s, j){
+          s.classList.remove('on', 'waiting');
+          if (j === i) s.classList.add(cls || 'on');
+        });
+      }
+      function lit(sel){ wrap.querySelectorAll(sel).forEach(function(el){ el.classList.add('lit'); }); }
+      function pop(td){
+        td.classList.add('filled', 'flash');
+        setTimeout(function(){ td.classList.remove('flash'); }, 430);
+      }
+      // Fills column by column, in the order each source hands its value over -
+      // which is deliberately not left to right.
+      function fillCols(cls, from, colStep, base, span){
+        var idx = [], t = from;
+        heads.forEach(function(th, i){ if (th.classList.contains(cls)) idx.push(i); });
+        idx.forEach(function(ci, k){
+          rows.forEach(function(tr, ri){ at(t + ri * 55, function(){ pop(tr.cells[ci]); }); });
+          t += colStep;
+          at(t, function(){ count(base + Math.round((k + 1) / idx.length * span)); });
+        });
+        return t;
+      }
+      function reset(){
+        timers.forEach(clearTimeout); timers = [];
+        wrap.querySelectorAll('td.c').forEach(function(td){ td.classList.remove('filled', 'flash', 'pending'); });
+        wrap.querySelectorAll('th.col').forEach(function(th){ th.classList.remove('lit'); });
+        srcs.forEach(function(s){ s.classList.remove('on', 'waiting'); });
+        stage('idle'); count(0);
+      }
+      function play(){
+        reset();
+        at(400, function(){ only(0); stage('s1'); lit('th.col.m'); });
+        var e = fillCols('m', 700, 150, 0, 2);
+        at(e + 350, function(){ only(1); stage('s2'); lit('th.col.sp'); });
+        e = fillCols('sp', e + 600, 150, 2, 1);
+        at(e + 350, function(){ only(2); stage('s3'); lit('th.col.or'); });
+        e = fillCols('or', e + 600, 150, 3, 1);
+        at(e + 350, function(){ only(3); stage('s4'); lit('th.col.ci'); });
+        e = fillCols('ci', e + 600, 150, 4, 5);
+        at(e + 400, function(){ only(4); stage('s5'); lit('th.col.lg'); });
+        e = fillCols('lg', e + 650, 150, 9, 3);
+        at(e + 500, function(){
+          only(5, 'waiting'); stage('s6'); lit('th.col.pd');
+          wrap.querySelectorAll('td.c.pd').forEach(function(td, i){
+            at(i * 80, function(){ td.classList.add('pending'); });
+          });
+        });
+        at(e + 1400, function(){ stage('end'); });
+      }
+
+      wrap.classList.add('xl-anim');
+      stage('idle'); count(0);
+      document.getElementById('xlReplay').addEventListener('click', play);
+
+      var played = false;
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting && !played){ played = true; setTimeout(play, 250); }
+        });
+      }, { threshold: 0.3 }).observe(wrap);
+    })();
   </script>
 </body>
 </html>
