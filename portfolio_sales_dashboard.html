@@ -138,7 +138,66 @@
     body.en p[data-en]{display:block;}
     body.en h3[data-en]{display:block;}
 
+    /* ── sync mockup ── */
+    .sync-note{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--muted);border:1px dashed var(--border);padding:7px 12px;border-radius:4px;display:inline-block;margin-bottom:30px;}
+    .sync-wrap{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surf);}
+    .sync-top{display:flex;align-items:center;gap:14px;padding:13px 18px;background:var(--surf2);border-bottom:1px solid var(--border);flex-wrap:wrap;}
+    .sync-dots{display:flex;gap:6px;}
+    .sync-dot{width:9px;height:9px;border-radius:50%;}
+    .sync-url{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:4px 14px;}
+    .sync-stage{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);flex:1;min-width:200px;}
+    .sync-count{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;display:flex;align-items:center;gap:8px;}
+    .sync-bar{width:88px;height:4px;background:var(--bg);border-radius:2px;overflow:hidden;}
+    .sync-fill{height:100%;background:var(--accent);border-radius:2px;display:block;width:100%;transition:width .4s ease;}
+    .sync-replay{display:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);background:none;border:1px solid var(--border);border-radius:20px;padding:5px 12px;cursor:pointer;transition:color .2s,border-color .2s;}
+    .sync-replay:hover{color:var(--text);border-color:var(--muted);}
+    .sync-wrap.on .sync-replay{display:inline-block;}
+
+    .sync-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
+    .sync-step{background:var(--surf);padding:14px;opacity:.3;transition:opacity .35s ease,background .35s ease;}
+    .sync-wrap:not(.on) .sync-step{opacity:1;}
+    .sync-step.lit{opacity:1;background:var(--surf2);}
+    .sync-sn{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--accent);letter-spacing:1.5px;}
+    .sync-st{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text);margin:6px 0 5px;line-height:1.4;}
+    .sync-sd{font-size:9.5px;color:var(--muted);line-height:1.55;}
+
+    .sync-body{display:grid;grid-template-columns:158px 1fr;}
+    .sync-side{border-right:1px solid var(--border);padding:16px 0;background:var(--bg);}
+    .sync-nav{font-size:11px;color:var(--muted);padding:9px 16px;display:flex;align-items:center;gap:8px;border-left:2px solid transparent;}
+    .sync-nav.active{color:var(--text);border-left-color:var(--accent);background:rgba(91,79,207,0.08);}
+    .sync-badge{font-family:'DM Mono',monospace;font-size:8.5px;background:var(--accent4);color:#141414;border-radius:9px;padding:1px 7px;margin-left:auto;opacity:0;transition:opacity .35s ease;}
+    .sync-badge.show{opacity:1;}
+    .sync-main{padding:18px 20px;}
+    .sync-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;}
+    .sync-kpi{background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:11px 12px;}
+    .sync-kl{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:7px;}
+    .sync-kv{font-family:'DM Mono',monospace;font-size:12px;color:var(--text);}
+    .sync-ptitle{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent4);margin-bottom:10px;}
+    table.sync-tbl{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;}
+    table.sync-tbl th{font-size:8.5px;font-weight:400;letter-spacing:1px;color:var(--muted);text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);text-transform:uppercase;white-space:nowrap;}
+    table.sync-tbl td{font-size:9.5px;color:rgba(238,240,248,0.72);padding:9px 8px;border-bottom:1px solid rgba(37,40,54,0.6);white-space:nowrap;}
+    table.sync-tbl tr:last-child td{border-bottom:none;}
+    .sync-wrap.on tbody tr.r{opacity:0;transform:translateY(-4px);transition:opacity .35s ease,transform .35s ease;}
+    .sync-wrap.on tbody tr.r.in{opacity:1;transform:none;}
+    .st-chip{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.5px;padding:3px 7px;border-radius:10px;border:1px solid;}
+    .sync-wrap.on .st-chip{opacity:0;transition:opacity .3s ease;}
+    .sync-wrap.on .st-chip.in{opacity:1;}
+    .st-new{color:#86efac;border-color:rgba(134,239,172,.3);background:rgba(15,168,120,.14);}
+    .st-upd{color:#93c5fd;border-color:rgba(147,197,253,.3);background:rgba(59,130,246,.12);}
+    .st-keep{color:var(--muted);border-color:var(--border);background:var(--surf2);}
+    .st-flag{color:#fcd34d;border-color:rgba(252,211,77,.3);background:rgba(224,156,16,.14);}
+    .sync-foot{padding:11px 18px;border-top:1px solid var(--border);background:var(--surf2);font-size:10px;color:var(--muted);}
+
+    .sync-notes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;}
+    .sn-item{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:20px 22px;font-size:11.5px;color:var(--muted);line-height:1.8;}
+    .sn-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1.5px;color:var(--accent2);margin-bottom:8px;text-transform:uppercase;}
+
     @media (max-width: 768px) {
+      .sync-steps{grid-template-columns:1fr 1fr;}
+      .sync-body{grid-template-columns:1fr;}
+      .sync-side{border-right:none;border-bottom:1px solid var(--border);}
+      .sync-kpis{grid-template-columns:1fr 1fr;}
+      .sync-notes{grid-template-columns:1fr;}
       .topbar{padding:16px 24px;}
       .hero, .section, .arch-section { padding: 90px 24px 50px; }
       footer { padding: 40px 24px; flex-direction: column; gap: 16px; text-align: center; }
@@ -190,7 +249,7 @@
 
     <div class="projects-grid">
 
-      <a class="project-card reveal" href="index_password.html">
+      <div class="project-card reveal">
         <div class="card-preview">
           <div class="preview-dashboard">
             <div class="mock-header">
@@ -218,13 +277,13 @@
             <div class="feature"><div class="feature-dot" style="background:#5b4fcf;"></div><span data-ko>이메일/비밀번호 로그인 + 비밀번호 리셋</span><span data-en>Email/password login + reset</span></div>
             <div class="feature"><div class="feature-dot" style="background:#0faaa0;"></div><span data-ko>분기·팀원 필터 + 상태별 테이블 분리</span><span data-en>Quarter/member filter + status tables</span></div>
             <div class="feature"><div class="feature-dot" style="background:#0fa878;"></div><span data-ko>드래그로 행 순서 변경 · CSV 내보내기</span><span data-en>Drag-reorder rows · CSV export</span></div>
-            <div class="feature"><div class="feature-dot" style="background:#2dd4bf;"></div><span data-ko>Salesforce 리포트 주 1회 검증·자동 반영</span><span data-en>Weekly verified Salesforce sync</span></div>
+            <div class="feature"><div class="feature-dot" style="background:#2dd4bf;"></div><span data-ko>Salesforce 후보를 클릭 한 번으로 등록</span><span data-en>Register a Salesforce candidate in one click</span></div>
           </div>
         </div>
-        <div class="card-footer"><span class="card-footer-info">MODULE 01 · MAIN</span><div class="card-arrow">→</div></div>
-      </a>
+        <div class="card-footer"><span class="card-footer-info">MODULE 01 · MAIN</span></div>
+      </div>
 
-      <a class="project-card reveal" href="dashboard_26.html" style="transition-delay:0.1s">
+      <div class="project-card reveal" style="transition-delay:0.1s">
         <div class="card-preview">
           <div class="preview-dashboard" style="background: linear-gradient(135deg, #f4f5f7 0%, #e8eaf0 100%);">
             <div class="mock-header">
@@ -266,10 +325,10 @@
             <div class="feature"><div class="feature-dot" style="background:#e09c10;"></div><span data-ko>라이브 뱃지 UI</span><span data-en>Live badge UI</span></div>
           </div>
         </div>
-        <div class="card-footer"><span class="card-footer-info">MODULE 02 · ANALYTICS</span><div class="card-arrow">→</div></div>
-      </a>
+        <div class="card-footer"><span class="card-footer-info">MODULE 02 · ANALYTICS</span></div>
+      </div>
 
-      <a class="project-card reveal" href="report.html" style="transition-delay:0.2s">
+      <div class="project-card reveal" style="transition-delay:0.2s">
         <div class="card-preview">
           <div class="preview-report">
             <div class="mock-table-header"><div class="mock-th"></div><div class="mock-th"></div><div class="mock-th"></div><div class="mock-th"></div><div class="mock-th"></div><div class="mock-th"></div></div>
@@ -295,9 +354,102 @@
             <div class="feature"><div class="feature-dot" style="background:#e09c10;"></div><span data-ko>비밀번호 보호 + 실시간 데이터</span><span data-en>Password-protected + realtime data</span></div>
           </div>
         </div>
-        <div class="card-footer"><span class="card-footer-info">MODULE 03 · REPORT</span><div class="card-arrow">→</div></div>
-      </a>
+        <div class="card-footer"><span class="card-footer-info">MODULE 03 · REPORT</span></div>
+      </div>
 
+    </div>
+  </section>
+
+  <!-- SYNC AUTOMATION -->
+  <section class="section" id="sync">
+    <div class="section-label">Sync Automation</div>
+    <h2 class="section-title reveal"><span data-ko>API가 없어서</span><span data-en>No API,</span><br><em><span data-ko>사람이 하던 경로 그대로</span><span data-en>so it walks the same path a person did</span></em></h2>
+    <div class="sync-note">
+      <span data-ko>※ 아래 화면은 구조 설명용 목업 — 실제 계약 데이터가 아니며 값은 전부 가려둠</span>
+      <span data-en>※ The screen below is a schematic mockup — no real deal data; every value is masked</span>
+    </div>
+
+    <div class="sync-wrap reveal" id="syncDemo">
+      <div class="sync-top">
+        <div class="sync-dots"><span class="sync-dot" style="background:#e84d6f"></span><span class="sync-dot" style="background:#e09c10"></span><span class="sync-dot" style="background:#0fa878"></span></div>
+        <div class="sync-url">forecast-sync</div>
+        <div class="sync-stage" id="syncStage"><span data-ko>완료 — 후보 5건이 대시보드에 도착</span><span data-en>done — 5 candidates landed on the dashboard</span></div>
+        <div class="sync-count"><span data-ko>후보</span><span data-en>candidates</span> <span id="syncCount">5</span><span class="sync-bar"><span class="sync-fill" id="syncFill"></span></span></div>
+        <button class="sync-replay" id="syncReplay">↻ <span data-ko>다시 재생</span><span data-en>replay</span></button>
+      </div>
+
+      <div class="sync-steps">
+        <div class="sync-step"><div class="sync-sn">01</div><div class="sync-st" data-ko>리포트 열기</div><div class="sync-st" data-en>Open report</div><div class="sync-sd" data-ko>전용 프로필로 로그인 없이 진입</div><div class="sync-sd" data-en>Enters on a dedicated profile, no login prompt</div></div>
+        <div class="sync-step"><div class="sync-sn">02</div><div class="sync-st" data-ko>기간 설정</div><div class="sync-st" data-en>Set the window</div><div class="sync-sd" data-ko>시작일 고정, 종료일만 30일씩 확장</div><div class="sync-sd" data-en>Start date fixed, end date extends 30 days each run</div></div>
+        <div class="sync-step"><div class="sync-sn">03</div><div class="sync-st">Export</div><div class="sync-sd" data-ko>화면의 Export 버튼을 눌러 파일 수신</div><div class="sync-sd" data-en>Clicks the on-screen Export button and waits for the file</div></div>
+        <div class="sync-step"><div class="sync-sn">04</div><div class="sync-st" data-ko>파싱</div><div class="sync-st" data-en>Parse</div><div class="sync-sd" data-ko>계약 단위로 묶어 후보 생성</div><div class="sync-sd" data-en>Groups by deal and builds candidates</div></div>
+        <div class="sync-step"><div class="sync-sn">05</div><div class="sync-st" data-ko>반영</div><div class="sync-st" data-en>Write</div><div class="sync-sd" data-ko>신규 · 갱신 · 보존을 건별로 판정</div><div class="sync-sd" data-en>Decides create, update or leave alone per record</div></div>
+      </div>
+
+      <div class="sync-body">
+        <div class="sync-side">
+          <div class="sync-nav"><span data-ko>대시보드</span><span data-en>Dashboard</span></div>
+          <div class="sync-nav"><span data-ko>팀별</span><span data-en>By team</span></div>
+          <div class="sync-nav"><span data-ko>개인별</span><span data-en>By member</span></div>
+          <div class="sync-nav"><span data-ko>통합데이터</span><span data-en>Combined</span></div>
+          <div class="sync-nav active"><span data-ko>신규 후보</span><span data-en>New candidates</span><span class="sync-badge" id="syncBadge">5</span></div>
+        </div>
+
+        <div class="sync-main">
+          <div class="sync-kpis">
+            <div class="sync-kpi"><div class="sync-kl" data-ko>분기 목표</div><div class="sync-kl" data-en>Target</div><div class="sync-kv">₩ ###,###,###</div></div>
+            <div class="sync-kpi"><div class="sync-kl">Ship Confirm</div><div class="sync-kv">₩ ###,###,###</div></div>
+            <div class="sync-kpi"><div class="sync-kl">GAP</div><div class="sync-kv">₩ ##,###,###</div></div>
+            <div class="sync-kpi"><div class="sync-kl" data-ko>달성률</div><div class="sync-kl" data-en>Attainment</div><div class="sync-kv">##.#%</div></div>
+          </div>
+
+          <div class="sync-ptitle"><span data-ko>신규 후보</span><span data-en>New candidates</span></div>
+          <div style="overflow-x:auto;">
+            <table class="sync-tbl">
+              <thead>
+                <tr>
+                  <th>Owner</th><th>Account</th><th>Product</th><th>Acc Type</th><th>Close</th><th>Amount</th><th><span data-ko>판정</span><span data-en>Verdict</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="r"><td>●●●</td><td>●●●●●●</td><td>●●●●</td><td>2</td><td>20##-##-##</td><td>₩ ##,###,###</td><td><span class="st-chip st-new"><span data-ko>신규</span><span data-en>new</span></span></td></tr>
+                <tr class="r"><td>●●●</td><td>●●●●●●</td><td>●●●●</td><td>—</td><td>20##-##-##</td><td>₩ #,###,###</td><td><span class="st-chip st-new"><span data-ko>신규 · 분리</span><span data-en>new · split out</span></span></td></tr>
+                <tr class="r"><td>●●●</td><td>●●●●●●●</td><td>●●●●</td><td>1</td><td>20##-##-##</td><td>₩ ##,###,###</td><td><span class="st-chip st-upd"><span data-ko>금액 갱신</span><span data-en>amount updated</span></span></td></tr>
+                <tr class="r"><td>●●●</td><td>●●●●●</td><td>●●●●</td><td>3</td><td>20##-##-##</td><td>₩ ##,###,###</td><td><span class="st-chip st-keep"><span data-ko>등록됨 · 손대지 않음</span><span data-en>registered · left alone</span></span></td></tr>
+                <tr class="r"><td>●●●</td><td>●●●●●●</td><td>●●●●</td><td>1</td><td>20##-##-##</td><td>₩ ##,###,###</td><td><span class="st-chip st-flag"><span data-ko>분기 바뀜 · 확인 요청</span><span data-en>quarter changed · flagged</span></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="sync-foot">
+        <span data-ko>매달 1일, 작업 스케줄러가 이 다섯 단계를 사람 없이 실행한다 · 후보는 대시보드에서 담당자가 클릭 한 번으로 등록한다</span>
+        <span data-en>On the first of each month a scheduled task runs these five steps unattended; the sales owner then registers a candidate with one click on the dashboard</span>
+      </div>
+    </div>
+
+    <div class="sync-notes">
+      <div class="sn-item reveal">
+        <div class="sn-label" data-ko>API가 없다</div><div class="sn-label" data-en>No API</div>
+        <span data-ko>이 리포트는 API로 뽑을 수 없어서, 사람이 하던 것과 똑같이 리포트 화면을 열고 기간 필터를 맞춘 뒤 Export 버튼을 누르게 했다. 로그인은 회사 SSO에 맡기고 전용 브라우저 프로필을 재사용해서, 계정 정보를 코드에 두지 않는다.</span>
+        <span data-en>The report cannot be pulled through an API, so the script opens the report screen, sets the date filter and clicks Export exactly as a person would. Login rides on the company SSO through a dedicated browser profile, so no credentials live in the code.</span>
+      </div>
+      <div class="sn-item reveal" style="transition-delay:0.05s">
+        <div class="sn-label" data-ko>계약 단위로 본다</div><div class="sn-label" data-en>Grouped by deal</div>
+        <span data-ko>행 하나가 곧 계약이 아니라서, 계약 단위로 묶은 뒤 메인 제품 라인이 들어있는 건만 후보로 인정하고 금액은 그 계약에 딸린 라인 합계로 계산한다. 같은 계약에 함께 팔린 다른 시스템은 합계에서 빼고 별도 후보로 분리한다.</span>
+        <span data-en>A row is not a deal, so lines are grouped per opportunity; only groups containing a main product line become candidates, and the amount is the sum of that deal's lines. A separate system sold alongside it is pulled out of the total and split into its own candidate.</span>
+      </div>
+      <div class="sn-item reveal" style="transition-delay:0.1s">
+        <div class="sn-label" data-ko>이미 쓴 건 건드리지 않는다</div><div class="sn-label" data-en>Never touches what is in use</div>
+        <span data-ko>후보가 이미 등록에 사용됐으면 덮어쓰지 않는다. 아직 안 쓴 후보만 최신 값으로 갱신하고, 이미 매출로 올라간 건은 금액만 고치고 담당자가 손으로 넣은 값은 그대로 둔다.</span>
+        <span data-en>Once a candidate has been used to register a deal it is never overwritten. Only unused candidates get refreshed, and for deals already counted as revenue only the amount is corrected, leaving every hand-entered field intact.</span>
+      </div>
+      <div class="sn-item reveal" style="transition-delay:0.15s">
+        <div class="sn-label" data-ko>애매하면 자동으로 처리하지 않는다</div><div class="sn-label" data-en>Ambiguity stops the machine</div>
+        <span data-ko>분기가 바뀌었거나 같은 계약의 다른 건이 이미 등록돼 있으면 자동으로 반영하지 않고 표시만 남겨 사람이 판단하게 한다. 검토 없이 매출이 생기는 쪽이 훨씬 위험하다고 봤다.</span>
+        <span data-en>If the quarter shifted, or another line from the same deal is already registered, nothing is applied automatically; the case is flagged for a person to judge. Revenue appearing without review is the worse failure.</span>
+      </div>
     </div>
   </section>
 
@@ -335,7 +487,7 @@
       <div class="arch-flow" style="margin-top:24px; padding-top:24px; border-top:1px dashed var(--border);">
         <div class="arch-node"><div class="arch-node-icon">☁️</div><div class="arch-node-name">Salesforce</div><div class="arch-node-sub" data-ko>Korea Opportunity 리포트</div><div class="arch-node-sub" data-en>Korea Opportunity report</div></div>
         <div class="arch-arrow">→</div>
-        <div class="arch-node highlight"><div class="arch-node-icon">🐍</div><div class="arch-node-name" data-ko>Python 동기화</div><div class="arch-node-name" data-en>Python Sync</div><div class="arch-node-sub" data-ko>주간 Excel Export → 파싱</div><div class="arch-node-sub" data-en>Weekly Excel export → parse</div></div>
+        <div class="arch-node highlight"><div class="arch-node-icon">🐍</div><div class="arch-node-name" data-ko>Python 동기화</div><div class="arch-node-name" data-en>Python Sync</div><div class="arch-node-sub" data-ko>월 1회 Export → 파싱</div><div class="arch-node-sub" data-en>Monthly export → parse</div></div>
         <div class="arch-arrow">→</div>
         <div class="arch-node"><div class="arch-node-icon">🔥</div><div class="arch-node-name">Firestore</div><div class="arch-node-sub" data-ko>SO번호·Dealer·계약구분 자동 반영</div><div class="arch-node-sub" data-en>Auto-fills SO #, dealer, contract type</div></div>
       </div>
@@ -347,7 +499,7 @@
       <div class="highlight-card c3 reveal" style="transition-delay:0.2s"><div class="highlight-num">03</div><div class="highlight-icon">↕️</div><div class="highlight-title" data-ko>드래그 앤 드롭 정렬</div><div class="highlight-title" data-en>Drag &amp; Drop Sort</div><div class="highlight-desc" data-ko>상태별 테이블에서 행을 드래그해 우선순위를 바꾸고 Firestore에 자동 저장.</div><div class="highlight-desc" data-en>Drag rows in status tables to reorder priority, auto-saved to Firestore.</div></div>
       <div class="highlight-card c4 reveal" style="transition-delay:0.3s"><div class="highlight-num">04</div><div class="highlight-icon">🌏</div><div class="highlight-title" data-ko>완전한 다국어 지원</div><div class="highlight-title" data-en>Full Multilingual</div><div class="highlight-desc" data-ko>버튼 하나로 KO ↔ EN 전환. localStorage에 선호 언어를 기억.</div><div class="highlight-desc" data-en>One button toggles KO ↔ EN; preference remembered in localStorage.</div></div>
       <div class="highlight-card c5 reveal" style="transition-delay:0.4s"><div class="highlight-num">05</div><div class="highlight-icon">📈</div><div class="highlight-title" data-ko>분기 목표 추적 자동화</div><div class="highlight-title" data-en>Auto Target Tracking</div><div class="highlight-desc" data-ko>입력 데이터로 분기 달성률·Back up 비율·미납 현황을 KPI·차트로 자동 계산.</div><div class="highlight-desc" data-en>Auto-computes quarter attainment, back-up ratio, and outstanding into KPIs and charts.</div></div>
-      <div class="highlight-card c6 reveal" style="transition-delay:0.5s"><div class="highlight-num">06</div><div class="highlight-icon">☁️</div><div class="highlight-title" data-ko>Salesforce 연동 · 수기 입력 간극 최소화</div><div class="highlight-title" data-en>Salesforce Sync · Minimizing the Manual-Entry Gap</div><div class="highlight-desc" data-ko>Salesforce Korea Opportunity 리포트를 매달 자동 Export(스케줄러) → SO번호·계약구분·Acc Type(옵션킷 조합 자동계산)을 Firestore 후보 큐에 반영. 담당자·제품·분기별 검색형 다중 필터로 영업팀이 검토 후 반영하며, 동일 구조를 커미션 자동계산 등 다른 수기 업무로 확장 가능하다.</div><div class="highlight-desc" data-en>A custom Salesforce Korea Opportunity report is exported automatically every month via a scheduled task. SO number, contract type, and Acc Type (auto-derived from option-kit combinations) land in a Firestore candidate queue with searchable multi-select filters by member/product/quarter, ready for the sales team to review and import. The same pipeline extends to other manual workflows, such as automated commission calculation.</div></div>
+      <div class="highlight-card c6 reveal" style="transition-delay:0.5s"><div class="highlight-num">06</div><div class="highlight-icon">☁️</div><div class="highlight-title" data-ko>Salesforce 연동 · 수기 입력 간극 최소화</div><div class="highlight-title" data-en>Salesforce Sync · Minimizing the Manual-Entry Gap</div><div class="highlight-desc" data-ko>리포트에 API가 없어 Selenium이 리포트 화면을 열고 기간 필터를 맞춘 뒤 Export까지 눌러 파일을 받는다. 받은 파일을 계약 단위로 묶어 SO번호·계약구분·Acc Type(옵션킷 조합 자동계산)을 Firestore 후보 큐에 넣고, 영업팀이 담당자·제품·분기 필터로 검토한 뒤 클릭 한 번으로 등록한다. 같은 구조를 커미션 자동계산 등 다른 수기 업무로 확장할 수 있다.</div><div class="highlight-desc" data-en>The report has no API, so Selenium opens the report screen, sets the date filter and clicks Export to collect the file. What comes back is grouped per deal, and SO number, contract type and Acc Type (derived from the option-kit combination) land in a Firestore candidate queue, where the sales team filters by member, product or quarter and registers a candidate in one click. The same pipeline extends to other manual workflows, such as automated commission calculation.</div></div>
       <div class="highlight-card c7 reveal" style="transition-delay:0.6s"><div class="highlight-num">07</div><div class="highlight-icon">🚢</div><div class="highlight-title" data-ko>Ship Confirm 게이트 · CRM-매출 괴리 완화</div><div class="highlight-title" data-en>Ship Confirm Gate · CRM-Revenue Reconciliation</div><div class="highlight-desc" data-ko>Salesforce는 실제 출하와 무관하게 계약을 Closed Won으로 표시한다. 이 대시보드는 상태를 Pending → Back up → ACT → Ship Confirm 4단계로 나누고, 매출 집계는 Ship Confirm 단계에서만 집계되도록 설계해 CRM 상 계약 현황과 실제 인식된 매출 사이의 괴리를 완화한다.</div><div class="highlight-desc" data-en>Salesforce marks a deal Closed Won independent of whether it has actually shipped. This dashboard splits status into four stages — Pending → Back up → ACT → Ship Confirm — and only counts revenue at the Ship Confirm stage, reconciling what the CRM reports against when revenue is actually recognized.</div></div>
     </div>
   </section>
@@ -369,6 +521,72 @@
       entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Replays one monthly sync run: open report, set window, export, parse,
+    // then write. Without JS or under reduced motion it stays a finished screen.
+    (function(){
+      var wrap = document.getElementById('syncDemo');
+      if (!wrap) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var stageEl = document.getElementById('syncStage');
+      var countEl = document.getElementById('syncCount');
+      var fillEl  = document.getElementById('syncFill');
+      var badge   = document.getElementById('syncBadge');
+      var steps   = wrap.querySelectorAll('.sync-step');
+      var rows    = wrap.querySelectorAll('tbody tr.r');
+      var chips   = wrap.querySelectorAll('.st-chip');
+      var timers  = [];
+
+      var TXT = {
+        idle: ['매달 1일 실행 대기', 'waiting for the monthly run'],
+        s1:   ['① Salesforce 리포트 열기', '① opening the Salesforce report'],
+        s2:   ['② Close Date 구간 설정 후 Run', '② setting the Close Date window, then Run'],
+        s3:   ['③ Export 클릭 · 파일 수신 대기', '③ clicking Export, waiting on the file'],
+        s4:   ['④ 계약 단위로 묶어 후보 생성', '④ grouping by deal into candidates'],
+        s5:   ['⑤ 건별로 신규 · 갱신 · 보존 판정', '⑤ deciding create, update or leave alone'],
+        end:  ['완료 — 후보 5건이 대시보드에 도착', 'done — 5 candidates landed on the dashboard']
+      };
+
+      function stage(k){ stageEl.innerHTML = '<span data-ko>' + TXT[k][0] + '</span><span data-en>' + TXT[k][1] + '</span>'; }
+      function count(n){ countEl.textContent = n; fillEl.style.width = (n / rows.length * 100) + '%'; }
+      function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
+      function lit(i){ steps.forEach(function(s, j){ s.classList.toggle('lit', j <= i); }); }
+      function reset(){
+        timers.forEach(clearTimeout); timers = [];
+        steps.forEach(function(s){ s.classList.remove('lit'); });
+        rows.forEach(function(r){ r.classList.remove('in'); });
+        chips.forEach(function(c){ c.classList.remove('in'); });
+        badge.classList.remove('show');
+        stage('idle'); count(0);
+      }
+      function play(){
+        reset();
+        at(400,  function(){ lit(0); stage('s1'); });
+        at(1200, function(){ lit(1); stage('s2'); });
+        at(2000, function(){ lit(2); stage('s3'); });
+        at(2800, function(){ lit(3); stage('s4'); });
+        rows.forEach(function(r, i){
+          at(3000 + i * 260, function(){ r.classList.add('in'); count(i + 1); });
+        });
+        at(4600, function(){ lit(4); stage('s5'); });
+        chips.forEach(function(c, i){
+          at(4800 + i * 130, function(){ c.classList.add('in'); });
+        });
+        at(5700, function(){ badge.classList.add('show'); stage('end'); });
+      }
+
+      wrap.classList.add('on');
+      stage('idle'); count(0);
+      document.getElementById('syncReplay').addEventListener('click', play);
+
+      var played = false;
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting && !played){ played = true; setTimeout(play, 250); }
+        });
+      }, { threshold: 0.25 }).observe(wrap);
+    })();
   </script>
 
 </body>
