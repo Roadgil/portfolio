@@ -115,6 +115,58 @@
     .footer-brand span { color: var(--accent2); }
     .footer-stack { text-align: right; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1.5px; line-height: 2; }
 
+    /* ── Animated worksheet ── */
+    .xl-wrap { border: 1px solid var(--border); border-radius: 14px; background: var(--surf); overflow: hidden; margin-bottom: 26px; }
+    .xl-top { display: flex; align-items: center; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--surf2); flex-wrap: wrap; }
+    .xl-file { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--text); letter-spacing: 0.5px; }
+    .xl-file span { color: var(--muted); }
+    .xl-stage { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent2); flex: 1; min-width: 210px; }
+    .xl-count { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; display: flex; align-items: center; gap: 9px; }
+    .xl-count .meter-bar { width: 104px; }
+    .xl-replay { display: none; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 20px; padding: 5px 13px; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+    .xl-replay:hover { color: var(--text); border-color: var(--muted); }
+    .xl-wrap.xl-anim .xl-replay { display: inline-block; }
+
+    .xl-src { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
+    .xl-srcbox { background: var(--surf); padding: 14px 16px; display: flex; align-items: center; gap: 11px; opacity: 0.32; transition: opacity 0.35s ease, background 0.35s ease; }
+    .xl-wrap:not(.xl-anim) .xl-srcbox { opacity: 1; }
+    .xl-srcbox.on { opacity: 1; background: var(--surf2); }
+    .xl-srcicon { font-size: 17px; flex-shrink: 0; }
+    .xl-srcname { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text); margin-bottom: 3px; }
+    .xl-srcsub { font-size: 9.5px; color: var(--muted); line-height: 1.4; }
+    .xl-srcbox.k1.on .xl-srcname { color: var(--accent); }
+    .xl-srcbox.k2.on .xl-srcname { color: var(--accent3); }
+    .xl-srcbox.k3.on .xl-srcname { color: var(--accent2); }
+    .xl-srcbox.k4.on .xl-srcname { color: var(--gold); }
+
+    .xl-gate { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.4s ease; background: rgba(56,189,248,0.06); border-bottom: 1px solid transparent; }
+    .xl-gate.on { max-height: 70px; opacity: 1; border-bottom-color: var(--border); }
+    .xl-gate-in { display: flex; align-items: center; gap: 14px; padding: 13px 18px; font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(238,240,248,0.8); flex-wrap: wrap; }
+    .xl-gate-in .op { color: var(--accent3); }
+    .xl-gate-in .ok { color: var(--accent); border: 1px solid rgba(74,222,128,0.3); border-radius: 12px; padding: 3px 10px; font-size: 9px; letter-spacing: 1px; }
+
+    .xl-scroll { overflow-x: auto; }
+    table.xl { border-collapse: collapse; width: 100%; min-width: 1180px; font-family: 'DM Mono', monospace; }
+    table.xl th, table.xl td { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 9px 9px; text-align: left; white-space: nowrap; }
+    table.xl th { font-size: 9px; font-weight: 400; letter-spacing: 0.5px; color: var(--muted); background: var(--surf2); transition: color 0.45s ease, background 0.45s ease; }
+    table.xl th.lit1 { color: #86efac; background: rgba(74,222,128,0.07); }
+    table.xl th.lit3 { color: #fdba74; background: rgba(251,146,60,0.07); }
+    table.xl th.lit4 { color: #fde68a; background: rgba(251,191,36,0.08); }
+    table.xl td { font-size: 9.5px; color: rgba(238,240,248,0.72); height: 33px; transition: background 0.45s ease; }
+    table.xl tr:last-child td { border-bottom: none; }
+    th.rn, td.rn { width: 32px; text-align: center; color: var(--muted); background: var(--surf2); font-size: 9px; }
+    td.c .v { display: inline-block; transition: opacity 0.3s ease, transform 0.3s ease; }
+    td.c .v.act { display: none; }
+    .xl-anim td.c .v { opacity: 0; transform: translateY(-3px); }
+    .xl-anim td.c.filled .v { opacity: 1; transform: none; }
+    .xl-anim td.recv .v.est { display: inline-block; color: var(--muted); font-style: italic; }
+    .xl-anim td.recv.done .v.est { display: none; }
+    .xl-anim td.recv.done .v.act { display: inline-block; color: #fde68a; }
+    td.c.s1.flash { background: rgba(74,222,128,0.18); }
+    td.c.s3.flash { background: rgba(251,146,60,0.18); }
+    td.c.s4.flash, td.c.recv.flash { background: rgba(251,191,36,0.2); }
+    .xl-foot { padding: 11px 18px; border-top: 1px solid var(--border); font-size: 10px; color: var(--muted); background: var(--surf2); }
+
     /* ── Data Flow visuals ── */
     .df-note { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px; color: var(--muted); border: 1px dashed var(--border); padding: 7px 12px; border-radius: 4px; display: inline-block; margin-bottom: 34px; }
     .lane-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
@@ -419,6 +471,115 @@
     <h2 class="sec-title"><span data-ko>실적 한 행이</span><span data-en>How a single record row</span><br><em><span data-ko>채워지는 순서</span><span data-en>fills up, stage by stage</span></em></h2>
     <div class="df-note"><span data-ko>※ 아래 값은 구조를 설명하기 위한 예시 서식 — 실제 데이터 아님</span><span data-en>※ Values below are schematic placeholders, not live data</span></div>
 
+    <div class="xl-wrap" id="xlDemo">
+      <div class="xl-top">
+        <div class="xl-file"><span data-ko>수입신고실적.xlsx</span><span data-en>import_record.xlsx</span> <span data-ko>— 예시 서식</span><span data-en>— schematic</span></div>
+        <div class="xl-stage" id="xlStage"><span data-ko>완료 — 23개 컬럼 채움</span><span data-en>done — 23 columns filled</span></div>
+        <div class="xl-count"><span data-ko>채워진 컬럼</span><span data-en>filled</span> <span id="xlCount">23/23</span><span class="meter-bar"><span class="meter-fill" id="xlBar" style="width:100%;background:var(--accent2);"></span></span></div>
+        <button class="xl-replay" id="xlReplay">↻ <span data-ko>다시 재생</span><span data-en>replay</span></button>
+      </div>
+
+      <div class="xl-src">
+        <div class="xl-srcbox k1"><span class="xl-srcicon">📊</span><div><div class="xl-srcname">Intransit .xlsx</div><div class="xl-srcsub" data-ko>본사 선적 스냅샷</div><div class="xl-srcsub" data-en>HQ shipment snapshot</div></div></div>
+        <div class="xl-srcbox k2"><span class="xl-srcicon">✅</span><div><div class="xl-srcname">C.I. <span data-ko>대사</span><span data-en>check</span></div><div class="xl-srcsub" data-ko>금액만 검증, 기입 없음</div><div class="xl-srcsub" data-en>verifies amounts, writes nothing</div></div></div>
+        <div class="xl-srcbox k3"><span class="xl-srcicon">📄</span><div><div class="xl-srcname" data-ko>수입신고필증 .pdf</div><div class="xl-srcname" data-en>declaration .pdf</div><div class="xl-srcsub" data-ko>통관 완료 후 수신</div><div class="xl-srcsub" data-en>arrives after clearance</div></div></div>
+        <div class="xl-srcbox k4"><span class="xl-srcicon">📦</span><div><div class="xl-srcname">OTBI</div><div class="xl-srcsub" data-ko>실제 입고 이벤트</div><div class="xl-srcsub" data-en>actual receipt event</div></div></div>
+      </div>
+
+      <div class="xl-gate" id="xlGate">
+        <div class="xl-gate-in">
+          <span>C.I. TOTAL &nbsp;##,###,###</span><span class="op">=</span><span data-ko>Oracle 실거래액</span><span data-en>Oracle actual</span><span>##,###,###</span>
+          <span class="ok"><span data-ko>일치 → 통관 진행</span><span data-en>match → clears</span></span>
+        </div>
+      </div>
+
+      <div class="xl-scroll">
+        <table class="xl">
+          <thead>
+            <tr>
+              <th class="rn"></th>
+              <th class="col s1"><span data-ko>본사선적일자</span><span data-en>Ship Date</span></th>
+              <th class="col s1"><span data-ko>자재코드</span><span data-en>Item Code</span></th>
+              <th class="col s1"><span data-ko>수량</span><span data-en>Qty</span></th>
+              <th class="col s1">Delivery No</th>
+              <th class="col s1">TO#</th>
+              <th class="col s1">SN/Lot</th>
+              <th class="col s3"><span data-ko>신고번호</span><span data-en>Decl. No</span></th>
+              <th class="col s3"><span data-ko>신고일자</span><span data-en>Decl. Date</span></th>
+              <th class="col s3">B/L(AWB)</th>
+              <th class="col s3">HS code</th>
+              <th class="col s3"><span data-ko>단가</span><span data-en>Unit Price</span></th>
+              <th class="col s3"><span data-ko>금액</span><span data-en>Amount</span></th>
+              <th class="col s3"><span data-ko>원산지</span><span data-en>Origin</span></th>
+              <th class="col recv"><span data-ko>입고일</span><span data-en>Receipt</span></th>
+              <th class="col s4">Variance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rn">2</td>
+              <td class="c s1"><span class="v">20##/##/##</span></td>
+              <td class="c s1"><span class="v">####-##-####</span></td>
+              <td class="c s1"><span class="v">1</span></td>
+              <td class="c s1"><span class="v">98#####</span></td>
+              <td class="c s1"><span class="v">78#####</span></td>
+              <td class="c s1"><span class="v">##-#####</span></td>
+              <td class="c s3"><span class="v">4####-##-######A</span></td>
+              <td class="c s3"><span class="v">20##/##/##</span></td>
+              <td class="c s3"><span class="v">###-########</span></td>
+              <td class="c s3"><span class="v">####.##-####</span></td>
+              <td class="c s3"><span class="v">#,###,###</span></td>
+              <td class="c s3"><span class="v">#,###,###</span></td>
+              <td class="c s3"><span class="v">##</span></td>
+              <td class="c recv"><span class="v est">20##/##/##</span><span class="v act">20##/##/##</span></td>
+              <td class="c s4"><span class="v">+1</span></td>
+            </tr>
+            <tr>
+              <td class="rn">3</td>
+              <td class="c s1"><span class="v">20##/##/##</span></td>
+              <td class="c s1"><span class="v">####-##-####</span></td>
+              <td class="c s1"><span class="v">2</span></td>
+              <td class="c s1"><span class="v">98#####</span></td>
+              <td class="c s1"><span class="v">78#####</span></td>
+              <td class="c s1"><span class="v">##-#####</span></td>
+              <td class="c s3"><span class="v">4####-##-######A</span></td>
+              <td class="c s3"><span class="v">20##/##/##</span></td>
+              <td class="c s3"><span class="v">###-########</span></td>
+              <td class="c s3"><span class="v">####.##-####</span></td>
+              <td class="c s3"><span class="v">#,###,###</span></td>
+              <td class="c s3"><span class="v">#,###,###</span></td>
+              <td class="c s3"><span class="v">##</span></td>
+              <td class="c recv"><span class="v est">20##/##/##</span><span class="v act">20##/##/##</span></td>
+              <td class="c s4"><span class="v">0</span></td>
+            </tr>
+            <tr>
+              <td class="rn">4</td>
+              <td class="c s1"><span class="v">20##/##/##</span></td>
+              <td class="c s1"><span class="v">####-##-####</span></td>
+              <td class="c s1"><span class="v">1</span></td>
+              <td class="c s1"><span class="v">98#####</span></td>
+              <td class="c s1"><span class="v">78#####</span></td>
+              <td class="c s1"><span class="v">##-#####</span></td>
+              <td class="c s3"><span class="v">4####-##-######A</span></td>
+              <td class="c s3"><span class="v">20##/##/##</span></td>
+              <td class="c s3"><span class="v">###-########</span></td>
+              <td class="c s3"><span class="v">####.##-####</span></td>
+              <td class="c s3"><span class="v">#,###,###</span></td>
+              <td class="c s3"><span class="v">#,###,###</span></td>
+              <td class="c s3"><span class="v">##</span></td>
+              <td class="c recv"><span class="v est">20##/##/##</span><span class="v act">20##/##/##</span></td>
+              <td class="c s4"><span class="v">+2</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="xl-foot">
+        <span data-ko>전체 23개 컬럼 중 15개만 표시 · 입고일은 필증 단계에서 추정치로 먼저 들어갔다가 OTBI 실입고로 교체된다</span>
+        <span data-en>15 of 23 columns shown · the receipt date lands as an estimate at the declaration stage, then gets replaced by the actual OTBI receipt</span>
+      </div>
+    </div>
+
     <div class="lane-grid">
 
       <div class="lane l1">
@@ -637,6 +798,106 @@
       entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 50); } });
     }, { threshold: 0.08 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Animated worksheet: replays how one record row gets filled, stage by stage.
+    // Without JS (or with reduced motion) the sheet just stands still, fully filled.
+    (function(){
+      var wrap = document.getElementById('xlDemo');
+      if (!wrap) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var stageEl = document.getElementById('xlStage');
+      var gate    = document.getElementById('xlGate');
+      var countEl = document.getElementById('xlCount');
+      var barEl   = document.getElementById('xlBar');
+      var srcs    = wrap.querySelectorAll('.xl-srcbox');
+      var timers  = [];
+
+      var TXT = {
+        idle: ['리포트 수신 대기', 'waiting for the report'],
+        s1:   ['① Intransit 리포트 → 신규 행 생성', '① Intransit report → new rows'],
+        s2:   ['② C.I. 금액 대사 — 컬럼은 채우지 않음', '② C.I. amount check — writes nothing'],
+        s3:   ['③ 수입신고필증 PDF → 통관 정보 반영', '③ Declaration PDF → customs data'],
+        s4:   ['④ OTBI 실입고 → 추정 입고일 대체', '④ OTBI actual receipt replaces the estimate'],
+        end:  ['완료 — 23개 컬럼 채움', 'done — 23 columns filled']
+      };
+
+      function stage(k){ stageEl.innerHTML = '<span data-ko>' + TXT[k][0] + '</span><span data-en>' + TXT[k][1] + '</span>'; }
+      function count(n){ countEl.textContent = n + '/23'; barEl.style.width = (n / 23 * 100) + '%'; }
+      function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
+      function only(i){ srcs.forEach(function(s, j){ s.classList.toggle('on', j === i); }); }
+      function pop(td){
+        td.classList.add('filled', 'flash');
+        setTimeout(function(){ td.classList.remove('flash'); }, 430);
+      }
+      // Fills column by column (not row by row) so it reads as "this source
+      // owns these columns", and the counter can tick along with it.
+      var rows = wrap.querySelectorAll('table.xl tbody tr');
+      var heads = wrap.querySelectorAll('table.xl thead th');
+      function colsWith(test){
+        var idx = [];
+        heads.forEach(function(th, i){ if (test(th)) idx.push(i); });
+        return idx;
+      }
+      function fillCols(test, from, colStep, base, span){
+        var idx = colsWith(test), t = from;
+        idx.forEach(function(ci, k){
+          rows.forEach(function(tr, ri){
+            at(t + ri * 55, function(){ pop(tr.cells[ci]); });
+          });
+          t += colStep;
+          at(t, function(){ count(base + Math.round((k + 1) / idx.length * span)); });
+        });
+        return t;
+      }
+      function lit(sel, cls){
+        wrap.querySelectorAll(sel).forEach(function(el){
+          el.classList.remove('lit1', 'lit3', 'lit4');
+          el.classList.add(cls);
+        });
+      }
+      function reset(){
+        timers.forEach(clearTimeout); timers = [];
+        wrap.querySelectorAll('td.c').forEach(function(td){ td.classList.remove('filled', 'flash', 'done'); });
+        wrap.querySelectorAll('th.col').forEach(function(th){ th.classList.remove('lit1', 'lit3', 'lit4'); });
+        srcs.forEach(function(s){ s.classList.remove('on'); });
+        gate.classList.remove('on');
+        stage('idle'); count(0);
+      }
+      var isS1   = function(th){ return th.classList.contains('s1'); };
+      var isS3   = function(th){ return th.classList.contains('s3') || th.classList.contains('recv'); };
+      var isS4   = function(th){ return th.classList.contains('s4'); };
+
+      function play(){
+        reset();
+        at(400, function(){ only(0); stage('s1'); lit('th.col.s1', 'lit1'); });
+        var e1 = fillCols(isS1, 700, 150, 0, 9);
+        at(e1 + 400,  function(){ only(1); stage('s2'); gate.classList.add('on'); });
+        at(e1 + 1900, function(){ gate.classList.remove('on'); });
+        at(e1 + 2100, function(){ only(2); stage('s3'); lit('th.col.s3, th.col.recv', 'lit3'); });
+        var e3 = fillCols(isS3, e1 + 2350, 150, 9, 13);
+        at(e3 + 400, function(){ only(3); stage('s4'); lit('th.col.s4, th.col.recv', 'lit4'); });
+        wrap.querySelectorAll('td.c.recv').forEach(function(td, i){
+          at(e3 + 600 + i * 70, function(){
+            td.classList.add('done', 'flash');
+            setTimeout(function(){ td.classList.remove('flash'); }, 430);
+          });
+        });
+        var e4 = fillCols(isS4, e3 + 850, 150, 22, 1);
+        at(e4 + 500, function(){ stage('end'); });
+      }
+
+      wrap.classList.add('xl-anim');
+      stage('idle'); count(0);
+      document.getElementById('xlReplay').addEventListener('click', play);
+
+      var played = false;
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting && !played){ played = true; setTimeout(play, 250); }
+        });
+      }, { threshold: 0.3 }).observe(wrap);
+    })();
   </script>
 
 </body>
