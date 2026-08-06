@@ -192,12 +192,21 @@
     .sn-item{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:20px 22px;font-size:11.5px;color:var(--muted);line-height:1.8;}
     .sn-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:1.5px;color:var(--accent2);margin-bottom:8px;text-transform:uppercase;}
 
+    .mods-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin:56px 0 16px;display:flex;align-items:center;gap:10px;}
+    .mods-label::after{content:'';flex:1;height:1px;background:var(--border);}
+    .mods{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+    .mod{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:20px 22px;}
+    .mod-n{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--accent);margin-bottom:9px;}
+    .mod-t{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:9px;line-height:1.3;}
+    .mod-d{font-size:11.5px;color:var(--muted);line-height:1.8;}
+
     @media (max-width: 768px) {
       .sync-steps{grid-template-columns:1fr 1fr;}
       .sync-body{grid-template-columns:1fr;}
       .sync-side{border-right:none;border-bottom:1px solid var(--border);}
       .sync-kpis{grid-template-columns:1fr 1fr;}
       .sync-notes{grid-template-columns:1fr;}
+      .mods{grid-template-columns:1fr;}
       .topbar{padding:16px 24px;}
       .hero, .section, .arch-section { padding: 90px 24px 50px; }
       footer { padding: 40px 24px; flex-direction: column; gap: 16px; text-align: center; }
@@ -241,124 +250,6 @@
       <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span><span class="ticker-item">Salesforce Sync</span>
     </div>
   </div>
-
-  <!-- PROJECTS -->
-  <section class="section">
-    <div class="section-label">Modules</div>
-    <h2 class="section-title reveal"><span data-ko>세 개의 모듈로</span><span data-en>Three modules,</span><br><em><span data-ko>완성되는 시스템</span><span data-en>one system</span></em></h2>
-
-    <div class="projects-grid">
-
-      <div class="project-card reveal">
-        <div class="card-preview">
-          <div class="preview-dashboard">
-            <div class="mock-header">
-              <div class="mock-dot" style="background:#e84d6f"></div><div class="mock-dot" style="background:#e09c10"></div><div class="mock-dot" style="background:#0fa878"></div>
-              <div class="mock-title-bar" style="max-width:100px; margin-left:8px;"></div>
-            </div>
-            <div class="mock-kpi-row">
-              <div class="mock-kpi" style="background:rgba(91,79,207,0.15);"><div class="mock-kpi-inner"><div class="mock-line" style="background:rgba(91,79,207,0.5); width:60%;"></div><div class="mock-line2" style="background:rgba(91,79,207,0.3); width:80%;"></div></div></div>
-              <div class="mock-kpi" style="background:rgba(15,170,160,0.12);"><div class="mock-kpi-inner"><div class="mock-line" style="background:rgba(15,170,160,0.5); width:70%;"></div><div class="mock-line2" style="background:rgba(15,170,160,0.3); width:55%;"></div></div></div>
-              <div class="mock-kpi" style="background:rgba(232,77,111,0.1);"><div class="mock-kpi-inner"><div class="mock-line" style="background:rgba(232,77,111,0.5); width:50%;"></div><div class="mock-line2" style="background:rgba(232,77,111,0.3); width:75%;"></div></div></div>
-              <div class="mock-kpi" style="background:rgba(224,156,16,0.1);"><div class="mock-kpi-inner"><div class="mock-line" style="background:rgba(224,156,16,0.5); width:65%;"></div><div class="mock-line2" style="background:rgba(224,156,16,0.3); width:45%;"></div></div></div>
-            </div>
-            <div class="mock-chart">
-              <div class="mock-bar" style="height:60%; background:rgba(91,79,207,0.6);"></div><div class="mock-bar" style="height:80%; background:rgba(91,79,207,0.6);"></div><div class="mock-bar" style="height:45%; background:rgba(91,79,207,0.6);"></div><div class="mock-bar" style="height:90%; background:rgba(91,79,207,0.8);"></div><div class="mock-bar" style="height:70%; background:rgba(91,79,207,0.6);"></div><div class="mock-bar" style="height:55%; background:rgba(91,79,207,0.6);"></div><div class="mock-bar" style="height:85%; background:rgba(15,170,160,0.7);"></div><div class="mock-bar" style="height:100%; background:rgba(15,170,160,0.8);"></div>
-            </div>
-          </div>
-          <div class="preview-overlay"></div>
-        </div>
-        <div class="card-body">
-          <div class="card-tags"><span class="tag tag-purple">Firebase Auth</span><span class="tag tag-teal">Firestore</span><span class="tag tag-green">KO/EN</span></div>
-          <h3 class="card-title" data-ko>영업 납품처 FCST Dashboard</h3><h3 class="card-title" data-en>Sales FCST Dashboard</h3>
-          <p class="card-desc" data-ko>팀원별 분기 목표 대비 실적을 실시간으로 관리하는 메인 대시보드. Firebase Auth로 접근 권한을 제어하며 Committed / Back up / 미납 상태별 분류와 드래그 정렬을 지원합니다.</p>
-          <p class="card-desc" data-en>The main dashboard for real-time per-member quarter target-vs-actual tracking. Firebase Auth controls access; supports Committed / Back-up / Outstanding status and drag-sort.</p>
-          <div class="card-features">
-            <div class="feature"><div class="feature-dot" style="background:#5b4fcf;"></div><span data-ko>이메일/비밀번호 로그인 + 비밀번호 리셋</span><span data-en>Email/password login + reset</span></div>
-            <div class="feature"><div class="feature-dot" style="background:#0faaa0;"></div><span data-ko>분기·팀원 필터 + 상태별 테이블 분리</span><span data-en>Quarter/member filter + status tables</span></div>
-            <div class="feature"><div class="feature-dot" style="background:#0fa878;"></div><span data-ko>드래그로 행 순서 변경 · CSV 내보내기</span><span data-en>Drag-reorder rows · CSV export</span></div>
-            <div class="feature"><div class="feature-dot" style="background:#2dd4bf;"></div><span data-ko>Salesforce 후보를 클릭 한 번으로 등록</span><span data-en>Register a Salesforce candidate in one click</span></div>
-          </div>
-        </div>
-        <div class="card-footer"><span class="card-footer-info">MODULE 01 · MAIN</span></div>
-      </div>
-
-      <div class="project-card reveal" style="transition-delay:0.1s">
-        <div class="card-preview">
-          <div class="preview-dashboard" style="background: linear-gradient(135deg, #f4f5f7 0%, #e8eaf0 100%);">
-            <div class="mock-header">
-              <div style="height:14px; width:120px; background:#1a1a2e; border-radius:3px; opacity:0.8;"></div><div style="flex:1;"></div><div style="height:10px; width:60px; background:#5b4fcf; border-radius:10px; opacity:0.6;"></div>
-            </div>
-            <div class="mock-kpi-row">
-              <div class="mock-kpi" style="background:#fff; border:1px solid #e4e6eb;"><div class="mock-kpi-inner"><div class="mock-line" style="background:#5b4fcf; width:55%; opacity:0.7;"></div><div class="mock-line2" style="background:#8a8fa8; width:80%; opacity:0.4;"></div></div></div>
-              <div class="mock-kpi" style="background:#fff; border:1px solid #e4e6eb;"><div class="mock-kpi-inner"><div class="mock-line" style="background:#0faaa0; width:70%; opacity:0.7;"></div><div class="mock-line2" style="background:#8a8fa8; width:60%; opacity:0.4;"></div></div></div>
-              <div class="mock-kpi" style="background:#fff; border:1px solid #e4e6eb;"><div class="mock-kpi-inner"><div class="mock-line" style="background:#e84d6f; width:45%; opacity:0.7;"></div><div class="mock-line2" style="background:#8a8fa8; width:70%; opacity:0.4;"></div></div></div>
-              <div class="mock-kpi" style="background:#fff; border:1px solid #e4e6eb;"><div class="mock-kpi-inner"><div class="mock-line" style="background:#e09c10; width:65%; opacity:0.7;"></div><div class="mock-line2" style="background:#8a8fa8; width:50%; opacity:0.4;"></div></div></div>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; flex:1;">
-              <div style="background:#fff; border:1px solid #e4e6eb; border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:5px;">
-                <div style="height:5px; background:#5b4fcf; border-radius:2px; width:40%; opacity:0.5;"></div>
-                <div style="height:50px; background:#f4f5f7; border-radius:6px; display:flex; align-items:flex-end; padding:6px; gap:4px;">
-                  <div style="flex:1; background:#5b4fcf; border-radius:2px 2px 0 0; height:70%; opacity:0.5;"></div><div style="flex:1; background:#5b4fcf; border-radius:2px 2px 0 0; height:90%; opacity:0.5;"></div><div style="flex:1; background:#0faaa0; border-radius:2px 2px 0 0; height:55%; opacity:0.5;"></div><div style="flex:1; background:#0faaa0; border-radius:2px 2px 0 0; height:80%; opacity:0.5;"></div>
-                </div>
-              </div>
-              <div style="background:#fff; border:1px solid #e4e6eb; border-radius:10px; padding:10px;">
-                <div style="height:5px; background:#5b4fcf; border-radius:2px; width:40%; opacity:0.5; margin-bottom:8px;"></div>
-                <div style="display:flex; flex-direction:column; gap:5px;">
-                  <div style="height:6px; background:#e4e6eb; border-radius:3px;"><div style="width:70%; height:100%; background:#5b4fcf; border-radius:3px; opacity:0.5;"></div></div>
-                  <div style="height:6px; background:#e4e6eb; border-radius:3px;"><div style="width:45%; height:100%; background:#0faaa0; border-radius:3px; opacity:0.5;"></div></div>
-                  <div style="height:6px; background:#e4e6eb; border-radius:3px;"><div style="width:85%; height:100%; background:#e09c10; border-radius:3px; opacity:0.5;"></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="preview-overlay" style="background:linear-gradient(to bottom, transparent 50%, rgba(19,21,28,0.85));"></div>
-        </div>
-        <div class="card-body">
-          <div class="card-tags"><span class="tag tag-purple">Chart.js</span><span class="tag tag-amber">Firestore</span><span class="tag tag-teal">DM Serif</span></div>
-          <h3 class="card-title" data-ko>Detail Report Dashboard</h3><h3 class="card-title" data-en>Detail Report Dashboard</h3>
-          <p class="card-desc" data-ko>Candela Korea 영업팀 전체 실적을 시각화하는 분석 대시보드. 팀원별 진척률, 제품군별 매출, 딜러 현황을 Chart.js로 렌더링하며 상세 리포트 탭을 지원합니다.</p>
-          <p class="card-desc" data-en>An analytics dashboard visualizing the whole sales team's performance. Renders per-member progress, revenue by product line, and dealer status with Chart.js, plus a detail-report tab.</p>
-          <div class="card-features">
-            <div class="feature"><div class="feature-dot" style="background:#5b4fcf;"></div><span data-ko>KPI 카드 4종 + 팀원별 달성률 바차트</span><span data-en>4 KPI cards + per-member bar chart</span></div>
-            <div class="feature"><div class="feature-dot" style="background:#0faaa0;"></div><span data-ko>탭 네비게이션으로 개별 분석 전환</span><span data-en>Tab nav for individual analysis</span></div>
-            <div class="feature"><div class="feature-dot" style="background:#e09c10;"></div><span data-ko>라이브 뱃지 UI</span><span data-en>Live badge UI</span></div>
-          </div>
-        </div>
-        <div class="card-footer"><span class="card-footer-info">MODULE 02 · ANALYTICS</span></div>
-      </div>
-
-      <div class="project-card reveal" style="transition-delay:0.2s">
-        <div class="card-preview">
-          <div class="preview-report">
-            <div class="mock-table-header"><div class="mock-th"></div><div class="mock-th"></div><div class="mock-th"></div><div class="mock-th"></div><div class="mock-th"></div><div class="mock-th"></div></div>
-            <div style="background:white; border:1px solid #e2e8f0; border-top:none;">
-              <div class="mock-tr" style="background:#dbeafe;"><div class="mock-td" style="background:#93c5fd; height:6px;"></div><div class="mock-td" style="background:#93c5fd; height:6px;"></div><div class="mock-td" style="background:#93c5fd; height:6px;"></div><div class="mock-td" style="background:#93c5fd; height:6px;"></div></div>
-              <div class="mock-tr"><div class="mock-td" style="background:#cbd5e1;"></div><div class="mock-td" style="background:#e2e8f0;"></div><div class="mock-td" style="background:#fca5a5;"></div><div class="mock-td" style="background:#cbd5e1;"></div></div>
-              <div class="mock-tr"><div class="mock-td" style="background:#cbd5e1;"></div><div class="mock-td" style="background:#86efac;"></div><div class="mock-td" style="background:#e2e8f0;"></div><div class="mock-td" style="background:#86efac;"></div></div>
-              <div class="mock-tr" style="background:#fef9c3;"><div class="mock-td" style="background:#fbbf24; opacity:0.6;"></div><div class="mock-td" style="background:#fbbf24; opacity:0.6;"></div><div class="mock-td" style="background:#fbbf24; opacity:0.6;"></div><div class="mock-td" style="background:#fbbf24; opacity:0.6;"></div></div>
-              <div class="mock-tr"><div class="mock-td" style="background:#cbd5e1;"></div><div class="mock-td" style="background:#e2e8f0;"></div><div class="mock-td" style="background:#93c5fd;"></div><div class="mock-td" style="background:#cbd5e1;"></div></div>
-              <div class="mock-tr"><div class="mock-td" style="background:#cbd5e1;"></div><div class="mock-td" style="background:#fca5a5;"></div><div class="mock-td" style="background:#e2e8f0;"></div><div class="mock-td" style="background:#86efac;"></div></div>
-            </div>
-          </div>
-          <div class="preview-overlay" style="background:linear-gradient(to bottom, transparent 40%, rgba(19,21,28,0.9));"></div>
-        </div>
-        <div class="card-body">
-          <div class="card-tags"><span class="tag tag-rose" data-ko>대표 보고용</span><span class="tag tag-rose" data-en>Exec Report</span><span class="tag tag-teal" data-ko>주차별 추적</span><span class="tag tag-teal" data-en>Weekly</span><span class="tag tag-green">Progress</span></div>
-          <h3 class="card-title" data-ko>대표님 보고용 리포트</h3><h3 class="card-title" data-en>Executive Report</h3>
-          <p class="card-desc" data-ko>경영진에게 주간 영업 진척을 보고하기 위한 Excel 스타일 리포트. 팀원별 분기 목표와 주차별 누적 실적을 색상으로 구분하며 Progress % 자동 계산을 지원합니다.</p>
-          <p class="card-desc" data-en>An Excel-style report for weekly sales updates to leadership. Color-codes per-member quarter targets and weekly cumulative actuals, with auto Progress % calculation.</p>
-          <div class="card-features">
-            <div class="feature"><div class="feature-dot" style="background:#e84d6f;"></div><span data-ko>주차 자동 날짜 레이블</span><span data-en>Auto weekly date labels</span></div>
-            <div class="feature"><div class="feature-dot" style="background:#0faaa0;"></div><span data-ko>Progress 자동 % 계산·색상 강조</span><span data-en>Auto Progress % + color highlight</span></div>
-            <div class="feature"><div class="feature-dot" style="background:#e09c10;"></div><span data-ko>비밀번호 보호 + 실시간 데이터</span><span data-en>Password-protected + realtime data</span></div>
-          </div>
-        </div>
-        <div class="card-footer"><span class="card-footer-info">MODULE 03 · REPORT</span></div>
-      </div>
-
-    </div>
-  </section>
 
   <!-- SYNC AUTOMATION -->
   <section class="section" id="sync">
@@ -449,6 +340,28 @@
         <div class="sn-label" data-ko>애매하면 자동으로 처리하지 않는다</div><div class="sn-label" data-en>Ambiguity stops the machine</div>
         <span data-ko>분기가 바뀌었거나 같은 계약의 다른 건이 이미 등록돼 있으면 자동으로 반영하지 않고 표시만 남겨 사람이 판단하게 한다. 검토 없이 매출이 생기는 쪽이 훨씬 위험하다고 봤다.</span>
         <span data-en>If the quarter shifted, or another line from the same deal is already registered, nothing is applied automatically; the case is flagged for a person to judge. Revenue appearing without review is the worse failure.</span>
+      </div>
+    </div>
+
+    <div class="mods-label"><span data-ko>후보가 도착하는 곳 · 3개 모듈</span><span data-en>Where candidates land · 3 modules</span></div>
+    <div class="mods">
+      <div class="mod reveal">
+        <div class="mod-n">01 · MAIN</div>
+        <div class="mod-t" data-ko>영업 납품처 대시보드</div><div class="mod-t" data-en>Sales Account Dashboard</div>
+        <div class="mod-d" data-ko>팀원별 분기 목표 대비 실적을 실시간으로 본다. Pending · Back up · ACT · Ship Confirm 상태로 나눠 관리하고 행은 드래그로 우선순위를 바꾼다.</div>
+        <div class="mod-d" data-en>Live per-member quarter target versus actual, split across Pending, Back up, ACT and Ship Confirm, with rows dragged into priority order.</div>
+      </div>
+      <div class="mod reveal" style="transition-delay:0.05s">
+        <div class="mod-n">02 · ANALYTICS</div>
+        <div class="mod-t" data-ko>상세 분석 리포트</div><div class="mod-t" data-en>Detail Report</div>
+        <div class="mod-d" data-ko>팀 전체 실적을 차트로 편다. 팀원별 달성률은 각자의 목표 100%를 기준선으로 그려, 실적이 큰 사람에게 눌려 보이지 않게 했다.</div>
+        <div class="mod-d" data-en>Charts the whole team's performance. Per-member attainment is drawn against each person's own 100% target, so a high performer no longer flattens everyone else's bar.</div>
+      </div>
+      <div class="mod reveal" style="transition-delay:0.1s">
+        <div class="mod-n">03 · REPORT</div>
+        <div class="mod-t" data-ko>경영진 보고 리포트</div><div class="mod-t" data-en>Executive Report</div>
+        <div class="mod-d" data-ko>주차별 누적 실적과 분기 목표를 익숙한 표 형태로 낸다. 주차 날짜 레이블과 진척률은 자동으로 계산된다.</div>
+        <div class="mod-d" data-en>Weekly cumulative actuals against quarter targets in the spreadsheet layout leadership already reads, with week labels and progress computed automatically.</div>
       </div>
     </div>
   </section>
