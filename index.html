@@ -19,6 +19,7 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
+    html { scroll-behavior: smooth; }
     body {
       background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif;
       min-height: 100vh; display: flex; flex-direction: column;
@@ -81,6 +82,66 @@
       font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace;
       letter-spacing: 0.5px; line-height: 1.8; margin: 0 60px 24px;
     }
+
+    .header-nav { display: flex; gap: 18px; }
+    .header-nav a {
+      font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      padding-bottom: 3px; border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s;
+    }
+    .header-nav a:hover { color: var(--text); border-bottom-color: var(--c2); }
+
+    /* ── overview ── */
+    .overview { margin: 64px 60px 0; animation: fadeUp 0.8s ease 0.2s both; }
+    .ov-grid { display: grid; grid-template-columns: 1.15fr 1fr; border: 1px solid var(--border); }
+    .ov-intro { padding: 48px; border-right: 1px solid var(--border); }
+    .ov-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 5vw, 62px);
+      line-height: 0.95; letter-spacing: -0.5px; margin-bottom: 12px;
+    }
+    .ov-name span { color: var(--c1); }
+    .ov-role {
+      font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--c2); line-height: 1.9; margin-bottom: 26px;
+    }
+    .ov-bio { font-size: 13.5px; color: #a9a49c; line-height: 1.95; margin-bottom: 18px; max-width: 540px; }
+    .ov-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 30px; }
+    .ov-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .ov-btn {
+      font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+      text-transform: uppercase; text-decoration: none; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: 6px; color: var(--muted);
+      transition: color 0.25s, border-color 0.25s, background 0.25s;
+    }
+    .ov-btn:hover { color: var(--text); border-color: var(--muted); }
+    .ov-btn.primary { background: var(--c1); border-color: var(--c1); color: #fff; }
+    .ov-btn.primary:hover { background: #4a3fb8; border-color: #4a3fb8; color: #fff; }
+
+    .ov-side { display: flex; flex-direction: column; }
+    .ov-card { padding: 32px 36px; }
+    .ov-card + .ov-card { border-top: 1px solid var(--border); }
+    .ov-card-label {
+      font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .ov-card-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .ov-row { display: flex; gap: 16px; padding: 7px 0; font-size: 12px; line-height: 1.65; }
+    .ov-k {
+      font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--muted); width: 84px; flex-shrink: 0; padding-top: 2px;
+    }
+    .ov-v { color: #c9c4bb; flex: 1; }
+    .ov-v b { color: var(--text); font-weight: 500; }
+    .ov-metric {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+      padding: 9px 0; border-bottom: 1px dashed rgba(255,255,255,0.07);
+    }
+    .ov-metric:last-child { border-bottom: none; }
+    .ov-mk { font-size: 12px; color: #a9a49c; line-height: 1.5; }
+    .ov-mv { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text); white-space: nowrap; }
+    .ov-mv b { color: #86efac; font-weight: 400; }
+    .ov-foot { font-size: 11px; color: var(--muted); line-height: 1.7; margin-top: 16px; }
 
     .projects {
       flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; margin: 0 60px; gap: 0;
@@ -190,6 +251,10 @@
       header { padding: 36px 24px 0; flex-direction: column; gap: 16px; }
       .hero  { padding: 48px 24px 0; }
       .divider { margin: 36px 24px 0; }
+      .overview { margin: 44px 24px 0; }
+      .ov-grid { grid-template-columns: 1fr; }
+      .ov-intro { padding: 36px 28px; border-right: none; border-bottom: 1px solid var(--border); }
+      .ov-card { padding: 28px; }
       .projects { grid-template-columns: 1fr; margin: 0 24px; }
       .proj-card { padding: 36px 28px; border-right: none; }
       footer { margin: 0 24px; }
@@ -201,6 +266,10 @@
   <header>
     <div class="logo">PORTFOLIO</div>
     <div class="header-right">
+      <nav class="header-nav">
+        <a href="#overview">Overview</a>
+        <a href="#projects">Projects</a>
+      </nav>
       <div class="header-meta">OPERATIONS<br>SUPPLY CHAIN</div>
       <div class="lang-toggle">
         <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
@@ -224,7 +293,78 @@
 
   <div class="divider"></div>
 
-  <div class="projects">
+  <!-- OVERVIEW -->
+  <section class="overview" id="overview">
+    <div class="ov-grid">
+
+      <div class="ov-intro">
+        <h2 class="ov-name">YOONGIL <span>CHAE</span></h2>
+        <div class="ov-role">
+          <span data-ko>수입/수출 통관 운영 · 프로세스 자동화 · 관세 감사 리스크 관리</span>
+          <span data-en>Import/Export &amp; Customs Operations · Process Automation · Customs Audit Risk Management</span>
+        </div>
+
+        <p class="ov-bio">
+          <span data-ko>수입 통관과 국가간 재배치 수출을 맡고 있다. 본사 Intransit 리포트 수신부터 통관 브로커와의 C.I. 대사, 수입신고필증 파싱, Finance 월 대사까지 매일 반복되던 구간을 파이썬 모듈 10개로 옮겼다. 하루 두 시간 걸리던 일이 지금은 2분이고, 사람이 여는 화면은 없다.</span>
+          <span data-en>Runs import clearance and cross-border rebalance exports for a medical device affiliate in Seoul. The daily stretch from the HQ in-transit report through invoice reconciliation with the customs broker, declaration PDF parsing, and the monthly close with Finance now runs as ten Python modules. What took two hours a day takes two minutes, and nobody opens a screen for it.</span>
+        </p>
+        <p class="ov-bio">
+          <span data-ko>자동화 자체보다 그게 막아주는 리스크 쪽이 더 중요하다고 본다. 본사가 이전가격 변경을 미리 통지하지 않아 브로커가 옛 가격으로 신고할 위험이 있었는데, 매 건을 Oracle Fusion 실거래 금액과 대사해 통관 전에 잡아내도록 바꿨다. 정정신고는 월 5~10건에서 1건 이하로 내려갔다.</span>
+          <span data-en>The automation matters less than the exposure it closes. HQ does not announce transfer price changes, so the broker could clear a shipment against a stale value; every invoice is now reconciled against the actual Oracle Fusion amount before filing. Correction filings fell from five to ten a month to under one.</span>
+        </p>
+        <p class="ov-bio">
+          <span data-ko>그 전에는 로레알 코리아에서 아시아 공급망을 담당해 중국 서비스 레벨을 80.5%에서 95.4%로, ODM 공급 리드타임을 91일에서 74일로 개선했다. 전공은 AI·빅데이터이고, 여기 있는 도구들은 대부분 업무를 하다 필요해져서 직접 만든 것이다.</span>
+          <span data-en>Before this, handled Asia supply chain at L'Oréal Korea, raising China's service level from 80.5% to 95.4% and cutting ODM supply lead time from 91 days to 74. Studied AI and big data; most of the tooling here started as something the job needed.</span>
+        </p>
+
+        <div class="ov-tags">
+          <span class="tag tag-orange"><span data-ko>수입/수출 통관</span><span data-en>Import/Export Customs</span></span>
+          <span class="tag tag-gold"><span data-ko>관세 감사 리스크</span><span data-en>Customs Audit Risk</span></span>
+          <span class="tag tag-green"><span data-ko>프로세스 자동화</span><span data-en>Process Automation</span></span>
+          <span class="tag tag-blue">Oracle Fusion RPA</span>
+          <span class="tag tag-teal"><span data-ko>Finance 대사</span><span data-en>Finance Reconciliation</span></span>
+          <span class="tag tag-purple">Claude + MCP</span>
+        </div>
+
+        <div class="ov-cta">
+          <a class="ov-btn primary" href="#projects"><span data-ko>프로젝트 보기 →</span><span data-en>View Work →</span></a>
+          <a class="ov-btn" href="https://linkedin.com/in/yoongil-chae-4a7576319" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="ov-btn" href="mailto:yroad2944@gmail.com">Email</a>
+        </div>
+      </div>
+
+      <div class="ov-side">
+
+        <div class="ov-card">
+          <div class="ov-card-label">Profile</div>
+          <div class="ov-row"><div class="ov-k">Location</div><div class="ov-v">Seoul, KR (GMT+9)</div></div>
+          <div class="ov-row"><div class="ov-k">Current</div><div class="ov-v"><b>Operation Specialist</b><br><span data-ko>시네론 캔델라 코리아 · 2025.11–</span><span data-en>Syneron Candela Korea · Nov 2025–</span></div></div>
+          <div class="ov-row"><div class="ov-k">Previous</div><div class="ov-v"><b>Supply Chain &amp; Operations Coordinator</b><br><span data-ko>로레알 코리아 · 2024.08–2025.11</span><span data-en>L'Oréal Korea · Aug 2024–Nov 2025</span></div></div>
+          <div class="ov-row"><div class="ov-k">Systems</div><div class="ov-v">Oracle Fusion (SCM · BI Publisher · OTBI) · SAP · Salesforce · SharePoint</div></div>
+          <div class="ov-row"><div class="ov-k">Stack</div><div class="ov-v">Python (Selenium · openpyxl · pdfplumber · win32com) · R · Power Automate · Claude + MCP</div></div>
+          <div class="ov-row"><div class="ov-k">Education</div><div class="ov-v"><span data-ko>순천향대학교 AI·빅데이터 학사</span><span data-en>B.S. AI Bigdata, Soonchunhyang University</span></div></div>
+          <div class="ov-row"><div class="ov-k">Language</div><div class="ov-v"><span data-ko>한국어(모국어) · 영어(업무 가능) · ADSP</span><span data-en>Korean (native) · English (proficient) · ADSP</span></div></div>
+        </div>
+
+        <div class="ov-card">
+          <div class="ov-card-label"><span data-ko>자동화 성과</span><span data-en>Automation Impact</span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>수입 통관 일일 작업</span><span class="ov-mk" data-en>Daily import clearance task</span><span class="ov-mv">2h → <b>2min</b></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>통관 정정신고</span><span class="ov-mk" data-en>Correction filings</span><span class="ov-mv"><span data-ko>월 5–10건 → <b>1건 이하</b></span><span data-en>5–10/mo → <b>under 1</b></span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>출고 건당 처리</span><span class="ov-mk" data-en>Order fulfillment handling</span><span class="ov-mv">1h → <b>10min</b></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>수출 재배치 SOP</span><span class="ov-mk" data-en>Rebalance export SOP</span><span class="ov-mv"><b>14/14</b> <span data-ko>단계 코드화</span><span data-en>steps coded</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>W&amp;D 비용 관리</span><span class="ov-mk" data-en>W&amp;D cost held at</span><span class="ov-mv"><span data-ko>매출 대비 <b>2.5% 이내</b></span><span data-en><b>≤2.5%</b> of revenue</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>수입/통관 파이썬 모듈</span><span class="ov-mk" data-en>Python modules, import cycle</span><span class="ov-mv"><b>10</b> <span data-ko>개 무인 실행</span><span data-en>running unattended</span></span></div>
+          <div class="ov-foot">
+            <span data-ko>각 수치의 근거는 아래 프로젝트 페이지에 정리돼 있다.</span>
+            <span data-en>Each number is backed by the project pages below.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="projects" id="projects">
 
     <div class="group-label">
       <span data-ko>핵심 운영 흐름</span>
