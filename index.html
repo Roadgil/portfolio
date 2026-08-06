@@ -64,7 +64,12 @@
     .hero-title .t1 { color: var(--text); }
     .hero-title .t2 { color: var(--c1); }
     .hero-title .t3 { color: var(--c2); }
+    .hero-tagline {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px, 3vw, 38px);
+      letter-spacing: 4px; color: var(--c2); line-height: 1; margin: -12px 0 22px;
+    }
     .hero-sub { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 1px; line-height: 1.8; }
+    .hero-sub .role { color: #a9a49c; }
 
     .divider { margin: 50px 60px 0; height: 1px; background: var(--border); animation: scaleX 0.8s ease 0.3s both; transform-origin: left; }
     @keyframes scaleX { from { transform: scaleX(0);} to{transform:scaleX(1);} }
@@ -95,16 +100,18 @@
     .overview { margin: 64px 60px 0; animation: fadeUp 0.8s ease 0.2s both; }
     .ov-grid { display: grid; grid-template-columns: 1.15fr 1fr; border: 1px solid var(--border); }
     .ov-intro { padding: 48px; border-right: 1px solid var(--border); }
-    .ov-name {
-      font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 5vw, 62px);
-      line-height: 0.95; letter-spacing: -0.5px; margin-bottom: 12px;
+    .ov-label {
+      font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
     }
-    .ov-name span { color: var(--c1); }
-    .ov-role {
-      font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--c2); line-height: 1.9; margin-bottom: 26px;
+    .ov-label::before { content: ''; width: 24px; height: 1px; background: var(--c1); }
+    .ov-lead {
+      font-family: 'DM Serif Display', serif; font-size: clamp(22px, 2.4vw, 30px);
+      line-height: 1.4; margin-bottom: 26px; max-width: 540px; word-break: keep-all;
     }
-    .ov-bio { font-size: 13.5px; color: #a9a49c; line-height: 1.95; margin-bottom: 18px; max-width: 540px; }
+    .ov-lead em { font-style: italic; color: var(--c1); }
+    .ov-bio { font-size: 13.5px; color: #a9a49c; line-height: 1.95; margin-bottom: 18px; max-width: 540px; word-break: keep-all; }
     .ov-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 30px; }
     .ov-cta { display: flex; gap: 10px; flex-wrap: wrap; }
     .ov-btn {
@@ -279,13 +286,14 @@
   </header>
 
   <div class="hero">
-    <div class="hero-eyebrow">Projects · 2025–2026</div>
+    <div class="hero-eyebrow">Operations &amp; Automation · 2025–2026</div>
     <h1 class="hero-title">
-      <span class="t1">MADE</span><br>
-      <span class="t2">TO</span><br>
-      <span class="t3">AUTOMATE</span>
+      <span class="t1">YOONGIL</span><br>
+      <span class="t2">CHAE</span>
     </h1>
+    <div class="hero-tagline">MADE TO AUTOMATE</div>
     <p class="hero-sub">
+      <span class="role"><span data-ko>수입/수출 통관 운영 · 프로세스 자동화 · 관세 감사 리스크 관리</span><span data-en>Import/Export &amp; Customs Operations · Process Automation · Customs Audit Risk Management</span></span><br>
       <span data-ko>열 개의 프로젝트, 두 갈래 — Supply Chain·Customer &amp; Order Management로 묶은 핵심 운영, 그리고 각자 다른 문제를 푸는 독립 툴들.</span>
       <span data-en>Ten projects, two tracks — core operations grouped into Supply Chain and Customer &amp; Order Management, and standalone tools solving separate problems.</span>
     </p>
@@ -298,11 +306,11 @@
     <div class="ov-grid">
 
       <div class="ov-intro">
-        <h2 class="ov-name">YOONGIL <span>CHAE</span></h2>
-        <div class="ov-role">
-          <span data-ko>수입/수출 통관 운영 · 프로세스 자동화 · 관세 감사 리스크 관리</span>
-          <span data-en>Import/Export &amp; Customs Operations · Process Automation · Customs Audit Risk Management</span>
-        </div>
+        <div class="ov-label">Overview</div>
+        <h2 class="ov-lead">
+          <span data-ko>매일 반복되던 통관 업무를 <em>하나씩 코드로</em> 옮겼다.</span>
+          <span data-en>Moved the repeating parts of customs work <em>into code</em>, one at a time.</span>
+        </h2>
 
         <p class="ov-bio">
           <span data-ko>수입 통관과 국가간 재배치 수출을 맡고 있다. 본사 Intransit 리포트 수신부터 통관 브로커와의 C.I. 대사, 수입신고필증 파싱, Finance 월 대사까지 매일 반복되던 구간을 파이썬 모듈 10개로 옮겼다. 하루 두 시간 걸리던 일이 지금은 2분이고, 사람이 여는 화면은 없다.</span>
