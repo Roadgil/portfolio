@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Cross-Border Rebalance Export · Full-Cycle Automation · Portfolio</title>
+  <title>Export Operations · Rebalance · HQ RMA · FedEx · Full-Cycle Automation · Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -46,7 +46,7 @@
     .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
     .flow-step{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
     .flow-step:last-child{border-bottom:none;}
-    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.40s}
     .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
     .flow-icon{font-size:18px;width:32px;text-align:center;flex-shrink:0;}
     .flow-info{flex:1;}
@@ -59,6 +59,10 @@
     .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
     .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
     @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
+    .hero-rules{position:relative;margin-top:8px;border-top:1px solid rgba(255,255,255,0.1);padding-top:22px;display:flex;flex-direction:column;gap:13px;animation:fadeRight 0.6s ease .44s both;}
+    .hrule{display:flex;gap:13px;align-items:flex-start;}
+    .hrule-k{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:1.5px;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.16);border-radius:10px;padding:3px 9px;flex-shrink:0;margin-top:1px;width:78px;text-align:center;}
+    .hrule-v{font-size:11.5px;color:rgba(255,255,255,0.62);line-height:1.65;}
 
     .section{padding:90px 60px;}
     .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
@@ -148,10 +152,9 @@
     td.c.or.flash{background:rgba(253,230,138,0.16);}
     td.c.ci.flash{background:rgba(134,239,172,0.16);}
     td.c.lg.flash{background:rgba(253,186,116,0.16);}
-    td.c.pd .pv{font-size:8.5px;letter-spacing:1px;color:#fca5a5;}
-    .xl-anim td.c.pd .pv{opacity:0;transition:opacity .35s ease;}
-    .xl-anim td.c.pd.pending .pv{opacity:1;}
-    td.c.pd.pending{background:rgba(124,45,18,0.16);box-shadow:inset 0 0 0 1px rgba(252,165,165,0.3);}
+    td.c.fx.flash{background:rgba(240,171,252,0.18);}
+    td.c.fx.filled{box-shadow:inset 0 0 0 1px rgba(240,171,252,0.25);}
+    td.c.fx .v{color:#f0abfc;}
     .xl-foot{padding:11px 18px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);background:var(--surf2);}
 
     /* ── case timeline ── */
@@ -175,6 +178,10 @@
     .m-ora .tl-dot{border-color:rgba(253,230,138,0.5);}.m-ora .tl-dot::after{background:#fde68a;}
     .m-doc .tl-tag{color:#86efac;border-color:rgba(134,239,172,0.35);background:rgba(45,80,22,0.5);}
     .m-doc .tl-dot{border-color:rgba(134,239,172,0.5);}.m-doc .tl-dot::after{background:#86efac;}
+    .m-fx .tl-tag{color:#fdba74;border-color:rgba(253,186,116,0.35);background:rgba(196,98,26,0.3);}
+    .m-fx .tl-dot{border-color:rgba(253,186,116,0.5);}.m-fx .tl-dot::after{background:#fdba74;}
+    .m-rma .tl-tag{color:#fca5a5;border-color:rgba(252,165,165,0.35);background:rgba(124,45,18,0.4);}
+    .m-rma .tl-dot{border-color:rgba(252,165,165,0.5);}.m-rma .tl-dot::after{background:#fca5a5;}
     .tl-item.wait .tl-dot{border-style:dashed;}
     .tl-item.wait .tl-title{color:var(--muted);}
 
@@ -183,6 +190,21 @@
     .ora-step .n{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--accent3);letter-spacing:1.5px;}
     .ora-step .t{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text);margin:7px 0 6px;line-height:1.4;}
     .ora-step .o{font-size:10px;color:var(--muted);line-height:1.6;}
+
+    /* ── SOP redefinition ── */
+    .sop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;}
+    .sop{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px 24px 22px;display:flex;flex-direction:column;gap:13px;transition:border-color .3s;}
+    .sop:hover{border-color:var(--accent);}
+    .sop-n{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);}
+    .sop-t{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--text);line-height:1.55;}
+    .sop-ba{display:flex;flex-direction:column;gap:8px;}
+    .sop-line{display:flex;gap:9px;align-items:flex-start;font-size:11px;line-height:1.7;}
+    .sop-k{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;padding:2px 7px;border-radius:10px;border:1px solid;flex-shrink:0;margin-top:3px;}
+    .sop-k.was{color:var(--muted);border-color:var(--border);background:var(--surf2);}
+    .sop-k.now{color:#86efac;border-color:rgba(134,239,172,0.3);background:rgba(45,80,22,0.5);}
+    .sop-line.was span{color:var(--muted);}
+    .sop-line.now span{color:rgba(238,240,248,0.82);}
+    .sop-why{font-size:10.5px;color:var(--muted);line-height:1.75;border-top:1px solid var(--border);padding-top:12px;}
 
     .pp-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
     .pp{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:26px 24px;display:flex;flex-direction:column;gap:15px;}
@@ -202,7 +224,7 @@
     .s-ci{color:#86efac;border-color:rgba(134,239,172,0.3);background:rgba(45,80,22,0.45);}
     .s-imp{color:#fdba74;border-color:rgba(253,186,116,0.3);background:rgba(196,98,26,0.3);}
     .s-fix{color:var(--muted);border-color:var(--border);background:var(--surf2);}
-    .s-wait{color:#fca5a5;border-color:rgba(252,165,165,0.3);background:rgba(124,45,18,0.4);}
+    .s-fx{color:#f0abfc;border-color:rgba(240,171,252,0.3);background:rgba(112,26,117,0.35);}
     .led-legend{display:flex;flex-wrap:wrap;gap:20px;margin-top:22px;font-size:11px;color:var(--muted);}
     .led-legend span b{font-family:'DM Mono',monospace;font-weight:400;font-size:9px;padding:3px 6px;border-radius:3px;margin-right:7px;border:1px solid;}
 
@@ -244,17 +266,21 @@
   <section class="hero">
     <div class="hero-left">
       <div class="hero-bg-glow"></div>
-      <div class="hero-tag">Cross-Border Rebalance Export Full-Cycle Automation · 2026</div>
-      <h1 class="hero-title"><span data-ko>국가간 재배치</span><span data-en>CROSS-BORDER</span><br><span class="a1" data-ko>수출 풀사이클</span><span class="a1" data-en>REBALANCE FULL-CYCLE</span><br><span class="a2" data-ko>자동화</span><span class="a2" data-en>AUTOMATION</span></h1>
+      <div class="hero-tag">Export Operations · Rebalance / HQ RMA / FedEx · 2026</div>
+      <h1 class="hero-title"><span data-ko>수출 오퍼레이션</span><span data-en>EXPORT OPERATIONS</span><br><span class="a1" data-ko>3개 트랙</span><span class="a1" data-en>THREE TRACKS</span><br><span class="a2" data-ko>풀사이클 자동화</span><span class="a2" data-en>FULL-CYCLE AUTOMATION</span></h1>
       <p class="hero-desc">
-        <span data-ko>한국(KRP) 창고에서 해외 법인(호주·홍콩·중국·일본·미국·스페인)으로 재고를 옮기는 국가간 Transfer Order(Rebalance)를, 알림 감지부터 3PL 창고 조율, Oracle 트랜잭션, 통관 Commercial Invoice 발급, 수출신고실적 기입까지 전 구간을 잇는 14단계 SOP 풀사이클을 사람 명령 없이 이어서 실행하도록 코드화했다. 3PL(용마)이 위치정보를 회신하는 순간부터는 시스템이 알아서 끝까지 처리하고, 유일하게 시스템 밖에 남는 일은 물리적 행위(FedEx/DHL 실제 픽업 예약)뿐이다.</span>
-        <span data-en>Codes the full 14-step cycle of the cross-border Transfer Order (inventory rebalance) procedure — from the first system alert, through 3PL warehouse coordination, the Oracle transaction, the customs commercial invoice, to the export declaration — to run end to end with no manual command, for stock moving from the Korea (KRP) warehouse to sister companies in Australia, Hong Kong, China, Japan, the US, and Spain. The moment the 3PL (Yongma) replies with pick-location details, the system carries the case through to completion on its own; the only work left outside the system entirely is physically booking the FedEx/DHL pickup.</span>
+        <span data-ko>한국(KRP) 창고에서 나가는 수출 물량 세 갈래 — 해외 법인으로 재고를 옮기는 국가간 재배치(Rebalance), 미국 본사로 되돌려 보내는 반송(HQ RMA), 그리고 그 둘을 실제로 실어 보내는 FedEx 발송 어레인지 — 를 하나의 파이프라인으로 묶었다. 알림 감지부터 3PL 창고 조율, Oracle 트랜잭션, 통관 서류 발급, 수출신고실적 기입, FedEx 발송물 생성과 트래킹 번호 회수까지 이어진다.</span>
+        <span data-en>Three outbound tracks leaving the Korea (KRP) warehouse — cross-border inventory rebalance to sister companies, RMA returns to US headquarters, and the FedEx booking that physically carries both — wired into a single pipeline. It runs from the first system alert through 3PL warehouse coordination, the Oracle transaction, customs paperwork, the export declaration, and on to creating the FedEx shipment and collecting the tracking number.</span>
+      </p>
+      <p class="hero-desc" style="margin-top:-30px;">
+        <span data-ko>수기 SOP를 그대로 옮겨 적은 것이 아니라, 코드로 옮기는 과정에서 SOP 자체를 다시 세웠다 — 창고에 보내는 요청 서식, 처리의 최소 단위, 실적의 출처, 되돌릴 수 없는 지점의 정의까지 7개 규칙을 재정립했다.</span>
+        <span data-en>The manual SOP wasn't merely transcribed into code — writing it down as code meant rewriting the procedure itself: seven rules were redefined, covering the request format sent to the warehouse, the unit of work, the source of truth for the ledger, and where the irreversible steps sit.</span>
       </p>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" style="color:var(--accent);">100%</span><span class="stat-label" data-ko>무인 처리(3PL 회신 이후)</span><span class="stat-label" data-en>Hands-off (after 3PL reply)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">3</span><span class="stat-label" data-ko>자동화 트랙(재배치·반송·발송)</span><span class="stat-label" data-en>Automated Tracks</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent2);">14/14</span><span class="stat-label" data-ko>수출 SOP 단계 코드화</span><span class="stat-label" data-en>Export SOP Steps Coded</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent3);">6</span><span class="stat-label" data-ko>목적지 법인</span><span class="stat-label" data-en>Destination Entities</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent4);">Hourly</span><span class="stat-label" data-ko>트리거·용마회신 스캔 주기(9시~18시)</span><span class="stat-label" data-en>Trigger &amp; 3PL-Reply Scan Interval (9am–6pm)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">11</span><span class="stat-label" data-ko>FedEx 어레인지 단계 코드화</span><span class="stat-label" data-en>FedEx Booking Steps Coded</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">7</span><span class="stat-label" data-ko>재정립한 SOP 규칙</span><span class="stat-label" data-en>SOP Rules Redefined</span></div>
       </div>
     </div>
 
@@ -263,51 +289,191 @@
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
       </div>
-      <div class="hero-flow-label" data-ko>// 알림 감지 → 수출신고실적, 5단계 워크플로우</div>
-      <div class="hero-flow-label" data-en>// From alert to export declaration, in 5 steps</div>
+      <div class="hero-flow-label" data-ko>// 알림 감지 → FedEx 발송까지, 6단계 워크플로우</div>
+      <div class="hero-flow-label" data-en>// From alert to the FedEx shipment, in 6 steps</div>
       <div class="hero-flow">
         <div class="flow-step"><span class="flow-num">01</span><span class="flow-icon">📋</span><div class="flow-info"><div class="flow-name" data-ko>TO 변경 감지</div><div class="flow-name" data-en>Alert In</div><div class="flow-role" data-ko>SharePoint TO 변경 알림 메일 자동 감지</div><div class="flow-role" data-en>Detects SharePoint TO-change alerts</div></div><span class="flow-badge badge-blue">SharePoint</span></div>
         <div class="flow-step"><span class="flow-num">02</span><span class="flow-icon">🤝</span><div class="flow-info"><div class="flow-name" data-ko>3PL 조율</div><div class="flow-name" data-en>3PL Coordination</div><div class="flow-role" data-ko>위치정보 요청 메일 발송 · 회신 파싱</div><div class="flow-role" data-en>Sends pick-location request, parses the reply</div></div><span class="flow-badge badge-orange">win32com</span></div>
         <div class="flow-step"><span class="flow-num">03</span><span class="flow-icon">🖱️</span><div class="flow-info"><div class="flow-name" data-ko>Oracle 3단계 실행</div><div class="flow-name" data-en>Oracle UI Automation</div><div class="flow-role" data-ko>Create Pick Wave→Confirm Pick Slips→Ship Confirm</div><div class="flow-role" data-en>Create Pick Wave → Confirm Pick Slips → Ship Confirm</div></div><span class="flow-badge badge-purple">Selenium</span></div>
         <div class="flow-step"><span class="flow-num">04</span><span class="flow-icon">🧾</span><div class="flow-info"><div class="flow-name" data-ko>통관 서류</div><div class="flow-name" data-en>Customs Paperwork</div><div class="flow-role" data-ko>Commercial Invoice 발급 + PDF 보정 + 수출신고실적</div><div class="flow-role" data-en>Commercial invoice + PDF correction + export declaration</div></div><span class="flow-badge badge-green">PyMuPDF</span></div>
-        <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name" data-ko>결과 알림</div><div class="flow-name" data-en>Notify</div><div class="flow-role" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="flow-role" data-en>Confirmation email &amp; state JSON update</div></div><span class="flow-badge badge-gold">Auto</span></div>
+        <div class="flow-step"><span class="flow-num">05</span><span class="flow-icon">🚚</span><div class="flow-info"><div class="flow-name" data-ko>FedEx 발송 어레인지</div><div class="flow-name" data-en>FedEx Booking</div><div class="flow-role" data-ko>수취인·제원·서비스·물품·송장 업로드까지 11단계 사전입력</div><div class="flow-role" data-en>Pre-fills all 11 steps: recipient, dimensions, service, contents, invoice upload</div></div><span class="flow-badge badge-orange">FedEx</span></div>
+        <div class="flow-step"><span class="flow-num">06</span><span class="flow-icon">📮</span><div class="flow-info"><div class="flow-name" data-ko>라벨 · 트래킹 회수</div><div class="flow-name" data-en>Label &amp; Tracking</div><div class="flow-role" data-ko>라벨 배포 · 트래킹 번호를 실적/재고목록에 역기입</div><div class="flow-role" data-en>Distributes the label, writes the tracking number back to the ledger and list</div></div><span class="flow-badge badge-gold">Auto</span></div>
       </div>
-      <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);">
+
+      <div class="hero-rules">
+        <div class="hrule"><span class="hrule-k">SCAN</span><span class="hrule-v" data-ko>트리거·회신 모두 24시간 30분 간격. 대기 건이 없으면 메일 폴더를 열지 않는다.</span><span class="hrule-v" data-en>Trigger and reply scans both run every 30 minutes, around the clock — and skip opening the mail folder entirely when nothing is pending.</span></div>
+        <div class="hrule"><span class="hrule-k">GUARD</span><span class="hrule-v" data-ko>3PL 회신이 TO 번호와 명확히 매칭될 때만 재고를 움직인다. 애매하면 멈추고 사람에게 넘긴다.</span><span class="hrule-v" data-en>Stock only moves when the 3PL reply matches a TO number unambiguously; anything murky halts and escalates.</span></div>
+        <div class="hrule"><span class="hrule-k">HUMAN</span><span class="hrule-v" data-ko>사람이 누르는 클릭은 하나 — 되돌릴 수 없는 발송물 최종 생성.</span><span class="hrule-v" data-en>Exactly one click is left to a person: the irreversible creation of the shipment.</span></div>
+        <div class="hrule"><span class="hrule-k">SOURCE</span><span class="hrule-v" data-ko>수출신고실적·발송 어레인지 모두 발행된 인보이스를 단일 출처로 삼는다.</span><span class="hrule-v" data-en>Both the export ledger and the shipment booking take the issued invoice as their single source of truth.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section class="section reveal" id="modules">
+    <div class="section-label">Modules</div>
+    <h2 class="section-title"><span data-ko>같은 트리거,</span><span data-en>One trigger,</span><br><em><span data-ko>세 갈래의 수출</span><span data-en>three kinds of export</span></em></h2>
+    <div class="mod-grid">
+
+      <div class="mod-card c1 reveal">
         <div class="mod-head">
-          <div class="mod-file">rebalance_watcher.py</div>
-          <div class="mod-title" data-ko>국가간 재배치 수출 풀사이클 자동화</div>
-          <div class="mod-title" data-en>Cross-Border Rebalance Export Full-Cycle Automation</div>
+          <div class="mod-file">rebalance_watcher.py · rebalance</div>
+          <div class="mod-title" data-ko>국가간 재배치 수출</div>
+          <div class="mod-title" data-en>Cross-Border Rebalance Export</div>
         </div>
-        <div class="mod-desc" data-ko>한국 창고에서 해외 법인으로 재고를 옮기는 국가간 Transfer Order(Rebalance)를, 알림 감지부터 통관 서류 발급까지 14단계 SOP 풀사이클 전체 코드화했다.</div>
-        <div class="mod-desc" data-en>Codes the full 14-step cycle of the cross-border Transfer Order (inventory rebalance) procedure — from the first system alert through customs paperwork — for stock moving from the Korea warehouse to sister companies abroad.</div>
+        <div class="mod-desc" data-ko>한국 창고에서 해외 법인(호주·홍콩·중국·일본·미국·스페인)으로 재고를 옮기는 Transfer Order를, 알림 감지부터 통관 서류·수출신고실적까지 14단계 SOP 전체 코드화했다.</div>
+        <div class="mod-desc" data-en>Codes all 14 SOP steps of the cross-border Transfer Order that moves stock from the Korea warehouse to sister companies in Australia, Hong Kong, China, Japan, the US, and Spain — from the first alert through customs paperwork and the export declaration.</div>
         <div class="mod-points">
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>SharePoint의 TO 변경 알림 메일을 감지해 대상 파트/수량을 조회하고, 3PL 창고에 위치정보를 요청하는 메일까지 자동 발송</span><span data-en>Detects SharePoint TO-change alert emails, looks up the affected part/quantity, and auto-sends the pick-location request to the 3PL warehouse</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>3PL 회신을 파싱하는 즉시 사람 명령 없이 바로 이어서 Oracle Fusion에 로그인해 Create Pick Wave(Transfer Order)→Confirm Pick Slips→Ship Confirm까지 실행하고 SharePoint에 결과를 다시 기입</span><span data-en>The moment the 3PL reply is parsed, logs into Oracle Fusion and drives Create Pick Wave (Transfer Order) → Confirm Pick Slips → Ship Confirm with no manual command, then writes the result back to SharePoint</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>수입 통관 C.I. 대사 자동화(icbl_ci_watcher.py)와 같은 Oracle 리포트·다운로드 파이프라인을 그대로 재사용해 Ship From을 반대 방향(KRP)으로 돌려 통관 Commercial Invoice를 발급</span><span data-en>Reuses the exact same Oracle report/download pipeline as the import-side C.I. reconciliation automation, just pointed the opposite way (Ship From = KRP), to issue the customs commercial invoice</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PyMuPDF로 오라클이 뽑은 PDF의 빈 여백에만 국가별 담당자 정보·HTS 코드를 직접 삽입 — 서식을 다시 만들지 않아 원본 인쇄 레이아웃이 그대로 유지됨</span><span data-en>Uses PyMuPDF to insert country-specific contact details and the HTS code straight into blank space on Oracle's generated PDF — no template re-export, so the original print layout is never disturbed</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>실제 라이브 케이스로 14단계 전체(메일 트리거 → SharePoint → 3PL 조율 → Oracle 3단계 → 통관 인보이스 → PDF 보정 → 수출신고실적)를 실측 검증 후 코드화</span><span data-en>All 14 steps — mail trigger → SharePoint → 3PL coordination → the 3-stage Oracle transaction → customs invoice → PDF correction → export ledger — were verified against a real live case before being coded</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>재고를 실제로 움직이는 Oracle 트랜잭션 구간도 라이브 케이스 검증 후 무인 실행으로 전환 — 3PL 위치정보가 TO#로 명확히 매칭될 때만 자동 진행하고, 애매하게 매칭되는 케이스는 사람 확인 알림으로 남겨 안전판을 유지</span><span data-en>After live-case validation, the stage that commits real inventory movement was switched to unattended execution too — it proceeds automatically only when the 3PL's pick-location reply matches a TO# unambiguously, falling back to a human-review alert on any ambiguous match</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>재고 이동 목록의 TO 변경 알림을 감지해 대상 파트/수량을 조회하고, 3PL 창고에 제원·로케이션을 요청하는 메일까지 자동 발송</span><span data-en>Detects TO-change alerts on the stock-movement list, looks up the affected parts and quantities, and auto-sends the dimension/pick-location request to the 3PL warehouse</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>3PL 회신을 파싱하는 즉시 사람 명령 없이 이어서 Oracle Fusion에 로그인해 Create Pick Wave(Transfer Order)→Confirm Pick Slips→Ship Confirm까지 실행하고 Delivery 번호를 목록에 역기입</span><span data-en>The moment the 3PL reply is parsed, logs into Oracle Fusion and drives Create Pick Wave (Transfer Order) → Confirm Pick Slips → Ship Confirm with no manual command, then writes the delivery number back to the list</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>수입 통관 C.I. 대사 자동화와 같은 Oracle 리포트·다운로드 파이프라인을 재사용하되 출발지를 반대 방향(KRP)으로 돌려 통관 Commercial Invoice를 발급</span><span data-en>Reuses the same Oracle report/download pipeline as the import-side C.I. reconciliation, just pointed the opposite way (Ship From = KRP), to issue the customs commercial invoice</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PyMuPDF로 오라클 원본 PDF의 표 안쪽만 다시 써서 목적지 국가별 수하인 주소·담당자·HTS 코드를 반영 — 서식을 재출력하지 않아 인쇄 레이아웃이 그대로 유지됨</span><span data-en>Rewrites only the inside of the table cells on Oracle's original PDF with PyMuPDF to carry the destination-specific consignee address, contact, and HTS code — no template re-export, so the print layout survives intact</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>발행된 인보이스를 단일 출처로 삼아 수출신고실적을 기입하고, 최종 인보이스를 정해진 파일명 규칙으로 보관</span><span data-en>Files the export declaration using the issued invoice as the single source of truth, then archives the final invoice under the established naming rule</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>재고를 실제로 움직이는 구간은 3PL 회신이 TO 번호와 명확히 매칭될 때만 자동 진행하고, 애매하면 멈추고 사람 확인 알림으로 넘긴다</span><span data-en>The stage that commits real inventory movement proceeds automatically only when the 3PL reply matches a TO number unambiguously; anything murky halts and escalates to a human-review alert</span></div>
         </div>
       </div>
+
+      <div class="mod-card c3 reveal" style="transition-delay:0.06s">
+        <div class="mod-head">
+          <div class="mod-file">rebalance_watcher.py · RMA branch</div>
+          <div class="mod-title" data-ko>본사 반송(HQ RMA)</div>
+          <div class="mod-title" data-en>HQ RMA Return</div>
+        </div>
+        <div class="mod-desc" data-ko>같은 폴더로 들어오지만 목적지가 나라가 아니라 본사 조직(수리랩·리퍼브·구매)인 트리거는 국가간 재배치가 아니라 미국 본사로 되돌려 보내는 무상 반송이다. 서류 규칙이 전혀 달라 독립 분기로 10개 규칙을 명문화했다.</div>
+        <div class="mod-desc" data-en>Alerts landing in the same folder but destined for a headquarters organisation — repair lab, refurb, purchasing — rather than a country are not a rebalance at all: they are no-charge returns to US headquarters. The documentation rules differ entirely, so ten of them were codified as a separate branch.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>목적지 3종을 하나의 반송 주소로 통일하고, 인보이스 HTS 코드는 미국 재반입 조항으로 고정 — 파트별 코드 조회 자체가 필요 없어짐</span><span data-en>Consolidates the three destination types into one return address and pins the invoice HTS code to the US re-entry provision — removing the need for any per-part code lookup</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>무상 반송이라 단가·품목금액·소계·총계를 전부 원본 인보이스의 10%로 다시 쓰고, 그 신고가의 근거가 되는 통관 문구를 품목표 아래 빈 띠에 삽입</span><span data-en>Because the return carries no commercial value, unit prices, line amounts, subtotal, and total are all rewritten to 10% of the original invoice, with the customs declaration sentence that justifies that value inserted into the blank band below the item table</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>금액 span이 인쇄분마다 통화기호와 붙기도 떨어지기도 해서, span 텍스트가 아니라 문자 단위 좌표로 숫자 부분만 골라 지우고 다시 쓴다 — 소수 1자리까지 살려 단가×수량=금액=합계가 정확히 맞음</span><span data-en>Since the currency symbol is sometimes fused to the number span and sometimes not, digits are located by character-level coordinates rather than span text, then redacted and rewritten — preserving one decimal place so unit × qty = amount = total holds exactly</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>반송에 반드시 따라붙는 Foreign Shipper Declaration을 양식에서 자동 생성 — 텍스트박스로 그려진 선언문이 날아가지 않도록 Excel COM으로 채우고, 품목은 파트당 한 줄로 합산</span><span data-en>Auto-generates the Foreign Shipper Declaration that every return requires — filled through Excel COM so the declaration text, which lives in text boxes, is not destroyed, with line items aggregated to one row per part</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>인보이스와 선언서를 본사 담당자 앞 메일에 함께 붙여 초안으로 저장 — 서류가 실제로 외부에 나가는 메일은 사람이 한 번 보고 보낸다는 원칙을 유지</span><span data-en>Attaches both the invoice and the declaration to a headquarters-bound email saved as a draft — keeping the rule that any mail actually handing documents outside gets a human read first</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>4개월 지난 수기 처리분이 분기를 켜는 순간 신규로 잡히지 않도록 이력을 먼저 채워 넣고 시작 — 매칭 범위를 넓힐 때의 표준 절차로 굳혔다</span><span data-en>Before switching the branch on, previously hand-processed cases were seeded into the state file so a four-month-old return would not be picked up as new — now the standing procedure whenever a trigger's matching scope widens</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c2 reveal" style="transition-delay:0.12s">
+        <div class="mod-head">
+          <div class="mod-file">fedex_ship_watcher.py</div>
+          <div class="mod-title" data-ko>FedEx 발송 어레인지</div>
+          <div class="mod-title" data-en>FedEx Shipment Booking</div>
+        </div>
+        <div class="mod-desc" data-ko>통관 인보이스가 확정되면 그대로 이어서 FedEx 발송 화면 11단계를 사전입력하고, 발송물 생성 이후의 라벨 배포·트래킹 역기입까지 처리한다. 이 모듈이 붙으면서 "시스템 밖에 남는 물리적 행위"였던 픽업 어레인지가 파이프라인 안으로 들어왔다.</div>
+        <div class="mod-desc" data-en>Once the customs invoice is final, it carries straight on into the FedEx booking screens, pre-filling all eleven steps, then handles label distribution and tracking write-back after the shipment is created. With this module in place, the pickup booking — long described as the one physical act left outside the system — moved inside the pipeline.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>박스 개수·치수·무게는 3PL 회신 원본 본문에서 파싱해 넣고, 기입 후 화면의 총 패키지 수·총 중량 합계까지 되읽어 대조 — 이전 미완성 발송물이 복원되면 옛 값이 남는 케이스를 실제로 겪고 넣은 검증이다</span><span data-en>Box count, dimensions, and weight are parsed from the original 3PL reply body, then read back and cross-checked against the on-screen package-count and total-weight totals — a verification added after a restored half-finished shipment left stale values in the fields</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>품목·수량·단가·원산지·HS 코드는 발행된 CI PDF를 정답으로 삼아 등록하고, 수출신고실적과 어긋나면 FedEx에는 CI 값을 넣되 불일치를 경고로 남긴다 — 실제로 실적 1대 vs CI 2대 불일치를 이 대조가 잡았다</span><span data-en>Items, quantities, unit prices, origin, and HS codes are registered from the issued CI PDF as the authority; when the export ledger disagrees, the CI values go to FedEx and the mismatch is raised as a warning — a check that caught a real 1-unit-vs-2-unit discrepancy</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>배송이 갈려 CI가 여러 장인 건은 한 PDF로 병합해 상업송장 슬롯에 올린다(슬롯이 하나뿐이라 병합이 아니면 한 장이 누락됨)</span><span data-en>When a split delivery yields multiple invoices, they are merged into one PDF before upload — the commercial-invoice slot accepts only one file, so anything unmerged would silently drop</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>발송날짜는 컷오프 시각과 공휴일을 반영해 당일/다음 영업일을 판정하고, 그날 이미 픽업이 잡혀 있으면 운송장만 생성하도록 분기</span><span data-en>The ship date is decided against the service cutoff and the holiday calendar to pick today or the next business day, with a branch that creates the waybill only when a pickup is already booked for that day</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>되돌릴 수 없는 최종 생성만 사람이 요약 화면을 보고 누르는 지점으로 남기고, 그 이후 라벨 다운로드 → 3PL 답장에 첨부 발송 → 재고 목록 Tracking Number → 수출신고실적 B/L번호까지 자동으로 이어진다</span><span data-en>Only the irreversible final creation is left as a human checkpoint on the summary screen; from there it runs on by itself — label download, attachment onto the 3PL reply, the tracking number onto the stock list, and the waybill number into the export ledger</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>트래킹 번호는 반드시 '발송물 생성 성공' 화면의 배송 조회 ID 앵커에서만 읽는다 — 열려 있던 다른 탭의 12자리 숫자를 트래킹으로 오독해 잘못된 번호를 기입한 사고 이후 고정된 규칙</span><span data-en>The tracking number is read only from the shipment-ID anchor on the creation-success screen — a rule fixed after a 12-digit number from an unrelated open tab was misread as the tracking number and written into the records</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>실패하면 탭을 닫지 않고 남긴다 — 5~8분치 입력을 통째로 날리고 처음부터 다시 태우던 낭비를 없앤 설계</span><span data-en>On failure the tab is deliberately left open — removing the waste of discarding five to eight minutes of form entry and starting the whole flow again</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <section class="pipeline-section reveal">
     <div class="section-label">Workflow</div>
-    <h2 class="section-title"><span data-ko>알림 감지부터</span><span data-en>From alert detection</span><br><em><span data-ko>수출신고실적까지</span><span data-en>to the export declaration</span></em></h2>
+    <h2 class="section-title"><span data-ko>알림 감지부터</span><span data-en>From alert detection</span><br><em><span data-ko>FedEx 발송까지</span><span data-en>to the FedEx shipment</span></em></h2>
     <div class="pipeline">
       <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📋</div><div class="pipe-title" data-ko>TO 변경 감지</div><div class="pipe-title" data-en>Alert In</div><div class="pipe-desc" data-ko>SharePoint의 국가간 TO 변경 알림 메일 자동 감지</div><div class="pipe-desc" data-en>Detects SharePoint cross-border TO-change alert emails</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🤝</div><div class="pipe-title" data-ko>3PL 조율</div><div class="pipe-title" data-en>3PL Coordination</div><div class="pipe-desc" data-ko>3PL 창고에 위치정보를 요청하고 회신을 파싱</div><div class="pipe-desc" data-en>Requests pick-location details from the 3PL warehouse and parses the reply</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🖱️</div><div class="pipe-title" data-ko>Oracle 3단계 실행</div><div class="pipe-title" data-en>Oracle UI Automation</div><div class="pipe-desc" data-ko>Create Pick Wave→Confirm Pick Slips→Ship Confirm(Transfer Order)</div><div class="pipe-desc" data-en>Create Pick Wave → Confirm Pick Slips → Ship Confirm (Transfer Order)</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">🧾</div><div class="pipe-title" data-ko>통관 서류</div><div class="pipe-title" data-en>Customs Paperwork</div><div class="pipe-desc" data-ko>Commercial Invoice 발급 후 PyMuPDF로 담당자 정보·HTS 코드 보정, 수출신고실적 기입</div><div class="pipe-desc" data-en>Issues the commercial invoice, corrects contact info and HTS code with PyMuPDF, and files the export declaration</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>결과 알림</div><div class="pipe-title" data-en>Notify</div><div class="pipe-desc" data-ko>담당자 회신 메일 · 상태 JSON 갱신</div><div class="pipe-desc" data-en>Sends confirmation email, updates state JSON</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">🧾</div><div class="pipe-title" data-ko>통관 서류</div><div class="pipe-title" data-en>Customs Paperwork</div><div class="pipe-desc" data-ko>Commercial Invoice 발급 후 PyMuPDF로 수하인·HTS 보정, 반송 건은 신고가·선언서까지 별도 규칙</div><div class="pipe-desc" data-en>Issues the commercial invoice, patches consignee and HTS with PyMuPDF; returns follow their own declared-value and declaration rules</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">🚚</div><div class="pipe-title" data-ko>FedEx 어레인지</div><div class="pipe-title" data-en>FedEx Booking</div><div class="pipe-desc" data-ko>수취인·제원·서비스·물품·송장 업로드까지 11단계 사전입력, 최종 생성만 사람 확인</div><div class="pipe-desc" data-en>Pre-fills all 11 steps through invoice upload; only the final creation is human-confirmed</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">📮</div><div class="pipe-title" data-ko>라벨 · 트래킹</div><div class="pipe-title" data-en>Label &amp; Tracking</div><div class="pipe-desc" data-ko>라벨을 3PL 답장에 첨부 발송, 트래킹 번호를 실적·재고목록에 역기입</div><div class="pipe-desc" data-en>Sends the label on the 3PL reply, writes the tracking number back to the ledger and stock list</div></div>
+    </div>
+  </section>
+
+  <!-- SOP REDEFINITION -->
+  <section class="section reveal" id="sop">
+    <div class="section-label">SOP Redefinition</div>
+    <h2 class="section-title"><span data-ko>SOP를 옮겨 적은 게 아니라</span><span data-en>The SOP wasn't transcribed</span><br><em><span data-ko>다시 세웠다</span><span data-en>— it was rewritten</span></em></h2>
+    <p class="tl-desc" style="max-width:900px;margin-bottom:38px;">
+      <span data-ko>수기 절차를 그대로 코드로 옮기면, 사람이 눈치로 메우던 빈칸이 그대로 자동화의 사고가 된다. 실제로 잘못된 수량이 벤더에게 나갔고, 배송이 갈린 건에서 서류 한 장이 조용히 빠졌다. 그때마다 코드만 고치지 않고 절차 자체를 다시 정의했다 — 아래 7개가 그 결과다.</span>
+      <span data-en>Transcribe a manual procedure verbatim into code and every gap a person used to paper over by instinct becomes an automated incident. A wrong quantity did go out to a vendor; on a split delivery a document did quietly go missing. Each time the fix was not only in the code but in the procedure itself — these seven are the result.</span>
+    </p>
+
+    <div class="sop-grid">
+
+      <div class="sop reveal">
+        <div class="sop-n">RULE 01</div>
+        <div class="sop-t"><span data-ko>창고에 보내는 요청 서식을 고정한다</span><span data-en>Fix the request format sent to the warehouse</span></div>
+        <div class="sop-ba">
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>평문으로 파트와 수량만 적어 보내고, 회신은 담당자가 쓰는 대로 자유서식으로 받았다.</span><span data-en>Parts and quantities went out as plain prose, and replies came back however the warehouse staffer chose to write them.</span></div>
+          <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>Item / Qty / Locator / Serial 4컬럼 표를 붙여 보낸다. Item만 우리가 채우고 수량만큼 행을 미리 뽑아 여유 행까지 붙인다 — 나머지 칸은 창고가 채운다.</span><span data-en>A four-column table — item, quantity, locator, serial — goes with the request. Only the item column is pre-filled, with one row per unit plus spare rows; the warehouse fills the rest.</span></div>
+        </div>
+        <div class="sop-why"><span data-ko>수량을 미리 채우려다 반려됐다. 시리얼이 붙는 제품은 개체마다 행을 쪼개야 하는데, 어느 파트에 시리얼이 있는지는 보내는 쪽이 알 수 없다. 아는 쪽이 채우게 두는 것이 정확하다.</span><span data-en>Pre-filling quantities was rejected: serialised items need one row per unit, and the sender has no way of knowing which parts carry serials. The side that knows should be the side that fills it in.</span></div>
+      </div>
+
+      <div class="sop reveal" style="transition-delay:.04s">
+        <div class="sop-n">RULE 02</div>
+        <div class="sop-t"><span data-ko>확인 안 된 정보는 보내지 않는다</span><span data-en>Never send what hasn't been confirmed</span></div>
+        <div class="sop-ba">
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>목록 조회가 실패하면 수량 자리를 물음표로 둔 채 요청 메일이 그대로 나갔다.</span><span data-en>When the list lookup failed, the request email went out anyway with a question mark where the quantity belonged.</span></div>
+          <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>품목·목적지·TO 번호·수량이 전부 확정되지 않으면 발송을 보류하고 처리 이력에도 남기지 않는다. 다음 회차가 같은 건을 자동으로 다시 시도한다.</span><span data-en>Unless item, destination, TO number, and quantity are all confirmed, the mail is held and the case is not marked processed — the next cycle retries it automatically.</span></div>
+        </div>
+        <div class="sop-why"><span data-ko>부정확한 정보를 벤더에게 보내는 것은 정보가 없는 것보다 나쁘다. 잘못된 수량으로 창고가 준비를 시작하기 때문이다. 목록 검색이 몇 분씩 지연되는 특성도 실측으로 확인해, 단발 조회 실패를 "없음"으로 단정하지 않고 재시도로 흡수하게 바꿨다.</span><span data-en>Sending a vendor inaccurate data is worse than sending nothing — the warehouse starts preparing against the wrong quantity. The list search was also measured to lag by minutes, so a single failed lookup is no longer read as "not there" but absorbed by retries.</span></div>
+      </div>
+
+      <div class="sop reveal" style="transition-delay:.08s">
+        <div class="sop-n">RULE 03</div>
+        <div class="sop-t"><span data-ko>처리의 최소 단위는 TO가 아니라 배송이다</span><span data-en>The unit of work is the delivery, not the order</span></div>
+        <div class="sop-ba">
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>한 TO를 한 건으로 처리했다. 오라클이 배송을 둘로 쪼개면 두 번째 인보이스가 서류에서도 실적에서도 조용히 빠졌다.</span><span data-en>One order was treated as one case. When Oracle split it into two deliveries, the second invoice vanished from both the paperwork and the ledger without a sound.</span></div>
+          <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>인보이스·실적 행·본사 앞 서류 메일이 전부 배송 단위다. 본사 메일은 그 TO의 인보이스가 다 모이고 조용해질 때까지 큐에 모아 한 통으로 보낸다.</span><span data-en>Invoices, ledger rows, and the headquarters document mail are all per delivery. The headquarters mail waits in a queue until every invoice for that order has landed and gone quiet, then goes out as one.</span></div>
+        </div>
+        <div class="sop-why"><span data-ko>실적 기입도 같은 이유로 바꿨다 — 목록에서 읽은 TO의 파트 전부가 아니라, 그 배송의 인보이스에 실제로 찍힌 파트만 기입한다.</span><span data-en>The ledger write follows the same logic: not every part on the order as read from the list, but only the parts actually printed on that delivery's invoice.</span></div>
+      </div>
+
+      <div class="sop reveal" style="transition-delay:.12s">
+        <div class="sop-n">RULE 04</div>
+        <div class="sop-t"><span data-ko>실적의 출처는 발행된 서류 하나뿐이다</span><span data-en>The ledger has exactly one source: the issued document</span></div>
+        <div class="sop-ba">
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>실적 컬럼마다 편한 곳에서 값을 가져왔다. 자재명·단가·금액·원산지가 통째로 빈칸으로 들어간 적도 있다.</span><span data-en>Each ledger column pulled its value from wherever was convenient — item name, unit price, amount, and origin once went in entirely blank.</span></div>
+          <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>금액·수량·원산지·품명은 발행된 인보이스 PDF에서 읽어 쓴다. 발송 어레인지도 같은 규칙을 따르고, 실적이 인보이스와 다르면 인보이스 값을 쓰되 불일치를 경고로 남긴다.</span><span data-en>Amounts, quantities, origin, and descriptions are read off the issued invoice PDF. The shipment booking follows the same rule: where the ledger disagrees with the invoice, the invoice wins and the mismatch is flagged.</span></div>
+        </div>
+        <div class="sop-why"><span data-ko>서류와 실적이 어긋나면 나중에 어느 쪽이 맞는지 아무도 판정할 수 없다. 그래서 통관에 실제로 나간 서류를 기준으로 삼았다 — 반송 건의 신고가를 10%로 낮춰 쓰는 규칙도 같은 이유로 실적에 그대로 반영한다.</span><span data-en>Once the document and the ledger drift apart, nobody can later adjudicate which is right — so the document that actually went to customs is the reference. The same reasoning carries the return's reduced declared value straight into the ledger.</span></div>
+      </div>
+
+      <div class="sop reveal" style="transition-delay:.16s">
+        <div class="sop-n">RULE 05</div>
+        <div class="sop-t"><span data-ko>되돌릴 수 없는 지점을 명시한다</span><span data-en>Name the points that cannot be undone</span></div>
+        <div class="sop-ba">
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>사람이 전 구간을 클릭했기 때문에 어디가 취소 불가인지 절차상 구분이 없었다.</span><span data-en>Because a person clicked through every screen, the procedure never distinguished which clicks were irreversible.</span></div>
+          <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>재고를 움직이는 구간은 3PL 회신이 TO 번호와 명확히 매칭될 때만 자동 진행하고, 발송물 최종 생성은 사람이 요약 화면을 보고 누르는 유일한 체크포인트로 남겼다.</span><span data-en>The stage that moves stock proceeds only on an unambiguous match between the 3PL reply and the TO number; creating the shipment itself remains the single checkpoint a person confirms on the summary screen.</span></div>
+        </div>
+        <div class="sop-why"><span data-ko>중복 실행 방지도 여기에 걸린다 — 상태 파일 잠금과 프로세스 잠금을 같이 두어, 한 회차가 다음 스캔 주기를 넘겨도 같은 TO가 두 번 처리되지 않는다.</span><span data-en>Duplicate-execution guards hang off the same rule: a state lock and a process lock together ensure the same order is never handled twice, even when one cycle runs past the next scan.</span></div>
+      </div>
+
+      <div class="sop reveal" style="transition-delay:.20s">
+        <div class="sop-n">RULE 06</div>
+        <div class="sop-t"><span data-ko>반송은 재배치와 다른 절차다</span><span data-en>A return is not a rebalance</span></div>
+        <div class="sop-ba">
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>같은 알림 폴더로 들어오지만 목적지가 나라가 아닌 건은 절차가 없어 매번 수기로 처리했다.</span><span data-en>Alerts arriving in the same folder but destined for a headquarters organisation had no written procedure at all, and were handled by hand each time.</span></div>
+          <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>목적지·HTS 코드·신고 금액·통관 문구·로케이터 유무·메일 제목·실적 기입·파일명·선언서·본사 서류 메일까지 10개 규칙을 독립 분기로 명문화했다.</span><span data-en>Ten rules — destination, HTS code, declared value, customs wording, whether locators apply, mail subject, ledger entry, file naming, the shipper's declaration, and the headquarters document mail — are codified as a separate branch.</span></div>
+        </div>
+        <div class="sop-why"><span data-ko>분기를 켜기 전에 과거 수기 처리분을 이력에 먼저 채웠다. 매칭 범위를 넓히는 순간 몇 달 지난 건이 신규로 잡히기 때문이다 — 이제 매칭 확장 시의 표준 절차다.</span><span data-en>Before switching the branch on, previously hand-processed cases were seeded into the history — widening a trigger's scope otherwise resurfaces months-old cases as new. That check is now standard whenever matching widens.</span></div>
+      </div>
+
+      <div class="sop reveal" style="transition-delay:.24s">
+        <div class="sop-n">RULE 07</div>
+        <div class="sop-t"><span data-ko>스캔 주기는 업무시간이 아니라 하루 전체다</span><span data-en>Scan the whole day, not office hours</span></div>
+        <div class="sop-ba">
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>업무시간(9~18시)에만 돌았다. 저녁에 도착한 트리거 3건이 하루 넘게 방치됐다.</span><span data-en>Scans ran only during office hours. Three triggers that arrived one evening sat untouched for over a day.</span></div>
+          <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>트리거·회신 스캔 모두 24시간 30분 간격. 대기 건이 하나도 없으면 메일 폴더를 아예 열지 않게 막아 idle 비용을 없앴다.</span><span data-en>Both the trigger and reply scans run every thirty minutes around the clock, with a guard that skips opening the mail folder entirely when nothing is pending — so the idle cost is nil.</span></div>
+        </div>
+        <div class="sop-why"><span data-ko>해외 법인이 만드는 알림은 우리 업무시간을 따르지 않는다. 아침 첫 실행이 메일 동기화보다 빨라 "없음"으로 끝나는 레이스도 실측으로 확인해, 짧은 주기로 자연스럽게 흡수되게 했다.</span><span data-en>Alerts raised by overseas entities don't keep Korean office hours. A race where the first morning scan outran the mail sync and returned "nothing" was also observed — a short interval absorbs it without special handling.</span></div>
+      </div>
+
     </div>
   </section>
 
   <!-- CASE TIMELINE -->
   <section class="section reveal" id="timeline">
     <div class="section-label">Case Timeline</div>
-    <h2 class="section-title"><span data-ko>알림 메일 한 통이</span><span data-en>What happens between</span><br><em><span data-ko>수출 서류가 되기까지</span><span data-en>one alert email and the export papers</span></em></h2>
+    <h2 class="section-title"><span data-ko>알림 메일 한 통이</span><span data-en>What happens between</span><br><em><span data-ko>발송물이 되기까지</span><span data-en>one alert email and a shipment on the truck</span></em></h2>
     <div class="df-note"><span data-ko>※ 아래 값은 구조를 설명하기 위한 예시 서식 — 실제 데이터 아님</span><span data-en>※ Values below are schematic placeholders, not live data</span></div>
 
     <div class="tl">
@@ -318,6 +484,14 @@
         <div class="tl-title" data-ko>재배치 알림 감지</div><div class="tl-title" data-en>Rebalance alert detected</div>
         <div class="tl-desc" data-ko>재고 이동 관리 리스트에 TO 번호가 배정되면 변경 알림 메일이 자동으로 날아온다. 본문에서 TO 번호와 출발·도착 법인, 파트를 읽어낸다. 한 TO에 파트가 여러 개면 파트마다 메일이 따로 오기 때문에 TO 번호 단위로 묶어 한 건으로 처리하고, 아직 TO 번호가 붙지 않은 등록 알림은 트리거 대상에서 제외한다.</div>
         <div class="tl-desc" data-en>When a TO number gets assigned on the stock-movement list, a change-notification email fires automatically. The body yields the TO number, the origin and destination entities, and the part. A single TO with several parts produces one email per part, so they're grouped by TO number into one case; notifications for entries that don't have a TO number yet are skipped as triggers.</div>
+      </div>
+
+      <div class="tl-item m-rma">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-tag">BRANCH</span><span class="tl-step">— · —</span></div>
+        <div class="tl-title" data-ko>목적지 판정 — 재배치인가, 본사 반송인가</div><div class="tl-title" data-en>Reading the destination — rebalance or return?</div>
+        <div class="tl-desc" data-ko>같은 폴더, 같은 형식의 알림인데 목적지가 나라 코드가 아니라 본사 조직명(수리랩·리퍼브·구매)이면 국가간 재배치가 아니라 미국 본사로 되돌려 보내는 무상 반송이다. 여기서 갈라진 뒤로는 서류 규칙이 통째로 달라진다 — 예전 정규식은 세 글자 국가 코드만 인식해서 이 유형이 조용히 무시돼 왔고, 매번 사람이 수기로 처리하고 있었다.</div>
+        <div class="tl-desc" data-en>Same folder, same alert format — but when the destination is a headquarters organisation (repair lab, refurb, purchasing) rather than a country code, it isn't a rebalance at all: it's a no-charge return to US headquarters. Everything about the paperwork diverges from here. The old pattern only recognised three-letter country codes, so this type had been silently ignored and handled by hand every time.</div>
       </div>
 
       <div class="tl-item m-sp">
@@ -339,9 +513,9 @@
       <div class="tl-item wait m-mail">
         <div class="tl-dot"></div>
         <div class="tl-head"><span class="tl-tag">WAITING</span><span class="tl-step">— · —</span></div>
-        <div class="tl-title" data-ko>3PL 회신 대기 (매시간 스캔)</div><div class="tl-title" data-en>Waiting on the 3PL reply (hourly scan)</div>
-        <div class="tl-desc" data-ko>여기서만 시스템 밖의 시간이 흐른다. 회신이 언제 올지 모르니 매시간 폴더를 훑고, 도착하면 그 즉시 이어서 진행한다.</div>
-        <div class="tl-desc" data-en>This is the only stretch where time passes outside the system. Since the reply can land at any hour, the folder is swept hourly and the case picks up the instant it arrives.</div>
+        <div class="tl-title" data-ko>3PL 회신 대기 (30분 간격 스캔)</div><div class="tl-title" data-en>Waiting on the 3PL reply (30-minute scan)</div>
+        <div class="tl-desc" data-ko>여기서만 시스템 밖의 시간이 흐른다. 회신이 언제 올지 모르니 24시간 내내 30분마다 폴더를 훑고, 도착하면 그 즉시 이어서 진행한다. 대기 중인 건이 하나도 없으면 폴더를 아예 열지 않아 빈 회차의 비용이 없다.</div>
+        <div class="tl-desc" data-en>This is the only stretch where time passes outside the system. Since the reply can land at any hour, the folder is swept every thirty minutes around the clock and the case picks up the instant it arrives — and with nothing pending the folder isn't opened at all, so an empty cycle costs nothing.</div>
       </div>
 
       <div class="tl-item m-mail">
@@ -383,6 +557,16 @@
         <div class="tl-desc" data-en>Reuses the very same invoice-printing path as the import automation, just pointed outbound from Korea. Oracle's generated PDF leaves the destination-specific consignee block and the HTS code cells empty, so values are laid directly into blank space on the original rather than re-exporting a template — the print layout has to survive intact for the document to work at customs. On multi-part shipments, every line gets its own HTS code.</div>
       </div>
 
+      <div class="tl-item m-rma">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-tag">RMA ONLY</span><span class="tl-step">STEP 11–12</span></div>
+        <div class="tl-title" data-ko>반송 건의 서류 규칙 — 신고가·선언서·본사 통보</div><div class="tl-title" data-en>Return-only rules — declared value, declaration, HQ notice</div>
+        <div class="tl-desc" data-ko>반송은 파는 물건이 아니라 고장난 부품이 제조사로 돌아가는 것이라, 인보이스 금액을 그대로 쓰면 안 된다. 단가·품목금액·소계·총계를 전부 원본의 10%로 다시 쓰고, HTS 코드는 파트와 무관하게 재반입 조항으로 고정하며, 그 금액의 근거가 되는 통관 문구를 품목표 아래 빈 띠에 넣는다. 여기에 반송에 반드시 따라붙는 선언서(Foreign Shipper Declaration)를 양식에서 자동 생성해 인보이스와 함께 본사 담당자 앞 메일에 붙인다.</div>
+        <div class="tl-desc" data-en>A return isn't merchandise — it's a faulty part going back to its manufacturer, so the invoice value cannot stand. Unit prices, line amounts, subtotal, and total are all rewritten to a tenth of the original, the HTS code is pinned to the re-entry provision regardless of the part, and the customs sentence justifying that value is placed in the blank band under the item table. The shipper's declaration that always accompanies a return is generated from its template and attached, alongside the invoice, to a mail addressed to headquarters.</div>
+        <div class="tl-desc" data-ko style="margin-top:10px;">금액을 다시 그리면 PDF의 텍스트 묶음이 깨져 품목 파싱이 무너지기 때문에, 실적에 쓸 값은 금액을 손대기 전 원본에서 읽고 코드 안에서 10%를 곱한다. 같은 파트가 시리얼별로 여러 줄에 걸쳐 있어서 선언서와 실적 수량은 파트당 합산해야 맞는다.</div>
+        <div class="tl-desc" data-en style="margin-top:10px;">Redrawing the amounts breaks the PDF's text grouping and with it the item parser, so the values destined for the ledger are read from the untouched original and scaled in code instead. The same part also spans several rows by serial number, so the declaration and the ledger quantity only come out right when aggregated per part.</div>
+      </div>
+
       <div class="tl-item m-doc">
         <div class="tl-dot"></div>
         <div class="tl-head"><span class="tl-tag">LEDGER</span><span class="tl-step">STEP 13</span></div>
@@ -399,12 +583,38 @@
         <div class="tl-desc" data-en>The finished invoice, consignee details and all, is stored in the archive folder under the established naming rule — origin-destination plus delivery number.</div>
       </div>
 
-      <div class="tl-item m-mail">
+      <div class="tl-item m-fx">
         <div class="tl-dot"></div>
-        <div class="tl-head"><span class="tl-tag">MAIL OUT</span><span class="tl-step">DONE</span></div>
-        <div class="tl-title" data-ko>완료 회신 + 상태 기록</div><div class="tl-title" data-en>Completion reply and state record</div>
-        <div class="tl-desc" data-ko>처리 결과를 담당자에게 회신하고 상태 파일에 기록한다. 같은 TO가 다시 트리거돼도 두 번 처리되지 않는다. 이 시점에 남는 일은 택배사 픽업 예약 하나뿐이다.</div>
-        <div class="tl-desc" data-en>The outcome is emailed back and logged to the state file, so the same TO can never be processed twice even if it triggers again. At this point the only thing left is booking the courier pickup.</div>
+        <div class="tl-head"><span class="tl-tag">FEDEX</span><span class="tl-step">STEP 15–25</span></div>
+        <div class="tl-title" data-ko>발송 어레인지 11단계 사전입력</div><div class="tl-title" data-en>Pre-filling all eleven booking screens</div>
+        <div class="tl-desc" data-ko>인보이스가 확정되면 그 자리에서 발송 예약 화면으로 넘어간다. 박스 제원은 3PL 회신 원본에서, 품목 값은 방금 발행한 인보이스에서 가져온다 — 사람이 두 문서를 번갈아 보며 옮겨 적던 구간이 통째로 사라진 지점이다.</div>
+        <div class="tl-desc" data-en>The moment the invoice is final, the case moves straight into the booking screens. Box dimensions come from the original 3PL reply, item values from the invoice just issued — the stretch where a person used to copy back and forth between two documents is simply gone.</div>
+        <div class="ora-steps">
+          <div class="ora-step"><div class="n">15–17</div><div class="t" data-ko>로그인 · 발송 시작</div><div class="t" data-en>Log in, start a shipment</div><div class="o" data-ko>세션을 붙이고 발송 화면까지 진입</div><div class="o" data-en>Attaches the session and lands on the shipping screen</div></div>
+          <div class="ora-step"><div class="n">18</div><div class="t" data-ko>수취인 선택</div><div class="t" data-en>Recipient</div><div class="o" data-ko>목적지 코드로 주소록에서 수취인 지정</div><div class="o" data-en>Picks the consignee from the address book by destination code</div></div>
+          <div class="ora-step"><div class="n">19</div><div class="t" data-ko>포장 · 제원</div><div class="t" data-en>Packaging</div><div class="o" data-ko>자체 포장재 선택 후 박스별 무게·치수 기입, 합계까지 되읽어 대조</div><div class="o" data-en>Selects own packaging, enters per-box weight and dimensions, then reads the totals back to verify</div></div>
+          <div class="ora-step"><div class="n">20</div><div class="t" data-ko>발송일 · 서비스</div><div class="t" data-en>Date &amp; service</div><div class="o" data-ko>컷오프·공휴일로 당일/익영업일 판정 후 서비스 선택</div><div class="o" data-en>Decides today or next business day against cutoff and holidays, then picks the service</div></div>
+          <div class="ora-step"><div class="n">21</div><div class="t" data-ko>물품 · 송장 업로드</div><div class="t" data-en>Contents &amp; invoice</div><div class="o" data-ko>인보이스 값으로 물품 등록, 인보이스가 여러 장이면 한 PDF로 병합해 업로드</div><div class="o" data-en>Registers contents from the invoice; multiple invoices are merged into one PDF before upload</div></div>
+          <div class="ora-step"><div class="n">22–25</div><div class="t" data-ko>픽업 · 청구 · 요약</div><div class="t" data-en>Pickup, billing, summary</div><div class="o" data-ko>픽업 예약 여부 분기, 수취인 청구 계정 입력 후 요약 화면까지</div><div class="o" data-en>Branches on whether a pickup is already booked, enters the recipient billing account, and stops at the summary</div></div>
+        </div>
+      </div>
+
+      <div class="tl-item wait m-fx">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-tag">CHECKPOINT</span><span class="tl-step">— · —</span></div>
+        <div class="tl-title" data-ko>최종 생성 — 사람이 확인하고 누른다</div><div class="tl-title" data-en>Final creation — a person looks, then clicks</div>
+        <div class="tl-desc" data-ko>발송물을 만드는 순간은 되돌릴 수 없다. 그래서 요약 화면까지만 자동으로 채워두고, 확정 클릭은 사람이 내용을 보고 누르는 지점으로 남겼다. 실패해도 탭을 닫지 않는다 — 5~8분치 입력을 날리고 처음부터 다시 태우는 낭비를 없앤 규칙이다.</div>
+        <div class="tl-desc" data-en>Creating the shipment cannot be reversed, so the flow fills everything up to the summary and leaves the confirming click to a person who has read it. On failure the tab is left open — the rule that ended the waste of discarding five to eight minutes of entry and starting over.</div>
+      </div>
+
+      <div class="tl-item m-fx">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-tag">LABEL</span><span class="tl-step">DONE</span></div>
+        <div class="tl-title" data-ko>라벨 배포 + 트래킹 역기입</div><div class="tl-title" data-en>Label out, tracking written back</div>
+        <div class="tl-desc" data-ko>생성 성공 화면에서 트래킹 번호를 읽고 라벨을 내려받은 뒤, 서류를 보냈던 3PL 답장 스레드에 라벨을 붙여 보내고, 같은 번호를 재고 이동 목록과 수출신고실적 B/L 칸에 되돌려 적는다. 트래킹 번호는 오직 성공 화면의 배송 조회 앵커에서만 읽는다 — 열려 있던 다른 탭의 12자리 숫자를 트래킹으로 착각해 잘못된 번호를 기입한 사고 이후 못 박은 규칙이다.</div>
+        <div class="tl-desc" data-en>The tracking number is read off the creation-success screen and the label downloaded, then the label goes out on the same 3PL thread that carried the documents, and the number is written back into both the stock-movement list and the waybill column of the export ledger. That number is read only from the shipment-ID anchor on the success screen — a rule nailed down after a 12-digit value from an unrelated open tab was mistaken for it.</div>
+        <div class="tl-desc" data-ko style="margin-top:10px;">처리 결과는 상태 파일에 남아 같은 TO가 다시 트리거돼도 두 번 처리되지 않는다. 여기까지 오면 남는 일은 창고가 상자를 실어 보내는 것뿐이다.</div>
+        <div class="tl-desc" data-en style="margin-top:10px;">The outcome is recorded in the state file, so the same order can never be processed twice even if it triggers again. Past this point the only thing left is the warehouse handing the boxes over.</div>
       </div>
 
     </div>
@@ -451,8 +661,8 @@
     <div class="xl-wrap" id="xlDemo">
       <div class="xl-top">
         <div class="xl-file"><span data-ko>수출신고실적.xlsx</span><span data-en>export_ledger.xlsx</span> <span data-ko>— 예시 서식</span><span data-en>— schematic</span></div>
-        <div class="xl-stage" id="xlStage"><span data-ko>12/13 자동 기입 — 남은 하나는 시스템 밖</span><span data-en>12 of 13 filled automatically — the last one lives outside the system</span></div>
-        <div class="xl-count"><span data-ko>채워진 컬럼</span><span data-en>filled</span> <span id="xlCount">12/13</span><span class="meter-bar"><span class="meter-fill" id="xlBar" style="width:92%;background:var(--accent2);"></span></span></div>
+        <div class="xl-stage" id="xlStage"><span data-ko>13/13 자동 기입 — 마지막 칸은 FedEx 라벨이 나온 뒤</span><span data-en>13 of 13 filled automatically — the last one lands once the FedEx label exists</span></div>
+        <div class="xl-count"><span data-ko>채워진 컬럼</span><span data-en>filled</span> <span id="xlCount">13/13</span><span class="meter-bar"><span class="meter-fill" id="xlBar" style="width:100%;background:var(--accent2);"></span></span></div>
         <button class="xl-replay" id="xlReplay">↻ <span data-ko>다시 재생</span><span data-en>replay</span></button>
       </div>
 
@@ -462,7 +672,7 @@
         <div class="xl-srcbox"><span class="xl-srcicon">☁️</span><div><div class="xl-srcname">Oracle</div><div class="xl-srcsub" data-ko>Ship Confirm 결과</div><div class="xl-srcsub" data-en>Ship Confirm result</div></div></div>
         <div class="xl-srcbox"><span class="xl-srcicon">🧾</span><div><div class="xl-srcname"><span data-ko>발행 인보이스</span><span data-en>issued invoice</span></div><div class="xl-srcsub" data-ko>금액 · 수량 · 원산지</div><div class="xl-srcsub" data-en>amounts, qty, origin</div></div></div>
         <div class="xl-srcbox"><span class="xl-srcicon">📒</span><div><div class="xl-srcname"><span data-ko>실적 기입</span><span data-en>ledger write</span></div><div class="xl-srcsub" data-ko>고정값 · 처리시점 · HS 재사용</div><div class="xl-srcsub" data-en>fixed value, run time, reused HS</div></div></div>
-        <div class="xl-srcbox"><span class="xl-srcicon">🚚</span><div><div class="xl-srcname"><span data-ko>픽업 예약</span><span data-en>courier pickup</span></div><div class="xl-srcsub" data-ko>시스템 밖 — 사람이 하는 유일한 일</div><div class="xl-srcsub" data-en>outside the system — the only human step</div></div></div>
+        <div class="xl-srcbox"><span class="xl-srcicon">🚚</span><div><div class="xl-srcname"><span data-ko>FedEx 어레인지</span><span data-en>FedEx booking</span></div><div class="xl-srcsub" data-ko>발송물 생성 → 트래킹 번호</div><div class="xl-srcsub" data-en>shipment created → tracking number</div></div></div>
       </div>
 
       <div class="xl-scroll">
@@ -473,7 +683,7 @@
               <th class="col m"><span class="hn">Destination</span><span class="hs s-mail">MAIL</span></th>
               <th class="col lg"><span class="hn">Purpose</span><span class="hs s-fix">FIXED</span></th>
               <th class="col lg"><span class="hn"><span data-ko>수출일자</span><span data-en>Ship Date</span></span><span class="hs s-fix">RUNTIME</span></th>
-              <th class="col pd"><span class="hn">B/L No</span><span class="hs s-wait">PENDING</span></th>
+              <th class="col fx"><span class="hn">B/L No</span><span class="hs s-fx">FEDEX</span></th>
               <th class="col lg"><span class="hn">HS code</span><span class="hs s-imp">IMPORT</span></th>
               <th class="col sp"><span class="hn"><span data-ko>자재코드</span><span data-en>Item Code</span></span><span class="hs s-sp">SHAREPOINT</span></th>
               <th class="col ci"><span class="hn"><span data-ko>자재명</span><span data-en>Item Desc</span></span><span class="hs s-ci">CI PDF</span></th>
@@ -491,7 +701,7 @@
               <td class="c m"><span class="v">###</span></td>
               <td class="c lg"><span class="v">Rebalance</span></td>
               <td class="c lg"><span class="v">20##-##-##</span></td>
-              <td class="c pd pending"><span class="pv" data-ko>픽업 후</span><span class="pv" data-en>after pickup</span></td>
+              <td class="c fx"><span class="v">87##########</span></td>
               <td class="c lg"><span class="v">####.##-####</span></td>
               <td class="c sp"><span class="v">####-##-####</span></td>
               <td class="c ci"><span class="v">••••••••</span></td>
@@ -507,7 +717,7 @@
               <td class="c m"><span class="v">###</span></td>
               <td class="c lg"><span class="v">Rebalance</span></td>
               <td class="c lg"><span class="v">20##-##-##</span></td>
-              <td class="c pd pending"><span class="pv" data-ko>픽업 후</span><span class="pv" data-en>after pickup</span></td>
+              <td class="c fx"><span class="v">87##########</span></td>
               <td class="c lg"><span class="v">####.##-####</span></td>
               <td class="c sp"><span class="v">####-##-####</span></td>
               <td class="c ci"><span class="v">••••••••</span></td>
@@ -523,7 +733,7 @@
               <td class="c m"><span class="v">###</span></td>
               <td class="c lg"><span class="v">Rebalance</span></td>
               <td class="c lg"><span class="v">20##-##-##</span></td>
-              <td class="c pd pending"><span class="pv" data-ko>픽업 후</span><span class="pv" data-en>after pickup</span></td>
+              <td class="c fx"><span class="v">87##########</span></td>
               <td class="c lg"><span class="v">####.##-####</span></td>
               <td class="c sp"><span class="v">####-##-####</span></td>
               <td class="c ci"><span class="v">••••••••</span></td>
@@ -550,12 +760,12 @@
       <span><b class="s-ora">ORACLE</b><span data-ko>Ship Confirm 결과</span><span data-en>Ship Confirm result</span></span>
       <span><b class="s-ci">CI PDF</b><span data-ko>발행된 인보이스에서 그대로</span><span data-en>read off the issued invoice</span></span>
       <span><b class="s-imp">IMPORT</b><span data-ko>과거 수입 때 분류한 코드 재사용</span><span data-en>reuses the code classified at import</span></span>
-      <span><b class="s-wait">PENDING</b><span data-ko>픽업 예약 후 배정되는 유일한 수기 항목</span><span data-en>the one manual field, assigned after pickup is booked</span></span>
+      <span><b class="s-fx">FEDEX</b><span data-ko>발송물이 생성돼야 비로소 존재하는 트래킹 번호</span><span data-en>the tracking number, which exists only once the shipment is created</span></span>
     </div>
 
     <p class="tl-desc" style="margin-top:28px;max-width:900px;">
-      <span data-ko>13개 중 12개가 자동으로 채워진다. 남은 하나는 택배사가 픽업을 잡아야 번호가 생기는 트래킹 번호라, 시스템 안에서 미리 만들어낼 수 없는 값이다 — 이 프로젝트에서 사람이 하는 일이 정확히 거기 하나로 좁혀졌다.</span>
-      <span data-en>Twelve of the thirteen fill themselves. The remaining one is the tracking number, which doesn't exist until the courier books the pickup — nothing inside the system can conjure it. That single field is exactly what the human work on this project has narrowed down to.</span>
+      <span data-ko>13개 컬럼이 전부 자동으로 채워진다. 마지막 B/L 칸은 오래 비어 있던 자리였다 — 택배사가 발송물을 만들어야 비로소 생기는 번호라 시스템 안에서 미리 만들어낼 수 없었기 때문이다. 발송 어레인지를 파이프라인 안으로 끌어들이면서 그 칸도 닫혔고, 사람이 하는 일은 요약 화면을 한 번 확인하는 것으로 줄었다.</span>
+      <span data-en>All thirteen columns now fill themselves. The waybill column at the end sat empty for a long time — the number doesn't exist until the courier creates the shipment, so nothing inside the system could conjure it. Pulling the booking itself into the pipeline closed that column too, and the human share came down to reading one summary screen.</span>
     </p>
   </section>
 
@@ -568,13 +778,15 @@
       <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Oracle Fusion Cloud</div><div class="stack-role" data-ko>Create Pick Wave·Ship Confirm 트랜잭션</div><div class="stack-role" data-en>Create Pick Wave &amp; Ship Confirm transactions</div></div>
       <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 감지·발송</div><div class="stack-role" data-en>Outlook mail detect &amp; send</div></div>
       <div class="stack-item"><div class="stack-emoji">📋</div><div class="stack-name">SharePoint</div><div class="stack-role" data-ko>재고 재배치 알림·기입</div><div class="stack-role" data-en>Rebalance alerts &amp; write-back</div></div>
-      <div class="stack-item"><div class="stack-emoji">📄</div><div class="stack-name">PyMuPDF</div><div class="stack-role" data-ko>통관 인보이스 PDF 보정</div><div class="stack-role" data-en>Customs invoice PDF correction</div></div>
+      <div class="stack-item"><div class="stack-emoji">📄</div><div class="stack-name">PyMuPDF</div><div class="stack-role" data-ko>통관 인보이스 PDF 보정·신고가 재기입</div><div class="stack-role" data-en>Customs invoice patching &amp; declared-value rewrite</div></div>
+      <div class="stack-item"><div class="stack-emoji">🚚</div><div class="stack-name">FedEx Ship</div><div class="stack-role" data-ko>발송 어레인지 11단계 · 라벨 회수</div><div class="stack-role" data-en>11-step booking flow &amp; label capture</div></div>
+      <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">Excel COM</div><div class="stack-role" data-ko>선언서 양식 작성 · 실적 기입</div><div class="stack-role" data-en>Shipper's declaration &amp; ledger writes</div></div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-brand">REBALANCE EXPORT<br><span style="font-size:16px;">FULL-CYCLE AUTOMATION</span></div>
-    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · WIN32COM · SHAREPOINT · PYMUPDF</div>
+    <div class="footer-brand">EXPORT OPERATIONS<br><span style="font-size:16px;">REBALANCE · HQ RMA · FEDEX</span></div>
+    <div class="footer-note">PYTHON · SELENIUM · ORACLE FUSION · WIN32COM · SHAREPOINT · PYMUPDF · FEDEX</div>
   </footer>
 
   <script>
@@ -610,8 +822,8 @@
         s3:   ['③ Oracle Ship Confirm → Delivery 번호', '③ Oracle Ship Confirm → delivery number'],
         s4:   ['④ 발행된 인보이스에서 그대로 읽음', '④ read straight off the issued invoice'],
         s5:   ['⑤ 실적 기입 — 고정값 · 처리시점 · HS 재사용', '⑤ ledger write — fixed value, run time, reused HS code'],
-        s6:   ['⑥ B/L(트래킹)은 픽업을 잡아야 생기는 번호', '⑥ the tracking number only exists once pickup is booked'],
-        end:  ['12/13 자동 기입 — 남은 하나는 시스템 밖', '12 of 13 filled automatically — the last one lives outside the system']
+        s6:   ['⑥ FedEx 발송물 생성 → 트래킹 번호를 B/L 칸에', '⑥ FedEx shipment created → tracking number into the waybill column'],
+        end:  ['13/13 자동 기입 — 마지막 칸까지 닫혔다', '13 of 13 filled automatically — the last column closed too']
       };
 
       function stage(k){ stageEl.innerHTML = '<span data-ko>' + TXT[k][0] + '</span><span data-en>' + TXT[k][1] + '</span>'; }
@@ -642,7 +854,7 @@
       }
       function reset(){
         timers.forEach(clearTimeout); timers = [];
-        wrap.querySelectorAll('td.c').forEach(function(td){ td.classList.remove('filled', 'flash', 'pending'); });
+        wrap.querySelectorAll('td.c').forEach(function(td){ td.classList.remove('filled', 'flash'); });
         wrap.querySelectorAll('th.col').forEach(function(th){ th.classList.remove('lit'); });
         srcs.forEach(function(s){ s.classList.remove('on', 'waiting'); });
         stage('idle'); count(0);
@@ -659,13 +871,9 @@
         e = fillCols('ci', e + 600, 150, 4, 5);
         at(e + 400, function(){ only(4); stage('s5'); lit('th.col.lg'); });
         e = fillCols('lg', e + 650, 150, 9, 3);
-        at(e + 500, function(){
-          only(5, 'waiting'); stage('s6'); lit('th.col.pd');
-          wrap.querySelectorAll('td.c.pd').forEach(function(td, i){
-            at(i * 80, function(){ td.classList.add('pending'); });
-          });
-        });
-        at(e + 1400, function(){ stage('end'); });
+        at(e + 500, function(){ only(5); stage('s6'); lit('th.col.fx'); });
+        e = fillCols('fx', e + 750, 150, 12, 1);
+        at(e + 900, function(){ stage('end'); });
       }
 
       wrap.classList.add('xl-anim');
