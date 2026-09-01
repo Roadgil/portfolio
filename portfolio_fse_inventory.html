@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>FSE Inventory / Monthly Closing · Portfolio</title>
+  <title>Warehouse Monthly Closing Dashboard · Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -110,15 +110,15 @@
 
   <section class="hero">
     <div class="hero-bg-glow"></div>
-    <div class="hero-tag">Monthly Closing · FSE Inventory · Single-file App</div>
-    <h1 class="hero-title"><span class="a1" data-ko>FSE 재고</span><span class="a1" data-en>FSE</span><span data-en> INVENTORY</span><br><span class="a2" data-ko>월마감 대시보드</span><span class="a2" data-en>CLOSING DASHBOARD</span></h1>
+    <div class="hero-tag">Monthly Closing · Warehouse Inventory · Single-file App</div>
+    <h1 class="hero-title"><span class="a1" data-ko>Warehouse</span><span class="a1" data-en>WAREHOUSE</span><br><span class="a2" data-ko>월마감 대시보드</span><span class="a2" data-en>CLOSING DASHBOARD</span></h1>
     <p class="hero-desc">
-      <span data-ko>월마감(Monthly Closing) 보고를 위해 필드 서비스 엔지니어(FSE) 담당자별 온핸드 재고·월별 소모량·월별 입고량을 추적하는 오프라인 HTML 대시보드. Oracle Material Transactions 원본 export를 그대로 다루다 보니 겪은 함정들 — 5000행에서 말없이 잘리는 export 제한, 재고실사 주간의 트랜잭션 공백, 단가 없는 리포트 — 을 하나씩 규칙으로 흡수해 FSE별 회전율(재고소진 속도)까지 자동 계산한다.</span>
-      <span data-en>An offline HTML dashboard built for Monthly Closing reporting, tracking on-hand inventory, monthly consumption, and monthly receipts per field service engineer (FSE). Built directly on raw Oracle Material Transactions exports, it absorbs every trap those exports hide — a 5,000-row limit that truncates silently, transaction blackout weeks during physical counts, and a report with no price column — as rules, then computes a per-FSE turnover rate on top.</span>
+      <span data-ko>FG·SP·MRB·RMA_NV·Scrap·Intransit 등 11개 재고 카테고리를 한눈에 보는 창고 전체 월마감(Monthly Closing) 대시보드. 그 안에 그동안 따로 안 잡히던 필드 서비스 엔지니어(FSE) 로케이션만 떼어내 담당자 10명별 온핸드·소비·입고·회전율을 보는 전용 트래킹 모듈을 얹었다. Oracle Material Transactions 원본 export를 그대로 다루다 보니 겪은 함정들 — 5000행에서 말없이 잘리는 export 제한, 재고실사 주간의 트랜잭션 공백, 단가 없는 리포트 — 을 하나씩 규칙으로 흡수했다.</span>
+      <span data-en>A warehouse-wide Monthly Closing dashboard covering 11 inventory categories — FG, SP, MRB, RMA_NV, Scrap, Intransit, and more — in one view. Inside it sits a dedicated tracking module that breaks out just the field service engineer (FSE) location, previously lumped in with everything else, into per-engineer on-hand/consumption/receipt/turnover for 10 engineers. Built directly on raw Oracle Material Transactions exports, it absorbs every trap those exports hide — a 5,000-row limit that truncates silently, transaction blackout weeks during physical counts, and a report with no price column.</span>
     </p>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num" style="color:var(--accent);">10</span><span class="stat-label" data-ko>FSE 엔지니어별 추적</span><span class="stat-label" data-en>FSEs tracked individually</span></div>
-      <div class="stat"><span class="stat-num" style="color:var(--accent2);">11</span><span class="stat-label" data-ko>개월 데이터 · 11개 재고 카테고리</span><span class="stat-label" data-en>months of data · 11 categories</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent2);">11</span><span class="stat-label" data-ko>재고 카테고리 · 11개월 데이터</span><span class="stat-label" data-en>inventory categories · 11 months</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent);">10</span><span class="stat-label" data-ko>FSE 모듈 - 엔지니어별 추적</span><span class="stat-label" data-en>FSE module - engineers tracked</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent3);">261</span><span class="stat-label" data-ko>품목 USD 단가 Lookup</span><span class="stat-label" data-en>item USD-price lookup</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent4);">1</span><span class="stat-label" data-ko>단일 HTML · 오프라인 · 백업/복원</span><span class="stat-label" data-en>single HTML · offline · backup/restore</span></div>
     </div>
@@ -153,8 +153,8 @@
   </section>
 
   <section class="section" style="padding-top:0;">
-    <div class="section-label">FSE Metrics</div>
-    <h2 class="section-title reveal"><span data-ko>담당자별 온핸드부터</span><span data-en>From per-engineer on-hand</span><br><em><span data-ko>회전율까지</span><span data-en>to turnover rate</span></em></h2>
+    <div class="section-label">FSE Tracking Module</div>
+    <h2 class="section-title reveal"><span data-ko>11개 카테고리 중 하나를 떼어내</span><span data-en>One category, pulled out</span><br><em><span data-ko>담당자 단위로 다시 본다</span><span data-en>and re-viewed per engineer</span></em></h2>
     <div class="fse-box reveal">
       <div class="fse-head" data-ko>// 엔지니어 10명 각각의 온핸드·소비·입고를 대조해 회전율을 계산한다</div>
       <div class="fse-head" data-en>// cross-checks on-hand, consumption, and receipts per engineer to compute turnover</div>
@@ -193,7 +193,7 @@
   </div>
 
   <footer>
-    <div class="footer-brand">FSE INVENTORY</div>
+    <div class="footer-brand">WAREHOUSE CLOSING</div>
     <div class="footer-note">HTML/JS · LOCALSTORAGE · ORACLE MATERIAL TRANSACTIONS · JSON BACKUP</div>
   </footer>
 
