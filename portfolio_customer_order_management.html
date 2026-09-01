@@ -43,6 +43,7 @@
     .proj-card.p6::after { background: #9f2b46; }
     .proj-card.p7::after { background: #0f9c8c; }
     .proj-card.p8::after { background: #2dd4bf; }
+    .proj-card.p9::after { background: #60a5fa; }
     .proj-card:hover::after { transform: scaleX(1); }
 
     .proj-bg-num { position: absolute; bottom: -20px; right: 20px; font-family: 'Bebas Neue', sans-serif; font-size: 150px; line-height: 1; color: rgba(255,255,255,0.025); pointer-events: none; transition: color 0.3s; }
@@ -67,6 +68,7 @@
     .p6 .proj-title em { color: #fda4af; }
     .p7 .proj-title em { color: #2dd4bf; }
     .p8 .proj-title em { color: #2dd4bf; }
+    .p9 .proj-title em { color: #60a5fa; }
     .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 22px; max-width: 400px; }
 
     .proj-impact { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.5px; color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; margin-bottom: 28px; }
@@ -79,6 +81,7 @@
     .p6:hover .proj-arrow { background: #9f2b46; }
     .p7:hover .proj-arrow { background: #0f9c8c; }
     .p8:hover .proj-arrow { background: #2dd4bf; }
+    .p9:hover .proj-arrow { background: #60a5fa; }
 
     footer { margin: 0 60px; padding: 32px 0; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; animation: fadeUp 0.8s ease 0.5s both; }
     .footer-note { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; }
@@ -88,6 +91,7 @@
     .proj-card.p6 { animation-delay: 0.30s; }
     .proj-card.p7 { animation-delay: 0.38s; }
     .proj-card.p8 { animation-delay: 0.46s; }
+    .proj-card.p9 { animation-delay: 0.54s; }
 
     [data-en] { display: none; }
     body.en [data-ko] { display: none; }
@@ -118,8 +122,8 @@
     <div class="hero-eyebrow">Category · 2025–2026</div>
     <h1 class="hero-title">CUSTOMER &amp; ORDER MANAGEMENT</h1>
     <p class="hero-sub">
-      <span data-ko>고객·현장 쪽 — 출고(주문 이행), 반품(RMA), 그리고 재고 백오더(SCO) 취소까지 자동화한 3개 프로젝트. 방향은 제각각(나가는 것/돌아오는 것/정리하는 것)이지만 모두 주문 이후의 고객 접점을 다룬다.</span>
-      <span data-en>The customer-facing side of the chain — 3 projects automating outbound order fulfillment, returns (RMA), and backorder (SCO) cancellation. Different physical directions (out / back in / cleanup), but all live on the post-order side of the business.</span>
+      <span data-ko>고객·현장 쪽 — 출고(주문 이행), 반품(RMA), 재고 백오더(SCO) 취소, 그리고 파트오더(소모품 출고) 백업 자동화까지 4개 프로젝트. 방향은 제각각(나가는 것/돌아오는 것/정리하는 것/대신 처리하는 것)이지만 모두 주문 이후의 고객 접점을 다룬다.</span>
+      <span data-en>The customer-facing side of the chain — 4 projects automating outbound order fulfillment, returns (RMA), backorder (SCO) cancellation, and parts-order (consumables) backup coverage. Different physical directions (out / back in / cleanup / stand-in), but all live on the post-order side of the business.</span>
     </p>
   </div>
 
@@ -193,10 +197,32 @@
       </div>
     </a>
 
+    <!-- 06 Part Order Backup App -->
+    <a class="proj-card p9" href="portfolio_part_order_app.html" style="animation-delay:0.54s;">
+      <div class="proj-bg-num">06</div>
+      <div class="proj-num">PROJECT · 06</div>
+      <div class="proj-type"><span class="type-pill dx">DX</span></div>
+      <div class="proj-tags">
+        <span class="tag tag-orange">Playwright</span>
+        <span class="tag tag-blue">Salesforce</span>
+        <span class="tag tag-green">Tkinter</span>
+      </div>
+      <h2 class="proj-title"><span data-ko>파트오더</span><span data-en>Part Order</span><br><em><span data-ko>백업 자동화 앱</span><span data-en>Backup App</span></em></h2>
+      <p class="proj-desc">
+        <span data-ko>Pick Release/RMA에 쓰던 Playwright 기반 Salesforce 구동 기법을 재사용해, 동료 휴가 기간 커버용으로 AI 호출 없이 배치 파일 2개로 돌아가는 독립 데스크톱 앱으로 재구성.</span>
+        <span data-en>Reuses the Playwright-based Salesforce automation from Pick Release/RMA, rebuilt as a standalone desktop app running on two batch files with zero AI calls, to cover a teammate's workflow while she was on leave.</span>
+      </p>
+      <div class="proj-impact"><b>16</b> <span data-ko>건 PO 생성(백업기간)</span><span data-en>POs created during coverage</span> · <span data-ko>Send to Approval은 사람만</span><span data-en>human-only approval gate</span></div>
+      <div class="proj-meta">
+        <div class="proj-stack">Python · Playwright (CDP) · Tkinter<br>win32com · Salesforce/ServiceMax · Oracle Fusion</div>
+        <div class="proj-arrow">→</div>
+      </div>
+    </a>
+
   </div>
 
   <footer>
-    <div class="footer-note">CUSTOMER &amp; ORDER MANAGEMENT · 3 PROJECTS</div>
+    <div class="footer-note">CUSTOMER &amp; ORDER MANAGEMENT · 4 PROJECTS</div>
   </footer>
 
   <script>
