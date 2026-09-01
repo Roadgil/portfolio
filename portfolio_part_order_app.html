@@ -137,17 +137,17 @@
   <section class="hero">
     <div class="hero-left">
       <div class="hero-bg-glow"></div>
-      <div class="hero-tag">Part Order Automation · Salesforce/ServiceMax · 2026</div>
+      <div class="hero-tag">Part Order Automation · Salesforce/ServiceMax + Oracle TO · 2026</div>
       <h1 class="hero-title"><span class="a1" data-ko>파트오더</span><span class="a1" data-en>PART ORDER</span><br><span class="a2" data-ko>백업 자동화 앱</span><span class="a2" data-en>BACKUP APP</span></h1>
       <p class="hero-desc">
-        <span data-ko>소모품 출고요청 메일 → ServiceMax Case/Parts Order 생성 → 오라클 Release → 완료 메일까지 이어지는 흐름을, Pick Release/RMA 자동화에 쓰던 Selenium·Playwright 기반 Salesforce 구동 기법을 그대로 가져와 만든 독립 실행 앱. 원래 이 업무를 맡던 동료와 공유했던 기법이었는데, 동료가 휴가로 자리를 비운 기간에 넘겨받은 기초 파일을 AI 호출 없이 배치 파일 두 개(설치·실행)만으로 돌아가는 앱으로 다시 짜서, 비개발자인 팀원도 그대로 설치해 쓸 수 있게 만들었다.</span>
-        <span data-en>A standalone desktop app covering the full loop — parts-order request emails → ServiceMax Case/Parts Order creation → Oracle release → completion email — reusing the same Selenium/Playwright technique for driving Salesforce that was built for Pick Release and RMA automation. The base files came from a teammate who normally owns this workflow; while she was on leave, they were rebuilt into an app that runs on two batch files (install/run) with zero AI calls at runtime, so any non-developer on the team could install and operate it themselves.</span>
+        <span data-ko>동료 휴가로 자리를 비운 두 업무 모두를, Pick Release/RMA에 쓰던 Selenium·Playwright 기반 Salesforce 구동 기법으로 대신 처리한 2개 트랙의 백업 앱. Track A는 소모품 출고요청 메일 → ServiceMax Case/Parts Order 생성 → 오라클 Release, Track B는 엔지니어(FSE) 앞으로 오는 Shipping Only Parts Order를 찾아 Oracle Transfer Order로 직접 릴리즈한다. 둘 다 원래 대화형(Claude Code)으로 처리하던 흐름을 AI 호출 없이 배치 파일로 돌아가는 앱으로 다시 짜서, 비개발자인 팀원도 그대로 설치해 쓸 수 있게 만들었다.</span>
+        <span data-en>A two-track backup app covering both of a teammate's responsibilities while she was on leave, using the same Selenium/Playwright technique for driving Salesforce built for Pick Release and RMA. Track A: consumables request emails → ServiceMax Case/Parts Order creation → Oracle release. Track B: finds Shipping-Only Parts Orders addressed to field service engineers and releases them directly as Oracle Transfer Orders. Both replace what used to be a Claude Code conversation with an app that runs on batch files, zero AI calls at runtime, so any non-developer teammate could install and operate it.</span>
       </p>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" style="color:var(--accent);">16</span><span class="stat-label" data-ko>백업 기간 중 생성된 Parts Order</span><span class="stat-label" data-en>Parts Orders created during coverage</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">20</span><span class="stat-label" data-ko>Track A - 생성된 Parts Order</span><span class="stat-label" data-en>Track A - POs created</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">12</span><span class="stat-label" data-ko>Track B - FSE TO 릴리즈</span><span class="stat-label" data-en>Track B - FSE TOs released</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent2);">0</span><span class="stat-label" data-ko>런타임 AI/LLM 호출</span><span class="stat-label" data-en>AI/LLM calls at runtime</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent3);">2</span><span class="stat-label" data-ko>탭 구조(생성 · 승인 후)</span><span class="stat-label" data-en>GUI tabs (Create · Post-Approval)</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent4);">1건</span><span class="stat-label" data-ko>동시생성 사고 - 오라클 전송 전 차단</span><span class="stat-label" data-en>concurrent duplicate caught before Oracle</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">2건</span><span class="stat-label" data-ko>실전 오발송 사고 - 당일 원인수정·회수</span><span class="stat-label" data-en>live mis-send incidents - same-day root-caused &amp; recalled</span></div>
       </div>
     </div>
 
@@ -156,6 +156,7 @@
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
         <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
       </div>
+      <div class="mod-file" style="margin:0 0 10px 2px;">TRACK A · <span data-ko>소모품 파트오더</span><span data-en>Consumables Parts Order</span></div>
       <div class="hero-flow">
         <div class="flow-step"><div class="flow-num">01</div><div class="flow-icon">📧</div><div class="flow-info"><div class="flow-name" data-ko>메일 스캔</div><div class="flow-name" data-en>Mail Scan</div><div class="flow-role" data-ko>Outlook 최근 N일 출고요청</div><div class="flow-role" data-en>Outlook, last N days</div></div><div class="flow-badge badge-blue">AUTO</div></div>
         <div class="flow-step"><div class="flow-num">02</div><div class="flow-icon">🧩</div><div class="flow-info"><div class="flow-name" data-ko>파싱 · 매핑</div><div class="flow-name" data-en>Parse &amp; Map</div><div class="flow-role" data-ko>병원·품목·단가·주문채널 추출</div><div class="flow-role" data-en>Hospital, item, price, channel</div></div><div class="flow-badge badge-blue">AUTO</div></div>
@@ -168,7 +169,7 @@
   </section>
 
   <section class="pipeline-section reveal">
-    <div class="section-label">Workflow</div>
+    <div class="section-label">Workflow · Track A</div>
     <h2 class="section-title"><span data-ko>사람이 봐야 할 지점만</span><span data-en>Only the two points</span><br><em><span data-ko>남기고 나머지는 자동</span><span data-en>a human must see stay manual</span></em></h2>
     <div class="pipeline">
       <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📥</div><div class="pipe-title" data-ko>메일 → 파싱</div><div class="pipe-title" data-en>Mail → Parse</div><div class="pipe-desc" data-ko>표 형태가 제각각인 출고요청 메일을 라벨/구간 기준으로 구조화</div><div class="pipe-desc" data-en>Structures inconsistently-formatted request emails by label/section boundaries</div></div>
@@ -179,7 +180,7 @@
   </section>
 
   <section class="section reveal">
-    <div class="section-label">Core Modules</div>
+    <div class="section-label">Core Modules · Track A</div>
     <h2 class="section-title"><span data-ko>메일 파서부터</span><span data-en>From the mail parser</span><br><em><span data-ko>GUI까지 6개 모듈</span><span data-en>to the GUI, 6 modules</span></em></h2>
     <div class="mod-grid">
       <div class="mod-card c1 reveal">
@@ -232,6 +233,46 @@
     </div>
   </section>
 
+  <section class="pipeline-section reveal">
+    <div class="section-label">Workflow · Track B</div>
+    <h2 class="section-title"><span data-ko>엔지니어 앞 Parts Order는</span><span data-en>Parts Orders addressed to FSEs</span><br><em><span data-ko>Oracle에서 직접 릴리즈</span><span data-en>get released straight from Oracle</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📬</div><div class="pipe-title" data-ko>공유메일함 스캔</div><div class="pipe-title" data-en>Shared-Mailbox Scan</div><div class="pipe-desc" data-ko>"New Parts Order#" 알림을 최근 48시간 창으로 스캔</div><div class="pipe-desc" data-en>Scans "New Parts Order#" notifications in a rolling 48h window</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🧮</div><div class="pipe-title" data-ko>Order Type 필터</div><div class="pipe-title" data-en>Order Type Filter</div><div class="pipe-desc" data-ko>Shipping Only만 통과, Billable·Closed는 자동 스킵</div><div class="pipe-desc" data-en>Only Shipping Only passes through; Billable and Closed auto-skip</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🚚</div><div class="pipe-title" data-ko>SP → FG 릴리즈</div><div class="pipe-title" data-en>SP → FG Release</div><div class="pipe-desc" data-ko>KRP_Pick_Release_SP 먼저, backorder 남으면 FG를 1회만 추가 릴리즈</div><div class="pipe-desc" data-en>KRP_Pick_Release_SP first, then one extra FG pass only if backorder lines remain</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">✉️</div><div class="pipe-title" data-ko>릴리즈 메일</div><div class="pipe-title" data-en>Release Mail</div><div class="pipe-desc" data-ko>용마로지스 + 원발신자에게 발송 전 발신함 재확인</div><div class="pipe-desc" data-en>Re-checks Sent Items before mailing Yongma Logis + the original sender</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Core Modules · Track B</div>
+    <h2 class="section-title"><span data-ko>기존 Pick Release 코드를</span><span data-en>Reusing the existing</span><br><em><span data-ko>그대로 재사용한 3개 모듈</span><span data-en>Pick Release code, 3 modules</span></em></h2>
+    <div class="mod-grid">
+      <div class="mod-card c3 reveal">
+        <div class="mod-head"><div class="mod-file">fse_po_release.py</div><div class="mod-title" data-ko>스캔 · Order Type 필터</div><div class="mod-title" data-en>Scan &amp; Order Type Filter</div></div>
+        <div class="mod-desc" data-ko>"Bohyun Kim" 공유메일함의 FSE PO 폴더에서 신규 Parts Order 알림을 찾아, Order Type이 Shipping Only인 것만 골라낸다. Billable은 기존 pick_release_watcher(Sales Order 플로우)의 대상이라 여기서는 명시적으로 제외한다.</div>
+        <div class="mod-desc" data-en>Scans the "Bohyun Kim" shared mailbox's FSE PO folder for new Parts Order notifications and keeps only Order Type = Shipping Only — Billable orders are explicitly excluded since those already belong to the existing pick_release_watcher (Sales Order) flow.</div>
+      </div>
+      <div class="mod-card c4 reveal">
+        <div class="mod-head"><div class="mod-file">fse_po_oracle_release.py</div><div class="mod-title" data-ko>Oracle Transfer Order 릴리즈</div><div class="mod-title" data-en>Oracle Transfer Order Release</div></div>
+        <div class="mod-desc" data-ko>DCD Pick Release/Rebalance 자동화에서 쓰던 create_pick_wave_transfer_order·release_pick_wave_now를 그대로 import해서 호출한다 - 새로 만들지 않고 검증된 코드를 재사용.</div>
+        <div class="mod-desc" data-en>Imports and calls create_pick_wave_transfer_order / release_pick_wave_now straight from the DCD Pick Release/Rebalance automation — reusing already-verified code instead of writing new release logic.</div>
+      </div>
+      <div class="mod-card c1 reveal">
+        <div class="mod-head"><div class="mod-file">fse_po_app.py</div><div class="mod-title" data-ko>원클릭 GUI (임시)</div><div class="mod-title" data-en>One-Click GUI (temporary)</div></div>
+        <div class="mod-desc" data-ko>part_order_app.py와 같은 패턴의 얇은 Tkinter 래퍼. "이번 주까지만 쓸 임시 백업용"이라고 코드에 명시하고, 로그를 실시간 스트리밍만 한다.</div>
+        <div class="mod-desc" data-en>A thin Tkinter wrapper in the same pattern as part_order_app.py. The docstring explicitly marks it "temporary, this week only," and it just streams the run log live.</div>
+      </div>
+    </div>
+
+    <div class="note-box reveal" style="border-left-color:var(--accent4);">
+      <div class="note-label" data-ko>첫 실행에서 잡은 사고 - 당일 원인수정</div>
+      <div class="note-label" data-en>A production incident caught on day one - root-caused same day</div>
+      <div class="note-text" data-ko>첫 실행(2026-09-01)에서 45건 중 5건이 중복 릴리즈요청 메일로 잘못 나갔다 - 이미 다른 플로우로 처리된 Billable 4건과 Order Status가 Closed인 1건인데, 자체 상태 파일만 믿고 발신함(Sent Items)을 대조하지 않은 게 원인. Closed 건은 관계형 리스트(Parts Order Lines)가 화면에 다 렌더링되기 전에 읽어 품목 0줄로 판단하고도 그대로 보낸 두 번째 버그가 겹쳤다. 발견 즉시 5건 모두 회수하고, 발송 전 Sent Items 대조(already_sent) + Order Status가 Open/Partial이 아니면 스킵 + 빈 라인이면 재시도 후에도 비면 스킵, 3개 가드를 그날 바로 추가했다. 이후 남은 40건은 20건 Billable 스킵 · 9건 Closed 스킵 · 12건 정상 릴리즈 · 4건 backorder 재시도로 정확히 갈렸다.</div>
+      <div class="note-text" data-en>On the first run (2026-09-01), 5 of 45 candidates got a duplicate release-request email — 4 already-handled Billable orders and 1 Closed order — because the app trusted only its own state file instead of cross-checking Sent Items. The Closed case had a second bug layered on top: it read the Parts Order Lines related list before the page finished rendering, saw 0 lines, and sent anyway. All 5 were recalled immediately, and three guards went in the same day: an already-sent check against Sent Items before any send, a skip when Order Status isn't Open/Partial, and a retry-then-skip on empty line reads. The remaining 40 candidates then split cleanly: 20 skipped as Billable, 9 skipped as Closed, 12 released normally, 4 re-tried for backorder.</div>
+    </div>
+  </section>
+
   <section class="section reveal">
     <div class="section-label">Stack</div>
     <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
@@ -241,7 +282,7 @@
       <div class="stack-item"><div class="stack-emoji">🖼️</div><div class="stack-name">Tkinter</div><div class="stack-role" data-ko>2탭 데스크톱 GUI</div><div class="stack-role" data-en>2-tab desktop GUI</div></div>
       <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 스캔·완료메일 발송</div><div class="stack-role" data-en>Outlook mail scan &amp; completion mail</div></div>
       <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Salesforce / ServiceMax</div><div class="stack-role" data-ko>Case · Parts Order 생성/승인</div><div class="stack-role" data-en>Case &amp; Parts Order creation/approval</div></div>
-      <div class="stack-item"><div class="stack-emoji">🏭</div><div class="stack-name">Oracle Fusion</div><div class="stack-role" data-ko>Interface Trigger · Pick Release</div><div class="stack-role" data-en>Interface trigger &amp; Pick Release</div></div>
+      <div class="stack-item"><div class="stack-emoji">🏭</div><div class="stack-name">Oracle Fusion</div><div class="stack-role" data-ko>Interface Trigger · Pick Release · Transfer Order</div><div class="stack-role" data-en>Interface trigger, Pick Release &amp; Transfer Order</div></div>
     </div>
   </section>
 

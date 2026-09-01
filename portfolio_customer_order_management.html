@@ -122,8 +122,8 @@
     <div class="hero-eyebrow">Category · 2025–2026</div>
     <h1 class="hero-title">CUSTOMER &amp; ORDER MANAGEMENT</h1>
     <p class="hero-sub">
-      <span data-ko>고객·현장 쪽 — 출고(주문 이행), 반품(RMA), 재고 백오더(SCO) 취소, 그리고 파트오더(소모품 출고) 백업 자동화까지 4개 프로젝트. 방향은 제각각(나가는 것/돌아오는 것/정리하는 것/대신 처리하는 것)이지만 모두 주문 이후의 고객 접점을 다룬다.</span>
-      <span data-en>The customer-facing side of the chain — 4 projects automating outbound order fulfillment, returns (RMA), backorder (SCO) cancellation, and parts-order (consumables) backup coverage. Different physical directions (out / back in / cleanup / stand-in), but all live on the post-order side of the business.</span>
+      <span data-ko>고객·현장 쪽 — 출고(주문 이행), 반품(RMA), 재고 백오더(SCO) 취소, 그리고 파트오더(소모품+엔지니어) 백업 자동화까지 4개 프로젝트. 방향은 제각각(나가는 것/돌아오는 것/정리하는 것/대신 처리하는 것)이지만 모두 주문 이후의 고객 접점을 다룬다. 마지막 파트오더 백업 앱은 본업(수입/통관)과 무관한 서비스팀 업무인데도, 동료가 자리를 비운 틈을 자동화로 메운 것이다.</span>
+      <span data-en>The customer-facing side of the chain — 4 projects automating outbound order fulfillment, returns (RMA), backorder (SCO) cancellation, and parts-order (consumables + engineer) backup coverage. Different physical directions (out / back in / cleanup / stand-in), but all live on the post-order side of the business. That last one sits outside the core job (import/customs) entirely — built to cover a service-team colleague's absence anyway.</span>
     </p>
   </div>
 
@@ -190,7 +190,7 @@
         <span data-ko>매달 자동 발송되는 Open Transfer Order 리포트에서 30~90일째 열려 있는 SCO 라인만 골라, Oracle Fusion 화면에서 직접 취소하거나 수량을 정정한다. 애매한 케이스만 사람 확인 알림으로 남긴다.</span>
         <span data-en>Filters the monthly Open Transfer Order report down to SCO lines open 30–90 days, then cancels or corrects them directly inside Oracle Fusion — only ambiguous cases are left as an alert for review.</span>
       </p>
-      <div class="proj-impact"><b>7</b> <span data-ko>라인 자동 처리</span><span data-en>lines auto-processed</span> · <b>0</b> <span data-ko>에러(첫 실행)</span><span data-en>errors (first run)</span></div>
+      <div class="proj-impact"><b>95</b> <span data-ko>라인 누적 처리</span><span data-en>lines processed to date</span> · <b>0</b> <span data-ko>에러</span><span data-en>errors</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Selenium · Oracle Fusion<br>BI Publisher · win32com</div>
         <div class="proj-arrow">→</div>
@@ -206,13 +206,14 @@
         <span class="tag tag-orange">Playwright</span>
         <span class="tag tag-blue">Salesforce</span>
         <span class="tag tag-green">Tkinter</span>
+        <span class="tag tag-teal">Oracle TO</span>
       </div>
       <h2 class="proj-title"><span data-ko>파트오더</span><span data-en>Part Order</span><br><em><span data-ko>백업 자동화 앱</span><span data-en>Backup App</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>Pick Release/RMA에 쓰던 Playwright 기반 Salesforce 구동 기법을 재사용해, 동료 휴가 기간 커버용으로 AI 호출 없이 배치 파일 2개로 돌아가는 독립 데스크톱 앱으로 재구성.</span>
-        <span data-en>Reuses the Playwright-based Salesforce automation from Pick Release/RMA, rebuilt as a standalone desktop app running on two batch files with zero AI calls, to cover a teammate's workflow while she was on leave.</span>
+        <span data-ko>Pick Release/RMA에 쓰던 Playwright 기반 Salesforce 구동 기법을 재사용해, 소모품(Billable) Parts Order 생성 + 엔지니어(Shipping Only) Transfer Order 릴리즈 2개 트랙을 AI 호출 없이 배치 파일로 돌아가는 독립 앱으로 재구성. 동료 휴가 기간 커버용.</span>
+        <span data-en>Reuses the Playwright-based Salesforce automation from Pick Release/RMA across two tracks — consumables (Billable) Parts Order creation and FSE (Shipping Only) Transfer Order release — rebuilt as standalone apps running on batch files with zero AI calls, to cover a teammate's workflow while she was on leave.</span>
       </p>
-      <div class="proj-impact"><b>16</b> <span data-ko>건 PO 생성(백업기간)</span><span data-en>POs created during coverage</span> · <span data-ko>Send to Approval은 사람만</span><span data-en>human-only approval gate</span></div>
+      <div class="proj-impact"><b>20</b> <span data-ko>건 PO 생성 + </span><span data-en>POs created + </span><b>12</b> <span data-ko>건 FSE TO 릴리즈</span><span data-en>FSE TOs released</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Playwright (CDP) · Tkinter<br>win32com · Salesforce/ServiceMax · Oracle Fusion</div>
         <div class="proj-arrow">→</div>

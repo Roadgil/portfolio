@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>FSE Inventory / Monthly Closing · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#34d399; --accent2:#60a5fa; --accent3:#f472b6; --accent4:#fbbf24;
+      --text:#eef0f8; --muted:#6b6f84;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 60px;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(52,211,153,0.15) 0%,transparent 70%);top:-200px;right:-200px;animation:floatGlow 8s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(30px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,104px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:640px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,4.6vw,48px);line-height:1.1;margin-bottom:50px;}
+    .section-title em{font-style:italic;color:var(--accent2);}
+
+    .trap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+    .trap-card{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:28px 26px;position:relative;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .trap-card:hover{transform:translateY(-4px);border-color:var(--accent3);}
+    .trap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent3);}
+    .trap-icon{font-size:22px;margin-bottom:14px;}
+    .trap-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:10px;}
+    .trap-desc{font-size:12px;color:var(--muted);line-height:1.75;}
+
+    .fse-box{background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:40px;position:relative;overflow:hidden;}
+    .fse-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(52,211,153,0.08) 0%,transparent 55%),radial-gradient(ellipse at 85% 100%,rgba(96,165,250,0.08) 0%,transparent 55%);}
+    .fse-head{position:relative;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:24px;}
+    .fse-metrics{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:28px;}
+    .fse-node{background:var(--surf2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+    .fse-node-label{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+    .fse-node-val{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);}
+    .fse-flags{position:relative;display:flex;gap:14px;flex-wrap:wrap;}
+    .flag{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:8px 14px;border-radius:10px;border:1px solid;}
+    .flag.blue{color:var(--accent2);border-color:rgba(96,165,250,0.3);background:rgba(96,165,250,0.07);}
+    .flag.green{color:var(--accent);border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.07);}
+    .flag.red{color:#f87171;border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.07);}
+    .flag-dot{width:8px;height:8px;border-radius:50%;}
+    .flag.blue .flag-dot{background:var(--accent2);}.flag.green .flag-dot{background:var(--accent);}.flag.red .flag-dot{background:#f87171;}
+
+    .stack-section{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    .note-box{margin-top:36px;padding:26px 30px;border:1px solid var(--border);border-radius:14px;background:var(--surf);border-left:3px solid var(--accent4);}
+    .note-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:2px;color:var(--accent4);text-transform:uppercase;margin-bottom:10px;}
+    .note-text{font-size:12.5px;color:var(--muted);line-height:1.85;}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+    body.en div[data-en]{display:block;}
+
+    @media (max-width:768px){
+      .topbar{padding:16px 24px;}
+      .hero,.section{padding:90px 24px 50px;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-tag">Monthly Closing · FSE Inventory · Single-file App</div>
+    <h1 class="hero-title"><span class="a1" data-ko>FSE 재고</span><span class="a1" data-en>FSE</span><span data-en> INVENTORY</span><br><span class="a2" data-ko>월마감 대시보드</span><span class="a2" data-en>CLOSING DASHBOARD</span></h1>
+    <p class="hero-desc">
+      <span data-ko>월마감(Monthly Closing) 보고를 위해 필드 서비스 엔지니어(FSE) 담당자별 온핸드 재고·월별 소모량·월별 입고량을 추적하는 오프라인 HTML 대시보드. Oracle Material Transactions 원본 export를 그대로 다루다 보니 겪은 함정들 — 5000행에서 말없이 잘리는 export 제한, 재고실사 주간의 트랜잭션 공백, 단가 없는 리포트 — 을 하나씩 규칙으로 흡수해 FSE별 회전율(재고소진 속도)까지 자동 계산한다.</span>
+      <span data-en>An offline HTML dashboard built for Monthly Closing reporting, tracking on-hand inventory, monthly consumption, and monthly receipts per field service engineer (FSE). Built directly on raw Oracle Material Transactions exports, it absorbs every trap those exports hide — a 5,000-row limit that truncates silently, transaction blackout weeks during physical counts, and a report with no price column — as rules, then computes a per-FSE turnover rate on top.</span>
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" style="color:var(--accent);">10</span><span class="stat-label" data-ko>FSE 엔지니어별 추적</span><span class="stat-label" data-en>FSEs tracked individually</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent2);">11</span><span class="stat-label" data-ko>개월 데이터 · 11개 재고 카테고리</span><span class="stat-label" data-en>months of data · 11 categories</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent3);">261</span><span class="stat-label" data-ko>품목 USD 단가 Lookup</span><span class="stat-label" data-en>item USD-price lookup</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent4);">1</span><span class="stat-label" data-ko>단일 HTML · 오프라인 · 백업/복원</span><span class="stat-label" data-en>single HTML · offline · backup/restore</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Data Traps</div>
+    <h2 class="section-title reveal"><span data-ko>원본 export가 숨긴</span><span data-en>Three traps hiding</span><br><em><span data-ko>세 가지 함정</span><span data-en>in the raw export</span></em></h2>
+    <div class="trap-grid">
+      <div class="trap-card reveal">
+        <div class="trap-icon">✂️</div>
+        <div class="trap-title" data-ko>말없이 잘리는 5000행</div>
+        <div class="trap-title" data-en>Silent 5,000-row cutoff</div>
+        <div class="trap-desc" data-ko>Oracle Material Transactions export가 5000행을 넘으면 마지막 줄에 "Reached export limit" 트레일러만 남고 나머지는 조용히 잘린다. 기간을 나눠 여러 번(export(4)~(8)) 재추출한 뒤 고유 Transaction ID로 dedup해 합쳤다.</div>
+        <div class="trap-desc" data-en>Past 5,000 rows, the export just stops and leaves a "Reached export limit" trailer on the last line — no error. Re-exported by date range across multiple files and merged them with a dedup pass on the unique Transaction ID.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">🧊</div>
+        <div class="trap-title" data-ko>재고실사 주간의 공백</div>
+        <div class="trap-title" data-en>Physical-count blackout weeks</div>
+        <div class="trap-desc" data-ko>1/1~1/8, 4/1~4/5, 7/1~7/5 구간엔 트랜잭션이 통째로 없다. 데이터가 빠진 게 아니라 재고실사 기간엔 시스템 트랜잭션 자체가 멈추고 실적이 인근 날짜로 흡수되는, 매 분기 초 반복되는 정상 패턴이다.</div>
+        <div class="trap-desc" data-en>Jan 1–8, Apr 1–5, and Jul 1–5 show zero transactions — not missing data. Transactions themselves pause during physical inventory counts and get absorbed into adjacent dates, a pattern that repeats every quarter-start.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">💲</div>
+        <div class="trap-title" data-ko>단가 없는 리포트</div>
+        <div class="trap-title" data-en>No price column</div>
+        <div class="trap-desc" data-ko>FSE 소비/입고 리포트엔 금액이 없다. 마감 자료에서 뽑은 261개 품목의 ITEM_COST_LOOKUP(USD 단가)으로 수량×단가를 추정하고, 새 품목이 늘면 수량엔 영향 없이 금액 추정에서만 제외한다.</div>
+        <div class="trap-desc" data-en>The FSE consumption/receipt reports carry no dollar value. A 261-item ITEM_COST_LOOKUP built from closing files estimates qty × USD price — new items simply drop out of the dollar estimate without affecting quantity.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="section-label">FSE Metrics</div>
+    <h2 class="section-title reveal"><span data-ko>담당자별 온핸드부터</span><span data-en>From per-engineer on-hand</span><br><em><span data-ko>회전율까지</span><span data-en>to turnover rate</span></em></h2>
+    <div class="fse-box reveal">
+      <div class="fse-head" data-ko>// 엔지니어 10명 각각의 온핸드·소비·입고를 대조해 회전율을 계산한다</div>
+      <div class="fse-head" data-en>// cross-checks on-hand, consumption, and receipts per engineer to compute turnover</div>
+      <div class="fse-metrics">
+        <div class="fse-node"><div class="fse-node-label">On-Hand</div><div class="fse-node-val" data-ko>수량·금액·비중</div><div class="fse-node-val" data-en>Qty · Value · Share</div></div>
+        <div class="fse-node"><div class="fse-node-label">Avg. Consumption</div><div class="fse-node-val" data-ko>월평균 소비</div><div class="fse-node-val" data-en>Monthly avg. issue</div></div>
+        <div class="fse-node"><div class="fse-node-label">Avg. Receipt</div><div class="fse-node-val" data-ko>월평균 입고</div><div class="fse-node-val" data-en>Monthly avg. receipt</div></div>
+        <div class="fse-node"><div class="fse-node-label">Turnover</div><div class="fse-node-val" data-ko>소비 ÷ 온핸드</div><div class="fse-node-val" data-en>consumption ÷ on-hand</div></div>
+      </div>
+      <div class="fse-flags">
+        <div class="flag blue"><div class="flag-dot"></div><span data-ko>회전율 &lt;50% — 🔵 과다재고 의심</span><span data-en>Turnover &lt;50% — 🔵 possible excess stock</span></div>
+        <div class="flag green"><div class="flag-dot"></div><span data-ko>회전율 50~150% — 🟢 적정</span><span data-en>Turnover 50–150% — 🟢 healthy</span></div>
+        <div class="flag red"><div class="flag-dot"></div><span data-ko>회전율 &gt;150% — 🔴 부족 위험</span><span data-en>Turnover &gt;150% — 🔴 risk of shortage</span></div>
+      </div>
+    </div>
+    <div class="note-box reveal">
+      <div class="note-label" data-ko>잠정치라고 명시한 이유</div>
+      <div class="note-label" data-en>Why the thresholds are marked provisional</div>
+      <div class="note-text" data-ko>50%/150% 회전율 구간은 코드에도 "잠정치"라고 그대로 적어뒀다 - 아직 한두 달치 실측으로만 잡은 초안 기준이라 확정 정책으로 내세우지 않는다. 또 "SP에서 이동"이라는 구두 설명과 달리 실제 FSE 입고 트랜잭션의 소스 서브인벤토리는 STG였다 - 사람의 설명보다 실제 데이터를 항상 우선했다.</div>
+      <div class="note-text" data-en>The code itself labels the 50%/150% bands "provisional" — they're a first-pass draft from just one or two months of real data, not a finalized policy. Separately, FSE receipt transactions were verbally described as moving "from SP," but the actual source subinventory in the data was STG — real data was trusted over the verbal description.</div>
+    </div>
+  </section>
+
+  <div class="stack-section">
+    <div class="section" style="padding-bottom:0;">
+      <div class="section-label">Stack</div>
+      <h2 class="section-title reveal"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-item"><div class="stack-emoji">📄</div><div class="stack-name">Single-file HTML</div><div class="stack-role" data-ko>설치 불필요·오프라인</div><div class="stack-role" data-en>No install · offline</div></div>
+      <div class="stack-item"><div class="stack-emoji">🗂️</div><div class="stack-name">localStorage / window.storage</div><div class="stack-role" data-ko>월별 데이터·조정값 저장</div><div class="stack-role" data-en>Persists monthly data &amp; overrides</div></div>
+      <div class="stack-item"><div class="stack-emoji">💾</div><div class="stack-name">JSON Backup/Restore</div><div class="stack-role" data-ko>기간별 데이터 내보내기/불러오기</div><div class="stack-role" data-en>Export/import saved periods</div></div>
+      <div class="stack-item"><div class="stack-emoji">🏭</div><div class="stack-name">Oracle Material Transactions</div><div class="stack-role" data-ko>소스 데이터(다중 export 병합)</div><div class="stack-role" data-en>Source data (multi-export merge)</div></div>
+      <div class="stack-item"><div class="stack-emoji">💲</div><div class="stack-name">ITEM_COST_LOOKUP</div><div class="stack-role" data-ko>261개 품목 USD 단가표</div><div class="stack-role" data-en>261-item USD price table</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">FSE INVENTORY</div>
+    <div class="footer-note">HTML/JS · LOCALSTORAGE · ORACLE MATERIAL TRANSACTIONS · JSON BACKUP</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
