@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Part Order Backup App · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#60a5fa; --accent2:#fbbf24; --accent3:#4ade80; --accent4:#f472b6;
+      --text:#eef0f8; --muted:#6b6f84;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;}
+    .hero-left{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(96,165,250,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7.5vw,100px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:14.5px;color:var(--muted);max-width:600px;line-height:1.9;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:44px;}
+    .hero-stats{display:flex;gap:36px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:32px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;max-width:150px;line-height:1.5;}
+
+    .hero-right{padding:120px 50px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
+    .hero-right-bg-cell{background:white;}
+    .hero-right-bg-cell:nth-child(odd){background:transparent;}
+    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
+    .flow-step{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}
+    .flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.4s}
+    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:22px;flex-shrink:0;}
+    .flow-icon{font-size:18px;width:30px;text-align:center;flex-shrink:0;}
+    .flow-info{flex:1;}
+    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+    .flow-role{font-size:10.5px;color:rgba(255,255,255,0.4);}
+    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
+    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
+    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
+    .badge-red{background:rgba(124,45,18,0.5);color:#fca5a5;border:1px solid rgba(252,165,165,0.3);}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,4.6vw,48px);line-height:1.1;margin-bottom:50px;}
+    .section-title em{font-style:italic;color:var(--accent2);}
+
+    .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .mod-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .mod-card:hover{transform:translateY(-5px);border-color:var(--accent);}
+    .mod-head{padding:26px 28px 0;}
+    .mod-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;background:var(--surf2);padding:5px 10px;border-radius:5px;display:inline-block;margin-bottom:14px;}
+    .mod-title{font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:10px;}
+    .mod-desc{font-size:12px;color:var(--muted);line-height:1.75;padding:0 28px 18px;}
+    .mod-points{padding:0 28px 26px;display:flex;flex-direction:column;gap:8px;}
+    .mpoint{font-size:11.5px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .mpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
+    .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
+    .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+    .mod-card.c4 .mpoint-dot{background:var(--accent4);}.mod-card.c4 .mod-title{color:var(--accent4);}
+
+    .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pipeline{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:16px;overflow:hidden;flex-wrap:wrap;}
+    .pipe-step{flex:1;min-width:150px;padding:28px 20px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+    .pipe-step:last-child{border-right:none;}
+    .pipe-step:hover{background:var(--surf2);}
+    .pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+    .pipe-icon{font-size:22px;margin-bottom:12px;}
+    .pipe-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
+    .pipe-desc{font-size:10.5px;color:var(--muted);line-height:1.6;}
+
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    .note-box{margin-top:56px;padding:26px 30px;border:1px solid var(--border);border-radius:14px;background:var(--surf);border-left:3px solid var(--accent2);}
+    .note-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:2px;color:var(--accent2);text-transform:uppercase;margin-bottom:10px;}
+    .note-text{font-size:12.5px;color:var(--muted);line-height:1.85;}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+    body.en div[data-en]{display:block;}
+
+    @media (max-width:900px){
+      .topbar{padding:16px 24px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-left,.hero-right{padding:90px 24px 50px;}
+      .hero-right{min-height:60vh;}
+      .section,.pipeline-section{padding:90px 24px 50px;}
+      .pipeline{flex-direction:column;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-tag">Part Order Automation · Salesforce/ServiceMax · 2026</div>
+      <h1 class="hero-title"><span class="a1" data-ko>파트오더</span><span class="a1" data-en>PART ORDER</span><br><span class="a2" data-ko>백업 자동화 앱</span><span class="a2" data-en>BACKUP APP</span></h1>
+      <p class="hero-desc">
+        <span data-ko>소모품 출고요청 메일 → ServiceMax Case/Parts Order 생성 → 오라클 Release → 완료 메일까지 이어지는 흐름을, Pick Release/RMA 자동화에 쓰던 Selenium·Playwright 기반 Salesforce 구동 기법을 그대로 가져와 만든 독립 실행 앱. 원래 이 업무를 맡던 동료와 공유했던 기법이었는데, 동료가 휴가로 자리를 비운 기간에 넘겨받은 기초 파일을 AI 호출 없이 배치 파일 두 개(설치·실행)만으로 돌아가는 앱으로 다시 짜서, 비개발자인 팀원도 그대로 설치해 쓸 수 있게 만들었다.</span>
+        <span data-en>A standalone desktop app covering the full loop — parts-order request emails → ServiceMax Case/Parts Order creation → Oracle release → completion email — reusing the same Selenium/Playwright technique for driving Salesforce that was built for Pick Release and RMA automation. The base files came from a teammate who normally owns this workflow; while she was on leave, they were rebuilt into an app that runs on two batch files (install/run) with zero AI calls at runtime, so any non-developer on the team could install and operate it themselves.</span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">16</span><span class="stat-label" data-ko>백업 기간 중 생성된 Parts Order</span><span class="stat-label" data-en>Parts Orders created during coverage</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">0</span><span class="stat-label" data-ko>런타임 AI/LLM 호출</span><span class="stat-label" data-en>AI/LLM calls at runtime</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">2</span><span class="stat-label" data-ko>탭 구조(생성 · 승인 후)</span><span class="stat-label" data-en>GUI tabs (Create · Post-Approval)</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">1건</span><span class="stat-label" data-ko>동시생성 사고 - 오라클 전송 전 차단</span><span class="stat-label" data-en>concurrent duplicate caught before Oracle</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="hero-flow">
+        <div class="flow-step"><div class="flow-num">01</div><div class="flow-icon">📧</div><div class="flow-info"><div class="flow-name" data-ko>메일 스캔</div><div class="flow-name" data-en>Mail Scan</div><div class="flow-role" data-ko>Outlook 최근 N일 출고요청</div><div class="flow-role" data-en>Outlook, last N days</div></div><div class="flow-badge badge-blue">AUTO</div></div>
+        <div class="flow-step"><div class="flow-num">02</div><div class="flow-icon">🧩</div><div class="flow-info"><div class="flow-name" data-ko>파싱 · 매핑</div><div class="flow-name" data-en>Parse &amp; Map</div><div class="flow-role" data-ko>병원·품목·단가·주문채널 추출</div><div class="flow-role" data-en>Hospital, item, price, channel</div></div><div class="flow-badge badge-blue">AUTO</div></div>
+        <div class="flow-step"><div class="flow-num">03</div><div class="flow-icon">🖱️</div><div class="flow-info"><div class="flow-name" data-ko>화면 확인·수정</div><div class="flow-name" data-en>GUI Review</div><div class="flow-role" data-ko>Location 후보·품목 줄 사람 확인</div><div class="flow-role" data-en>Confirm Location &amp; line items</div></div><div class="flow-badge badge-green">HUMAN</div></div>
+        <div class="flow-step"><div class="flow-num">04</div><div class="flow-icon">🗂️</div><div class="flow-info"><div class="flow-name" data-ko>Case / PO 생성</div><div class="flow-name" data-en>Case / PO Create</div><div class="flow-role" data-ko>Playwright(CDP)로 ServiceMax 생성</div><div class="flow-role" data-en>ServiceMax via Playwright over CDP</div></div><div class="flow-badge badge-blue">AUTO</div></div>
+        <div class="flow-step"><div class="flow-num">05</div><div class="flow-icon">🔏</div><div class="flow-info"><div class="flow-name" data-ko>Send to Approval</div><div class="flow-name" data-en>Send to Approval</div><div class="flow-role" data-ko>앱은 절대 누르지 않음 - 사람이 직접</div><div class="flow-role" data-en>Never auto-clicked - human only</div></div><div class="flow-badge badge-red">HUMAN</div></div>
+        <div class="flow-step"><div class="flow-num">06</div><div class="flow-icon">🔁</div><div class="flow-info"><div class="flow-name" data-ko>Oracle 전송·Release·완료메일</div><div class="flow-name" data-en>Oracle Trigger·Release·Mail</div><div class="flow-role" data-ko>중복발송 가드 포함</div><div class="flow-role" data-en>with duplicate-send guard</div></div><div class="flow-badge badge-blue">AUTO</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pipeline-section reveal">
+    <div class="section-label">Workflow</div>
+    <h2 class="section-title"><span data-ko>사람이 봐야 할 지점만</span><span data-en>Only the two points</span><br><em><span data-ko>남기고 나머지는 자동</span><span data-en>a human must see stay manual</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📥</div><div class="pipe-title" data-ko>메일 → 파싱</div><div class="pipe-title" data-en>Mail → Parse</div><div class="pipe-desc" data-ko>표 형태가 제각각인 출고요청 메일을 라벨/구간 기준으로 구조화</div><div class="pipe-desc" data-en>Structures inconsistently-formatted request emails by label/section boundaries</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🖥️</div><div class="pipe-title" data-ko>탭1 - 생성</div><div class="pipe-title" data-en>Tab 1 - Create</div><div class="pipe-desc" data-ko>병원/Location/품목 확인 후 Case+Parts Order 생성, 월마감이면 선출고 문서까지</div><div class="pipe-desc" data-en>Confirms hospital/Location/items, creates Case+PO, plus pre-shipment docs in month-end mode</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">✋</div><div class="pipe-title" data-ko>승인 (수동)</div><div class="pipe-title" data-en>Approval (manual)</div><div class="pipe-desc" data-ko>Send to Approval은 화면 보고 사람이 직접 클릭</div><div class="pipe-desc" data-en>A human clicks Send to Approval after reviewing the screen</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📤</div><div class="pipe-title" data-ko>탭2 - 승인 후</div><div class="pipe-title" data-en>Tab 2 - Post-Approval</div><div class="pipe-desc" data-ko>오라클 Trigger → Release → 완료메일을 버튼 하나로, 중복 발송은 발신함 조회로 차단</div><div class="pipe-desc" data-en>Trigger → Release → completion mail in one click, dup-checked against Sent Items</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Core Modules</div>
+    <h2 class="section-title"><span data-ko>메일 파서부터</span><span data-en>From the mail parser</span><br><em><span data-ko>GUI까지 6개 모듈</span><span data-en>to the GUI, 6 modules</span></em></h2>
+    <div class="mod-grid">
+      <div class="mod-card c1 reveal">
+        <div class="mod-head"><div class="mod-file">parser.py</div><div class="mod-title" data-ko>출고요청 메일 파서</div><div class="mod-title" data-en>Request Mail Parser</div></div>
+        <div class="mod-desc" data-ko>인사말→(비고)→라벨/값 반복 구조의 메일을 "라벨 줄 = 구간 경계"로 파싱. 품명 뒤에 PN이 더 붙거나, 입금자명이 라벨 없이 한 줄 더 오는 등 변형을 흡수한다.</div>
+        <div class="mod-desc" data-en>Parses the greeting→section→label/value pattern by treating each label line as a section boundary, absorbing variants like an extra PN line after the item name or an unlabeled depositor-name line.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>병원명이 본문에 두 번 나오면 인용/전달된 이전 메일로 보고 첫 요청만 파싱 - 전달 메일 오탐 가드</span><span data-en>If "hospital name" appears twice, treats it as a quoted/forwarded prior mail and parses only the first request</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>필수 필드(병원/내역/결제수단/결제일자/입금액)가 하나라도 비면 자동 생성하지 않고 unparsed로 표시</span><span data-en>Withholds auto-creation and flags unparsed if any required field is missing</span></div>
+        </div>
+      </div>
+      <div class="mod-card c2 reveal">
+        <div class="mod-head"><div class="mod-file">map_to_servicemax.py</div><div class="mod-title" data-ko>품목·Location 매핑</div><div class="mod-title" data-en>Item &amp; Location Mapping</div></div>
+        <div class="mod-desc" data-ko>파싱된 품명을 품목코드 DB에 대조해 코드/단가를 채우고, 병원명으로 ServiceMax Location을 검색한다. 검색 결과가 정확히 1건일 때만 자동 확정한다.</div>
+        <div class="mod-desc" data-en>Matches parsed item names against a product-code DB to fill code/price, and searches ServiceMax Location by hospital name — auto-confirming only when exactly one candidate matches.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Location 0건/2건 이상은 자동 진행하지 않고 후보 목록을 화면에 띄워 사람이 고르게 함</span><span data-en>0 or 2+ Location matches stop auto-progress and surface candidates for a human to pick</span></div>
+        </div>
+      </div>
+      <div class="mod-card c3 reveal">
+        <div class="mod-head"><div class="mod-file">po_create.py · sf_actions.py</div><div class="mod-title" data-ko>Case/PO 생성 (Playwright)</div><div class="mod-title" data-en>Case/PO Creation (Playwright)</div></div>
+        <div class="mod-desc" data-ko>이미 SSO 로그인된 Edge에 CDP로 붙어 ServiceMax 화면에서 Case → Parts Order를 순서대로 생성하고, 생성 직후 화면에서 PO 번호·Case 번호·합계를 다시 읽어 검증한다.</div>
+        <div class="mod-desc" data-en>Connects over CDP to an already SSO-logged-in Edge, creates Case then Parts Order in ServiceMax, and re-reads the PO number/Case number/total from the screen right after to verify.</div>
+      </div>
+      <div class="mod-card c4 reveal">
+        <div class="mod-head"><div class="mod-file">po_finish.py</div><div class="mod-title" data-ko>오라클 전송 · Release · 완료메일</div><div class="mod-title" data-en>Oracle Trigger · Release · Mail</div></div>
+        <div class="mod-desc" data-ko>승인 후 Service Flow Wizards 프레임에서 Trigger Interface To Oracle을 눌러 Oracle Order Number가 채워지길 기다린 뒤, 릴리즈 → 완료메일 발송까지 이어간다.</div>
+        <div class="mod-desc" data-en>After approval, clicks Trigger Interface To Oracle in the Service Flow Wizards frame and waits for the Oracle Order Number to populate, then chains into release and the completion mail.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>발송 전 발신함에서 같은 제목 이력을 조회해 중복 완료메일을 막는다(already_replied)</span><span data-en>Checks Sent Items for the same subject before sending, blocking duplicate completion mails (already_replied)</span></div>
+        </div>
+      </div>
+      <div class="mod-card c1 reveal">
+        <div class="mod-head"><div class="mod-file">part_order_app.py</div><div class="mod-title" data-ko>Tkinter GUI + 인간 게이트</div><div class="mod-title" data-en>Tkinter GUI + Human Gate</div></div>
+        <div class="mod-desc" data-ko>탭1(생성)·탭2(승인 후) 구조의 데스크톱 앱. Send to Approval 버튼 자체를 앱에 두지 않아, 승인 전 최종 확인은 구조적으로 사람만 할 수 있게 만들었다.</div>
+        <div class="mod-desc" data-en>A two-tab desktop app (Create / Post-Approval). Deliberately has no Send to Approval button at all, so the final pre-approval check is structurally reserved for a human.</div>
+      </div>
+      <div class="mod-card c2 reveal">
+        <div class="mod-head"><div class="mod-file">make_preship_docs.py / draft.py</div><div class="mod-title" data-ko>월마감 선출고 모드</div><div class="mod-title" data-en>Month-End Pre-Ship Mode</div></div>
+        <div class="mod-desc" data-ko>월마감 체크박스를 켜면 거래명세서·선출고요청서 PDF 2종을 자동 생성하고, 첨부한 발송 요청 메일 초안까지 만들어 둔다.</div>
+        <div class="mod-desc" data-en>With the month-end checkbox on, auto-generates the transaction statement and pre-shipment request PDFs, and drafts the shipment-request email with them attached.</div>
+      </div>
+    </div>
+
+    <div class="note-box reveal">
+      <div class="note-label" data-ko>왜 AI 없이 다시 짰나</div>
+      <div class="note-label" data-en>Why rebuild without AI</div>
+      <div class="note-text" data-ko>Salesforce를 Playwright로 직접 구동하는 방식 자체는 본인이 Pick Release/RMA 자동화에서 이미 쓰던 기법이라 동료의 소모품 출고 업무에도 공유해뒀었다. 문제는 동료가 자리를 비운 동안 Claude Code 없이도 팀원이 이어받아 돌릴 수 있어야 한다는 점 — 그래서 대화형으로 처리하던 흐름을 규칙 기반 파서 + 고정 GUI로 재구성해, 토큰 비용도 없고 Claude Code 설치도 필요 없는 배치 파일 2개짜리 앱으로 다시 짰다. Send to Approval을 앱이 누르지 못하게 막은 것도 같은 이유 - 무인화 범위를 사람이 통제할 수 있는 만큼만 좁혔다.</div>
+      <div class="note-text" data-en>Driving Salesforce directly via Playwright wasn't new — it's the same technique already used for Pick Release/RMA automation, shared into this parts-order workflow too. The problem was coverage: a teammate had to be able to run this without Claude Code while the usual owner was on leave. So the conversational, AI-assisted flow was rebuilt as a rule-based parser plus a fixed GUI — no token cost, no Claude Code install, just two batch files. Blocking the app from ever clicking Send to Approval follows the same logic: keep the unattended scope exactly as wide as a human can still supervise.</div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="stack-emoji">🐍</div><div class="stack-name">Python</div><div class="stack-role" data-ko>파서·매핑·자동화 로직</div><div class="stack-role" data-en>Parser, mapping, automation logic</div></div>
+      <div class="stack-item"><div class="stack-emoji">🎭</div><div class="stack-name">Playwright (CDP)</div><div class="stack-role" data-ko>기존 SSO 세션에 붙어 ServiceMax 조작</div><div class="stack-role" data-en>Attaches to an existing SSO session to drive ServiceMax</div></div>
+      <div class="stack-item"><div class="stack-emoji">🖼️</div><div class="stack-name">Tkinter</div><div class="stack-role" data-ko>2탭 데스크톱 GUI</div><div class="stack-role" data-en>2-tab desktop GUI</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 스캔·완료메일 발송</div><div class="stack-role" data-en>Outlook mail scan &amp; completion mail</div></div>
+      <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Salesforce / ServiceMax</div><div class="stack-role" data-ko>Case · Parts Order 생성/승인</div><div class="stack-role" data-en>Case &amp; Parts Order creation/approval</div></div>
+      <div class="stack-item"><div class="stack-emoji">🏭</div><div class="stack-name">Oracle Fusion</div><div class="stack-role" data-ko>Interface Trigger · Pick Release</div><div class="stack-role" data-en>Interface trigger &amp; Pick Release</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">PART ORDER APP</div>
+    <div class="footer-note">PYTHON · PLAYWRIGHT · TKINTER · WIN32COM · SALESFORCE · ORACLE FUSION</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
