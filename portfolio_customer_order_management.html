@@ -122,8 +122,8 @@
     <div class="hero-eyebrow">Category · 2025–2026</div>
     <h1 class="hero-title">CUSTOMER &amp; ORDER MANAGEMENT</h1>
     <p class="hero-sub">
-      <span data-ko>고객·현장 쪽 — 출고(주문 이행), 반품(RMA), 재고 백오더(SCO) 취소, 그리고 파트오더(소모품+엔지니어) 백업 자동화까지 4개 프로젝트. 방향은 제각각(나가는 것/돌아오는 것/정리하는 것/대신 처리하는 것)이지만 모두 주문 이후의 고객 접점을 다룬다. 마지막 파트오더 백업 앱은 본업(수입/통관)과 무관한 서비스팀 업무인데도, 동료가 자리를 비운 틈을 자동화로 메운 것이다.</span>
-      <span data-en>The customer-facing side of the chain — 4 projects automating outbound order fulfillment, returns (RMA), backorder (SCO) cancellation, and parts-order (consumables + engineer) backup coverage. Different physical directions (out / back in / cleanup / stand-in), but all live on the post-order side of the business. That last one sits outside the core job (import/customs) entirely — built to cover a service-team colleague's absence anyway.</span>
+      <span data-ko>고객·현장 쪽 — 출고(주문 이행), 반품(RMA), 재고 백오더(SCO) 취소, 그리고 파트오더(소모품+엔지니어) 주문–출고 전 구간 자동화까지 4개 프로젝트. 방향은 제각각(나가는 것/돌아오는 것/정리하는 것/처음부터 끝까지 잇는 것)이지만 모두 주문 이후의 고객 접점을 다룬다. 마지막 파트오더는 본업(수입/통관) 밖의 서비스팀 업무였고, 원래 맡은 릴리즈 한 단계에서 시작해 앞뒤 공정을 흡수한 경우다.</span>
+      <span data-en>The customer-facing side of the chain — 4 projects automating outbound order fulfillment, returns (RMA), backorder (SCO) cancellation, and parts-order (consumables + engineer) order-to-ship automation. Different physical directions (out / back in / cleanup / joining the whole line), but all live on the post-order side of the business. That last one sits outside the core job (import/customs) entirely — it started as the single release step I owned and grew to cover the whole line.</span>
     </p>
   </div>
 
@@ -197,7 +197,7 @@
       </div>
     </a>
 
-    <!-- 06 Part Order Backup App -->
+    <!-- 06 Part Order - Order-to-Ship -->
     <a class="proj-card p9" href="portfolio_part_order_app.html" style="animation-delay:0.54s;">
       <div class="proj-bg-num">06</div>
       <div class="proj-num">PROJECT · 06</div>
@@ -208,12 +208,12 @@
         <span class="tag tag-green">Tkinter</span>
         <span class="tag tag-teal">Oracle TO</span>
       </div>
-      <h2 class="proj-title"><span data-ko>파트오더</span><span data-en>Part Order</span><br><em><span data-ko>백업 자동화 앱</span><span data-en>Backup App</span></em></h2>
+      <h2 class="proj-title"><span data-ko>파트오더</span><span data-en>Part Order</span><br><em><span data-ko>주문–출고 전 구간</span><span data-en>Order-to-Ship</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>Pick Release/RMA에 쓰던 Playwright 기반 Salesforce 구동 기법을 재사용해, 소모품(Billable) Parts Order 생성 + 엔지니어(Shipping Only) Transfer Order 릴리즈 2개 트랙을 AI 호출 없이 배치 파일로 돌아가는 독립 앱으로 재구성. 동료 휴가 기간 커버용.</span>
-        <span data-en>Reuses the Playwright-based Salesforce automation from Pick Release/RMA across two tracks — consumables (Billable) Parts Order creation and FSE (Shipping Only) Transfer Order release — rebuilt as standalone apps running on batch files with zero AI calls, to cover a teammate's workflow while she was on leave.</span>
+        <span data-ko>원래 맡은 구간은 오라클 릴리즈 한 단계. 그 앞뒤 공정을 흡수해 출고요청 접수부터 입금 대조·Parts Order 생성·오라클 전송·릴리즈·완료통보까지 7단계 중 6단계를 자동화했다. 사람이 남긴 지점은 승인 클릭 하나. 소모품(Billable)과 엔지니어(Shipping Only) 두 트랙을 한 앱의 탭으로 묶고, 계정별 경로 인식으로 동료 PC에도 이관했다.</span>
+        <span data-en>My original scope was one step: Oracle release. The pipeline absorbed the stages on either side, automating six of seven — request intake, deposit verification, Parts Order creation, Oracle interface, release, completion notice. One human checkpoint remains: the approval click. Consumables (Billable) and engineer-facing (Shipping Only) tracks share one app, and per-account path resolution handed it to a teammate's machine.</span>
       </p>
-      <div class="proj-impact"><b>20</b> <span data-ko>건 PO 생성 + </span><span data-en>POs created + </span><b>12</b> <span data-ko>건 FSE TO 릴리즈</span><span data-en>FSE TOs released</span></div>
+      <div class="proj-impact"><b>28</b> <span data-ko>건 PO 생성 + </span><span data-en>POs created + </span><b>17</b> <span data-ko>건 FSE TO 릴리즈 · 건당 20~30분 → 승인 클릭 1회</span><span data-en>FSE TOs released · 20~30 min/order → one approval click</span></div>
       <div class="proj-meta">
         <div class="proj-stack">Python · Playwright (CDP) · Tkinter<br>win32com · Salesforce/ServiceMax · Oracle Fusion</div>
         <div class="proj-arrow">→</div>

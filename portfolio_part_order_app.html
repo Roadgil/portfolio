@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Part Order Backup App · Portfolio</title>
+  <title>Part Order — Order-to-Ship Automation · Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -47,6 +47,7 @@
     .flow-step:last-child{border-bottom:none;}
     .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}
     .flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}.flow-step:nth-child(6){animation-delay:.4s}
+    .flow-step:nth-child(7){animation-delay:.46s}
     .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:22px;flex-shrink:0;}
     .flow-icon{font-size:18px;width:30px;text-align:center;flex-shrink:0;}
     .flow-info{flex:1;}
@@ -137,16 +138,16 @@
   <section class="hero">
     <div class="hero-left">
       <div class="hero-bg-glow"></div>
-      <div class="hero-tag">Part Order Automation · Salesforce/ServiceMax + Oracle TO · 2026</div>
-      <h1 class="hero-title"><span class="a1" data-ko>파트오더</span><span class="a1" data-en>PART ORDER</span><br><span class="a2" data-ko>백업 자동화 앱</span><span class="a2" data-en>BACKUP APP</span></h1>
+      <div class="hero-tag">Order-to-Ship · Salesforce/ServiceMax + Oracle TO · 2026</div>
+      <h1 class="hero-title"><span class="a1" data-ko>파트오더</span><span class="a1" data-en>ORDER-TO-SHIP</span><br><span class="a2" data-ko>전 구간 자동화</span><span class="a2" data-en>PART ORDER CYCLE</span></h1>
       <p class="hero-desc">
-        <span data-ko>동료 휴가로 자리를 비운 두 업무 모두를, Pick Release/RMA에 쓰던 Selenium·Playwright 기반 Salesforce 구동 기법으로 대신 처리한 2개 트랙의 백업 앱. Track A는 소모품 출고요청 메일 → ServiceMax Case/Parts Order 생성 → 오라클 Release, Track B는 엔지니어(FSE) 앞으로 오는 Shipping Only Parts Order를 찾아 Oracle Transfer Order로 직접 릴리즈한다. 둘 다 원래 대화형(Claude Code)으로 처리하던 흐름을 AI 호출 없이 배치 파일로 돌아가는 앱으로 다시 짜서, 비개발자인 팀원도 그대로 설치해 쓸 수 있게 만들었다.</span>
-        <span data-en>A two-track backup app covering both of a teammate's responsibilities while she was on leave, using the same Selenium/Playwright technique for driving Salesforce built for Pick Release and RMA. Track A: consumables request emails → ServiceMax Case/Parts Order creation → Oracle release. Track B: finds Shipping-Only Parts Orders addressed to field service engineers and releases them directly as Oracle Transfer Orders. Both replace what used to be a Claude Code conversation with an app that runs on batch files, zero AI calls at runtime, so any non-developer teammate could install and operate it.</span>
+        <span data-ko>원래 맡은 구간은 오라클 Pick Release 한 단계였다. 주문 접수와 Parts Order 생성은 서비스팀, 릴리즈는 나. 그 한 단계를 자동화한 Pick Release Watcher(누적 372건)를 기점으로 앞뒤 공정을 하나씩 흡수해, 출고요청 메일 수신부터 입금 대조 · Case/Parts Order 생성 · 오라클 전송 · 릴리즈 · 물류창고 완료통보까지 7단계를 한 앱에서 처리한다. 사람이 남긴 지점은 Send to Approval 한 번. 소모품 파트오더(Track A)와 엔지니어(FSE) Shipping Only 파트오더(Track B)를 같은 앱의 탭으로 묶었고, 진행 상태는 앱이 적어둔 메모가 아니라 릴리즈 상태파일 · 보낸편지함 · 승인/취소 알림 메일이라는 실제 흔적으로만 판정한다.</span>
+        <span data-en>My original scope was a single step: Oracle Pick Release. Order intake and Parts Order creation belonged to the service team; release was mine. Starting from Pick Release Watcher (372 orders to date), which automated that one step, the pipeline absorbed the stages on either side — request email, deposit verification, Case/Parts Order creation, Oracle interface, release, and the completion notice to the 3PL warehouse: seven stages in one app. Exactly one human checkpoint remains: Send to Approval. Consumables orders (Track A) and engineer-facing Shipping-Only orders (Track B) share the app as tabs, and progress is never read from notes the app wrote — only from real traces: the release state file, Sent Items, and approval/cancellation notification mails.</span>
       </p>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" style="color:var(--accent);">20</span><span class="stat-label" data-ko>Track A - 생성된 Parts Order</span><span class="stat-label" data-en>Track A - POs created</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent3);">12</span><span class="stat-label" data-ko>Track B - FSE TO 릴리즈</span><span class="stat-label" data-en>Track B - FSE TOs released</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent2);">0</span><span class="stat-label" data-ko>런타임 AI/LLM 호출</span><span class="stat-label" data-en>AI/LLM calls at runtime</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">6/7</span><span class="stat-label" data-ko>공정 자동화 단계 - 승인만 사람</span><span class="stat-label" data-en>stages automated - approval stays human</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">372</span><span class="stat-label" data-ko>Pick Release 누적 - 확장의 출발점</span><span class="stat-label" data-en>orders released to date - the starting point</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">20~30분</span><span class="stat-label" data-ko>건당 수작업 → 승인 클릭 1회</span><span class="stat-label" data-en>manual minutes per order → one approval click</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent4);">2건</span><span class="stat-label" data-ko>실전 오발송 사고 - 당일 원인수정·회수</span><span class="stat-label" data-en>live mis-send incidents - same-day root-caused &amp; recalled</span></div>
       </div>
     </div>
@@ -158,12 +159,13 @@
       </div>
       <div class="mod-file" style="margin:0 0 10px 2px;">TRACK A · <span data-ko>소모품 파트오더</span><span data-en>Consumables Parts Order</span></div>
       <div class="hero-flow">
-        <div class="flow-step"><div class="flow-num">01</div><div class="flow-icon">📧</div><div class="flow-info"><div class="flow-name" data-ko>메일 스캔</div><div class="flow-name" data-en>Mail Scan</div><div class="flow-role" data-ko>Outlook 최근 N일 출고요청</div><div class="flow-role" data-en>Outlook, last N days</div></div><div class="flow-badge badge-blue">AUTO</div></div>
+        <div class="flow-step"><div class="flow-num">01</div><div class="flow-icon">📧</div><div class="flow-info"><div class="flow-name" data-ko>주문 접수</div><div class="flow-name" data-en>Order Intake</div><div class="flow-role" data-ko>출고요청 메일 · 문자 접수분 수기 입력</div><div class="flow-role" data-en>Request email, or manual entry for phone orders</div></div><div class="flow-badge badge-blue">AUTO</div></div>
         <div class="flow-step"><div class="flow-num">02</div><div class="flow-icon">🧩</div><div class="flow-info"><div class="flow-name" data-ko>파싱 · 매핑</div><div class="flow-name" data-en>Parse &amp; Map</div><div class="flow-role" data-ko>병원·품목·단가·주문채널 추출</div><div class="flow-role" data-en>Hospital, item, price, channel</div></div><div class="flow-badge badge-blue">AUTO</div></div>
-        <div class="flow-step"><div class="flow-num">03</div><div class="flow-icon">🖱️</div><div class="flow-info"><div class="flow-name" data-ko>화면 확인·수정</div><div class="flow-name" data-en>GUI Review</div><div class="flow-role" data-ko>Location 후보·품목 줄 사람 확인</div><div class="flow-role" data-en>Confirm Location &amp; line items</div></div><div class="flow-badge badge-green">HUMAN</div></div>
+        <div class="flow-step"><div class="flow-num">03</div><div class="flow-icon">💰</div><div class="flow-info"><div class="flow-name" data-ko>입금 대조</div><div class="flow-name" data-en>Deposit Check</div><div class="flow-role" data-ko>계좌이체 건은 재무 원장과 금액·일자 대조</div><div class="flow-role" data-en>Bank-transfer orders matched to the finance ledger</div></div><div class="flow-badge badge-blue">AUTO</div></div>
         <div class="flow-step"><div class="flow-num">04</div><div class="flow-icon">🗂️</div><div class="flow-info"><div class="flow-name" data-ko>Case / PO 생성</div><div class="flow-name" data-en>Case / PO Create</div><div class="flow-role" data-ko>Playwright(CDP)로 ServiceMax 생성</div><div class="flow-role" data-en>ServiceMax via Playwright over CDP</div></div><div class="flow-badge badge-blue">AUTO</div></div>
-        <div class="flow-step"><div class="flow-num">05</div><div class="flow-icon">🔏</div><div class="flow-info"><div class="flow-name" data-ko>Send to Approval</div><div class="flow-name" data-en>Send to Approval</div><div class="flow-role" data-ko>앱은 절대 누르지 않음 - 사람이 직접</div><div class="flow-role" data-en>Never auto-clicked - human only</div></div><div class="flow-badge badge-red">HUMAN</div></div>
-        <div class="flow-step"><div class="flow-num">06</div><div class="flow-icon">🔁</div><div class="flow-info"><div class="flow-name" data-ko>Oracle 전송·Release·완료메일</div><div class="flow-name" data-en>Oracle Trigger·Release·Mail</div><div class="flow-role" data-ko>중복발송 가드 포함</div><div class="flow-role" data-en>with duplicate-send guard</div></div><div class="flow-badge badge-blue">AUTO</div></div>
+        <div class="flow-step"><div class="flow-num">05</div><div class="flow-icon">🔏</div><div class="flow-info"><div class="flow-name" data-ko>Send to Approval</div><div class="flow-name" data-en>Send to Approval</div><div class="flow-role" data-ko>앱은 절대 누르지 않음 - 사람이 직접</div><div class="flow-role" data-en>Never auto-clicked - human only</div></div><div class="flow-badge badge-green">HUMAN</div></div>
+        <div class="flow-step"><div class="flow-num">06</div><div class="flow-icon">🔁</div><div class="flow-info"><div class="flow-name" data-ko>오라클 전송 · 릴리즈</div><div class="flow-name" data-en>Oracle Interface &amp; Release</div><div class="flow-role" data-ko>승인 메일 감지 후 2건 동시 처리</div><div class="flow-role" data-en>Detects approval mail, runs 2 orders in parallel</div></div><div class="flow-badge badge-blue">AUTO</div></div>
+        <div class="flow-step"><div class="flow-num">07</div><div class="flow-icon">📮</div><div class="flow-info"><div class="flow-name" data-ko>완료 통보</div><div class="flow-name" data-en>Completion Notice</div><div class="flow-role" data-ko>물류창고 앞 발송 - 보낸편지함 중복 확인</div><div class="flow-role" data-en>To the 3PL warehouse - dup-checked in Sent Items</div></div><div class="flow-badge badge-blue">AUTO</div></div>
       </div>
     </div>
   </section>
@@ -181,7 +183,7 @@
 
   <section class="section reveal">
     <div class="section-label">Core Modules · Track A</div>
-    <h2 class="section-title"><span data-ko>메일 파서부터</span><span data-en>From the mail parser</span><br><em><span data-ko>GUI까지 6개 모듈</span><span data-en>to the GUI, 6 modules</span></em></h2>
+    <h2 class="section-title"><span data-ko>메일 파서부터</span><span data-en>From the mail parser</span><br><em><span data-ko>입금 대조까지 9개 모듈</span><span data-en>to deposit checks, 9 modules</span></em></h2>
     <div class="mod-grid">
       <div class="mod-card c1 reveal">
         <div class="mod-head"><div class="mod-file">parser.py</div><div class="mod-title" data-ko>출고요청 메일 파서</div><div class="mod-title" data-en>Request Mail Parser</div></div>
@@ -230,7 +232,46 @@
       <div class="note-label" data-en>Why rebuild without AI</div>
       <div class="note-text" data-ko>Salesforce를 Playwright로 직접 구동하는 방식 자체는 본인이 Pick Release/RMA 자동화에서 이미 쓰던 기법이라 동료의 소모품 출고 업무에도 공유해뒀었다. 문제는 동료가 자리를 비운 동안 Claude Code 없이도 팀원이 이어받아 돌릴 수 있어야 한다는 점 — 그래서 대화형으로 처리하던 흐름을 규칙 기반 파서 + 고정 GUI로 재구성해, 토큰 비용도 없고 Claude Code 설치도 필요 없는 배치 파일 2개짜리 앱으로 다시 짰다. Send to Approval을 앱이 누르지 못하게 막은 것도 같은 이유 - 무인화 범위를 사람이 통제할 수 있는 만큼만 좁혔다.</div>
       <div class="note-text" data-en>Driving Salesforce directly via Playwright wasn't new — it's the same technique already used for Pick Release/RMA automation, shared into this parts-order workflow too. The problem was coverage: a teammate had to be able to run this without Claude Code while the usual owner was on leave. So the conversational, AI-assisted flow was rebuilt as a rule-based parser plus a fixed GUI — no token cost, no Claude Code install, just two batch files. Blocking the app from ever clicking Send to Approval follows the same logic: keep the unattended scope exactly as wide as a human can still supervise.</div>
-    </div>
+          <div class="mod-card c3 reveal">
+        <div class="mod-head">
+          <div class="mod-file">deposit_check.py</div>
+          <div class="mod-title" data-ko>입금 대조</div>
+          <div class="mod-title" data-en>Deposit Verification</div>
+        </div>
+        <div class="mod-desc"><span data-ko>결제수단이 계좌이체인 주문에 한해, 재무 부서의 입금 원장(6,157건, 읽기 전용)과 대조한 뒤에만 생성으로 넘긴다. 금액 정확일치를 1차 키로, 결제일 앞뒤 며칠을 2차 조건으로 걸고, 적요의 입금자명은 확신을 올리는 가점으로 쓴다.</span><span data-en>For bank-transfer orders only, matches against the finance team's deposit ledger (6,157 rows, read-only) before creation proceeds. Exact amount is the primary key, a date window around the payment date the secondary, and the remitter name on the statement line raises confidence.</span></div>
+        <div class="mod-points">
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>입금자가 병원이 아니라 원장·직원 개인 이름인 경우가 흔해 이름 일치는 필수 조건이 아니라 등급 구분에 씀 - 입금확인 / 이름불일치 / 입금없음</span><span data-en>Remitters are often an individual, not the clinic, so a name match grades the result rather than gating it - verified / name-mismatch / not-found</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>지점명만 겹쳐 다른 병원 입금을 잡던 오탐을 브랜드명 우선 매칭으로 교정</span><span data-en>Fixed a false positive where a shared branch token matched a different clinic, by requiring the brand token</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>일괄 생성에서는 미확인 건을 자동 제외, 단건은 경고 후 사람이 판단</span><span data-en>Batch creation drops unverified orders; single creation warns and leaves the call to a human</span></div></div>
+        </div>
+      </div>
+      <div class="mod-card c1 reveal">
+        <div class="mod-head">
+          <div class="mod-file">po_finish.py · classify_pending()</div>
+          <div class="mod-title" data-ko>상태 판정</div>
+          <div class="mod-title" data-en>Status Derivation</div>
+        </div>
+        <div class="mod-desc"><span data-ko>진행 상태를 앱이 적어둔 메모로 판단하지 않는다. 메모는 생성 시점 문구라 끝난 뒤에도 그대로 남아 완료된 주문이 계속 대기로 보였다. 릴리즈 상태파일, 보낸편지함의 주문번호, 승인·취소 알림 메일이라는 세 가지 외부 흔적으로만 상태를 만든다.</span><span data-en>Progress is never derived from notes the app itself wrote. Those notes are written at creation time and never change, so finished orders kept showing as pending. Status is rebuilt from three external traces: the release state file, order numbers in Sent Items, and approval/cancellation notification mails.</span></div>
+        <div class="mod-points">
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>완료 / 메일만 남음 / 승인-진행가능 / 승인 대기 / 취소됨 5단계로 분류, 완료·취소 건은 버튼 자체가 잠긴다</span><span data-en>Five states - done / mail-pending / ready / awaiting-approval / cancelled - with action buttons locked on the finished and cancelled ones</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>스케줄러가 처리했든 사람이 직접 했든 흔적은 같은 자리에 남으므로 앱을 거치지 않은 처리도 그대로 인식</span><span data-en>Because the traces land in the same places regardless of who acted, work done outside the app is recognised too</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>보낸편지함은 주문 1건마다 다시 훑지 않고 한 번만 읽어 번호 집합으로 만든다</span><span data-en>Sent Items is scanned once into a set of order numbers, not re-scanned per order</span></div></div>
+        </div>
+      </div>
+      <div class="mod-card c2 reveal">
+        <div class="mod-head">
+          <div class="mod-file">파트오더앱.py · run_bg(lane)</div>
+          <div class="mod-title" data-ko>동시 실행 · 일괄 처리</div>
+          <div class="mod-title" data-en>Concurrency &amp; Batching</div>
+        </div>
+        <div class="mod-desc"><span data-ko>생성 탭과 승인-후 탭이 각자의 레인에서 동시에 돈다. 승인건 일괄 처리는 워커 2개가 나눠 가져가되, 오라클 릴리즈만은 잠금으로 줄을 세운다 - 창고 시스템이 한 번에 한 건만 받기 때문이다.</span><span data-en>The creation tab and the post-approval tab run concurrently in separate lanes. Approved orders are processed by two workers, but the Oracle release step alone is serialised behind a lock, because the warehouse system accepts one at a time.</span></div>
+        <div class="mod-points">
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>병렬 이득은 최대 4분 걸리는 오라클 전송 대기가 겹치는 구간 - 릴리즈를 억지로 겹치면 잠금 대기로 오히려 느려진다</span><span data-en>The gain comes from overlapping the Oracle interface poll (up to 4 min); forcing release to overlap only burns lock-wait</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>워커마다 전용 브라우저 탭 - 로그인 탭을 공유하면 서로 다른 주소로 끌고 다녀 양쪽이 깨진다</span><span data-en>Each worker gets its own browser tab; sharing the logged-in tab makes both sides navigate it out from under each other</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>여러 건 생성은 Location을 먼저 전부 조회해 후보가 갈리는 건만 시작 전에 사람이 고른다</span><span data-en>Multi-create resolves every Location up front, asking a human only where candidates are ambiguous</span></div></div>
+        </div>
+      </div>
+</div>
   </section>
 
   <section class="pipeline-section reveal">
@@ -259,9 +300,9 @@
         <div class="mod-desc" data-en>Imports and calls create_pick_wave_transfer_order / release_pick_wave_now straight from the DCD Pick Release/Rebalance automation — reusing already-verified code instead of writing new release logic.</div>
       </div>
       <div class="mod-card c1 reveal">
-        <div class="mod-head"><div class="mod-file">fse_po_app.py</div><div class="mod-title" data-ko>원클릭 GUI (임시)</div><div class="mod-title" data-en>One-Click GUI (temporary)</div></div>
-        <div class="mod-desc" data-ko>part_order_app.py와 같은 패턴의 얇은 Tkinter 래퍼. "이번 주까지만 쓸 임시 백업용"이라고 코드에 명시하고, 로그를 실시간 스트리밍만 한다.</div>
-        <div class="mod-desc" data-en>A thin Tkinter wrapper in the same pattern as part_order_app.py. The docstring explicitly marks it "temporary, this week only," and it just streams the run log live.</div>
+        <div class="mod-head"><div class="mod-file">파트오더앱.py · 탭 3</div><div class="mod-title" data-ko>통합 · 팀 이관</div><div class="mod-title" data-en>Merged &amp; Handed Over</div></div>
+        <div class="mod-desc" data-ko>따로 돌던 FSE 전용 앱을 소모품 앱의 세 번째 탭으로 흡수해 실행 파일을 하나로 줄였다. 합치는 과정에서 두 트랙이 같은 Salesforce 탭을 서로 끌고 다니던 충돌과, 종료 시 공용 브라우저를 통째로 닫아 다른 탭 작업까지 죽이던 처리를 함께 잡았다. 사용자 이름이 박혀 있던 경로는 계정 기준으로 자동 해석하게 바꾸고 설정은 계정별 파일로 분리해, 동료 PC에서도 같은 코드가 그대로 돈다.</div>
+        <div class="mod-desc" data-en>The standalone FSE app became the third tab of the consumables app, collapsing two executables into one. Merging them surfaced two defects worth fixing: both tracks were navigating the same Salesforce tab out from under each other, and one path closed the shared browser on exit, killing work running in the other tab. Hard-coded user paths now resolve per Windows account and settings split into per-account files, so the same code runs on a teammate's machine.</div>
       </div>
     </div>
 
