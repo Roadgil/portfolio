@@ -286,11 +286,11 @@
   <section class="hero">
     <div class="hero-bg-glow"></div>
     <div class="hero-bg-glow2"></div>
-    <div class="hero-tag">Sales FCST · 2025–2026</div>
-    <h1 class="hero-title"><span data-ko>영업</span><span data-en>SALES</span><br><span class="accent" data-ko>예측</span><span class="accent" data-en>FCST</span><br><span class="accent2" data-ko>대시보드</span><span class="accent2" data-en>DASH</span><span data-en>BOARD</span></h1>
+    <div class="hero-tag">Sales Dashboard · 2025–2026</div>
+    <h1 class="hero-title"><span data-ko>영업</span><span data-en>SALES</span><br><span class="accent2" data-ko>대시보드</span><span class="accent2" data-en>DASHBOARD</span></h1>
     <p class="hero-desc">
-      <span data-ko>Firebase 기반의 실시간 영업 납품처 관리 시스템. 팀원별 분기 목표 추적, 다국어 지원, 대표 보고용 리포트까지 하나의 플랫폼에서 연결한 End-to-End 솔루션. Salesforce(CRM)는 실제 출하 확정(Ship Confirm) 여부와 무관하게 계약을 Closed Won으로 표시하기 때문에, CRM 상 계약 현황과 실제 매출 인식 시점 사이에 괴리가 생길 수 있다 — 이 대시보드는 Salesforce 예측 데이터를 매달 자동 동기화하고, Ship Confirm을 매출 집계의 최종 게이트로 두어 그 괴리를 완화한다.</span>
-      <span data-en>A real-time Firebase sales-account management system. Per-member quarterly target tracking, multilingual UI, and an executive report — connected end-to-end in one platform. Salesforce (CRM) marks a deal Closed Won regardless of whether it has actually shipped, which can create a gap between what the CRM reports and when revenue is truly recognized. This dashboard closes that gap by auto-syncing Salesforce forecast data every month and treating Ship Confirm as the sole gate for counting revenue.</span>
+      <span data-ko>Firebase 기반의 실시간 영업 납품처 관리 시스템. 팀원별 분기 목표 추적, 다국어 지원, 대표 보고용 리포트까지 하나의 플랫폼에서 연결한 End-to-End 솔루션. Salesforce(CRM)는 실제 출하 확정(Ship Confirm) 여부와 무관하게 계약을 Closed Won으로 표시하기 때문에, CRM 상 계약 현황과 실제 매출 인식 시점 사이에 괴리가 생길 수 있다 — 이 대시보드는 Salesforce 데이터를 매주 자동 동기화하고, Ship Confirm을 매출 집계의 최종 게이트로 두어 그 괴리를 완화한다. 목표를 못 채울 것 같은 분기에는, 실제 데이터를 건드리지 않고 어떤 미확정 건을 추가로 확보하면 되는지 미리 계산해보는 가상 시나리오 모드도 함께 쓴다.</span>
+      <span data-en>A real-time Firebase sales-account management system. Per-member quarterly target tracking, multilingual UI, and an executive report — connected end-to-end in one platform. Salesforce (CRM) marks a deal Closed Won regardless of whether it has actually shipped, which can create a gap between what the CRM reports and when revenue is truly recognized. This dashboard closes that gap by auto-syncing Salesforce data every week and treating Ship Confirm as the sole gate for counting revenue. When a quarter looks short, a what-if scenario mode lets the team test which pending deals would close the gap — without ever touching the real numbers.</span>
     </p>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num">3</span><span class="stat-label" data-ko>핵심 모듈</span><span class="stat-label" data-en>Core Modules</span></div>
@@ -303,8 +303,8 @@
   <!-- TICKER -->
   <div class="ticker">
     <div class="ticker-inner">
-      <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span><span class="ticker-item">Salesforce Sync</span>
-      <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span><span class="ticker-item">Salesforce Sync</span>
+      <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span><span class="ticker-item">Salesforce Sync</span><span class="ticker-item">Scenario Sim</span><span class="ticker-item">Audit Log</span>
+      <span class="ticker-item">React 18</span><span class="ticker-item">Firebase Firestore</span><span class="ticker-item">Firebase Auth</span><span class="ticker-item">Chart.js</span><span class="ticker-item">Tailwind CSS</span><span class="ticker-item">KO / EN</span><span class="ticker-item">Realtime Sync</span><span class="ticker-item">Drag Sort</span><span class="ticker-item">Salesforce Sync</span><span class="ticker-item">Scenario Sim</span><span class="ticker-item">Audit Log</span>
     </div>
   </div>
 
@@ -380,8 +380,8 @@
       </div>
 
       <div class="sync-foot">
-        <span data-ko>매달 1일, 작업 스케줄러가 이 다섯 단계를 사람 없이 실행한다 · 후보는 대시보드에서 담당자가 클릭 한 번으로 등록한다</span>
-        <span data-en>On the first of each month a scheduled task runs these five steps unattended; the sales owner then registers a candidate with one click on the dashboard</span>
+        <span data-ko>매주 목요일, 작업 스케줄러가 이 다섯 단계를 사람 없이 실행한다 · 후보는 대시보드에서 담당자가 클릭 한 번으로 등록한다</span>
+        <span data-en>Every Thursday a scheduled task runs these five steps unattended; the sales owner then registers a candidate with one click on the dashboard</span>
       </div>
     </div>
 
@@ -413,8 +413,8 @@
       <div class="mod reveal">
         <div class="mod-n">01 · MAIN</div>
         <div class="mod-t" data-ko>영업 납품처 대시보드</div><div class="mod-t" data-en>Sales Account Dashboard</div>
-        <div class="mod-d" data-ko>팀원별 분기 목표 대비 실적을 실시간으로 본다. Pending · Back up · ACT · Ship Confirm 상태로 나눠 관리하고 행은 드래그로 우선순위를 바꾼다.</div>
-        <div class="mod-d" data-en>Live per-member quarter target versus actual, split across Pending, Back up, ACT and Ship Confirm, with rows dragged into priority order.</div>
+        <div class="mod-d" data-ko>팀원별 분기 목표 대비 실적을 실시간으로 본다. Pending · Back up · ACT · Ship Confirm 상태로 나눠 관리하고 행은 드래그로 우선순위를 바꾼다. 같은 화면에서 시나리오 모드로 전환하면, 미확정 건을 드래그로 얹어보며 무엇을 더 확보해야 목표를 채우는지 실제 데이터를 건드리지 않고 미리 계산해볼 수 있다.</div>
+        <div class="mod-d" data-en>Live per-member quarter target versus actual, split across Pending, Back up, ACT and Ship Confirm, with rows dragged into priority order. The same screen doubles as a scenario mode — drag pending deals in to test what would close the gap to target, without ever touching the real numbers.</div>
       </div>
       <div class="mod reveal" style="transition-delay:0.05s">
         <div class="mod-n">02 · ANALYTICS</div>
@@ -560,7 +560,7 @@
       <div class="arch-flow" style="margin-top:24px; padding-top:24px; border-top:1px dashed var(--border);">
         <div class="arch-node"><div class="arch-node-icon">☁️</div><div class="arch-node-name">Salesforce</div><div class="arch-node-sub" data-ko>Korea Opportunity 리포트</div><div class="arch-node-sub" data-en>Korea Opportunity report</div></div>
         <div class="arch-arrow">→</div>
-        <div class="arch-node highlight"><div class="arch-node-icon">🐍</div><div class="arch-node-name" data-ko>Python 동기화</div><div class="arch-node-name" data-en>Python Sync</div><div class="arch-node-sub" data-ko>월 1회 Export → 파싱</div><div class="arch-node-sub" data-en>Monthly export → parse</div></div>
+        <div class="arch-node highlight"><div class="arch-node-icon">🐍</div><div class="arch-node-name" data-ko>Python 동기화</div><div class="arch-node-name" data-en>Python Sync</div><div class="arch-node-sub" data-ko>매주 목요일 Export → 파싱</div><div class="arch-node-sub" data-en>Weekly (Thu) export → parse</div></div>
         <div class="arch-arrow">→</div>
         <div class="arch-node"><div class="arch-node-icon">🔥</div><div class="arch-node-name">Firestore</div><div class="arch-node-sub" data-ko>SO번호·Dealer·계약구분 자동 반영</div><div class="arch-node-sub" data-en>Auto-fills SO #, dealer, contract type</div></div>
       </div>
@@ -574,11 +574,14 @@
       <div class="highlight-card c5 reveal" style="transition-delay:0.4s"><div class="highlight-num">05</div><div class="highlight-icon">📈</div><div class="highlight-title" data-ko>분기 목표 추적 자동화</div><div class="highlight-title" data-en>Auto Target Tracking</div><div class="highlight-desc" data-ko>입력 데이터로 분기 달성률·Back up 비율·미납 현황을 KPI·차트로 자동 계산.</div><div class="highlight-desc" data-en>Auto-computes quarter attainment, back-up ratio, and outstanding into KPIs and charts.</div></div>
       <div class="highlight-card c6 reveal" style="transition-delay:0.5s"><div class="highlight-num">06</div><div class="highlight-icon">☁️</div><div class="highlight-title" data-ko>Salesforce 연동 · 수기 입력 간극 최소화</div><div class="highlight-title" data-en>Salesforce Sync · Minimizing the Manual-Entry Gap</div><div class="highlight-desc" data-ko>리포트에 API가 없어 Selenium이 리포트 화면을 열고 기간 필터를 맞춘 뒤 Export까지 눌러 파일을 받는다. 받은 파일을 계약 단위로 묶어 SO번호·계약구분·Acc Type(옵션킷 조합 자동계산)을 Firestore 후보 큐에 넣고, 영업팀이 담당자·제품·분기 필터로 검토한 뒤 클릭 한 번으로 등록한다. 같은 구조를 커미션 자동계산 등 다른 수기 업무로 확장할 수 있다.</div><div class="highlight-desc" data-en>The report has no API, so Selenium opens the report screen, sets the date filter and clicks Export to collect the file. What comes back is grouped per deal, and SO number, contract type and Acc Type (derived from the option-kit combination) land in a Firestore candidate queue, where the sales team filters by member, product or quarter and registers a candidate in one click. The same pipeline extends to other manual workflows, such as automated commission calculation.</div></div>
       <div class="highlight-card c7 reveal" style="transition-delay:0.6s"><div class="highlight-num">07</div><div class="highlight-icon">🚢</div><div class="highlight-title" data-ko>Ship Confirm 게이트 · CRM-매출 괴리 완화</div><div class="highlight-title" data-en>Ship Confirm Gate · CRM-Revenue Reconciliation</div><div class="highlight-desc" data-ko>Salesforce는 실제 출하와 무관하게 계약을 Closed Won으로 표시한다. 이 대시보드는 상태를 Pending → Back up → ACT → Ship Confirm 4단계로 나누고, 매출 집계는 Ship Confirm 단계에서만 집계되도록 설계해 CRM 상 계약 현황과 실제 인식된 매출 사이의 괴리를 완화한다.</div><div class="highlight-desc" data-en>Salesforce marks a deal Closed Won independent of whether it has actually shipped. This dashboard splits status into four stages — Pending → Back up → ACT → Ship Confirm — and only counts revenue at the Ship Confirm stage, reconciling what the CRM reports against when revenue is actually recognized.</div></div>
+      <div class="highlight-card c1 reveal" style="transition-delay:0.7s"><div class="highlight-num">08</div><div class="highlight-icon">🧮</div><div class="highlight-title" data-ko>가상 시나리오 계산기 · 목표 역산</div><div class="highlight-title" data-en>Scenario Simulator · Working Backward From Target</div><div class="highlight-desc" data-ko>확정된 Ship Confirm 금액 위에 아직 미확정인 건들을 드래그로 얹어보며 "무엇을 더 확보하면 목표를 채우는지"를 계산한다. Firestore 원본에는 전혀 쓰지 않는 화면 전용 오버레이라 새로고침하면 완전히 원상복구되고, 실제 합계와 시나리오 합계를 나란히 표시해 확정치와 가정치가 섞이지 않게 했다.</div><div class="highlight-desc" data-en>On top of the amount already locked in at Ship Confirm, pending deals can be dragged in to test what would close the gap to target. It's a display-only overlay that never writes to Firestore, so a refresh restores the real numbers exactly — and the real and scenario totals are shown side by side so confirmed and hypothetical figures are never confused.</div></div>
+      <div class="highlight-card c2 reveal" style="transition-delay:0.8s"><div class="highlight-num">09</div><div class="highlight-icon">🔁</div><div class="highlight-title" data-ko>분기 전환 자동 이월</div><div class="highlight-title" data-en>Automatic Quarter Rollover</div><div class="highlight-desc" data-ko>새 분기가 시작되는 시점을 감지해, 직전 분기에서 Ship Confirm까지 가지 못한 건(ACT · Pending · Back up)을 현재 분기로 자동 이월한다. 이미 이월했는지는 별도 플래그로 기억해 중복 실행을 막는다.</div><div class="highlight-desc" data-en>Detects the moment a new quarter begins and automatically rolls forward any deal that never reached Ship Confirm in the prior quarter — ACT, Pending or Back up — into the current one. A flag remembers whether the rollover already ran, so it never fires twice.</div></div>
+      <div class="highlight-card c3 reveal" style="transition-delay:0.9s"><div class="highlight-num">10</div><div class="highlight-icon">🧾</div><div class="highlight-title" data-ko>감사 로그 · 커미션 이중차감 방지</div><div class="highlight-title" data-en>Audit Log · Double-Commission Guard</div><div class="highlight-desc" data-ko>매출 건 생성 · 수정 · 삭제, 담당자 변경, 분기 이동이 일어날 때마다 변경 전/후 값과 실행자를 별도 감사 로그 화면에 남긴다. 같은 계약이 여러 제품 라인으로 나뉘어도 외부 커미션은 대표 라인 하나에서만 차감해 이중 차감을 막는다.</div><div class="highlight-desc" data-en>Every create, edit, delete, owner change and quarter move is logged with a before/after snapshot and the actor's email on a separate audit page. When one deal spans multiple product lines, external commission is deducted from a single representative line only, preventing double counting.</div></div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-brand">SALES FCST</div>
+    <div class="footer-brand">SALES DASHBOARD</div>
     <div class="footer-note">BUILT WITH REACT · FIREBASE · CHART.JS</div>
   </footer>
 
@@ -595,7 +598,7 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Replays one monthly sync run: open report, set window, export, parse,
+    // Replays one weekly sync run: open report, set window, export, parse,
     // then write. Without JS or under reduced motion it stays a finished screen.
     (function(){
       var wrap = document.getElementById('syncDemo');
@@ -612,7 +615,7 @@
       var timers  = [];
 
       var TXT = {
-        idle: ['매달 1일 실행 대기', 'waiting for the monthly run'],
+        idle: ['매주 목요일 실행 대기', 'waiting for the weekly run'],
         s1:   ['① Salesforce 리포트 열기', '① opening the Salesforce report'],
         s2:   ['② Close Date 구간 설정 후 Run', '② setting the Close Date window, then Run'],
         s3:   ['③ Export 클릭 · 파일 수신 대기', '③ clicking Export, waiting on the file'],
