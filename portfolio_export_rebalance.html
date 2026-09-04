@@ -273,14 +273,14 @@
         <span data-en>Three outbound tracks leaving the Korea (KRP) warehouse — cross-border inventory rebalance to sister companies, RMA returns to US headquarters, and the FedEx booking that physically carries both — wired into a single pipeline. It runs from the first system alert through 3PL warehouse coordination, the Oracle transaction, customs paperwork, the export declaration, and on to creating the FedEx shipment and collecting the tracking number.</span>
       </p>
       <p class="hero-desc" style="margin-top:-30px;">
-        <span data-ko>수기 SOP를 그대로 옮겨 적은 것이 아니라, 코드로 옮기는 과정에서 SOP 자체를 다시 세웠다 — 창고에 보내는 요청 서식, 처리의 최소 단위, 실적의 출처, 되돌릴 수 없는 지점의 정의까지 7개 규칙을 재정립했다.</span>
-        <span data-en>The manual SOP wasn't merely transcribed into code — writing it down as code meant rewriting the procedure itself: seven rules were redefined, covering the request format sent to the warehouse, the unit of work, the source of truth for the ledger, and where the irreversible steps sit.</span>
+        <span data-ko>수기 SOP를 그대로 옮겨 적은 것이 아니라, 코드로 옮기는 과정에서 SOP 자체를 다시 세웠다 — 창고에 보내는 요청 서식, 처리의 최소 단위, 실적의 출처, 되돌릴 수 없는 지점의 정의까지 8개 규칙을 재정립했다.</span>
+        <span data-en>The manual SOP wasn't merely transcribed into code — writing it down as code meant rewriting the procedure itself: eight rules were redefined, covering the request format sent to the warehouse, the unit of work, the source of truth for the ledger, and where the irreversible steps sit.</span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">3</span><span class="stat-label" data-ko>자동화 트랙(재배치·반송·발송)</span><span class="stat-label" data-en>Automated Tracks</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent2);">14/14</span><span class="stat-label" data-ko>수출 SOP 단계 코드화</span><span class="stat-label" data-en>Export SOP Steps Coded</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent3);">11</span><span class="stat-label" data-ko>FedEx 어레인지 단계 코드화</span><span class="stat-label" data-en>FedEx Booking Steps Coded</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent4);">7</span><span class="stat-label" data-ko>재정립한 SOP 규칙</span><span class="stat-label" data-en>SOP Rules Redefined</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">8</span><span class="stat-label" data-ko>재정립한 SOP 규칙</span><span class="stat-label" data-en>SOP Rules Redefined</span></div>
       </div>
     </div>
 
@@ -391,8 +391,8 @@
     <div class="section-label">SOP Redefinition</div>
     <h2 class="section-title"><span data-ko>SOP를 옮겨 적은 게 아니라</span><span data-en>The SOP wasn't transcribed</span><br><em><span data-ko>다시 세웠다</span><span data-en>— it was rewritten</span></em></h2>
     <p class="tl-desc" style="max-width:900px;margin-bottom:38px;">
-      <span data-ko>수기 절차를 그대로 코드로 옮기면, 사람이 눈치로 메우던 빈칸이 그대로 자동화의 사고가 된다. 실제로 잘못된 수량이 벤더에게 나갔고, 배송이 갈린 건에서 서류 한 장이 조용히 빠졌다. 그때마다 코드만 고치지 않고 절차 자체를 다시 정의했다 — 아래 7개가 그 결과다.</span>
-      <span data-en>Transcribe a manual procedure verbatim into code and every gap a person used to paper over by instinct becomes an automated incident. A wrong quantity did go out to a vendor; on a split delivery a document did quietly go missing. Each time the fix was not only in the code but in the procedure itself — these seven are the result.</span>
+      <span data-ko>수기 절차를 그대로 코드로 옮기면, 사람이 눈치로 메우던 빈칸이 그대로 자동화의 사고가 된다. 실제로 잘못된 수량이 벤더에게 나갔고, 배송이 갈린 건에서 서류 한 장이 조용히 빠졌다. 그때마다 코드만 고치지 않고 절차 자체를 다시 정의했다 — 아래 8개가 그 결과다.</span>
+      <span data-en>Transcribe a manual procedure verbatim into code and every gap a person used to paper over by instinct becomes an automated incident. A wrong quantity did go out to a vendor; on a split delivery a document did quietly go missing. Each time the fix was not only in the code but in the procedure itself — these eight are the result.</span>
     </p>
 
     <div class="sop-grid">
@@ -467,6 +467,16 @@
         <div class="sop-why"><span data-ko>해외 법인이 만드는 알림은 우리 업무시간을 따르지 않는다. 아침 첫 실행이 메일 동기화보다 빨라 "없음"으로 끝나는 레이스도 실측으로 확인해, 짧은 주기로 자연스럽게 흡수되게 했다.</span><span data-en>Alerts raised by overseas entities don't keep Korean office hours. A race where the first morning scan outran the mail sync and returned "nothing" was also observed — a short interval absorbs it without special handling.</span></div>
       </div>
 
+      <div class="sop reveal" style="transition-delay:.28s">
+        <div class="sop-n">RULE 08</div>
+        <div class="sop-t"><span data-ko>트리거는 한 경로에 기대지 않는다</span><span data-en>Never let a trigger depend on one channel</span></div>
+        <div class="sop-ba">
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>알림 메일이 유일한 시작점이었다. 메일 발송이 멈춘 나흘 동안 재배치 4건이 통째로 밀렸고, 스캔 로그에는 매 회차 "신규 없음"만 남았다.</span><span data-en>The alert mail was the only entry point. When it stopped for four days, four rebalance cases sat untouched while every scan cycle logged nothing but "no new triggers".</span></div>
+          <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>메일에서 아무것도 못 찾으면 알림의 원천인 재고이동 목록을 직접 읽는다. 출발 창고·TO 번호 배정·미출고 상태로 메일과 같은 판정을 만든다.</span><span data-en>When the mail yields nothing, the stock-movement list that raises those alerts is read directly — origin warehouse, an assigned TO number, and a not-yet-shipped status reproduce the same judgement the mail carried.</span></div>
+        </div>
+        <div class="sop-why"><span data-ko>알림은 원천이 아니라 원천의 사본이다. 사본이 끊긴 것을 "일이 없다"로 읽으면 자동화는 조용히 멈춘 채 정상으로 보인다 — 침묵이 정상인지 장애인지 구분되지 않는 구조가 진짜 결함이었다.</span><span data-en>An alert is a copy of the source, not the source. Read a broken copy as "nothing to do" and the automation stalls while still looking healthy — the real defect was a design in which silence and failure were indistinguishable.</span></div>
+      </div>
+
     </div>
   </section>
 
@@ -534,8 +544,8 @@
         <div class="tl-desc" data-en>Runs straight through with no manual command the moment the reply is parsed. Progress is recorded stage by stage so an interruption never re-clicks a step that already went through — inventory movement can't be undone, so retries and duplicate-execution guards had to be built together.</div>
         <div class="ora-steps">
           <div class="ora-step"><div class="n">05</div><div class="t">Create Pick Wave</div><div class="o" data-ko>주문 유형을 Sales Order → Transfer Order로 전환 후 TO 번호 투입</div><div class="o" data-en>Switches order type from Sales Order to Transfer Order, then feeds the TO number</div></div>
-          <div class="ora-step"><div class="n">06</div><div class="t">Release Now</div><div class="o" data-ko>피킹 지시 발행</div><div class="o" data-en>Issues the pick instruction</div></div>
-          <div class="ora-step"><div class="n">07</div><div class="t">Confirm Pick Slips</div><div class="o" data-ko>3PL이 회신한 로케이터·수량을 그 TO가 들어있는 행에만 입력</div><div class="o" data-en>Enters the 3PL's locators and quantities on the row holding that TO — and only that row</div></div>
+          <div class="ora-step"><div class="n">06</div><div class="t">Release Now</div><div class="o" data-ko>피킹 지시 발행. 백오더가 남으면 다른 서브인벤토리 룰로 한 번 더 릴리즈하고, 두 룰 모두 0건이면 피킹 지시가 없다는 뜻이라 그 자리에서 멈춘다</div><div class="o" data-en>Issues the pick instruction. Any backordered line is released again under the other subinventory rule; when both rules yield nothing there is no pick to confirm, so the run stops right there</div></div>
+          <div class="ora-step"><div class="n">07</div><div class="t">Confirm Pick Slips</div><div class="o" data-ko>3PL이 회신한 로케이터·수량을 그 TO가 들어있는 행에만 입력. 시리얼 관리 품목은 기존 값을 수량만큼 전부 지우고 개체마다 한 줄씩 다시 넣는다 — 화면이 값을 확정했는지 옆 칸으로 확인한 뒤에야 다음 줄로 넘어간다</div><div class="o" data-en>Enters the 3PL's locators and quantities on the row holding that TO — and only that row. For serialised items every pre-filled serial is cleared, one per unit, then re-entered line by line; each line moves on only once the adjacent cell confirms the value stuck</div></div>
           <div class="ora-step"><div class="n">08</div><div class="t">Confirm &amp; Go to Ship Confirm</div><div class="o" data-ko>Shipment 생성</div><div class="o" data-en>Creates the shipment</div></div>
           <div class="ora-step"><div class="n">09</div><div class="t">Ship Confirm</div><div class="o" data-ko>확정 메시지에서 Shipment 번호 확인 → Delivery 번호 확정</div><div class="o" data-en>Reads the shipment number off the confirmation, fixing the delivery number</div></div>
         </div>
@@ -563,8 +573,8 @@
         <div class="tl-title" data-ko>반송 건의 서류 규칙 — 신고가·선언서·본사 통보</div><div class="tl-title" data-en>Return-only rules — declared value, declaration, HQ notice</div>
         <div class="tl-desc" data-ko>반송은 파는 물건이 아니라 고장난 부품이 제조사로 돌아가는 것이라, 인보이스 금액을 그대로 쓰면 안 된다. 단가·품목금액·소계·총계를 전부 원본의 10%로 다시 쓰고, HTS 코드는 파트와 무관하게 재반입 조항으로 고정하며, 그 금액의 근거가 되는 통관 문구를 품목표 아래 빈 띠에 넣는다. 여기에 반송에 반드시 따라붙는 선언서(Foreign Shipper Declaration)를 양식에서 자동 생성해 인보이스와 함께 본사 담당자 앞 메일에 붙인다.</div>
         <div class="tl-desc" data-en>A return isn't merchandise — it's a faulty part going back to its manufacturer, so the invoice value cannot stand. Unit prices, line amounts, subtotal, and total are all rewritten to a tenth of the original, the HTS code is pinned to the re-entry provision regardless of the part, and the customs sentence justifying that value is placed in the blank band under the item table. The shipper's declaration that always accompanies a return is generated from its template and attached, alongside the invoice, to a mail addressed to headquarters.</div>
-        <div class="tl-desc" data-ko style="margin-top:10px;">금액을 다시 그리면 PDF의 텍스트 묶음이 깨져 품목 파싱이 무너지기 때문에, 실적에 쓸 값은 금액을 손대기 전 원본에서 읽고 코드 안에서 10%를 곱한다. 같은 파트가 시리얼별로 여러 줄에 걸쳐 있어서 선언서와 실적 수량은 파트당 합산해야 맞는다.</div>
-        <div class="tl-desc" data-en style="margin-top:10px;">Redrawing the amounts breaks the PDF's text grouping and with it the item parser, so the values destined for the ledger are read from the untouched original and scaled in code instead. The same part also spans several rows by serial number, so the declaration and the ledger quantity only come out right when aggregated per part.</div>
+        <div class="tl-desc" data-ko style="margin-top:10px;">금액을 다시 그리면 PDF의 텍스트 묶음이 깨져 품목 파싱이 무너지기 때문에, 실적에 쓸 값은 금액을 손대기 전 원본에서 읽고 코드 안에서 10%를 곱한다. 같은 파트가 시리얼별로 여러 줄에 걸쳐 있어서 선언서와 실적 수량은 파트당 합산해야 맞는다 — 반송만의 규칙으로 두었다가, 시리얼이 붙은 재배치 건에서 수량이 절반만 기입되는 것을 발견하고 두 경로 모두에 적용했다.</div>
+        <div class="tl-desc" data-en style="margin-top:10px;">Redrawing the amounts breaks the PDF's text grouping and with it the item parser, so the values destined for the ledger are read from the untouched original and scaled in code instead. The same part also spans several rows by serial number, so the declaration and the ledger quantity only come out right when aggregated per part — treated as a return-only rule until a serialised rebalance landed in the ledger at half its quantity, after which it was applied to both paths.</div>
       </div>
 
       <div class="tl-item m-doc">
@@ -587,8 +597,8 @@
         <div class="tl-dot"></div>
         <div class="tl-head"><span class="tl-tag">FEDEX</span><span class="tl-step">STEP 15–25</span></div>
         <div class="tl-title" data-ko>발송 어레인지 11단계 사전입력</div><div class="tl-title" data-en>Pre-filling all eleven booking screens</div>
-        <div class="tl-desc" data-ko>인보이스가 확정되면 그 자리에서 발송 예약 화면으로 넘어간다. 박스 제원은 3PL 회신 원본에서, 품목 값은 방금 발행한 인보이스에서 가져온다 — 사람이 두 문서를 번갈아 보며 옮겨 적던 구간이 통째로 사라진 지점이다.</div>
-        <div class="tl-desc" data-en>The moment the invoice is final, the case moves straight into the booking screens. Box dimensions come from the original 3PL reply, item values from the invoice just issued — the stretch where a person used to copy back and forth between two documents is simply gone.</div>
+        <div class="tl-desc" data-ko>인보이스가 확정되면 그 자리에서 발송 예약 화면으로 넘어간다. 박스 제원은 3PL 회신 원본에서, 품목 값은 방금 발행한 인보이스에서 가져온다 — 사람이 두 문서를 번갈아 보며 옮겨 적던 구간이 통째로 사라진 지점이다. 어레인지는 배송이 아니라 TO 단위로 한 번만 잡는다. 한 TO가 배송 2건으로 갈리면 이 구간이 두 번 호출되는데, 그대로 두면 같은 화물에 발송물이 두 개 생긴다.</div>
+        <div class="tl-desc" data-en>The moment the invoice is final, the case moves straight into the booking screens. Box dimensions come from the original 3PL reply, item values from the invoice just issued — the stretch where a person used to copy back and forth between two documents is simply gone. A booking is made once per order, not per delivery: when one order splits into two deliveries this stage is entered twice, and left alone it would create two shipments for one consignment.</div>
         <div class="ora-steps">
           <div class="ora-step"><div class="n">15–17</div><div class="t" data-ko>로그인 · 발송 시작</div><div class="t" data-en>Log in, start a shipment</div><div class="o" data-ko>세션을 붙이고 발송 화면까지 진입</div><div class="o" data-en>Attaches the session and lands on the shipping screen</div></div>
           <div class="ora-step"><div class="n">18</div><div class="t" data-ko>수취인 선택</div><div class="t" data-en>Recipient</div><div class="o" data-ko>목적지 코드로 주소록에서 수취인 지정</div><div class="o" data-en>Picks the consignee from the address book by destination code</div></div>
@@ -611,8 +621,8 @@
         <div class="tl-dot"></div>
         <div class="tl-head"><span class="tl-tag">LABEL</span><span class="tl-step">DONE</span></div>
         <div class="tl-title" data-ko>라벨 배포 + 트래킹 역기입</div><div class="tl-title" data-en>Label out, tracking written back</div>
-        <div class="tl-desc" data-ko>생성 성공 화면에서 트래킹 번호를 읽고 라벨을 내려받은 뒤, 서류를 보냈던 3PL 답장 스레드에 라벨을 붙여 보내고, 같은 번호를 재고 이동 목록과 수출신고실적 B/L 칸에 되돌려 적는다. 트래킹 번호는 오직 성공 화면의 배송 조회 앵커에서만 읽는다 — 열려 있던 다른 탭의 12자리 숫자를 트래킹으로 착각해 잘못된 번호를 기입한 사고 이후 못 박은 규칙이다.</div>
-        <div class="tl-desc" data-en>The tracking number is read off the creation-success screen and the label downloaded, then the label goes out on the same 3PL thread that carried the documents, and the number is written back into both the stock-movement list and the waybill column of the export ledger. That number is read only from the shipment-ID anchor on the success screen — a rule nailed down after a 12-digit value from an unrelated open tab was mistaken for it.</div>
+        <div class="tl-desc" data-ko>생성 성공 화면에서 트래킹 번호를 읽고 라벨을 내려받은 뒤, 서류를 보냈던 3PL 답장 스레드에 라벨을 붙여 보내고, 같은 번호를 재고 이동 목록과 수출신고실적 B/L 칸에 되돌려 적고, 이동 목록의 상태를 출고 완료로 바꾼다 — 트래킹이 기입된 뒤에만 바꿔서 추적 번호 없이 출고로만 표시된 행이 남지 않게 했다. 트래킹 번호는 오직 성공 화면의 배송 조회 앵커에서만 읽는다 — 열려 있던 다른 탭의 12자리 숫자를 트래킹으로 착각해 잘못된 번호를 기입한 사고 이후 못 박은 규칙이다.</div>
+        <div class="tl-desc" data-en>The tracking number is read off the creation-success screen and the label downloaded, then the label goes out on the same 3PL thread that carried the documents, and the number is written back into both the stock-movement list and the waybill column of the export ledger, and the movement is flipped to shipped — only after the tracking number has landed, so no row is ever marked shipped without one. That number is read only from the shipment-ID anchor on the success screen — a rule nailed down after a 12-digit value from an unrelated open tab was mistaken for it.</div>
         <div class="tl-desc" data-ko style="margin-top:10px;">처리 결과는 상태 파일에 남아 같은 TO가 다시 트리거돼도 두 번 처리되지 않는다. 여기까지 오면 남는 일은 창고가 상자를 실어 보내는 것뿐이다.</div>
         <div class="tl-desc" data-en style="margin-top:10px;">The outcome is recorded in the state file, so the same order can never be processed twice even if it triggers again. Past this point the only thing left is the warehouse handing the boxes over.</div>
       </div>
@@ -656,13 +666,13 @@
   <!-- LEDGER SOURCE MAP -->
   <section class="pipeline-section reveal" id="ledger">
     <div class="section-label">Ledger Column Map</div>
-    <h2 class="section-title"><span data-ko>실적 13개 컬럼이</span><span data-en>Where each of the 13</span><br><em><span data-ko>어디서 오는가</span><span data-en>ledger columns comes from</span></em></h2>
+    <h2 class="section-title"><span data-ko>실적 14개 컬럼이</span><span data-en>Where each of the 14</span><br><em><span data-ko>어디서 오는가</span><span data-en>ledger columns comes from</span></em></h2>
 
     <div class="xl-wrap" id="xlDemo">
       <div class="xl-top">
         <div class="xl-file"><span data-ko>수출신고실적.xlsx</span><span data-en>export_ledger.xlsx</span> <span data-ko>— 예시 서식</span><span data-en>— schematic</span></div>
-        <div class="xl-stage" id="xlStage"><span data-ko>13/13 자동 기입 — 마지막 칸은 FedEx 라벨이 나온 뒤</span><span data-en>13 of 13 filled automatically — the last one lands once the FedEx label exists</span></div>
-        <div class="xl-count"><span data-ko>채워진 컬럼</span><span data-en>filled</span> <span id="xlCount">13/13</span><span class="meter-bar"><span class="meter-fill" id="xlBar" style="width:100%;background:var(--accent2);"></span></span></div>
+        <div class="xl-stage" id="xlStage"><span data-ko>14/14 자동 기입 — 마지막 칸은 FedEx 라벨이 나온 뒤</span><span data-en>14 of 14 filled automatically — the last one lands once the FedEx label exists</span></div>
+        <div class="xl-count"><span data-ko>채워진 컬럼</span><span data-en>filled</span> <span id="xlCount">14/14</span><span class="meter-bar"><span class="meter-fill" id="xlBar" style="width:100%;background:var(--accent2);"></span></span></div>
         <button class="xl-replay" id="xlReplay">↻ <span data-ko>다시 재생</span><span data-en>replay</span></button>
       </div>
 
@@ -693,6 +703,7 @@
               <th class="col m"><span class="hn">SO (TO#)</span><span class="hs s-mail">MAIL</span></th>
               <th class="col or"><span class="hn">Delivery No</span><span class="hs s-ora">ORACLE</span></th>
               <th class="col ci"><span class="hn"><span data-ko>원산지</span><span data-en>Origin</span></span><span class="hs s-ci">CI PDF</span></th>
+              <th class="col ci"><span class="hn">S/N</span><span class="hs s-ci">CI PDF</span></th>
             </tr>
           </thead>
           <tbody>
@@ -711,6 +722,7 @@
               <td class="c m"><span class="v">78#####</span></td>
               <td class="c or"><span class="v">99#####</span></td>
               <td class="c ci"><span class="v">##</span></td>
+              <td class="c ci"><span class="v">D####K-#######</span></td>
             </tr>
             <tr>
               <td class="rn">3</td>
@@ -727,6 +739,7 @@
               <td class="c m"><span class="v">78#####</span></td>
               <td class="c or"><span class="v">99#####</span></td>
               <td class="c ci"><span class="v">##</span></td>
+              <td class="c ci"><span class="v">D####K-#######</span></td>
             </tr>
             <tr>
               <td class="rn">4</td>
@@ -743,6 +756,7 @@
               <td class="c m"><span class="v">78#####</span></td>
               <td class="c or"><span class="v">99#####</span></td>
               <td class="c ci"><span class="v">##</span></td>
+              <td class="c ci"><span class="v">D####K-#######</span></td>
             </tr>
           </tbody>
         </table>
@@ -764,8 +778,8 @@
     </div>
 
     <p class="tl-desc" style="margin-top:28px;max-width:900px;">
-      <span data-ko>13개 컬럼이 전부 자동으로 채워진다. 마지막 B/L 칸은 오래 비어 있던 자리였다 — 택배사가 발송물을 만들어야 비로소 생기는 번호라 시스템 안에서 미리 만들어낼 수 없었기 때문이다. 발송 어레인지를 파이프라인 안으로 끌어들이면서 그 칸도 닫혔고, 사람이 하는 일은 요약 화면을 한 번 확인하는 것으로 줄었다.</span>
-      <span data-en>All thirteen columns now fill themselves. The waybill column at the end sat empty for a long time — the number doesn't exist until the courier creates the shipment, so nothing inside the system could conjure it. Pulling the booking itself into the pipeline closed that column too, and the human share came down to reading one summary screen.</span>
+      <span data-ko>14개 컬럼이 전부 자동으로 채워진다. 마지막 B/L 칸은 오래 비어 있던 자리였다 — 택배사가 발송물을 만들어야 비로소 생기는 번호라 시스템 안에서 미리 만들어낼 수 없었기 때문이다. 발송 어레인지를 파이프라인 안으로 끌어들이면서 그 칸도 닫혔고, 사람이 하는 일은 요약 화면을 한 번 확인하는 것으로 줄었다.</span>
+      <span data-en>All fourteen columns now fill themselves. The waybill column at the end sat empty for a long time — the number doesn't exist until the courier creates the shipment, so nothing inside the system could conjure it. Pulling the booking itself into the pipeline closed that column too, and the human share came down to reading one summary screen.</span>
     </p>
   </section>
 
@@ -823,11 +837,11 @@
         s4:   ['④ 발행된 인보이스에서 그대로 읽음', '④ read straight off the issued invoice'],
         s5:   ['⑤ 실적 기입 — 고정값 · 처리시점 · HS 재사용', '⑤ ledger write — fixed value, run time, reused HS code'],
         s6:   ['⑥ FedEx 발송물 생성 → 트래킹 번호를 B/L 칸에', '⑥ FedEx shipment created → tracking number into the waybill column'],
-        end:  ['13/13 자동 기입 — 마지막 칸까지 닫혔다', '13 of 13 filled automatically — the last column closed too']
+        end:  ['14/14 자동 기입 — 마지막 칸까지 닫혔다', '14 of 14 filled automatically — the last column closed too']
       };
 
       function stage(k){ stageEl.innerHTML = '<span data-ko>' + TXT[k][0] + '</span><span data-en>' + TXT[k][1] + '</span>'; }
-      function count(n){ countEl.textContent = n + '/13'; barEl.style.width = (n / 13 * 100) + '%'; }
+      function count(n){ countEl.textContent = n + '/14'; barEl.style.width = (n / 14 * 100) + '%'; }
       function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
       function only(i, cls){
         srcs.forEach(function(s, j){
@@ -868,11 +882,11 @@
         at(e + 350, function(){ only(2); stage('s3'); lit('th.col.or'); });
         e = fillCols('or', e + 600, 150, 3, 1);
         at(e + 350, function(){ only(3); stage('s4'); lit('th.col.ci'); });
-        e = fillCols('ci', e + 600, 150, 4, 5);
+        e = fillCols('ci', e + 600, 150, 4, 6);
         at(e + 400, function(){ only(4); stage('s5'); lit('th.col.lg'); });
-        e = fillCols('lg', e + 650, 150, 9, 3);
+        e = fillCols('lg', e + 650, 150, 10, 3);
         at(e + 500, function(){ only(5); stage('s6'); lit('th.col.fx'); });
-        e = fillCols('fx', e + 750, 150, 12, 1);
+        e = fillCols('fx', e + 750, 150, 13, 1);
         at(e + 900, function(){ stage('end'); });
       }
 
