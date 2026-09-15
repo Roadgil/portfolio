@@ -691,6 +691,7 @@
         <div class="parse-out">
           <div><b>ocr</b><span data-ko>스캔 PDF라 글자를 그림에서 읽어내야 하는데, 저배율에서 앞자리가 잘리는 사례가 있어 저배율·고배율 두 번 읽고 서로 교차 검증한다</span><span data-en>These arrive as scans, so digits come from image recognition — and leading digits were being clipped at low zoom, so it reads twice at two zoom levels and cross-checks the results</span></div>
           <div><b>edge</b><span data-ko>TOTAL 문구 자체가 없는 인보이스는 품목별 금액을 합산해 총액을 만들고, 같은 배치로 딸려온 다른 창고 품목은 분리해 따로 대사한다</span><span data-en>Invoices with no TOTAL label get their total summed from the line items, and items from a second warehouse that rode along in the same batch are split out and reconciled separately</span></div>
+          <div><b>rule</b><span data-ko>Oracle 합계가 문서 총액에 못 미치면 무조건 품목 누락으로 판정한다 — 창고 라벨(FBC/FBS)은 신뢰하지 않고, 같은 선적일에 걸린 다른 Delivery를 전부 후보로 넣어 합계가 맞을 때까지 재대사한다</span><span data-en>If the Oracle sum falls short of the document total, it's always treated as a missing item — the warehouse label (FBC/FBS) isn't trusted, so every Delivery sharing the same ship date becomes a candidate, re-checked until the sum matches</span></div>
         </div>
       </div>
 
