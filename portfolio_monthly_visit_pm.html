@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Monthly Visit · Equipment PM Auto-Alert Webapp · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#34d399; --accent2:#60a5fa; --accent3:#f472b6; --accent4:#fbbf24;
+      --text:#eef0f8; --muted:#6b6f84;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 60px;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(52,211,153,0.15) 0%,transparent 70%);top:-200px;right:-200px;animation:floatGlow 8s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(30px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,104px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:640px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,4.6vw,48px);line-height:1.1;margin-bottom:50px;}
+    .section-title em{font-style:italic;color:var(--accent2);}
+
+    .trap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+    .trap-card{background:var(--surf);border:1px solid var(--border);border-radius:16px;padding:28px 26px;position:relative;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .trap-card:hover{transform:translateY(-4px);border-color:var(--accent3);}
+    .trap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent3);}
+    .trap-icon{font-size:22px;margin-bottom:14px;}
+    .trap-title{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:10px;}
+    .trap-desc{font-size:12px;color:var(--muted);line-height:1.75;}
+
+    .fse-box{background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:40px;position:relative;overflow:hidden;}
+    .fse-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(52,211,153,0.08) 0%,transparent 55%),radial-gradient(ellipse at 85% 100%,rgba(96,165,250,0.08) 0%,transparent 55%);}
+    .fse-head{position:relative;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:24px;}
+    .fse-metrics{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:28px;}
+    .fse-node{background:var(--surf2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+    .fse-node-label{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+    .fse-node-val{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);}
+    .fse-flags{position:relative;display:flex;gap:14px;flex-wrap:wrap;}
+    .flag{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:8px 14px;border-radius:10px;border:1px solid;}
+    .flag.blue{color:var(--accent2);border-color:rgba(96,165,250,0.3);background:rgba(96,165,250,0.07);}
+    .flag.green{color:var(--accent);border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.07);}
+    .flag.red{color:#f87171;border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.07);}
+    .flag-dot{width:8px;height:8px;border-radius:50%;}
+    .flag.blue .flag-dot{background:var(--accent2);}.flag.green .flag-dot{background:var(--accent);}.flag.red .flag-dot{background:#f87171;}
+
+    .stack-section{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    .note-box{margin-top:36px;padding:26px 30px;border:1px solid var(--border);border-radius:14px;background:var(--surf);border-left:3px solid var(--accent4);}
+    .note-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:2px;color:var(--accent4);text-transform:uppercase;margin-bottom:10px;}
+    .note-text{font-size:12.5px;color:var(--muted);line-height:1.85;}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+    body.en div[data-en]{display:block;}
+
+    @media (max-width:768px){
+      .topbar{padding:16px 24px;}
+      .hero,.section{padding:90px 24px 50px;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-tag">Warranty &amp; Contract PM · Google Apps Script · Personalized Alerts</div>
+    <h1 class="hero-title"><span class="a1" data-ko>Monthly Visit</span><span class="a1" data-en>MONTHLY VISIT</span><br><span class="a2" data-ko>정기점검(PM) 자동알림</span><span class="a2" data-en>PM AUTO-ALERT WEBAPP</span></h1>
+    <p class="hero-desc">
+      <span data-ko>Google Apps Script + Google Sheets로 만든 장비 정기점검(PM) 관리 웹앱. 장비구입(워런티 1년, 시작일+5/10개월)과 컨트랙(계약기간 무관, 시작일+3/7/10개월) 두 가지 규칙으로 방문 일정을 자동 계산한다. Brick(영업권역)별 담당 FSE에게는 URL 파라미터로 개인화한 링크를 발급해, 본인 담당 건만 팝업으로 Yes/No 응답과 비고를 받고 매주 월요일 자동 메일로 리마인드한다. 설치기반(ISB) 리포트를 xlsx 원본 그대로 업로드하면 브라우저에서 Billing Type만 걸러 일괄 등록된다.</span>
+      <span data-en>A Google Apps Script + Google Sheets webapp that manages equipment PM visits under two rules — warranty (1-year, start date +5/10 months) and contract (regardless of length, start date +3/7/10 months). Each FSE gets a Brick-specific link via URL parameter, so only their own units pop up for a Yes/No response with notes, plus a Monday auto-email reminder. Uploading the raw installed-base (ISB) report as-is filters by Billing Type in the browser and bulk-registers the rest.</span>
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" style="color:var(--accent2);">619</span><span class="stat-label" data-ko>설치 장비 자동등록</span><span class="stat-label" data-en>installed units registered</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent);">7</span><span class="stat-label" data-ko>개 Brick 담당자 개인화 알림</span><span class="stat-label" data-en>Bricks with personalized alerts</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent3);">2</span><span class="stat-label" data-ko>규칙 - 워런티 5/10 · 컨트랙 3/7/10개월</span><span class="stat-label" data-en>rules - warranty 5/10 · contract 3/7/10mo</span></div>
+      <div class="stat"><span class="stat-num" style="color:var(--accent4);">1</span><span class="stat-label" data-ko>주 1회 · 월요일 자동 메일 발송</span><span class="stat-label" data-en>weekly · Monday auto-email</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Build Log</div>
+    <h2 class="section-title reveal"><span data-ko>배포하면서 실제로 부딪힌</span><span data-en>Three issues hit</span><br><em><span data-ko>세 가지 문제</span><span data-en>while shipping it</span></em></h2>
+    <div class="trap-grid">
+      <div class="trap-card reveal">
+        <div class="trap-icon">🗂️</div>
+        <div class="trap-title" data-ko>1,274건 중 619건만 규칙 대상</div>
+        <div class="trap-title" data-en>Only 619 of 1,274 rows apply</div>
+        <div class="trap-desc" data-ko>설치기반(ISB) 리포트 1,274건 전부를 그대로 넣으면 안 된다. Billing Type이 Warranty(283) 또는 Contract(336)인 619건만 PM 규칙 대상이고, Billable·Sales Support 655건은 자동 제외해야 한다 - 업로드 시 브라우저에서 바로 필터링하도록 처리.</div>
+        <div class="trap-desc" data-en>Not all 1,274 rows in the installed-base (ISB) report belong in the PM cycle. Only rows with Billing Type Warranty (283) or Contract (336) — 619 total — are in scope; the other 655 (Billable, Sales Support) get auto-excluded right in the browser at upload time.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">🔗</div>
+        <div class="trap-title" data-ko>로그인 계정 ≠ 회사 이메일</div>
+        <div class="trap-title" data-en>Login account ≠ company email</div>
+        <div class="trap-desc" data-ko>회사 이메일은 M365(Outlook)인데, 웹앱 로그인은 구글 계정이라 서로 다른 계정이다. Session.getActiveUser()로 담당자를 구분하려던 첫 시도는 무산됐고, 대신 브릭별 URL 쿼리파라미터(?brick=N)로 FSE마다 다른 링크를 발급해 개인화 알림을 우회 구현했다.</div>
+        <div class="trap-desc" data-en>Company email runs on M365 (Outlook), but webapp login uses a Google account — two separate identities. The first attempt to distinguish FSEs via Session.getActiveUser() didn't hold up; personalization was instead solved with a per-Brick URL query parameter (?brick=N), giving each FSE their own link.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">♻️</div>
+        <div class="trap-title" data-ko>중복 업로드 사고 → dedupe</div>
+        <div class="trap-title" data-en>Duplicate upload → dedupe guard</div>
+        <div class="trap-desc" data-ko>같은 ISB 파일을 실수로 두 번 업로드해 장비가 정확히 2배(1,238건)로 늘어난 걸 발견한 뒤, ProductID 기준 중복 제거 로직을 추가했다. 이후로는 전체 리스트를 다시 올려도 이미 등록된 ProductID는 자동으로 건너뛴다.</div>
+        <div class="trap-desc" data-en>After noticing equipment count had exactly doubled (1,238) from an accidental double-upload of the same ISB file, a ProductID-based dedupe guard was added — re-uploading the full list now silently skips anything already registered.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="section-label">Cutoff Cleanup</div>
+    <h2 class="section-title reveal"><span data-ko>과거 데이터는 걷어내고</span><span data-en>Old records purged</span><br><em><span data-ko>이번 분기부터 추적</span><span data-en>tracking starts this quarter</span></em></h2>
+    <div class="fse-box reveal">
+      <div class="fse-head" data-ko>// 대량 업로드로 몇 년 치 과거 PM 기록이 한꺼번에 들어와, 커트오프 날짜 기준으로 한 번 정리했다</div>
+      <div class="fse-head" data-en>// bulk upload pulled in years of past PM records at once; cleaned up with a one-time cutoff date</div>
+      <div class="fse-metrics">
+        <div class="fse-node"><div class="fse-node-label">Before Purge</div><div class="fse-node-val" data-ko>1,574건</div><div class="fse-node-val" data-en>1,574 records</div></div>
+        <div class="fse-node"><div class="fse-node-label">Cutoff</div><div class="fse-node-val">2026-10-01</div></div>
+        <div class="fse-node"><div class="fse-node-label">Removed</div><div class="fse-node-val" data-ko>1,021건 (과거분)</div><div class="fse-node-val" data-en>1,021 (past due)</div></div>
+        <div class="fse-node"><div class="fse-node-label">Kept</div><div class="fse-node-val" data-ko>553건 (Q4 2026~)</div><div class="fse-node-val" data-en>553 (Q4 2026 on)</div></div>
+      </div>
+      <div class="fse-flags">
+        <div class="flag green"><div class="flag-dot"></div><span data-ko>완료 — 진짜 해결된 건만 알림에서 제외</span><span data-en>Completed — only true resolutions drop out of alerts</span></div>
+        <div class="flag blue"><div class="flag-dot"></div><span data-ko>대기 — 예정일 도래/경과 시 알림</span><span data-en>Pending — alerts once due or overdue</span></div>
+        <div class="flag red"><div class="flag-dot"></div><span data-ko>건너뜀 — 완료 아니므로 다시 알림 대상</span><span data-en>Skipped — not resolved, re-enters the alert queue</span></div>
+      </div>
+    </div>
+    <div class="note-box reveal">
+      <div class="note-label" data-ko>실행 로그로 검증한 것만 올림</div>
+      <div class="note-label" data-en>Only what the execution log confirmed</div>
+      <div class="note-text" data-ko>매주 월요일 자동 메일은 Apps Script 실행 로그로 Brick 1~7 담당자 전원에게 발송 성공한 것을 직접 확인했다. 한 명이라도 발송 중 오류가 나면 나머지 전원이 조용히 발송 중단되는 구조였던 걸 발견해, 발송을 하나씩 try/catch로 감싸 한 명의 실패가 나머지를 막지 않게 고쳤다.</div>
+      <div class="note-text" data-en>The Monday auto-email was verified by execution log to send successfully to all seven Brick recipients. Along the way, one recipient's send failure was found to silently abort the rest of the loop — fixed by wrapping each send in its own try/catch so one failure no longer blocks everyone else.</div>
+    </div>
+  </section>
+
+  <div class="stack-section">
+    <div class="section" style="padding-bottom:0;">
+      <div class="section-label">Stack</div>
+      <h2 class="section-title reveal"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-item"><div class="stack-emoji">📜</div><div class="stack-name">Google Apps Script</div><div class="stack-role" data-ko>서버 로직·주간 트리거·메일 발송</div><div class="stack-role" data-en>Server logic · weekly trigger · mail</div></div>
+      <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">Google Sheets</div><div class="stack-role" data-ko>장비/PM일정 DB</div><div class="stack-role" data-en>Equipment &amp; PM schedule DB</div></div>
+      <div class="stack-item"><div class="stack-emoji">📥</div><div class="stack-name">SheetJS</div><div class="stack-role" data-ko>브라우저에서 xlsx 원본 파싱</div><div class="stack-role" data-en>Parses raw xlsx in-browser</div></div>
+      <div class="stack-item"><div class="stack-emoji">✉️</div><div class="stack-name">MailApp</div><div class="stack-role" data-ko>Brick별 개인화 알림 메일</div><div class="stack-role" data-en>Per-Brick personalized alert mail</div></div>
+      <div class="stack-item"><div class="stack-emoji">🔗</div><div class="stack-name">URL Query Param Routing</div><div class="stack-role" data-ko>?brick=N으로 담당자 구분</div><div class="stack-role" data-en>?brick=N distinguishes each FSE</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">MONTHLY VISIT</div>
+    <div class="footer-note">GOOGLE APPS SCRIPT · GOOGLE SHEETS · SHEETJS · MAILAPP</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
