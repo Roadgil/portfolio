@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    :root{
+      --brand:#1d4d4f; --brand-light:#e8f0ee; --line:#e3e3e3; --sub:#777;
+      --bg:#f6f7f7; --card:#fff; --danger:#c0392b; --ok:#2e7d32;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+      background:var(--bg); margin:0; padding:24px 14px; color:#222;
+    }
+    .wrap{max-width:720px; margin:0 auto}
+    h1{font-size:20px; margin:0 0 4px}
+    .sub{color:var(--sub); font-size:13px; margin:0 0 16px}
+    .tabs{display:flex; gap:6px; margin-bottom:16px}
+    .tabBtn{
+      flex:1; padding:11px 8px; border-radius:10px; border:1px solid var(--line);
+      background:#fff; font-size:13.5px; font-weight:700; color:var(--sub); cursor:pointer;
+    }
+    .tabBtn.active{background:var(--brand); color:#fff; border-color:var(--brand)}
+    .panel{display:none}
+    .panel.active{display:block}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:16px}
+    label{display:block; font-size:13px; font-weight:600; margin:14px 0 6px}
+    label:first-child{margin-top:0}
+    input[type=text], input[type=number], textarea{
+      width:100%; padding:11px 12px; border:1px solid #ccc; border-radius:9px;
+      font:inherit; font-size:14.5px;
+    }
+    textarea{min-height:80px; resize:vertical}
+    .btn{
+      background:var(--brand); color:#fff; border:none; border-radius:9px;
+      padding:12px 18px; font-size:15px; font-weight:700; cursor:pointer;
+    }
+    .btn:hover{opacity:.92}
+    .autocomplete{position:relative}
+    .dd{
+      position:absolute; left:0; right:0; top:calc(100% + 4px); background:#fff;
+      border:1px solid var(--line); border-radius:10px; max-height:260px; overflow:auto;
+      box-shadow:0 6px 18px rgba(0,0,0,.08); z-index:20; display:none;
+    }
+    .dd.show{display:block}
+    .dd .hi{padding:10px 12px; cursor:pointer; border-bottom:1px solid #f0f0f0}
+    .dd .hi:hover{background:var(--brand-light)}
+    .dd .pn{font-weight:600; font-size:14px}
+    .dd .ad{font-size:12px; color:var(--sub); margin-top:2px}
+    .dd .msg{padding:12px; font-size:12.5px; color:var(--sub)}
+    .msg-ok{background:#eef7ee; border:1px solid #cfe8cf; color:var(--ok); padding:12px 14px; border-radius:10px; font-size:14px}
+    .msg-err{background:#fdeceb; border:1px solid #f3c6c1; color:var(--danger); padding:12px 14px; border-radius:10px; font-size:14px}
+    .notice{background:#fff8e6; border:1px solid #f0dca0; color:#7a5c00; padding:12px 14px; border-radius:10px; font-size:12.8px; line-height:1.7; margin-bottom:16px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Vbeam/Gentlemax 냉매가스(DCD)</h1>
+  <p class="sub">아래 탭을 선택해서 신청해주세요. 병원명을 검색하면 주소가 자동으로 채워져요.</p>
+
+  <div class="tabs">
+    <button class="tabBtn active" data-tab="recover" onclick="showTab('recover')">빈캔 회수</button>
+    <button class="tabBtn" data-tab="defective" onclick="showTab('defective')">불량캔 신고</button>
+  </div>
+
+  <!-- 빈캔 회수 -->
+  <div class="panel active" id="panel-recover">
+    <div class="notice">
+      📌 오전 8시 ~ 오후 4시 사이 접수 건은 <b>당일 접수</b>, 그 이후 접수 건은 <b>다음날 접수</b>로 처리됩니다.<br>
+      📦 접수 이후 기사님 픽업까지는 영업일 기준 <b>빠르면 3일, 늦으면 7일</b> 정도 소요됩니다.
+    </div>
+    <div class="card">
+      <label>병원명</label>
+      <div class="autocomplete">
+        <input type="text" id="hospital-recover" placeholder="예: 라라피부과" autocomplete="off">
+        <div class="dd" id="dd-recover"></div>
+      </div>
+      <label>주소</label>
+      <input type="text" id="address-recover" placeholder="도로명주소 (자동입력, 필요시 직접 수정)">
+      <label>우편번호</label>
+      <input type="text" id="zip-recover" placeholder="자동입력됩니다">
+      <label>박스 개수</label>
+      <input type="number" id="qty-recover" min="1" value="1">
+      <label>특이사항</label>
+      <textarea id="note-recover" placeholder="예: 불량캔이 있었어요 / 방문 가능 시간대 등"></textarea>
+      <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400; margin-top:16px">
+        <input type="checkbox" id="agree-recover" style="width:auto; margin-top:3px">
+        <span>(필수) 개인정보 수집·이용에 동의합니다.<br>
+        <span style="color:var(--sub); font-size:12px">수집항목: 병원명, 주소, 우편번호, 요청내용 / 목적: 회수 접수 처리 및 연락 / 보유기간: 처리완료 후 1년 / 처리위탁: Google(스프레드시트·Apps Script, 해외 서버). 담당자 개인 연락처 등은 별도로 남기지 않으셔도 됩니다.</span></span>
+      </label>
+      <div style="margin-top:20px">
+        <button class="btn" onclick="submitForm('recover')">회수 예약 신청</button>
+      </div>
+      <div id="result-recover" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <!-- 불량캔 신고 -->
+  <div class="panel" id="panel-defective">
+    <div class="notice">
+      🔍 신고 접수 후 담당자가 확인하여 필요 시 새 캔으로 교환해드립니다.
+    </div>
+    <div class="card">
+      <label>병원명</label>
+      <div class="autocomplete">
+        <input type="text" id="hospital-defective" placeholder="예: 라라피부과" autocomplete="off">
+        <div class="dd" id="dd-defective"></div>
+      </div>
+      <label>주소</label>
+      <input type="text" id="address-defective" placeholder="도로명주소 (자동입력, 필요시 직접 수정)">
+      <label>우편번호</label>
+      <input type="text" id="zip-defective" placeholder="자동입력됩니다">
+      <label>불량 캔 개수</label>
+      <input type="number" id="qty-defective" min="1" value="1">
+      <label>불량 내용</label>
+      <textarea id="note-defective" placeholder="예: 캔에서 액이 새고 있어요 / 캔이 찌그러져 있어요 등"></textarea>
+      <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400; margin-top:16px">
+        <input type="checkbox" id="agree-defective" style="width:auto; margin-top:3px">
+        <span>(필수) 개인정보 수집·이용에 동의합니다.<br>
+        <span style="color:var(--sub); font-size:12px">수집항목: 병원명, 주소, 우편번호, 요청내용 / 목적: 불량 접수 처리 및 연락 / 보유기간: 처리완료 후 1년 / 처리위탁: Google(스프레드시트·Apps Script, 해외 서버). 담당자 개인 연락처 등은 별도로 남기지 않으셔도 됩니다.</span></span>
+      </label>
+      <div style="margin-top:20px">
+        <button class="btn" onclick="submitForm('defective')">불량 신고 접수</button>
+      </div>
+      <div id="result-defective" style="margin-top:14px"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function showTab(tab){
+  document.querySelectorAll('.tabBtn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+tab));
+}
+
+// 탭별로 병원명 자동완성을 각각 붙인다.
+// 카카오 검색/우편번호 조회는 브라우저가 직접 하지 않고 Apps Script 서버(Code.gs)에
+// 대신 요청한다 — 카카오 API 키가 브라우저 쪽 코드에 노출되지 않게 하기 위함(2026-09-21).
+function setupAutocomplete(key){
+  const hospital = document.getElementById('hospital-'+key);
+  const address = document.getElementById('address-'+key);
+  const zip = document.getElementById('zip-'+key);
+  const dd = document.getElementById('dd-'+key);
+  let timer=null, results=[], seq=0;
+
+  hospital.addEventListener('input', ()=>{
+    const q = hospital.value.trim();
+    if(timer) clearTimeout(timer);
+    if(q.length<2){ hide(); return; }
+    timer=setTimeout(()=>run(q), 400);
+  });
+  hospital.addEventListener('blur', ()=>setTimeout(hide,160));
+
+  function hide(){ dd.classList.remove('show'); dd.innerHTML=''; }
+
+  function run(q){
+    dd.innerHTML = '<div class="msg">검색 중…</div>';
+    dd.classList.add('show');
+    const mySeq = ++seq;
+    google.script.run
+      .withSuccessHandler(list=>{
+        if(mySeq!==seq) return; // 더 최근 검색이 이미 진행됨 - 낡은 응답 무시
+        results = list||[];
+        render();
+      })
+      .withFailureHandler(()=>{
+        if(mySeq!==seq) return;
+        dd.innerHTML = '<div class="msg">검색 실패했어요. 주소는 직접 입력해도 됩니다.</div>';
+      })
+      .kakaoSearchHospital(q);
+  }
+
+  function render(){
+    if(!results.length){
+      dd.innerHTML = '<div class="msg">결과가 없어요. 이름을 다르게 검색하거나 주소를 직접 입력하세요.</div>';
+      return;
+    }
+    dd.innerHTML = results.map((r,i)=>
+      '<div class="hi" data-i="'+i+'"><div class="pn">'+esc(r.name)+'</div>'+
+      '<div class="ad">'+esc(r.addr)+'</div></div>'
+    ).join('');
+    dd.querySelectorAll('.hi').forEach(el=>{
+      el.addEventListener('mousedown', ev=>{ ev.preventDefault(); pick(+el.dataset.i); });
+    });
+  }
+
+  function pick(i){
+    const r = results[i]; if(!r) return;
+    hospital.value = r.name;
+    address.value = r.addr || '';
+    hide();
+    address.focus();
+    if(r.addr){
+      zip.value = '조회 중…';
+      google.script.run
+        .withSuccessHandler(z=>{ zip.value = z || ''; })
+        .withFailureHandler(()=>{ zip.value = ''; })
+        .kakaoZipForAddress(r.addr);
+    }
+  }
+}
+
+['recover','defective'].forEach(setupAutocomplete);
+
+function submitForm(type){
+  const h = document.getElementById('hospital-'+type).value.trim();
+  const a = document.getElementById('address-'+type).value.trim();
+  const z = document.getElementById('zip-'+type).value.trim();
+  const qty = document.getElementById('qty-'+type).value;
+  const note = document.getElementById('note-'+type).value.trim();
+  const agree = document.getElementById('agree-'+type).checked;
+  const msgEl = document.getElementById('result-'+type);
+
+  if(!h || !a || !qty || Number(qty) < 1){
+    msgEl.innerHTML = '<div class="msg-err">병원명, 주소, 개수(1개 이상)는 꼭 입력해주세요.</div>';
+    return;
+  }
+  if(!agree){
+    msgEl.innerHTML = '<div class="msg-err">개인정보 수집·이용 동의에 체크해주세요.</div>';
+    return;
+  }
+
+  msgEl.innerHTML = '<div class="msg-ok">신청 중…</div>';
+  google.script.run
+    .withSuccessHandler(()=>{
+      const extraByType = {
+        recover: '오전 8시~오후 4시 사이 접수는 당일 접수, 그 이후는 다음날 접수로 처리되며,<br>영업일 기준 3~7일 정도 소요됩니다.',
+        defective: '확인 후 필요 시 담당자가 연락드립니다.'
+      };
+      const extra = extraByType[type] || '';
+      msgEl.innerHTML = '<div class="msg-ok">✅ 신청 완료됐습니다.<br>'+extra+'</div>';
+      document.getElementById('hospital-'+type).value='';
+      document.getElementById('address-'+type).value='';
+      document.getElementById('zip-'+type).value='';
+      document.getElementById('qty-'+type).value='1';
+      document.getElementById('note-'+type).value='';
+      document.getElementById('agree-'+type).checked=false;
+    })
+    .withFailureHandler((err)=>{
+      msgEl.innerHTML = '<div class="msg-err">신청 중 오류가 발생했어요: '+esc(err.message||err)+'</div>';
+    })
+    .saveEntry(type, { hospital: h, address: a, zip: z, qty, note });
+}
+</script>
+</body>
+</html>

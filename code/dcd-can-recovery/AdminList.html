@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    :root{
+      --brand:#1d4d4f; --brand-light:#e8f0ee; --line:#e3e3e3; --sub:#777;
+      --bg:#f6f7f7; --card:#fff; --danger:#c0392b; --ok:#2e7d32;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+      background:var(--bg); margin:0; padding:24px 14px; color:#222;
+    }
+    .wrap{max-width:980px; margin:0 auto}
+    h1{font-size:20px; margin:0 0 4px}
+    .sub{color:var(--sub); font-size:13px; margin:0 0 16px}
+    .tabs{display:flex; gap:6px; margin-bottom:16px}
+    .tabBtn{
+      flex:1; padding:11px 8px; border-radius:10px; border:1px solid var(--line);
+      background:#fff; font-size:13.5px; font-weight:700; color:var(--sub); cursor:pointer;
+    }
+    .tabBtn.active{background:var(--brand); color:#fff; border-color:var(--brand)}
+    .panel{display:none}
+    .panel.active{display:block}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:16px}
+    .btn{
+      background:var(--brand); color:#fff; border:none; border-radius:9px;
+      padding:12px 18px; font-size:15px; font-weight:700; cursor:pointer;
+    }
+    .btn.secondary{background:#eee; color:#333}
+    .msg-err{background:#fdeceb; border:1px solid #f3c6c1; color:var(--danger); padding:12px 14px; border-radius:10px; font-size:14px}
+    table{width:100%; border-collapse:collapse; font-size:13px}
+    th, td{border-bottom:1px solid var(--line); padding:9px 8px; text-align:left; vertical-align:top}
+    th{background:var(--brand-light); font-size:12.5px}
+    select{font:inherit; padding:6px 8px; border-radius:7px; border:1px solid #ccc}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Vbeam/Gentlemax 냉매가스(DCD) — 관리자</h1>
+  <p class="sub">탭을 눌러 각 신청 목록을 확인하세요. 상태를 바꾸면 바로 저장돼요.</p>
+
+  <div class="tabs">
+    <button class="tabBtn active" data-tab="recover" onclick="showTab('recover')">빈캔 회수</button>
+    <button class="tabBtn" data-tab="defective" onclick="showTab('defective')">불량캔 신고</button>
+    <button class="tabBtn" data-tab="order" onclick="showTab('order')">DCD 구매 주문</button>
+  </div>
+
+  <div class="panel active" id="panel-recover"><div class="card"><div id="list-recover">불러오는 중…</div></div></div>
+  <div class="panel" id="panel-defective"><div class="card"><div id="list-defective">불러오는 중…</div></div></div>
+  <div class="panel" id="panel-order"><div class="card"><div id="list-order">불러오는 중…</div></div></div>
+</div>
+
+<script>
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  let TYPE_CFG = {};
+  const loaded = { recover:false, defective:false, order:false };
+
+  function showTab(tab){
+    document.querySelectorAll('.tabBtn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+tab));
+    if(!loaded[tab]) load(tab);
+  }
+
+  function load(type){
+    document.getElementById('list-'+type).innerHTML = '불러오는 중…';
+    google.script.run.withSuccessHandler(rows=>{ loaded[type]=true; render(type, rows); })
+      .withFailureHandler(err=>showErr(type, err))
+      .getEntries(type);
+  }
+
+  function showErr(type, err){
+    document.getElementById('list-'+type).innerHTML = '<div class="msg-err">불러오기 실패: '+esc(err.message||err)+'</div>';
+  }
+
+  function render(type, rows){
+    const statuses = (TYPE_CFG[type] && TYPE_CFG[type].statuses) || ['접수됨'];
+    const box = document.getElementById('list-'+type);
+    if(!rows.length){
+      box.innerHTML = '<p class="sub">아직 신청 내역이 없습니다.</p>';
+      return;
+    }
+    const html = '<table><thead><tr>' +
+      '<th>신청일시</th><th>병원명</th><th>주소</th><th>우편번호</th><th>수량</th><th>비고</th><th>상태</th><th>메모</th><th></th>' +
+      '</tr></thead><tbody>' +
+      rows.map(r => `
+        <tr data-row="${r.row}">
+          <td>${esc(r.timestamp)}</td>
+          <td>${esc(r.hospital)}</td>
+          <td>${esc(r.address)}</td>
+          <td>${esc(r.zip)}</td>
+          <td>${esc(r.qty)}</td>
+          <td>${esc(r.note)}</td>
+          <td>
+            <select class="statusSel">
+              ${statuses.map(s => `<option value="${s}" ${s===r.status?'selected':''}>${s}</option>`).join('')}
+            </select>
+          </td>
+          <td><input type="text" class="memoInp" value="${esc(r.memo)}" style="width:120px"></td>
+          <td><button class="btn secondary saveBtn" style="padding:6px 10px;font-size:12.5px">저장</button></td>
+        </tr>
+      `).join('') +
+      '</tbody></table>';
+    box.innerHTML = html;
+
+    box.querySelectorAll('.saveBtn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const tr = btn.closest('tr');
+        const row = tr.dataset.row;
+        const status = tr.querySelector('.statusSel').value;
+        const memo = tr.querySelector('.memoInp').value;
+        btn.textContent = '저장중…';
+        google.script.run.withSuccessHandler(()=>{
+          btn.textContent = '✓ 저장됨';
+          setTimeout(()=>btn.textContent='저장', 1200);
+        }).updateEntry(type, Number(row), status, memo);
+      });
+    });
+  }
+
+  google.script.run.withSuccessHandler(cfg=>{ TYPE_CFG = cfg; load('recover'); }).getTypeConfig();
+</script>
+</body>
+</html>

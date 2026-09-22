@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body { font-family: -apple-system, 'Malgun Gothic', sans-serif; margin: 0; padding: 16px; background: #f5f6f8; color: #222; }
+    h1 { font-size: 18px; margin-bottom: 12px; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab-btn { padding: 8px 14px; border: none; border-radius: 6px; background: #e0e0e0; cursor: pointer; font-size: 14px; }
+    .tab-btn.active { background: #2d6cdf; color: #fff; }
+    .panel { display: none; background: #fff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .panel.active { display: block; }
+    label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
+    input, select, textarea { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+    button.primary { margin-top: 16px; padding: 10px 16px; background: #2d6cdf; color: #fff; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { border-bottom: 1px solid #eee; padding: 8px 6px; text-align: left; }
+    th { background: #fafafa; }
+    .status-대기 { color: #b8860b; }
+    .status-완료 { color: #1a8a3e; }
+    .status-건너뜀 { color: #999; }
+    .status-지연 { color: #d33; font-weight: bold; }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; z-index: 999; }
+    .modal-box { background: #fff; border-radius: 10px; padding: 20px; width: 90%; max-width: 380px; }
+    .modal-box h3 { margin-top: 0; font-size: 16px; }
+    .modal-box p { font-size: 14px; color: #444; }
+    .modal-btns { display: flex; gap: 8px; margin-top: 14px; }
+    .modal-btns button { flex: 1; padding: 10px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; }
+    .btn-yes { background: #1a8a3e; color: #fff; }
+    .btn-no { background: #ccc; }
+    .hint { font-size: 12px; color: #888; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Monthly Visit<span id="brick-badge" style="font-size:12px; color:#888; font-weight:normal;"></span></h1>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="list">목록</button>
+    <button class="tab-btn" data-tab="add">장비 등록</button>
+  </div>
+
+  <div id="status-banner" style="background:#fff3cd; border:1px solid #ffe08a; border-radius:6px; padding:8px 12px; font-size:13px; margin-bottom:4px;">상태 확인 중...</div>
+  <div id="diag-info" style="font-size:11px; color:#888; margin-bottom:12px; word-break:break-all;"></div>
+
+  <div id="panel-list" class="panel active">
+    <label>분기 보기</label>
+    <select id="quarter-filter" onchange="renderFilteredList()">
+      <option value="all">전체</option>
+    </select>
+    <table id="pm-table">
+      <thead>
+        <tr><th>병원</th><th>Brick</th><th>장비</th><th>유형</th><th>카테고리</th><th>W/C start date</th><th>상태</th><th>방문일시</th><th>비고</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="panel-add" class="panel">
+    <label>병원명(고객명)</label>
+    <input id="f-hospital" type="text">
+
+    <label>장비명</label>
+    <input id="f-equipName" type="text">
+
+    <label>모델</label>
+    <input id="f-model" type="text">
+
+    <label>구매유형</label>
+    <select id="f-purchaseType">
+      <option value="장비구입">장비구입 (워런티 1년, +5개월/+10개월 PM)</option>
+      <option value="컨트랙">컨트랙 (+3/+7/+10개월 PM, 전체기간 총 3회)</option>
+    </select>
+
+    <div id="contract-years-wrap" style="display:none">
+      <label>계약기간</label>
+      <select id="f-contractYears">
+        <option value="2">2년</option>
+        <option value="3">3년</option>
+      </select>
+    </div>
+
+    <label>시작일 (구매일/계약시작일)</label>
+    <input id="f-startDate" type="date">
+
+    <label>담당 FSE 이름</label>
+    <input id="f-fseName" type="text">
+
+    <label>담당 FSE 이메일 (주간 알림 발송 대상)</label>
+    <input id="f-fseEmail" type="email">
+
+    <button class="primary" onclick="submitEquipment()">등록</button>
+    <p class="hint">등록하면 PM 예정일이 규칙에 따라 자동 계산되어 목록에 생성됩니다.</p>
+
+    <hr style="margin:24px 0; border:none; border-top:1px solid #eee;">
+
+    <h3 style="font-size:15px; margin-bottom:8px;">파일로 여러 건 한번에 등록</h3>
+    <p class="hint" style="margin-top:0;">
+      다음 두 형식을 자동으로 인식합니다:<br>
+      <b>① ISB 리포트(xlsx)</b> - Account/Billing Type/Model/Product Warranty Start date/Service Contract Start Date/Location: Service Team 컬럼 그대로 업로드 (Billing Type이 Warranty/Contract인 것만 반영, Billable/Sales Support는 자동 제외)<br>
+      <b>② 자체 템플릿(csv)</b> - 병원명, 장비명, 모델, 구매유형(장비구입/컨트랙), 계약기간, 시작일(YYYY-MM-DD), 담당FSE명, 담당FSE이메일, Brick
+    </p>
+    <input id="f-bulk-file" type="file" accept=".csv,.xlsx">
+    <button class="primary" onclick="submitBulkUpload()">업로드</button>
+    <div id="bulk-result" style="font-size:13px; margin-top:10px;"></div>
+  </div>
+
+  <div id="due-modal-container"></div>
+
+  <script>
+    const BRICK_PARAM = "<?= brick ?>";
+    if (BRICK_PARAM) {
+      document.getElementById('brick-badge').textContent = ' (Brick' + BRICK_PARAM + ' 담당자용 링크)';
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    document.getElementById('f-purchaseType').addEventListener('change', function() {
+      document.getElementById('contract-years-wrap').style.display = this.value === '컨트랙' ? 'block' : 'none';
+    });
+
+    function submitEquipment() {
+      const data = {
+        hospital: document.getElementById('f-hospital').value,
+        equipName: document.getElementById('f-equipName').value,
+        model: document.getElementById('f-model').value,
+        purchaseType: document.getElementById('f-purchaseType').value,
+        contractYears: document.getElementById('f-purchaseType').value === '컨트랙' ? document.getElementById('f-contractYears').value : '',
+        startDate: document.getElementById('f-startDate').value,
+        fseName: document.getElementById('f-fseName').value,
+        fseEmail: document.getElementById('f-fseEmail').value
+      };
+      if (!data.hospital || !data.equipName || !data.startDate) {
+        alert('병원명, 장비명, 시작일은 필수입니다.');
+        return;
+      }
+      google.script.run.withSuccessHandler(() => {
+        alert('등록되었습니다.');
+        document.querySelector('[data-tab="list"]').click();
+        loadList();
+      }).withFailureHandler(showServerError).addEquipment(data);
+    }
+
+    // ISB 리포트(Account/Billing Type/...) 또는 우리 자체 템플릿(병원명/구매유형/...)을
+    // 자동으로 알아보고 서버가 원하는 표준 형태({hospital, equipName, ...})로 변환
+    function mapRowsForUpload(json) {
+      const rows = [];
+      json.forEach(r => {
+        if ('Billing Type' in r) { // ISB 리포트 형식
+          const billing = r['Billing Type'];
+          if (billing !== 'Warranty' && billing !== 'Contract') return; // Billable/Sales Support 등 제외
+          const isWarranty = billing === 'Warranty';
+          rows.push({
+            hospital: r['Account'] || '',
+            equipName: r['Model'] || '',
+            model: r['Model'] || '',
+            purchaseType: isWarranty ? '장비구입' : '컨트랙',
+            startDate: isWarranty ? r['Product Warranty Start date'] : r['Service Contract Start Date'],
+            fseName: '',
+            fseEmail: '',
+            brick: r['Location: Service Team'] || '',
+            productId: r['Installed Product: Installed Product ID'] || ''
+          });
+          return;
+        }
+        // 우리 자체 템플릿 형식
+        rows.push({
+          hospital: r['병원명'] || '',
+          equipName: r['장비명'] || '',
+          model: r['모델'] || r['장비명'] || '',
+          purchaseType: r['구매유형'] || '',
+          contractYears: r['계약기간'] || '',
+          startDate: r['시작일'] || '',
+          fseName: r['담당FSE명'] || '',
+          fseEmail: r['담당FSE이메일'] || '',
+          brick: r['Brick'] || ''
+        });
+      });
+      return rows;
+    }
+
+    function submitBulkUpload() {
+      const fileInput = document.getElementById('f-bulk-file');
+      const file = fileInput.files[0];
+      if (!file) {
+        alert('파일을 선택해주세요.');
+        return;
+      }
+      const resultBox = document.getElementById('bulk-result');
+      resultBox.textContent = '업로드 중... (파일이 크면 시간이 좀 걸릴 수 있어요)';
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        let rows;
+        try {
+          const data = new Uint8Array(e.target.result);
+          const wb = XLSX.read(data, { type: 'array' });
+          const sheet = wb.Sheets[wb.SheetNames[0]];
+          const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+          rows = mapRowsForUpload(json);
+        } catch (err) {
+          resultBox.textContent = '파일을 읽는 중 오류: ' + err.message;
+          return;
+        }
+        if (rows.length === 0) {
+          resultBox.textContent = '인식된 데이터가 없습니다. 파일 형식을 확인해주세요.';
+          return;
+        }
+
+        google.script.run.withSuccessHandler(result => {
+          let msg = '완료: ' + result.total + '건 중 ' + result.added + '건 등록됨.';
+          if (result.errors.length > 0) {
+            msg += '\n건너뛴 건:\n' + result.errors.join('\n');
+          }
+          resultBox.style.whiteSpace = 'pre-wrap';
+          resultBox.textContent = msg;
+          document.querySelector('[data-tab="list"]').click();
+          loadList();
+        }).withFailureHandler(err => {
+          resultBox.textContent = '';
+          showServerError(err);
+        }).bulkAddEquipmentRows(rows);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function setBanner(text, isError) {
+      const b = document.getElementById('status-banner');
+      b.textContent = text;
+      b.style.background = isError ? '#fdecea' : '#e8f5e9';
+      b.style.borderColor = isError ? '#f5c2c0' : '#a5d6a7';
+    }
+
+    function showServerError(err) {
+      const msg = (err && err.message) ? err.message : String(err);
+      setBanner('서버 오류: ' + msg, true);
+      alert('오류가 발생했습니다: ' + msg);
+      console.error(err);
+    }
+
+    function fmtDate(d) {
+      if (!d) return '';
+      const dt = new Date(d);
+      return dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0') + '-' + String(dt.getDate()).padStart(2,'0');
+    }
+
+    function loadList() {
+      setBanner('PM 목록 불러오는 중... (' + new Date().toLocaleTimeString() + ')', false);
+      google.script.run.withSuccessHandler(rows => {
+        try {
+          if (rows === null || rows === undefined) {
+            setBanner('서버 응답이 null 입니다 (직렬화 문제로 추정)', true);
+            return;
+          }
+          renderList(rows);
+        } catch (e) {
+          setBanner('클라이언트 처리 오류: ' + e.message, true);
+          console.error(e);
+        }
+      }).withFailureHandler(showServerError).getPmSchedule();
+
+      google.script.run.withSuccessHandler(info => {
+        document.getElementById('diag-info').textContent =
+          '이 앱이 보고 있는 시트: "' + info.name + '" (ID: ' + info.id + ') / 장비행수=' + info.equipRows + ', PM행수=' + info.pmRows;
+      }).withFailureHandler(showServerError).getDiagCounts();
+    }
+
+    // 분기(YYYY-Qn) 키 계산
+    function quarterKey(dateVal) {
+      const d = new Date(dateVal);
+      const q = Math.floor(d.getMonth() / 3) + 1;
+      return d.getFullYear() + '-Q' + q;
+    }
+
+    let allPmRows = [];
+
+    function populateQuarterOptions(rows) {
+      const select = document.getElementById('quarter-filter');
+      const prevValue = select.value || 'all';
+      const keys = Array.from(new Set(rows.map(r => quarterKey(r.dueDate)))).sort();
+      select.innerHTML = '<option value="all">전체</option>';
+      keys.forEach(k => {
+        const opt = document.createElement('option');
+        opt.value = k;
+        opt.textContent = k;
+        select.appendChild(opt);
+      });
+      if (keys.includes(prevValue) || prevValue === 'all') select.value = prevValue;
+    }
+
+    function renderFilteredList() {
+      const q = document.getElementById('quarter-filter').value;
+      const filtered = (q === 'all') ? allPmRows : allPmRows.filter(r => quarterKey(r.dueDate) === q);
+      renderRows(filtered);
+    }
+
+    function renderList(rows) {
+      try {
+        rows = rows || [];
+        allPmRows = rows;
+        populateQuarterOptions(rows);
+        setBanner('불러온 PM 항목: ' + rows.length + '건', false);
+        renderFilteredList();
+      } catch (e) {
+        setBanner('클라이언트 처리 오류: ' + e.message, true);
+        console.error(e);
+      }
+    }
+
+    function renderRows(rows) {
+      try {
+        const today = new Date(); today.setHours(0,0,0,0);
+        const tbody = document.querySelector('#pm-table tbody');
+        tbody.innerHTML = '';
+        rows.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate));
+        rows.forEach(r => {
+          const due = new Date(r.dueDate); due.setHours(0,0,0,0);
+          const overdue = r.status !== '완료' && due <= today;
+          const tr = document.createElement('tr');
+          tr.innerHTML = '<td>' + (r.hospital||'') + '</td>' +
+            '<td>' + (r.brick||'') + '</td>' +
+            '<td>' + (r.equipName||'') + '</td>' +
+            '<td>' + (r.purchaseType||'') + '</td>' +
+            '<td>' + (r.category||'') + '</td>' +
+            '<td>' + fmtDate(r.wcStartDate) + '</td>' +
+            '<td class="status-' + (overdue ? '지연' : r.status) + '">' + (overdue ? '지연' : r.status) + '</td>' +
+            '<td>' + fmtDate(r.visitedAt) + '</td>' +
+            '<td>' + (r.note||'') + '</td>';
+          tbody.appendChild(tr);
+        });
+      } catch (e) {
+        setBanner('화면 표시 중 오류: ' + e.message, true);
+        console.error(e);
+      }
+    }
+
+    // 앱 열었을 때 도래/경과 건 팝업 처리 (로그인한 사용자의 담당 Brick 건만 서버에서 필터링됨)
+    let dueQueue = [];
+    let dueTotal = 0;
+    function loadDueItems() {
+      google.script.run.withSuccessHandler(items => {
+        dueQueue = items || [];
+        dueTotal = dueQueue.length;
+        showNextDuePopup();
+      }).withFailureHandler(showServerError).getDuePmItems(BRICK_PARAM);
+    }
+
+    function showNextDuePopup() {
+      const container = document.getElementById('due-modal-container');
+      if (dueQueue.length === 0) { container.innerHTML = ''; return; }
+      const item = dueQueue[0];
+      const current = dueTotal - dueQueue.length + 1;
+      container.innerHTML =
+        '<div class="modal-overlay"><div class="modal-box">' +
+        '<h3>정기점검(PM) 확인 (' + current + ' / ' + dueTotal + ')</h3>' +
+        '<p><b>' + item.hospital + '</b> - ' + item.equipName + '<br>예정일: ' + fmtDate(item.dueDate) + '</p>' +
+        '<p>방문하셨나요?</p>' +
+        '<textarea id="due-note" rows="2" placeholder="비고 (선택)"></textarea>' +
+        '<div class="modal-btns">' +
+        '<button class="btn-yes" onclick="answerDue(true)">Yes</button>' +
+        '<button class="btn-no" onclick="answerDue(false)">No</button>' +
+        '</div></div></div>';
+    }
+
+    function answerDue(visited) {
+      const item = dueQueue.shift();
+      const note = document.getElementById('due-note').value;
+      const isLast = dueQueue.length === 0;
+
+      // 저장 응답을 기다리지 않고 바로 다음 팝업으로 넘어감 (체감 속도용).
+      // 저장 자체는 백그라운드에서 진행되고, 실패하면 실패 알림만 뜸.
+      showNextDuePopup();
+
+      google.script.run.withSuccessHandler(() => {
+        if (isLast) loadList();
+      }).withFailureHandler(err => {
+        showServerError(err);
+        loadList(); // 실패했을 수 있으니 실제 상태를 다시 불러와 확인
+      }).recordPmVisit(item.rowIndex, visited, note);
+    }
+
+    loadList();
+    loadDueItems();
+  </script>
+</body>
+</html>

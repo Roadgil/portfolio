@@ -1,0 +1,89 @@
+<script>
+// 선출고_요청서.html 에서 쓰던 것과 같은 카카오 로컬 키워드검색 API.
+// 병원/지점명으로 검색 -> 도로명주소 자동완성.
+const DEFAULT_KAKAO_KEY = '49a1b04da4328d39e9bc52fc67a7c58d';
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function kakaoSearch(q, signal){
+  const res = await fetch('https://dapi.kakao.com/v2/local/search/keyword.json?size=15&query='+encodeURIComponent(q),
+    { signal, headers:{ Authorization:'KakaoAK '+DEFAULT_KAKAO_KEY } });
+  if(!res.ok) throw new Error('KAKAO_'+res.status);
+  const data = await res.json();
+  return (data.documents||[]).map(d=>({
+    name: d.place_name || '',
+    addr: d.road_address_name || d.address_name || ''
+  }));
+}
+
+// 키워드검색 결과에는 우편번호가 없어서, 도로명주소로 다시 한 번 조회해 zone_no를 가져온다.
+async function kakaoZipForAddress(addr){
+  if(!addr) return '';
+  try{
+    const res = await fetch('https://dapi.kakao.com/v2/local/search/address.json?query='+encodeURIComponent(addr),
+      { headers:{ Authorization:'KakaoAK '+DEFAULT_KAKAO_KEY } });
+    if(!res.ok) return '';
+    const data = await res.json();
+    const doc = (data.documents||[])[0];
+    return (doc && doc.road_address && doc.road_address.zone_no) || '';
+  }catch(e){ return ''; }
+}
+
+// 병원명 input에 자동완성 드롭다운을 붙인다.
+// opts: { hospitalInput, addressInput, zipInput, ddEl, onPick }
+function attachHospitalAutocomplete(opts){
+  const { hospitalInput, addressInput, zipInput, ddEl } = opts;
+  let timer=null, ctrl=null, results=[], active=-1;
+
+  hospitalInput.addEventListener('input', ()=>{
+    const q = hospitalInput.value.trim();
+    active=-1;
+    if(timer) clearTimeout(timer);
+    if(q.length<2){ hide(); return; }
+    timer=setTimeout(()=>run(q), 400);
+  });
+
+  hospitalInput.addEventListener('blur', ()=>setTimeout(hide,160));
+
+  async function run(q){
+    ddEl.innerHTML = '<div class="msg">검색 중…</div>';
+    ddEl.classList.add('show');
+    if(ctrl) ctrl.abort();
+    ctrl = new AbortController();
+    try{
+      results = await kakaoSearch(q, ctrl.signal);
+      render();
+    }catch(e){
+      if(e.name==='AbortError') return;
+      ddEl.innerHTML = '<div class="msg">검색 실패했어요. 주소는 직접 입력해도 됩니다.</div>';
+    }
+  }
+
+  function render(){
+    if(!results.length){
+      ddEl.innerHTML = '<div class="msg">결과가 없어요. 이름을 다르게 검색하거나 주소를 직접 입력하세요.</div>';
+      return;
+    }
+    ddEl.innerHTML = results.map((r,i)=>
+      '<div class="hi" data-i="'+i+'"><div class="pn">'+esc(r.name)+'</div>'+
+      '<div class="ad">'+esc(r.addr)+'</div></div>'
+    ).join('');
+    ddEl.querySelectorAll('.hi').forEach(el=>{
+      el.addEventListener('mousedown', ev=>{ ev.preventDefault(); pick(+el.dataset.i); });
+    });
+  }
+
+  async function pick(i){
+    const r = results[i]; if(!r) return;
+    hospitalInput.value = r.name;
+    addressInput.value = r.addr || '';
+    hide();
+    addressInput.focus();
+    if(zipInput && r.addr){
+      zipInput.value = '조회 중…';
+      zipInput.value = await kakaoZipForAddress(r.addr);
+    }
+  }
+
+  function hide(){ ddEl.classList.remove('show'); ddEl.innerHTML=''; }
+}
+</script>
