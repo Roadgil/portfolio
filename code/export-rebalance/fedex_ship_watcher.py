@@ -151,9 +151,11 @@ LOCK_FILE_PATH = os.path.join(ROOT, "_fedex_ship.lock")
 
 FEDEX_TRACKING_URL = "https://www.fedex.com/ko-kr/tracking.html"
 
-# 2026-08-24 사용자 제공 계정. 기존 오라클 자동화들과 같은 관행으로 스크립트 상수로 둔다.
+# 2026-08-24 사용자 제공 계정. 비밀번호는 코드에 하드코딩하지 않고 환경변수로 받는다
+# (2026-09-22, 포트폴리오 공개 저장소에 평문 노출됐던 사고 이후 수정).
+# setx FEDEX_PASSWORD "실제비밀번호" 로 1회 등록해두면 작업 스케줄러 실행 시에도 읽힌다.
 FEDEX_USER_ID = "sckorea1234"
-FEDEX_PASSWORD = "<REDACTED_BEFORE_PUBLISH>"
+FEDEX_PASSWORD = os.environ["FEDEX_PASSWORD"]
 
 # 국가별 담당자가 적힌 엑셀(2026-08-24 사용자 지정 경로).
 CONTACT_TEMPLATE_PATH = (

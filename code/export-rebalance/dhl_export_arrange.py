@@ -15,7 +15,7 @@ DHL Express(MyDHL+)로 발송해야 하는 라인(현재는 REMI/일본 고정 �
 
 사용자가 구술한 전체 SOP(29단계, 2026-09-15):
   1. 오른쪽 상단 로그인
-  2. yoongil.chae@candelamedical.com / <REDACTED_BEFORE_PUBLISH> 입력
+  2. yoongil.chae@candelamedical.com / (비밀번호는 환경변수 DHL_PASSWORD) 입력
   3. 인증메일 뜨면 Outlook 받은편지함의 "DHL Express 필요한 조치" 메일에서
      8자리 일회용 코드 찾아 입력 후 인증(없으면 그냥 로그인)
   4. (MFA 없으면 곧장 로그인 완료)
@@ -147,9 +147,11 @@ LOCK_FILE_PATH = os.path.join(ROOT, "_dhl_export_arrange.lock")
 
 DHL_HOME_URL = "https://mydhl.express.dhl/kr/ko/home.html"
 
-# 2026-09-15 사용자 제공 계정
+# 2026-09-15 사용자 제공 계정. 비밀번호는 코드에 하드코딩하지 않고 환경변수로 받는다
+# (2026-09-22, 포트폴리오 공개 저장소에 평문 노출됐던 사고 이후 수정).
+# setx DHL_PASSWORD "실제비밀번호" 로 1회 등록해두면 작업 스케줄러 실행 시에도 읽힌다.
 DHL_USER_EMAIL = "yoongil.chae@candelamedical.com"
-DHL_PASSWORD = "<REDACTED_BEFORE_PUBLISH>"
+DHL_PASSWORD = os.environ["DHL_PASSWORD"]
 
 # 이 자동화는 현재 REMI(일본) 고정 라인 하나만 처리한다(사용자 SOP: "일본
 # 고정이기에 589931353 고정"). 다른 나라가 생기면 fedex_ship_watcher처럼
