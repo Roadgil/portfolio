@@ -15,12 +15,16 @@
  */
 
 const SHEET_ID = '1urjnp_oQSzNVJf3uK7bt7jw6C3SpkRluK9jpsgaDI8o';
-const ADMIN_TOKEN = 'candela-dcd-admin-7729';
+// ADMIN_TOKEN/KAKAO_KEY는 코드에 하드코딩하지 않고 Apps Script 프로젝트 설정의
+// Script Properties에서 읽어온다 (2026-09-22, 포트폴리오 공개 저장소에 평문 노출됐던
+// 사고 이후 수정). Apps Script 편집기 > 프로젝트 설정(⚙) > 스크립트 속성에서
+// ADMIN_TOKEN, KAKAO_KEY 키를 등록해둘 것. 카카오 키는 재발급 필요(기존 값은 유출됨).
+const ADMIN_TOKEN = PropertiesService.getScriptProperties().getProperty('ADMIN_TOKEN');
 const MAIL_TO = ['y7221063@yongmalogis.co.kr', 'y7225055@yongmalogis.co.kr']; // 김기훈, 유용호
 const MAIL_HOUR = 16;
 // 카카오 키는 여기(서버 쪽 Code.gs)에만 있음 — 브라우저로 전달되는 HTML에는 절대 넣지 않는다.
 // (2026-09-21: 예전엔 RequestForm.html에서 브라우저가 직접 카카오 API를 호출해서 키가 페이지 소스에 노출됐음. 이제 서버가 대신 호출.)
-const KAKAO_KEY = '49a1b04da4328d39e9bc52fc67a7c58d';
+const KAKAO_KEY = PropertiesService.getScriptProperties().getProperty('KAKAO_KEY');
 
 const HEADERS = ['타임스탬프', '병원명', '주소', '우편번호', '수량', '비고', '상태', '메일발송여부', '처리메모'];
 
