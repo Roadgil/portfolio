@@ -1,7 +1,12 @@
 <script>
 // 선출고_요청서.html 에서 쓰던 것과 같은 카카오 로컬 키워드검색 API.
 // 병원/지점명으로 검색 -> 도로명주소 자동완성.
-const DEFAULT_KAKAO_KEY = '49a1b04da4328d39e9bc52fc67a7c58d';
+// 2026-09-23: 이 파일은 어디서도 include 안 되고 있어(현재 미사용) 방치돼 있었는데,
+// 실제 카카오 키가 하드코딩된 채 public 포트폴리오 저장소에도 그대로 올라간 상태였음.
+// 브라우저에서 직접 카카오를 호출하는 방식 자체가 키를 클라이언트에 노출시키므로,
+// 다시 쓰려면 RequestForm.html처럼 google.script.run으로 Code.gs의
+// kakaoSearchHospital()/kakaoZipForAddress() 서버 함수를 호출하는 방식으로 바꿀 것.
+const DEFAULT_KAKAO_KEY = ''; // 실제 키를 여기 하드코딩하지 말 것
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 async function kakaoSearch(q, signal){
