@@ -191,16 +191,17 @@
 
       <div class="mod-card c3 reveal" style="position:relative;background:var(--surf2);transition-delay:0.16s">
         <div class="mod-head">
-          <div class="mod-file">finance_calendar_ocr.py</div>
+          <div class="mod-file">finance_calendar_to_outlook.py</div>
           <div class="mod-title" data-ko>마감일 OCR 캘린더</div>
           <div class="mod-title" data-en>Deadline OCR Calendar</div>
         </div>
-        <div class="mod-desc" data-ko>이미지로 박힌 사내 메일에서 '2차 지급요청 마감' 날짜를 easyocr로 읽어내, Outlook 캘린더에 일정 3건을 자동 생성한다. 한국 영업일 계산 포함.</div>
-        <div class="mod-desc" data-en>Uses easyocr to read the "2nd payment-request deadline" date from an image-embedded email and auto-creates three Outlook calendar events, with Korean business-day math.</div>
+        <div class="mod-desc" data-ko>이미지로 박힌 사내 메일에서 '1차/2차 vendor 지급' 날짜를 OCR로 읽어내, Outlook 캘린더에 일정 3건과 업체 안내 메일 초안을 자동 생성한다. 한국 영업일 계산 포함.</div>
+        <div class="mod-desc" data-en>Uses OCR to read the "1st/2nd vendor payment" dates from an image-embedded email, then auto-creates three Outlook calendar events and vendor cutoff email drafts, with Korean business-day math.</div>
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>이미지 메일에서 텍스트 추출 (OCR)</span><span data-en>Extracts text from image emails (OCR)</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>영업일 역산으로 알림 일정 생성</span><span data-en>Back-calculates reminders by business day</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Outlook 캘린더 이벤트 3건 자동 등록</span><span data-en>Auto-adds 3 Outlook calendar events</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Outlook 캘린더 이벤트 3건 + 업체 4곳 cutoff 메일 초안 자동 등록</span><span data-en>Auto-adds 3 Outlook events + 4 vendor cutoff email drafts</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Claude가 OCR값을 안 보여준 채 같은 이미지를 독립 재판독해 대조하는 검증 레이어 추가 — 오차허용 안에서 통과된 OCR 오독(28일→30일) 실사고를 계기로 도입</span><span data-en>Added a blind cross-check layer where Claude independently re-reads the same image without seeing the OCR value — built after a real incident where a misread (28th→30th) slipped past the tolerance check</span></div>
         </div>
       </div>
     </div>
@@ -211,7 +212,7 @@
     <h2 class="section-title"><span data-ko>비용 인지부터</span><span data-en>From cost notice</span><br><em><span data-ko>지급요청까지</span><span data-en>to payment request</span></em></h2>
     <div class="pipeline">
       <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📩</div><div class="pipe-title" data-ko>비용 통지 수신</div><div class="pipe-title" data-en>Cost Notice In</div><div class="pipe-desc" data-ko>통관 브로커 NT- PDF · DHL 인보이스 · 이미지 메일 자동 감지</div><div class="pipe-desc" data-en>Detects broker NT- PDFs, DHL invoices, and image emails</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>파싱 · OCR</div><div class="pipe-title" data-en>Parse · OCR</div><div class="pipe-desc" data-ko>PDF 금액 추출 · 이미지 마감일 OCR · 독촉장 제외</div><div class="pipe-desc" data-en>Extracts amounts, OCRs deadlines, excludes dunning</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🔍</div><div class="pipe-title" data-ko>파싱 · OCR · 검증</div><div class="pipe-title" data-en>Parse · OCR · Verify</div><div class="pipe-desc" data-ko>PDF 금액 추출 · 이미지 마감일 OCR · Claude 블라인드 재판독 대조 · 독촉장 제외</div><div class="pipe-desc" data-en>Extracts amounts, OCRs deadlines, cross-checks with a blind Claude re-read, excludes dunning</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🗓️</div><div class="pipe-title" data-ko>스케줄 판정</div><div class="pipe-title" data-en>Schedule Check</div><div class="pipe-desc" data-ko>공휴일·영업일 기준 2회차 결제 타이밍 계산</div><div class="pipe-desc" data-en>Computes 2-round timing by holiday/working day</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">✉️</div><div class="pipe-title" data-ko>메일 생성</div><div class="pipe-title" data-en>Email Build</div><div class="pipe-desc" data-ko>Finance 대상 지급요청 메일 작성 · CC 자동 지정</div><div class="pipe-desc" data-en>Drafts the Finance payment request, auto-CCs</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">✅</div><div class="pipe-title" data-ko>중복 방지 발송</div><div class="pipe-title" data-en>Dedup Send</div><div class="pipe-desc" data-ko>State JSON 대조 후 발송 · 캘린더 일정 등록</div><div class="pipe-desc" data-en>Sends after state check, adds calendar events</div></div>
@@ -228,12 +229,13 @@
       <div class="stack-item"><div class="stack-emoji">📅</div><div class="stack-name">holidays</div><div class="stack-role" data-ko>한국 공휴일·영업일 계산</div><div class="stack-role" data-en>KR holiday/working-day calc</div></div>
       <div class="stack-item"><div class="stack-emoji">📝</div><div class="stack-name">JSON State</div><div class="stack-role" data-ko>중복 발송 방지</div><div class="stack-role" data-en>Duplicate-send guard</div></div>
       <div class="stack-item"><div class="stack-emoji">📑</div><div class="stack-name">pdfplumber</div><div class="stack-role" data-ko>관세 통지 PDF 파싱</div><div class="stack-role" data-en>Customs notice PDF parse</div></div>
+      <div class="stack-item"><div class="stack-emoji">🤖</div><div class="stack-name">Claude Code CLI</div><div class="stack-role" data-ko>OCR 결과 블라인드 재판독·검증</div><div class="stack-role" data-en>Blind re-read &amp; verification of OCR output</div></div>
     </div>
   </section>
 
   <footer>
     <div class="footer-brand">FINANCE AUTO</div>
-    <div class="footer-note">PYTHON · WIN32COM · EASYOCR · HOLIDAYS · JSON STATE</div>
+    <div class="footer-note">PYTHON · WIN32COM · EASYOCR · CLAUDE VERIFY · HOLIDAYS · JSON STATE</div>
   </footer>
 
   <script>

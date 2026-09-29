@@ -17,10 +17,17 @@ finance_calendar_to_outlook.py  (OCR 버전)
   - OCR은 무겁다 → 메일 EntryID로 캐시하여 같은 메일은 OCR 1회만 (하루 5회 실행해도 월 1회).
   - 주말·한국 공휴일 제외 영업일 역산(holidays).
   - 동일 제목·동일 날짜 일정이 이미 있으면 건너뜀(idempotent).
+  - 2026-09-29 추가: OCR 결과는 그대로 캐시하지 않고, Claude 헤드리스(claude -p)가
+    같은 이미지를 OCR값을 안 보여준 채 독립적으로 재판독해 대조·검증한다(claude_verify_dates).
+    10월 캘린더에서 OCR이 '2차 vendor 지급'(28일)을 30일로 오독했는데 sanity-check
+    허용오차 안이라 그냥 통과된 사고 때문에 추가됨. 불일치 시 Claude 값을 채택하고
+    _fin_cal_anomalies.log에 기록. claude 헤드리스 호출 자체가 실패하면(타임아웃 등)
+    검증을 생략하고 OCR 결과를 그대로 신뢰한다(안전장치가 하나 빠지는 것뿐, 실패는 아님).
 
 의존성:  pip install pywin32 holidays easyocr paddleocr paddlepaddle
          OCR은 PaddleOCR(korean) 1순위, 실패 시 easyocr 폴백.
          (easyocr 최초 실행 시 모델 자동 다운로드 → 인터넷 1회 필요, 이후 오프라인)
+         + claude CLI (검증용, %USERPROFILE%/.local/bin/claude.exe 또는 PATH)
 """
 
 import os
@@ -30,6 +37,7 @@ import re
 import sys
 import json
 import calendar
+import subprocess
 import datetime as dt
 
 import win32com.client
@@ -594,6 +602,73 @@ def ocr_find_dates(image_path, year, month):
     return _mk_date(year, month, fday), _mk_date(year, month, sday), shtext
 
 
+# ───────────────────────── Claude 검증(블라인드 재판독) ─────────────────────────
+# 2026-09-29: 10월 캘린더에서 OCR이 '2차 vendor 지급'(실제 28일)을 30일로 오독했는데,
+# 그 값이 _sanity_check의 허용오차(±10일) 안에 들어 그냥 통과되어 잘못된 Outlook
+# 일정·업체 cutoff 메일 초안이 만들어진 사고가 있었다(사용자 발견). 좌표/퍼지매칭
+# 방식은 구조적으로 이런 종류의 근소한 오독은 못 잡으므로, OCR 결과를 보여주지 않은
+# 채(앵커링 방지) Claude 헤드리스가 이미지를 독립적으로 직접 읽게 해서 대조한다.
+# OCR은 그대로 1순위 추출기로 남기고, 이건 그 위에 얹는 검증 레이어다.
+CLAUDE_EXE = r"C:\Users\yoongil.chae\.local\bin\claude.exe"
+CLAUDE_VERIFY_TIMEOUT_SEC = 180
+
+
+def _claude_exe_path():
+    if os.path.exists(CLAUDE_EXE):
+        return CLAUDE_EXE
+    import shutil
+    return shutil.which("claude") or "claude"
+
+
+def claude_verify_dates(image_path, year, month):
+    """Claude 헤드리스에게 달력 이미지를 독립적으로(OCR값 안 보여주고) 읽혀
+    (1차 vendor 지급일, 2차 vendor 지급일)을 재추출한다.
+    반환: (first: date|None, second: date|None, ok: bool)
+    ok=False면 호출 자체가 실패(타임아웃/파싱실패 등)한 것이니 검증 불가로 취급하고
+    OCR 결과를 그대로 신뢰해야 한다(값이 아니라 '검증 못 함' 신호)."""
+    prompt = (
+        f"파일 경로 '{image_path}' 는 {year}년 {month}월 Finance Calendar 달력 이미지다. "
+        f"Read 도구로 이 이미지를 직접 읽어라. 달력에서 다음 두 칸을 찾아 그 칸이 속한 "
+        f"날짜(칸 왼쪽 위의 작은 'D-Mon' 헤더)를 확인해라:\n"
+        f"  1) '1차 vendor 지급'이라고 적힌 칸\n"
+        f"  2) '2차 vendor 지급'이라고 적힌 칸\n"
+        f"두 날짜 모두 {year}-{month:02d} 안의 날짜여야 한다(달력 앞뒤에 다른 달 날짜가 "
+        f"섞여 있으면 무시). 다른 설명 없이 마지막 줄에 JSON 한 줄만 출력해라, 형식: "
+        f'{{"first": "YYYY-MM-DD 또는 null", "second": "YYYY-MM-DD 또는 null"}}'
+    )
+    try:
+        proc = subprocess.run(
+            [_claude_exe_path(), "-p", prompt, "--model", "sonnet", "--allowedTools", "Read"],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            timeout=CLAUDE_VERIFY_TIMEOUT_SEC,
+        )
+    except Exception as e:
+        print(f"    [Claude검증] 호출 실패({type(e).__name__}: {e}) → 검증 생략, OCR값 신뢰")
+        return None, None, False
+
+    out = (proc.stdout or "").strip()
+    m = re.search(r"\{[^{}]*\"first\"[^{}]*\}", out)
+    if not m:
+        print(f"    [Claude검증] JSON 응답을 못 찾음(exit={proc.returncode}) → 검증 생략, OCR값 신뢰")
+        if os.environ.get("CAL_DEBUG"):
+            print("    [DBG] claude stdout:", out[-500:])
+            print("    [DBG] claude stderr:", (proc.stderr or "")[-500:])
+        return None, None, False
+    try:
+        data = json.loads(m.group(0))
+    except Exception as e:
+        print(f"    [Claude검증] JSON 파싱 실패({e}) → 검증 생략, OCR값 신뢰")
+        return None, None, False
+
+    def _parse(v):
+        try:
+            return dt.date.fromisoformat(v) if v else None
+        except Exception:
+            return None
+
+    return _parse(data.get("first")), _parse(data.get("second")), True
+
+
 # ───────────────────────── OCR 결과 검증(안전장치) ─────────────────────────
 def _is_business_day(d: dt.date) -> bool:
     return d.weekday() < 5 and d not in KR_HOLIDAYS
@@ -818,6 +893,32 @@ def resolve_calendar():
     for path in images:
         first, second, htext = ocr_find_dates(path, year, month)
         first, second = _sanity_check(first, second, year, month, msg.Subject or "")
+
+        print("  [Claude검증] OCR값 안 보여주고 이미지 독립 재판독 중...")
+        cfirst, csecond, verified = claude_verify_dates(path, year, month)
+        if verified:
+            if csecond and second and csecond != second:
+                m = (f"Claude 검증 불일치(2차): OCR={second} vs Claude={csecond} "
+                     f"→ Claude(직접 이미지 판독) 값 채택")
+                print(f"  [경고] {m}"); _log_anomaly(msg.Subject or "", m)
+                second = csecond
+            elif csecond and not second:
+                print(f"  [Claude검증] OCR 실패분을 Claude가 보완: 2차={csecond}")
+                second = csecond
+            if cfirst and first and cfirst != first:
+                m = (f"Claude 검증 불일치(1차): OCR={first} vs Claude={cfirst} "
+                     f"→ Claude(직접 이미지 판독) 값 채택")
+                print(f"  [경고] {m}"); _log_anomaly(msg.Subject or "", m)
+                first = cfirst
+            elif cfirst and not first:
+                print(f"  [Claude검증] OCR 실패분을 Claude가 보완: 1차={cfirst}")
+                first = cfirst
+            if (not csecond) and second:
+                m = f"Claude 검증: 2차={second}(OCR)를 Claude는 못 찾음 → 그래도 OCR값 유지, 확인 필요"
+                print(f"  [경고] {m}"); _log_anomaly(msg.Subject or "", m)
+        else:
+            print("  [Claude검증] 생략됨 → OCR 결과만으로 진행")
+
         if second:
             entry = {
                 "first": first.isoformat() if first else None,
