@@ -9,6 +9,7 @@ Urgent Item Freezer
 """
 
 import openpyxl
+from openpyxl.utils.datetime import from_excel
 import os
 import sys
 import subprocess
@@ -41,6 +42,20 @@ def log(msg):
 
 def is_formula(value):
     return isinstance(value, str) and value.startswith('=')
+
+# 2026-09-29: 셀 서식이 '일반'인 수식 셀은 계산값이 날짜가 아니라 엑셀 일련번호
+# (예: 46281.6875)로 읽혀서 그대로 숫자로 고정되던 문제 → 날짜로 변환해서 저장
+DATE_FMT = 'mm-dd-yy'  # openpyxl에서 Excel 기본 '간단한 날짜(Short Date)'(서식 14)에 해당, 표시는 PC 지역설정 따름
+
+def to_datetime(v):
+    if isinstance(v, datetime):
+        return v
+    if isinstance(v, (int, float)) and not isinstance(v, bool) and v > 0:
+        try:
+            return from_excel(v)
+        except Exception:
+            return None
+    return None
 
 # ── 재계산 방법 1: Excel COM (Windows 전용, 가장 정확) ────────────────────────
 def recalc_via_excel_com(path):
@@ -124,8 +139,16 @@ def freeze_rows():
             return raw if raw not in (None, '') else '-'
 
         frozen_count = 0
+        fmt_count = 0
 
         for row_idx in range(2, ws.max_row + 1):
+            # J열(용마입고날짜)은 수식이든 값이든 항상 Short Date로 보이게
+            # (서식이 General이면 날짜가 46287 같은 숫자로 보임, 2026-09-29 요청)
+            j_fmt_cell = ws.cell(row=row_idx, column=COL_YONGMA)
+            if j_fmt_cell.value is not None and j_fmt_cell.number_format != DATE_FMT:
+                j_fmt_cell.number_format = DATE_FMT
+                fmt_count += 1
+
             k_cell     = ws.cell(row=row_idx, column=COL_STATUS)
             k_raw      = k_cell.value
             k_computed = ws_vals.cell(row=row_idx, column=COL_STATUS).value
@@ -141,12 +164,31 @@ def freeze_rows():
             j_cell  = ws.cell(row=row_idx, column=COL_YONGMA)
             changed = False
 
+            if not (is_formula(i_cell.value) or is_formula(j_cell.value) or is_formula(k_raw)):
+                continue  # 이미 전부 값으로 고정된 행
+
+            i_val = ws_vals.cell(row=row_idx, column=COL_SHIP_DATE).value if is_formula(i_cell.value) else i_cell.value
+            j_val = ws_vals.cell(row=row_idx, column=COL_YONGMA).value if is_formula(j_cell.value) else j_cell.value
+            i_dt = to_datetime(i_val)
+            j_dt = to_datetime(j_val)
+
+            # 2026-09-29: J가 0/빈값(실적파일 입고일 아직 없음)이거나 선적일(I)보다
+            # 이르면(품번으로만 찾아서 예전 선적분 입고일을 가져온 경우) 고정 보류.
+            # 7122-00-3803: 9/9 선적인데 J=8/25로 '입고됨' 고정 → 이후 J=0으로 재고정된 사례.
+            if j_dt is None or (i_dt is not None and j_dt.date() < i_dt.date()):
+                pn = read_display(row_idx, COL_PN)
+                log(f'  Row {row_idx} ({pn}): J={j_val}가 날짜가 아니거나 선적일 I={i_val}보다 빨라 freeze 보류')
+                continue
+
             if is_formula(i_cell.value):
-                i_cell.value = ws_vals.cell(row=row_idx, column=COL_SHIP_DATE).value
+                i_cell.value = i_dt if i_dt is not None else i_val
+                if i_dt is not None:
+                    i_cell.number_format = DATE_FMT
                 changed = True
 
             if is_formula(j_cell.value):
-                j_cell.value = ws_vals.cell(row=row_idx, column=COL_YONGMA).value
+                j_cell.value = j_dt
+                j_cell.number_format = DATE_FMT
                 changed = True
 
             if is_formula(k_raw):
@@ -160,9 +202,16 @@ def freeze_rows():
                 frozen_count += 1
 
         # 3) 저장
-        if frozen_count > 0:
+        if frozen_count > 0 or fmt_count > 0:
             wb.save(EXCEL_FILE_PATH)
-            log(f'저장 완료. 총 {frozen_count}개 행 freeze 처리')
+            log(f'저장 완료. 총 {frozen_count}개 행 freeze 처리, J열 날짜서식 적용 {fmt_count}개')
+            # openpyxl 저장 시 실적파일 외부링크 Id가 어긋나 Excel이 링크를 끊는 문제 보정
+            try:
+                from xlsx_extlink_fix import fix_external_links
+                for msg in fix_external_links(EXCEL_FILE_PATH):
+                    log(f'  외부링크 보정: {msg}')
+            except Exception as e:
+                log(f'  [경고] 외부링크 보정 실패: {e}')
         else:
             log('새로 freeze할 행 없음. 파일 변경 없음.')
 

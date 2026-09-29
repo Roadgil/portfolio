@@ -437,6 +437,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>실제 입고가 확인되는 순간 Urgent Item 알림·통관완료 알림까지 자동 연쇄 발동</span><span data-en>The moment actual receipt is confirmed, it automatically triggers a chain of Urgent Item and clearance-complete notifications</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>배터리 전원 조건으로 조용히 스킵되던 실행 버그 수정</span><span data-en>Fixed a silent-skip bug tied to a battery-power condition</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>TO 번호가 재사용되는 케이스에서 가장 오래된 입고일 하나만 남기던 매칭 로직을 고쳐, 신고일자 이후 가장 이른 실입고일을 찾도록 개선 — 전에는 영영 공란으로 남던 재사용 TO 건까지 채워짐</span><span data-en>Fixed a matching bug where TO-number reuse kept only the single oldest receipt date — now finds the earliest actual-receipt date on or after the declaration date, filling in reused-TO rows that used to stay permanently blank</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent3);"></div><span data-ko>입고가 신고보다 먼저 찍힌 건은 목록통관(200달러 미만, 신고 없이 통관)으로 판정해, Urgent Item은 신고일자가 없으면 선적일을 하한선으로 매칭한다</span><span data-en>A receipt with no prior declaration is treated as list clearance (under $200, cleared without a formal declaration), so Urgent Item matching falls back to the ship date as its lower bound</span></div>
         </div>
       </div>
 
@@ -451,6 +452,9 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>같은 건 중복 알림 방지</span><span data-en>Prevents duplicate arrival notices</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>서비스팀 앞 입고 알림 메일 자동 발송</span><span data-en>Auto-sends the arrival notice to the service team</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>입고 판정 기준을 '신고일+2영업일 추정'에서 OTBI 실입고 이벤트 기반으로 전환 — 상반기 약 30건 처리</span><span data-en>Shifted arrival detection from a 'declaration date + 2 business days' estimate to actual OTBI receipt events — ~30 requests processed in H1</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>셀 서식이 '일반'이면 입고일이 엑셀 일련번호(46281.6875 등)로 고정되던 문제를 고쳐 항상 날짜 서식으로 저장</span><span data-en>Fixed arrival dates being frozen as raw Excel serial numbers (e.g. 46281.6875) in General-formatted cells; they are now always stored as dates</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>입고일이 비었거나 선적일보다 이르면(같은 품번의 예전 선적분을 끌어온 경우) 고정하지 않고 보류</span><span data-en>Holds off freezing when the arrival date is empty or earlier than the ship date, which means an older shipment of the same part was picked up</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>openpyxl 저장 시 실적 파일 외부링크 ID가 어긋나 Excel이 링크를 끊던 원인을 찾아, 통합 파일을 저장하는 세 스크립트에 저장 직후 링크 자동 복구 단계 추가</span><span data-en>Traced Excel dropping the external link to the declaration workbook to a relationship-ID mismatch left by openpyxl saves, and added an automatic link repair step right after save in all three scripts that write the combined file</span></div>
         </div>
       </div>
 

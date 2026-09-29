@@ -1,6 +1,6 @@
 원본 경로: OneDrive `10. 수입/PDF-수입면장 파이썬`, `Intransit-수입면장 파이썬`, `Intransit 내부공유`, `작업스케줄러`, `OTBI 실입고 파이썬`, `인천관세법인 C.I 확인`. 작업 스케줄러(GROUP_A/B/C)로 평일 자동 실행.
 
-- **실행 방법**: `group_a.py`/`group_b.py`/`group_c.py`가 각 그룹의 오케스트레이터(스케줄러 .bat이 이걸 호출). `icbl_ci_watcher.py`, `outlook_imp_pdf_saver.py`, `outlook_intransit_downloader.py`, `urgent_item_freezer.py`, `pdf_auto_updater.py`, `otbi_receipt_updater.py` 등은 각 그룹 안에서 순서대로 호출되는 개별 단계 스크립트. `intransit_to_ir_append_only_sorted_paths_set.py`는 `intransit_internal_share.py` 등에서 `as updater`로 import됨.
+- **실행 방법**: `group_a.py`/`group_b.py`/`group_c.py`가 각 그룹의 오케스트레이터(스케줄러 .bat이 이걸 호출). `icbl_ci_watcher.py`, `outlook_imp_pdf_saver.py`, `outlook_intransit_downloader.py`, `urgent_item_freezer.py`, `pdf_auto_updater.py`, `otbi_receipt_updater.py` 등은 각 그룹 안에서 순서대로 호출되는 개별 단계 스크립트. `intransit_to_ir_append_only_sorted_paths_set.py`는 `intransit_internal_share.py` 등에서 `as updater`로 import됨. `xlsx_extlink_fix.py`는 IR 통합 파일을 openpyxl로 저장하는 세 스크립트(`urgent_item_freezer.py`, `otbi_receipt_updater.py`, `intransit_to_ir_append_only_sorted_paths_set.py`)가 저장 직후 호출하는 외부링크 보정 도우미(원본 위치는 `작업스케줄러` 폴더).
 - **필요 패키지**: `openpyxl`, `pandas`, `pdfplumber`, `pypdfium2`, `pytesseract`(+시스템에 Tesseract OCR 설치 필요), `Pillow`(PIL), `pywin32`(`win32com.client` — Outlook).
 - **외부 의존성**: Outlook 데스크톱 클라이언트, Microsoft Edge + Selenium(`icbl_ci_watcher.py`, `intransit_internal_share.py`), Oracle Fusion 로그인(SSO), SharePoint(REST API 호출 부분 있음).
 - **필요 환경변수/시크릿**: 이 폴더 코드에서는 하드코딩된 비밀번호가 발견되지 않음(Oracle은 SSO, Outlook은 로그인된 데스크톱 세션 사용).

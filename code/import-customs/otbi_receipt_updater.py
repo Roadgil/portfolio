@@ -646,9 +646,42 @@ def build_intransit_index(ws_intransit) -> dict:
     return index
 
 
+def build_perf_decl_map() -> dict:
+    """실적파일에서 (TO, 자재코드) → 신고일자 리스트.
+    2026-09-29: Urgent Item에도 '신고일자 <= 실제입고일' 가드를 적용하기 위함.
+    신고일자가 없는 건은 목록통관으로 보고 선적일을 하한선으로 쓴다
+    (예: TO 7882263 / 3460-00-0071, 9/17 선적 → 9/22 목록통관 입고)."""
+    wb = openpyxl.load_workbook(PERF_FILE_PATH, data_only=True, read_only=True)
+    try:
+        ws = wb.worksheets[0]
+        header = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
+        col_map = {norm_hdr(h): i for i, h in enumerate(header) if h is not None}
+        i_to = col_map.get(norm_hdr("SO Number"))
+        i_item = col_map.get(norm_hdr("자재코드"))
+        i_decl = col_map.get(norm_hdr("신고일자"))
+        if i_to is None or i_item is None or i_decl is None:
+            raise ValueError(f"실적파일에서 SO Number/자재코드/신고일자 컬럼을 못 찾음: {list(col_map.keys())}")
+        decl_map: dict[tuple[str, str], list] = {}
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            to_val = norm_str(row[i_to]) if i_to < len(row) else ""
+            item_val = norm_str(row[i_item]).upper() if i_item < len(row) else ""
+            d = norm_date(row[i_decl]) if i_decl < len(row) else None
+            if not to_val or not item_val or d is None:
+                continue
+            decl_map.setdefault((to_val, item_val), []).append(d)
+        return decl_map
+    finally:
+        wb.close()
+
+
 def update_ir_file(receipt_map: dict, report_time: datetime | None = None) -> int:
     if not receipt_map:
         return 0
+    try:
+        decl_map = build_perf_decl_map()
+    except PermissionError:
+        log("[경고] 실적파일이 열려있어 신고일자 확인 불가 → Urgent Item 업데이트 이번 회차 스킵")
+        return -1
     try:
         # 읽기 전용: 수식이 계산된 실제 값(날짜 등)을 봐야 하므로 data_only=True
         wb_read = openpyxl.load_workbook(IR_FILE_PATH, data_only=True, read_only=True)
@@ -667,7 +700,8 @@ def update_ir_file(receipt_map: dict, report_time: datetime | None = None) -> in
         # iter_rows로 순차 접근 (위와 동일한 이유)
         max_c = max(URGENT_COL_PN, URGENT_COL_DESC, URGENT_COL_REQUESTER,
                     URGENT_COL_STATUS, URGENT_COL_SHIP)
-        to_write: list[tuple[int, str, str, str, str]] = []
+        to_write: list[tuple[int, str, str, str, str, date]] = []
+        skipped_no_decl = 0
         for r, row in enumerate(
             ws_urgent_r.iter_rows(min_row=2, max_col=max_c, values_only=True), start=2
         ):
@@ -688,11 +722,23 @@ def update_ir_file(receipt_map: dict, report_time: datetime | None = None) -> in
 
             to_num = candidates[0]
             if (to_num, pn) in receipt_map:
+                # 보통(98%)은 신고 → 용마입고 순이라 신고일자 이후 receipt만 인정.
+                # 신고일자가 없는데 receipt가 있으면 목록통관(200달러 미만, 신고 없이
+                # 통관)이므로 최근선적일(I열) 이후 receipt를 인정(TO 재사용 오매칭 방지).
+                decl_dates = decl_map.get((to_num, pn), [])
+                lower = min(decl_dates) if decl_dates else ship
+                candidate_dates = [d for d in receipt_map[(to_num, pn)] if d >= lower]
+                if not candidate_dates:
+                    skipped_no_decl += 1
+                    continue
                 desc = str(row[URGENT_COL_DESC - 1] or "")
                 requester = str(row[URGENT_COL_REQUESTER - 1] or "")
-                to_write.append((r, to_num, pn, desc, requester))
+                to_write.append((r, to_num, pn, desc, requester, min(candidate_dates)))
     finally:
         wb_read.close()
+
+    if skipped_no_decl > 0:
+        log(f"IR통합파일: receipt가 신고일자(목록통관은 선적일)보다 빨라서 스킵(TO 재사용 오매칭 방지): {skipped_no_decl}건")
 
     if not to_write:
         log("IR통합파일: 매칭된 신규 건 없음")
@@ -709,8 +755,7 @@ def update_ir_file(receipt_map: dict, report_time: datetime | None = None) -> in
 
         updated = 0
         newly_arrived = []  # 이번 실행에서 처음 채워진 행만 메일 알림 대상
-        for r, to_num, pn, desc, requester in to_write:
-            new_date = min(receipt_map[(to_num, pn)])  # 신고일자 개념이 없으므로 가장 이른 날짜 사용(기존 동작 유지)
+        for r, to_num, pn, desc, requester, new_date in to_write:
             cell = ws_urgent_w.cell(r, URGENT_NEW_COL)
             # 2026-07-13: 실적파일과 동일한 이유로 이미 값이 있으면 덮어쓰지 않음.
             if cell.value is not None:
@@ -733,6 +778,14 @@ def update_ir_file(receipt_map: dict, report_time: datetime | None = None) -> in
             backup_file(IR_FILE_PATH, IR_BACKUP_DIR)
             wb_write.save(IR_FILE_PATH)
             log(f"IR통합파일(Urgent Item) 업데이트: {updated}건")
+            # openpyxl 저장 시 실적파일 외부링크 Id가 어긋나 Excel이 링크를 끊는 문제 보정
+            try:
+                sys.path.insert(0, os.path.join(ROOT, "작업스케줄러"))
+                from xlsx_extlink_fix import fix_external_links
+                for msg in fix_external_links(IR_FILE_PATH):
+                    log(f"외부링크 보정: {msg}")
+            except Exception as e:
+                log(f"[경고] 외부링크 보정 실패: {e}")
             try:
                 send_urgent_arrival_draft(newly_arrived)
             except Exception as e:

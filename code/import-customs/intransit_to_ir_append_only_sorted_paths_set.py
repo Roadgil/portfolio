@@ -424,6 +424,15 @@ def main():
 
     wb_t.save(TARGET_FILE)
     log(f"신규 추가 행 수: {inserted}")
+    # openpyxl 저장 시 실적파일 외부링크 Id가 어긋나 Excel이 링크를 끊는 문제 보정
+    try:
+        import sys
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "작업스케줄러"))
+        from xlsx_extlink_fix import fix_external_links
+        for msg in fix_external_links(TARGET_FILE):
+            log(f"외부링크 보정: {msg}")
+    except Exception as e:
+        log(f"[경고] 외부링크 보정 실패: {e}")
     log("완료")
 
 if __name__ == "__main__":
