@@ -114,14 +114,15 @@
     <div class="hero-tag">Monthly Closing · Warehouse Inventory · Single-file App</div>
     <h1 class="hero-title"><span class="a1" data-ko>Warehouse</span><span class="a1" data-en>WAREHOUSE</span><br><span class="a2" data-ko>월마감 대시보드</span><span class="a2" data-en>CLOSING DASHBOARD</span></h1>
     <p class="hero-desc">
-      <span data-ko>FG·SP·MRB·RMA_NV·Scrap·Intransit 등 11개 재고 카테고리를 한눈에 보는 창고 전체 월마감(Monthly Closing) 대시보드. 그 안에 그동안 따로 안 잡히던 필드 서비스 엔지니어(FSE) 로케이션만 떼어내 담당자 10명별 온핸드·소비·입고·회전율을 보는 전용 트래킹 모듈을 얹었다. Oracle Material Transactions 원본 export를 그대로 다루다 보니 겪은 함정들 — 5000행에서 말없이 잘리는 export 제한, 재고실사 주간의 트랜잭션 공백, 단가 없는 리포트 — 을 하나씩 규칙으로 흡수했다.</span>
-      <span data-en>A warehouse-wide Monthly Closing dashboard covering 11 inventory categories — FG, SP, MRB, RMA_NV, Scrap, Intransit, and more — in one view. Inside it sits a dedicated tracking module that breaks out just the field service engineer (FSE) location, previously lumped in with everything else, into per-engineer on-hand/consumption/receipt/turnover for 10 engineers. Built directly on raw Oracle Material Transactions exports, it absorbs every trap those exports hide — a 5,000-row limit that truncates silently, transaction blackout weeks during physical counts, and a report with no price column.</span>
+      <span data-ko>FG·SP·MRB·RMA_NV·Scrap·Intransit 등 11개 재고 카테고리를 한눈에 보는 창고 전체 월마감(Monthly Closing) 대시보드. 그 안에 그동안 따로 안 잡히던 필드 서비스 엔지니어(FSE) 로케이션만 떼어내 담당자 10명별 온핸드·소비·입고·회전율을 보는 전용 트래킹 모듈을 얹었다. Oracle Material Transactions 원본 export를 그대로 다루다 보니 겪은 함정들 — 5000행에서 말없이 잘리는 export 제한, 재고실사 주간의 트랜잭션 공백, 단가 없는 리포트 — 을 하나씩 규칙으로 흡수했다. 매달 마감 시점의 소비/입고/온핸드 수집은 Playwright로 자동화해 Salesforce·Oracle에서 대시보드 UI로 직접 밀어 넣는다.</span>
+      <span data-en>A warehouse-wide Monthly Closing dashboard covering 11 inventory categories — FG, SP, MRB, RMA_NV, Scrap, Intransit, and more — in one view. Inside it sits a dedicated tracking module that breaks out just the field service engineer (FSE) location, previously lumped in with everything else, into per-engineer on-hand/consumption/receipt/turnover for 10 engineers. Built directly on raw Oracle Material Transactions exports, it absorbs every trap those exports hide — a 5,000-row limit that truncates silently, transaction blackout weeks during physical counts, and a report with no price column. Monthly consumption/receipt/on-hand collection is now Playwright-automated, pushing straight from Salesforce and Oracle into the dashboard's own upload UI.</span>
     </p>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num" style="color:var(--accent2);">11</span><span class="stat-label" data-ko>재고 카테고리 · 11개월 데이터</span><span class="stat-label" data-en>inventory categories · 11 months</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent);">10</span><span class="stat-label" data-ko>FSE 모듈 - 엔지니어별 추적</span><span class="stat-label" data-en>FSE module - engineers tracked</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent3);">261</span><span class="stat-label" data-ko>품목 USD 단가 Lookup</span><span class="stat-label" data-en>item USD-price lookup</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent4);">1</span><span class="stat-label" data-ko>단일 HTML · 오프라인 · 백업/복원</span><span class="stat-label" data-en>single HTML · offline · backup/restore</span></div>
+      <div class="stat"><span class="stat-num" style="color:#a78bfa;">3</span><span class="stat-label" data-ko>소스 자동수집(SF+Oracle×2) · 월마감일 11시 스케줄</span><span class="stat-label" data-en>sources automated (SF + Oracle×2) · scheduled month-end 11:00</span></div>
     </div>
   </section>
 
@@ -179,6 +180,41 @@
     </div>
   </section>
 
+  <section class="section" style="padding-top:0;">
+    <div class="section-label">Monthly Automation</div>
+    <h2 class="section-title reveal"><span data-ko>수기 업로드에서</span><span data-en>From manual paste</span><br><em><span data-ko>Playwright 자동 수집으로</span><span data-en>to Playwright-driven collection</span></em></h2>
+    <div class="trap-grid">
+      <div class="trap-card reveal">
+        <div class="trap-icon">🕹️</div>
+        <div class="trap-title" data-ko>3소스 병렬 수집 + 월마감일 스케줄</div>
+        <div class="trap-title" data-en>3-source parallel pull, month-end scheduled</div>
+        <div class="trap-desc" data-ko>소비(Salesforce), 입고·온핸드(Oracle Fusion BI Publisher) 3개를 각각 별도 브라우저 프로필로 병렬 실행 - 순차 대비 소요시간이 4분에서 2분 21초로 줄었다. Windows 작업 스케줄러가 매달 마지막 영업일 11시에만 실제로 돌게 날짜 가드를 걸었고, 실패한 달은 "완료"로 기록하지 않아 다음날 자동 재시도된다.</div>
+        <div class="trap-desc" data-en>Consumption (Salesforce) and receipt/on-hand (Oracle Fusion BI Publisher) run in parallel across separate browser profiles - cutting the run from 4 minutes to 2m21s versus sequential. A Windows Scheduled Task fires daily but only actually runs on the last business day of the month; a failed month is never marked complete, so it retries automatically the next day.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">🗂️</div>
+        <div class="trap-title" data-ko>브라우저 프로필의 탭 기억이 부른 가짜 타임아웃</div>
+        <div class="trap-title" data-en>A remembered browser tab masquerading as a timeout</div>
+        <div class="trap-desc" data-ko>병렬 전환 후 입고 수집이 "Inventory Management" 화면을 못 찾고 타임아웃났다. 처음엔 부하로 오판해 대기시간만 늘렸지만, 실패 스크린샷을 보고서야 원인을 확인했다 - Oracle Fusion 홈이 브라우저 프로필별 마지막 방문 탭을 기억해뒀다가 그대로 띄우는데, 온핸드와 프로필을 공유하던 시절 기록이 남아있었다. 프로필 분리 + 원하는 탭 명시적 클릭으로 해결.</div>
+        <div class="trap-desc" data-en>After switching to parallel runs, receipt collection kept timing out looking for the "Inventory Management" tile. Bumping the wait first — wrongly blaming load — did nothing; only the failure screenshot revealed that Oracle Fusion Home remembers each browser profile's last-visited tab, and a stale tab from when the profile was shared with on-hand collection was still there. Fixed by separating profiles and explicitly clicking the target tab every run.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">🤫</div>
+        <div class="trap-title" data-ko>조용히 성공으로 둔갑한 실패</div>
+        <div class="trap-title" data-en>A failure that quietly reported itself as success</div>
+        <div class="trap-desc" data-ko>자식 스크립트가 예외를 잡고 그냥 return하면 프로세스 종료코드가 0(성공)으로 남는다 - 실제로 입고 수집이 화면 진입도 못했는데 오케스트레이터엔 "완료"로 기록된 사고가 있었다. 모든 실패 경로를 sys.exit(1)로 바꿔 종료코드가 실제 결과를 반영하게 고쳤다.</div>
+        <div class="trap-desc" data-en>When a child script caught its own exception and just returned, the process still exited 0 (success) - receipt collection once failed to even reach the target screen yet got logged as complete by the orchestrator. Every failure path now calls sys.exit(1) so the exit code reflects what actually happened.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">🧩</div>
+        <div class="trap-title" data-ko>특이사항 편집이 온핸드 상세를 지우던 버그</div>
+        <div class="trap-title" data-en>Editing a remark silently wiped on-hand detail</div>
+        <div class="trap-desc" data-ko>대시보드 자체에서 나온 버그: 어떤 달에 "특이사항"이 하나라도 있으면 그 달 데이터를 카테고리별로 재조립하는데, 이 재조립 로직이 온핸드 담당자별 상세(fseDetail)와 FG/DEMO 시스템 대수(keyEquip)를 챙기지 않고 버렸다. 재고관리 지표 표가 전부 0/판단불가로 보이는 증상으로 발견해 원본 필드를 그대로 펼친 뒤 특이사항만 덮어쓰도록 고쳤다.</div>
+        <div class="trap-desc" data-en>A bug in the dashboard itself: any month with even one remark note triggered a per-category rebuild that dropped the per-engineer on-hand breakdown (fseDetail) and FG/DEMO system counts (keyEquip) entirely. Surfaced as every row in the inventory-metrics table reading zero/undetermined; fixed by spreading the original fields through and overlaying only the remark text.</div>
+      </div>
+    </div>
+  </section>
+
   <div class="stack-section">
     <div class="section" style="padding-bottom:0;">
       <div class="section-label">Stack</div>
@@ -190,6 +226,8 @@
       <div class="stack-item"><div class="stack-emoji">💾</div><div class="stack-name">JSON Backup/Restore</div><div class="stack-role" data-ko>기간별 데이터 내보내기/불러오기</div><div class="stack-role" data-en>Export/import saved periods</div></div>
       <div class="stack-item"><div class="stack-emoji">🏭</div><div class="stack-name">Oracle Material Transactions</div><div class="stack-role" data-ko>소스 데이터(다중 export 병합)</div><div class="stack-role" data-en>Source data (multi-export merge)</div></div>
       <div class="stack-item"><div class="stack-emoji">💲</div><div class="stack-name">ITEM_COST_LOOKUP</div><div class="stack-role" data-ko>261개 품목 USD 단가표</div><div class="stack-role" data-en>261-item USD price table</div></div>
+      <div class="stack-item"><div class="stack-emoji">🎭</div><div class="stack-name">Playwright</div><div class="stack-role" data-ko>Salesforce·Oracle 자동 수집 + 대시보드 업로드</div><div class="stack-role" data-en>Salesforce/Oracle collection + dashboard upload</div></div>
+      <div class="stack-item"><div class="stack-emoji">⏰</div><div class="stack-name">Windows Task Scheduler</div><div class="stack-role" data-ko>월마감일 11시 자동 실행 + 캐치업</div><div class="stack-role" data-en>Month-end 11:00 run + catch-up</div></div>
     </div>
   </div>
 
