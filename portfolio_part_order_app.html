@@ -288,7 +288,7 @@
 
   <section class="section reveal">
     <div class="section-label">Core Modules · Track B</div>
-    <h2 class="section-title"><span data-ko>기존 Pick Release 코드를</span><span data-en>Reusing the existing</span><br><em><span data-ko>그대로 재사용한 3개 모듈</span><span data-en>Pick Release code, 3 modules</span></em></h2>
+    <h2 class="section-title"><span data-ko>기존 Pick Release 코드를</span><span data-en>Reusing the existing</span><br><em><span data-ko>그대로 재사용한 4개 모듈</span><span data-en>Pick Release code, 4 modules</span></em></h2>
     <div class="mod-grid">
       <div class="mod-card c3 reveal">
         <div class="mod-head"><div class="mod-file">fse_po_release.py</div><div class="mod-title" data-ko>스캔 · Order Type 필터</div><div class="mod-title" data-en>Scan &amp; Order Type Filter</div></div>
@@ -299,6 +299,11 @@
         <div class="mod-head"><div class="mod-file">fse_po_oracle_release.py</div><div class="mod-title" data-ko>Oracle Transfer Order 릴리즈</div><div class="mod-title" data-en>Oracle Transfer Order Release</div></div>
         <div class="mod-desc" data-ko>DCD Pick Release/Rebalance 자동화에서 쓰던 create_pick_wave_transfer_order·release_pick_wave_now를 그대로 import해서 호출한다 - 새로 만들지 않고 검증된 코드를 재사용.</div>
         <div class="mod-desc" data-en>Imports and calls create_pick_wave_transfer_order / release_pick_wave_now straight from the DCD Pick Release/Rebalance automation — reusing already-verified code instead of writing new release logic.</div>
+      </div>
+      <div class="mod-card c2 reveal">
+        <div class="mod-head"><div class="mod-file">teams_po_watcher.py</div><div class="mod-title" data-ko>Teams 예외 문의 감시</div><div class="mod-title" data-en>Teams Exception Watcher</div></div>
+        <div class="mod-desc" data-ko>알림 메일이 안 와서 자동 처리에서 빠진 건은 엔지니어가 Teams 개인톡으로 문의해 온다. 출근 전 8~10시에는 볼 사람이 없어, 그 시간대(평일 07:50~10:15, 10분 간격)에만 헤드리스 Claude가 M365 커넥터로 개인톡을 읽는다. PO 번호는 정규식으로 뽑아 기존 릴리즈 상태파일과 대조하고, 이미 처리된 건은 기록만 남기고, 미처리 건은 기존 direct 모드(Billable 판별 · 발신함 중복 확인 포함)로 넘긴다. 번호 없는 문의는 확인 목록으로 모은다. 그룹 채팅과 엔지니어 명단 밖 발신자는 자동 처리 대상에서 제외하며, 현재는 기록만 남기는 shadow 모드로 며칠 검증한 뒤 자동 처리로 전환할 예정이다.</div>
+        <div class="mod-desc" data-en>Exceptions that slip past automation — typically a Salesforce notification mail that never arrived — come in as Teams DMs from engineers. Nobody is at a desk from 8 to 10 a.m., so only in that window (weekdays 07:50–10:15, every 10 minutes) a headless Claude session reads the DMs through the M365 connector. PO numbers are extracted with a regex and checked against the existing release state file; already-handled orders are only logged, unhandled ones can be handed to the existing direct mode, which keeps its Billable check and Sent Items dedup. Messages without a PO number are collected for human review. Group chats and senders outside the engineer roster are never auto-processed. It currently runs in shadow mode (log only) for a few days of verification before auto-processing is switched on.</div>
       </div>
       <div class="mod-card c1 reveal">
         <div class="mod-head"><div class="mod-file">파트오더앱.py · 탭 3</div><div class="mod-title" data-ko>통합 · 팀 이관</div><div class="mod-title" data-en>Merged &amp; Handed Over</div></div>
@@ -323,6 +328,7 @@
       <div class="stack-item"><div class="stack-emoji">🎭</div><div class="stack-name">Playwright (CDP)</div><div class="stack-role" data-ko>기존 SSO 세션에 붙어 ServiceMax 조작</div><div class="stack-role" data-en>Attaches to an existing SSO session to drive ServiceMax</div></div>
       <div class="stack-item"><div class="stack-emoji">🖼️</div><div class="stack-name">Tkinter</div><div class="stack-role" data-ko>2탭 데스크톱 GUI</div><div class="stack-role" data-en>2-tab desktop GUI</div></div>
       <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 스캔·완료메일 발송</div><div class="stack-role" data-en>Outlook mail scan &amp; completion mail</div></div>
+      <div class="stack-item"><div class="stack-emoji">🤖</div><div class="stack-name">Claude Code (headless) · M365</div><div class="stack-role" data-ko>Teams 개인톡 읽기, 판단은 정규식·상태파일로</div><div class="stack-role" data-en>Reads Teams DMs; decisions stay in regex &amp; state files</div></div>
       <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Salesforce / ServiceMax</div><div class="stack-role" data-ko>Case · Parts Order 생성/승인</div><div class="stack-role" data-en>Case &amp; Parts Order creation/approval</div></div>
       <div class="stack-item"><div class="stack-emoji">🏭</div><div class="stack-name">Oracle Fusion</div><div class="stack-role" data-ko>Interface Trigger · Pick Release · Transfer Order</div><div class="stack-role" data-en>Interface trigger, Pick Release &amp; Transfer Order</div></div>
     </div>
