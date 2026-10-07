@@ -8,11 +8,12 @@ Order Type = "Shipping Only" 인 건만 대상으로 한다 - "Billable Parts Or
 대상 건에 대해:
   1. SF Parts Order 링크에서 Oracle Order Number / Parts Order Line / Message
      For Shipper 확인
-  2. 기훈님/용호님(용마로지스) TO + 원발신자 CC로 출고요청 메일 발송(품목은
-     줄바꿈으로, 세미콜론 연결 금지 - 2026-09-01 사용자 지정)
-  3. 오라클에서 Transfer order로 SP release(부품은 SP 1회로 충분, backorder
-     있으면 FG 1회 추가만, 그 이상 재시도 안 함) - fse_po_oracle_release.py를
-     pdf_updater 콘다 환경 subprocess로 호출
+  2. (2026-10-06 순서 변경) 오라클에서 Transfer order로 SP release, backorder가 있으면
+     FG 1회 추가, 그래도 backorder가 남으면 Manage Shipment Lines에서 빠진 품목 확인
+     - fse_po_oracle_release.py를 pdf_updater 콘다 환경 subprocess로 호출
+  3. 오라클 처리가 끝난 뒤 기훈님/용호님(용마로지스) TO + 원발신자 CC로 출고요청 메일을
+     원본 알림 메일에 회신(품목은 줄바꿈으로, 세미콜론 연결 금지 - 2026-09-01 사용자
+     지정). 백오더 품목은 메일에 명시
 
 state 파일(fse_po_release_state.json)로 중복 처리를 막는다. 삭제·수정은 사용자
 명시적 요청 때만.
@@ -47,8 +48,8 @@ import paths                # 사용자마다 다른 경로를 이 PC 기준으�
 PDF_UPDATER_PY = paths.PDF_UPDATER_PY
 
 DEBUG_PORT = 9222
-SF_BASE = "https://candelamedical.my.salesforce.com"
-YONGMA_TO = "김기훈 <y7221063@yongmalogis.co.kr>; 용호 유 <y7225055@yongmalogis.co.kr>"
+SF_BASE = "https://example.my.salesforce.com"
+YONGMA_TO = "3PL Contact 1 <3pl.contact1@example-3pl.com>; 3PL Contact 2 <3pl.contact2@example-3pl.com>"
 
 # 세일즈포스 조회/메일발송은 2건까지 동시에, 오라클 릴리즈는 한 번에 하나씩만
 # (릴리즈는 singleton lock 때문에 진짜 동시실행이 안 됨 - part_order_app의
@@ -68,19 +69,19 @@ def _save_state_locked(state):
 # SF 필드 표기 순서가 달라도 동일하게 매칭된다. 2026-09-01 FSE PO 폴더 발신자
 # 전수조사(최근 3000건) 기준.
 _SENDER_TABLE = [
-    ("Ben Lee", "benl@candelamedical.com"),
-    ("Jaepil Jeong", "jaepilj@candelamedical.com"),
-    ("Jong Seong Cha", "jongseongc@candelamedical.com"),
-    ("Kwang Yul Lee", "kwangl@candelamedical.com"),
-    ("Dasung Jung", "dasungj@candelamedical.com"),
-    ("Junyeol Yang", "junyeoly@candelamedical.com"),
-    ("JooHyung Han", "joohyungh@candelamedical.com"),
-    ("Chang Sik Shin", "changsiks@candelamedical.com"),
-    ("Jungon Park", "jungonp@candelamedical.com"),
-    ("Haejoon Kim", "haejoonk@candelamedical.com"),
-    ("Jaehwan han", "jaehwanh@candelamedical.com"),
-    ("Chang Gyu Yu", "changgyuy@candelamedical.com"),
-    ("Yohan Kim", "yohank@candelamedical.com"),
+    ("Ben Lee", "fse01@example.com"),
+    ("Jaepil Jeong", "fse02@example.com"),
+    ("Jong Seong Cha", "fse03@example.com"),
+    ("Kwang Yul Lee", "fse04@example.com"),
+    ("Dasung Jung", "fse05@example.com"),
+    ("Junyeol Yang", "fse06@example.com"),
+    ("JooHyung Han", "fse07@example.com"),
+    ("Chang Sik Shin", "fse08@example.com"),
+    ("Jungon Park", "fse09@example.com"),
+    ("Haejoon Kim", "fse10@example.com"),
+    ("Jaehwan han", "fse11@example.com"),
+    ("Chang Gyu Yu", "fse12@example.com"),
+    ("Yohan Kim", "fse13@example.com"),
 ]
 
 
@@ -104,10 +105,10 @@ _SENDER_KO = {
     "Junyeol Yang":   ("양준열", "대리"),
     "JooHyung Han":   ("한주형", "차장"),
     "Chang Sik Shin": ("신창식", "차장"),
-    # 아래 4명은 퇴사(2026-09-03 사용자 확인). 새 파트오더는 안 오지만, 예전
+    "Jungon Park":    ("박준곤", "대리"),   # 현재 근무 중(2026-10-07 사용자 확인). 박정온 아님, 직급 대리
+    # 아래 3명은 퇴사(2026-09-03 사용자 확인). 새 파트오더는 안 오지만, 예전
     # 메일을 direct 모드로 다시 돌릴 때를 위해 이름은 남겨둔다.
     "Chang Gyu Yu":   ("유창규", ""),
-    "Jungon Park":    ("박정온", ""),
     "Jaehwan han":    ("한재환", ""),
     "Yohan Kim":      ("김요한", ""),
 }
@@ -305,22 +306,68 @@ def already_sent(po_no: str, days=14) -> bool:
     return False
 
 
-def send_release_mail(subject, oracle_no, lines, msg_shipper, cc_name, cc_email, entry_id=None):
+# Manage Shipment Lines의 Line Status 중 "이미 뽑혀 출고 흐름에 들어간" 상태.
+# 이 외(Backordered / Ready to release 등)는 아직 안 뽑힌 라인 = 백오더로 본다.
+_RELEASED_STATUS_KEYS = ("released to warehouse", "staged", "shipped", "closed", "interfaced")
+
+
+def compute_backordered(lines, release_result):
+    """백오더로 빠진 품목을 Manage Shipment Lines의 라인 상태와 대조해 문자열 목록으로
+    돌려준다(2026-10-07, Pick Slip 대신 Manage Shipment Lines 기준으로 교체).
+
+    lines: SF Parts Order Line [(품번, 분류, 수량)], release_result: 오라클 릴리즈 결과.
+    반환: 백오더 품목 설명 리스트(없으면 []), 라인을 못 읽었으면 None.
+    품목별로 '뽑힌 상태(Released 등)'인 라인의 Requested Quantity 합을 SF 요청 수량과
+    비교한다 - 모자라거나 아예 없으면 그만큼이 백오더."""
+    if not (release_result or {}).get("final_backordered_lines"):
+        return []
+    ship_lines = (release_result or {}).get("shipment_lines")
+    if not ship_lines:
+        return None
+    missing = []
+    for part, _cat, qty in lines:
+        want = int(qty) if str(qty).isdigit() else 0
+        got = 0
+        for row in ship_lines:
+            if row.get("item") != part:
+                continue
+            status = str(row.get("line_status", "")).lower()
+            r = str(row.get("requested", "")).strip()
+            if any(k in status for k in _RELEASED_STATUS_KEYS):
+                got += int(r) if r.isdigit() else 0
+        if got == 0:
+            missing.append(f"{part} x{qty} (전량 백오더)")
+        elif want and got < want:
+            missing.append(f"{part} x{want - got} (요청 {want} 중 {got}만 출고, 나머지 백오더)")
+    return missing
+
+
+def send_release_mail(subject, oracle_no, lines, msg_shipper, cc_name, cc_email, entry_id=None,
+                      backordered=None):
     """용마 앞 출고요청 메일 발송.
 
     2026-09-03부터 새 메일 대신 원본 알림 메일에 **전체회신**한다(사용자 요청) -
     원본 발신자/수신자가 스레드에 그대로 남고, 기훈님/용호님(YONGMA_TO)을 CC에
     추가한다. entry_id가 없으면(direct 모드처럼 원본 알림 메일이 없는 경우) 예전
-    방식대로 새 메일을 만든다."""
+    방식대로 새 메일을 만든다.
+
+    2026-10-06: 오라클 release가 끝난 **뒤에** 보낸다(사용자 지정 순서). backordered는
+    compute_backordered 결과(리스트, 없으면 []). 전 품목 백오더여도 같은 형식으로
+    용마에 보낸다(사용자 지시, 그런 경우는 없을 거라고 함)."""
     import win32com.client
     lines_block = "\n".join(f"- {p}({c}) x{q}" for p, c, q in lines) or "(품목 정보 없음)"
     greeting = sender_honorific(cc_name)
+    bo_block = ""
+    if backordered:
+        bo_block = ("\n※ 아래 품목은 재고 부족(백오더)으로 이번 출고에서 제외됩니다:\n"
+                    + "\n".join(f"- {b}" for b in backordered) + "\n")
     body = (
         (f"안녕하세요, {greeting} 파트오더입니다.\n\n" if greeting else "")
         + "기훈님 용호님\n\n"
         "출고 부탁드립니다\n\n"
         f"Oracle Order Number : {oracle_no}\n"
-        f"Parts Order Line :\n{lines_block}\n\n"
+        f"Parts Order Line :\n{lines_block}\n"
+        + bo_block + "\n"
         f"Message for Shipper : {msg_shipper}\n"
     )
     outlook = win32com.client.Dispatch("Outlook.Application")
@@ -402,6 +449,36 @@ def _connect_sf():
             "SF 브라우저(포트 9222)에 연결 못함 - part_order_backup\\open_browser.py를 "
             "먼저 백그라운드로 띄워야 함")
     return p, browser
+
+
+def ensure_sf_browser(wait_sec=90):
+    """SF 브라우저(9222)가 안 떠 있으면 part_order_backup/open_browser.py를 분리 프로세스로
+    띄우고 포트가 열릴 때까지 기다린다(2026-10-07, 스케줄러 등록용 안전장치 - 재부팅/
+    브라우저 종료 후에도 스캔이 멈추지 않게). 이미 떠 있으면 아무것도 안 한다."""
+    import socket
+
+    def _open():
+        try:
+            with socket.create_connection(("127.0.0.1", DEBUG_PORT), timeout=2):
+                return True
+        except OSError:
+            return False
+
+    if _open():
+        return True
+    script = os.path.join(PART_ORDER_BACKUP_DIR, "open_browser.py")
+    log(f"SF 브라우저(포트 {DEBUG_PORT})가 꺼져 있어 open_browser.py를 띄움")
+    subprocess.Popen([sys.executable, script], cwd=PART_ORDER_BACKUP_DIR,
+                     creationflags=0x00000008 | 0x00000200,     # DETACHED | NEW_PROCESS_GROUP
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    deadline = time.time() + wait_sec
+    while time.time() < deadline:
+        time.sleep(3)
+        if _open():
+            time.sleep(5)       # 로그인/초기 화면 안정화
+            return True
+    log(f"[경고] {wait_sec}초 안에 SF 브라우저가 안 열림")
+    return False
 
 
 def search_po_url(page, po_no: str):
@@ -551,7 +628,14 @@ def run_oracle_release(oracle_no: str) -> dict:
 
 # ------------------------------------------------------------- 공통 처리
 DONE_STATUSES = ("released", "skipped_billable", "skipped_closed",
-                  "skipped_already_sent", "mail_sent_release_pending")
+                  "skipped_already_sent", "mail_sent_release_pending",
+                  "release_failed_final", "shipline_failed")
+# 2026-10-06: release -> 메일 순서로 바뀌며 새 상태가 생겼다.
+#   release_failed        release 실패라 메일 미발송 -> 스캔이 재시도(최대 3회, RETRY)
+#   released_mail_failed  release는 끝났고 메일만 실패 -> 재시도 시 release 건너뜀(RETRY)
+#   release_failed_final  3회 실패 -> 사람 확인
+#   shipline_failed       백오더 품목을 못 읽음 -> 메일 미발송, 사람 확인
+# mail_sent_release_pending은 옛 순서(메일 먼저)로 처리된 과거 건의 상태라 유지.
 
 # mail_sent_release_pending은 "메일은 나갔는데 release가 아직 안 됨"을 뜻한다.
 # 이 상태를 DONE_STATUSES에 넣어 스캔에서 자동으로 다시 안 건드리게 한 이유는
@@ -657,39 +741,66 @@ def process_one(page, po_no, subject, sender_name, sender_email, po_link, state,
 
     msg_shipper = fields.get("Message For Shipper", "").strip()
 
+    # 2026-10-06 사용자 지정 순서로 변경(예전엔 메일 -> release):
+    #   1. SF에서 품목 확인(위) -> 2. 오라클 SP/FG release
+    #   3. backorder가 남으면 Manage Shipment Lines에서 빠진 품목 확인
+    #   4. 오라클 transaction이 끝난 뒤에 메일 회신(백오더 품목 명시)
+    # release를 먼저 하므로 release가 실패하면 메일이 안 나가고, release는 재실행해도
+    # 안전하다(이미 뽑힌 라인은 오라클이 다시 안 뽑음). 메일 발송만 실패한 경우는
+    # 재시도 때 release를 건너뛴다.
+    prev = state.get(po_no) or {}
     log(f"PO {po_no}: Order Type=Shipping Only, Oracle#{oracle_no}, "
-        f"품목 {len(lines)}건 - 메일 발송 진행")
-    send_release_mail(subject, oracle_no, lines, msg_shipper, sender_name, sender_email, entry_id)
+        f"품목 {len(lines)}건 - 오라클 release 먼저 진행 (다른 건과 겹치면 대기)")
+    if prev.get("status") == "released_mail_failed" and prev.get("release"):
+        release_result = prev["release"]
+        log(f"PO {po_no}: 이전에 release 완료, 메일만 실패한 건 - release 건너뛰고 메일만 재시도")
+    else:
+        with RELEASE_LOCK:
+            release_result = run_oracle_release(oracle_no)
 
-    # 메일은 나갔으니 이 시점부터는 상태를 반드시 남긴다(release 성공 여부와
-    # 무관하게 재발송은 절대 안 되므로).
-    state[po_no] = {
-        "status": "mail_sent_release_pending",
+    rules = release_result.get("rules") or {}
+    released_total = sum(int((r or {}).get("released_lines") or 0) for r in rules.values())
+    sp_failed = release_result.get("status") != "done" or bool(
+        (rules.get("KRP_Pick_Release_SP") or {}).get("error"))
+    attempts = int(prev.get("release_attempts", 0)) + (0 if prev.get("release") == release_result else 1)
+    base = {
         "order_type": order_type,
         "oracle_no": oracle_no,
         "subject": subject,
         "cc_email": sender_email,
+        "release": release_result,
+        "release_attempts": attempts,
         "processed_at": time.strftime("%Y-%m-%d %H:%M:%S"),
     }
 
-    log(f"PO {po_no}: 오라클 release 진행 (다른 건과 겹치면 대기)")
-    with RELEASE_LOCK:
-        release_result = run_oracle_release(oracle_no)
+    if sp_failed and released_total == 0:
+        # 아무것도 못 뽑았고 기술적으로 실패 - 메일은 보내지 않는다. 다음 스캔에서
+        # 재시도(최대 3회), 그 뒤엔 사람이 확인.
+        state[po_no] = dict(base, status="release_failed" if attempts < 3 else "release_failed_final")
+        log(f"PO {po_no}: 오라클 release 실패({release_result.get('status')}) - 메일 미발송, "
+            + ("다음 스캔에서 재시도" if attempts < 3 else "3회 실패 - 사람 확인 필요"))
+        return
 
-    release_ok = any(
-        (r or {}).get("released_lines")
-        for r in (release_result.get("rules") or {}).values()
-    )
-    state[po_no]["release"] = release_result
-    state[po_no]["status"] = "released" if release_ok else "mail_sent_release_pending"
-    # mail_sent_release_pending은 DONE_STATUSES에 있어서 스캔이 다음 실행에서
-    # 자동으로 다시 안 건드린다(메일 중복발송 방지가 우선이라 의도된 설계) -
-    # 그래서 release 실패는 "다음 실행에서 자동재시도"가 아니라 fse_po_oracle_release.py
-    # <오라클오더번호>로 수동 실행해야 마무리된다. 이 로그가 예전엔 반대로
-    # 써 있어서 헷갈렸음(2026-09-03 00601331 건에서 발견).
-    log(f"PO {po_no}: 처리 완료(release "
-        + ("성공" if release_ok
-           else "실패 - 자동재시도 안 됨, fse_po_oracle_release.py로 직접 재실행 필요")
+    backordered = compute_backordered(lines, release_result)
+    if backordered is None:
+        # 사용자 말로는 "조회 실패는 없다" - 그래도 품목을 모른 채 용마에 보내면 안 되므로
+        # 메일 없이 멈추고 사람이 본다(조용히 틀린 메일이 나가는 것보다 낫다).
+        state[po_no] = dict(base, status="shipline_failed")
+        log(f"PO {po_no}: 백오더가 남았는데 Manage Shipment Lines에서 품목을 못 읽음 "
+            f"({release_result.get('shipline_error', '라인 없음')}) - 메일 미발송, 사람 확인 필요")
+        return
+    if backordered:
+        log(f"PO {po_no}: 백오더 품목 - " + "; ".join(backordered))
+
+    try:
+        send_release_mail(subject, oracle_no, lines, msg_shipper, sender_name, sender_email,
+                          entry_id, backordered=backordered)
+    except Exception as e:
+        state[po_no] = dict(base, status="released_mail_failed", error=f"{type(e).__name__}: {e}")
+        raise
+    state[po_no] = dict(base, status="released", backordered=backordered)
+    log(f"PO {po_no}: 처리 완료(release {released_total}라인, 메일 발송"
+        + (f", 백오더 {len(backordered)}품목 표기" if backordered else "")
         + ")")
 
 
@@ -741,8 +852,34 @@ def process_candidate(c, state, stop_event):
         pythoncom.CoUninitialize()
 
 
+LOCK_PATH = os.path.join(SCRIPT_DIR, "fse_po_release.lock")
+
+
+def acquire_single_instance():
+    """scan/direct가 동시에 둘 이상 돌지 않게 하는 잠금(2026-10-06 추가).
+
+    주기 실행(작업 스케줄러)에서 앞 회차가 아직 오라클 release 중인데 다음 회차가
+    시작하면 같은 PO를 동시에 처리해 release/메일이 중복될 수 있다. 파일 바이트 잠금은
+    프로세스가 죽으면 OS가 알아서 풀어주므로 stale 잠금이 남지 않는다.
+    잠금을 잡은 파일 핸들을 반환(프로세스 종료까지 유지), 이미 실행 중이면 None."""
+    import msvcrt
+    f = open(LOCK_PATH, "a+")
+    try:
+        f.seek(0)
+        msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+    except OSError:
+        f.close()
+        return None
+    return f
+
+
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "scan"
+    if mode in ("scan", "direct"):
+        _lock = acquire_single_instance()      # 프로세스 끝날 때까지 참조 유지
+        if _lock is None:
+            log("이미 다른 fse_po_release가 실행 중 - 이번 회차는 건너뜀")
+            return
     state = load_state()
 
     if mode == "cutoff":
@@ -763,7 +900,8 @@ def main():
         # pending_lines도 여기 없으면 영원히 안 건드려진다(2026-09-03 00601295로
         # 실제 발견 - 스캔 순간 관련목록 렌더링이 안 끝나 lines=0으로 한 번 걸리면
         # DONE_STATUSES에도 없고 RETRY에도 없어서 다음 스캔부터 그냥 통째로 무시됨).
-        RETRY = ("pending_interface", "pending_lines", "error")
+        RETRY = ("pending_interface", "pending_lines", "error",
+                 "release_failed", "released_mail_failed")
         pending = [c for c in candidates if c["po_no"] not in state
                    or state[c["po_no"]].get("status") in RETRY]
 
@@ -786,6 +924,7 @@ def main():
         log(f"FSE PO 폴더 스캔: 후보 {len(candidates)}건 중 처리 대상 {len(pending)}건 "
             f"(최대 {MAX_PARALLEL_FSE}건 동시 처리, 오라클 릴리즈만 순서대로)")
         if pending:
+            ensure_sf_browser()
             stop_event = threading.Event()
             with ThreadPoolExecutor(max_workers=MAX_PARALLEL_FSE) as ex:
                 list(ex.map(lambda c: process_candidate(c, state, stop_event), pending))
@@ -796,6 +935,7 @@ def main():
             print("사용법: python fse_po_release.py direct <PO_NO>")
             sys.exit(1)
         po_no = sys.argv[2]
+        ensure_sf_browser()
         p, browser = _connect_sf()
         page = None
         try:
