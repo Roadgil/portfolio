@@ -212,12 +212,12 @@
       </div>
       <h2 class="proj-title"><span data-ko>파트오더</span><span data-en>Part Order</span><br><em><span data-ko>주문–출고 전 구간</span><span data-en>Order-to-Ship</span></em></h2>
       <p class="proj-desc">
-        <span data-ko>원래 맡은 구간은 오라클 릴리즈 한 단계. 그 앞뒤 공정을 흡수해 출고요청 접수부터 입금 대조·Parts Order 생성·오라클 전송·릴리즈·완료통보까지 7단계 중 6단계를 자동화했다. 사람이 남긴 지점은 승인 클릭 하나. 소모품(Billable)과 엔지니어(Shipping Only) 두 트랙을 한 앱의 탭으로 묶고, 계정별 경로 인식으로 동료 PC에도 이관했다.</span>
-        <span data-en>My original scope was one step: Oracle release. The pipeline absorbed the stages on either side, automating six of seven — request intake, deposit verification, Parts Order creation, Oracle interface, release, completion notice. One human checkpoint remains: the approval click. Consumables (Billable) and engineer-facing (Shipping Only) tracks share one app, and per-account path resolution handed it to a teammate's machine.</span>
+        <span data-ko>원래 맡은 구간은 오라클 릴리즈 한 단계. 그 앞뒤 공정을 흡수해 출고요청 접수부터 입금 대조·Parts Order 생성·오라클 전송·릴리즈·완료통보까지 7단계 중 6단계를 자동화했다. 사람이 남긴 지점은 승인 클릭 하나. 소모품(Billable)과 엔지니어(Shipping Only) 두 트랙을 한 앱의 탭으로 묶고, 계정별 경로 인식으로 동료 PC에도 이관했다. 알림 누락 같은 예외는 엔지니어 Teams 개인톡으로 오는데, 출근 전 8~10시 공백에는 헤드리스 Claude가 개인톡만 읽어 처리 여부를 대조하는 감시를 기록 모드로 검증 중이다.</span>
+        <span data-en>My original scope was one step: Oracle release. The pipeline absorbed the stages on either side, automating six of seven — request intake, deposit verification, Parts Order creation, Oracle interface, release, completion notice. One human checkpoint remains: the approval click. Consumables (Billable) and engineer-facing (Shipping Only) tracks share one app, and per-account path resolution handed it to a teammate's machine. Exceptions such as a missed notification arrive as engineers' Teams DMs; for the 8–10 a.m. gap before I'm at my desk, a headless Claude session reads only those DMs and checks whether each order was already handled — currently verified in log-only mode.</span>
       </p>
       <div class="proj-impact"><b>28</b> <span data-ko>건 PO 생성 + </span><span data-en>POs created + </span><b>17</b> <span data-ko>건 FSE TO 릴리즈 · 건당 20~30분 → 승인 클릭 1회</span><span data-en>FSE TOs released · 20~30 min/order → one approval click</span></div>
       <div class="proj-meta">
-        <div class="proj-stack">Python · Playwright (CDP) · Tkinter<br>win32com · Salesforce/ServiceMax · Oracle Fusion</div>
+        <div class="proj-stack">Python · Playwright (CDP) · Tkinter<br>win32com · Salesforce/ServiceMax · Oracle Fusion<br>Claude Code (headless) · M365</div>
         <div class="proj-arrow">→</div>
       </div>
     </a>
