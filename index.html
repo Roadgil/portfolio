@@ -286,14 +286,14 @@
   </header>
 
   <div class="hero">
-    <div class="hero-eyebrow">Operations &amp; Automation · 2025–2026</div>
+    <div class="hero-eyebrow">Operations &amp; AI Automation · 2025–2026</div>
     <h1 class="hero-title">
       <span class="t1">YOONGIL</span><br>
       <span class="t2">CHAE</span>
     </h1>
-    <div class="hero-tagline">MADE TO AUTOMATE</div>
+    <div class="hero-tagline">OPERATIONS, RUN BY AI</div>
     <p class="hero-sub">
-      <span class="role"><span data-ko>수입/수출 통관 운영 · 프로세스 자동화 · 관세 감사 리스크 관리</span><span data-en>Import/Export &amp; Customs Operations · Process Automation · Customs Audit Risk Management</span></span><br>
+      <span class="role"><span data-ko>수입/수출 통관 운영 · AI 에이전트·MCP 기반 업무 자동화 · 관세 감사 리스크 관리</span><span data-en>Import/Export &amp; Customs Operations · AI Agents &amp; MCP-based Automation · Customs Audit Risk Management</span></span><br>
       <span data-ko>열두 개의 프로젝트, 두 갈래 — Supply Chain·Customer &amp; Order Management로 묶은 핵심 운영, 그리고 각자 다른 문제를 푸는 독립 툴들.</span>
       <span data-en>Twelve projects, two tracks — core operations grouped into Supply Chain and Customer &amp; Order Management, and standalone tools solving separate problems.</span>
     </p>
@@ -308,13 +308,25 @@
       <div class="ov-intro">
         <div class="ov-label">Overview</div>
         <h2 class="ov-lead">
-          <span data-ko>매일 반복되던 통관 업무를 <em>하나씩 코드로</em> 옮겼다.</span>
-          <span data-en>Moved the repeating parts of customs work <em>into code</em>, one at a time.</span>
+          <span data-ko>매일 반복되던 통관 업무를 코드로, 그리고 <em>AI 에이전트</em>에게 옮겼다.</span>
+          <span data-en>Moved the repeating parts of customs work into code, and then to an <em>AI agent</em>.</span>
         </h2>
 
         <p class="ov-bio">
           <span data-ko>수입 통관과 국가간 재배치 수출을 맡고 있다. 본사 Intransit 리포트 수신부터 통관 브로커와의 C.I. 대사, 수입신고필증 파싱, Finance 월 대사까지 매일 반복되던 구간을 파이썬 모듈 10개로 옮겼다. 하루 두 시간 걸리던 일이 지금은 2분이고, 사람이 여는 화면은 없다.</span>
           <span data-en>Runs import clearance and cross-border rebalance exports for a medical device affiliate in Seoul. The daily stretch from the HQ in-transit report through invoice reconciliation with the customs broker, declaration PDF parsing, and the monthly close with Finance now runs as ten Python modules. What took two hours a day takes two minutes, and nobody opens a screen for it.</span>
+        </p>
+        <p class="ov-bio">
+          <span data-ko>여기에 AI를 얹었다. 수입신고 실적·리드타임·variance, 재무 일정과 DHL 청구서, 인천관세법인 C.I 검증, Pick Release, RMA 처리 이력, 자동화 실행 상태까지 업무 데이터를 조회하는 MCP 서버를 직접 만들어(도구 16개) Claude에 연결했다. "실적 요약", "urgent 확인"처럼 짧게 물으면 에이전트가 알맞은 도구를 골라 조회하고 결과를 요약해 준다. 평일 아침에는 같은 에이전트가 Urgent Item·DHL 청구서·재무 일정·자동화 실행 상태를 점검해 브리핑을 쓰고, 멈춘 자동화를 가장 먼저 알린다.</span>
+          <span data-en>Then layered AI on top. I built an MCP server of sixteen query tools — import declarations, lead time and variance, the finance calendar and DHL invoices, broker C.I. verification, Pick Release, RMA history, and automation run status — and connected it to Claude. A short prompt such as "summarize performance" or "check urgent items" is enough: the agent picks the right tool, queries it, and summarizes the result. Each weekday morning the same agent checks Urgent Items, DHL invoices, the finance calendar, and automation run status, writes the briefing, and flags stalled automations first.</span>
+        </p>
+        <p class="ov-bio">
+          <span data-ko>에이전트는 이 하나로 끝나지 않는다. 재무팀 Finance Calendar 이미지는 OCR로 지급 마감일을 읽은 뒤, Claude가 OCR 결과를 보지 않고 같은 이미지를 따로 읽어 날짜를 대조하도록 검증 단계를 붙였다(불일치는 로그에 남긴다). 엔지니어가 Teams로 보내는 PO 예외 문의는 헤드리스 Claude와 M365 커넥터로 읽어 PO 번호를 뽑고 처리 여부를 대조하는 감시 에이전트로 만들어, 지금은 실행 없이 기록만 하는 shadow 모드로 검증 중이다.</span>
+          <span data-en>It is not a single agent. For the finance team's Finance Calendar image, OCR reads the payment cut-off dates, and Claude then reads the same image independently, without seeing the OCR output, so the two can be compared; mismatches are logged. Engineers' PO exception requests on Teams are read by a watcher agent built on headless Claude and the M365 connector, which extracts the PO number and checks whether it was already handled — currently validated in shadow mode, logging only and executing nothing.</span>
+        </p>
+        <p class="ov-bio">
+          <span data-ko>AI에게 맡기는 범위는 의도적으로 좁혔다. 조회·요약을 하는 에이전트는 읽기 전용이라 운영 데이터를 바꾸지 못하고, 실제 실행은 검증된 규칙 기반 스크립트가 맡는다. 실행까지 이어질 수 있는 에이전트는 shadow 모드로 먼저 돌려 오탐과 누락을 확인한 뒤에만 켠다. 판단과 요약은 AI가, 실행은 규칙이 하는 구조라 AI가 틀려도 업무가 망가지지 않는다.</span>
+          <span data-en>The scope given to AI is deliberately narrow. Agents that look up and summarize are read-only and cannot change operational data; execution stays with validated, rule-based scripts. An agent that could lead to execution runs in shadow mode first, and is switched on only after false positives and misses are checked. AI handles lookup and summary, rules handle action — so a wrong answer from an agent cannot break the work.</span>
         </p>
         <p class="ov-bio">
           <span data-ko>자동화 자체보다 그게 막아주는 리스크 쪽이 더 중요하다고 본다. 본사가 이전가격 변경을 미리 통지하지 않아 브로커가 옛 가격으로 신고할 위험이 있었는데, 매 건을 Oracle Fusion 실거래 금액과 대사해 통관 전에 잡아내도록 바꿨다. 정정신고는 월 5~10건에서 1건 이하로 내려갔다.</span>
@@ -323,10 +335,6 @@
         <p class="ov-bio">
           <span data-ko>필증 PDF, 인트랜짓 리포트, RMA 처리 이력 — 다루는 문서마다 형식이 제각각이었다. 반복되는 예외를 규칙화해 자동화 파이프라인으로 흡수하는 것이 이 프로젝트들의 공통된 방식이다.</span>
           <span data-en>Declaration PDFs, in-transit reports, RMA case histories — every document came in a different shape. Turning recurring exceptions into rules and folding them into the automation pipeline is the method behind all of these.</span>
-        </p>
-        <p class="ov-bio">
-          <span data-ko>AI 에이전트도 하나 운영한다. Claude에 직접 만든 MCP 서버(조회 도구 16개)를 연결해, 평일 아침 Urgent Item·DHL 청구서·재무 일정·자동화 실행 상태를 점검한 브리핑을 쓰고, 멈춘 자동화를 가장 먼저 알리는 모니터링 담당이다. 읽기 전용으로 제한해 운영 데이터는 건드리지 못한다.</span>
-          <span data-en>Also runs an AI agent: Claude wired to a custom MCP server of sixteen query tools. Each weekday morning it checks Urgent Items, DHL invoices, the finance calendar, and automation run status, writes the briefing, and flags stalled automations first. It is read-only and cannot touch operational data.</span>
         </p>
         <p class="ov-bio">
           <span data-ko>그 전에는 로레알 코리아에서 아시아 공급망을 담당해 중국 서비스 레벨을 80.5%에서 95.4%로, ODM 공급 리드타임을 91일에서 74일로 개선했다. 전공은 AI·빅데이터다.</span>
@@ -344,6 +352,7 @@
           <span class="tag tag-blue">Oracle Fusion RPA</span>
           <span class="tag tag-teal"><span data-ko>Finance 대사</span><span data-en>Finance Reconciliation</span></span>
           <span class="tag tag-purple">Claude + MCP</span>
+          <span class="tag tag-purple"><span data-ko>AI 에이전트</span><span data-en>AI Agents</span></span>
         </div>
 
         <div class="ov-cta">
