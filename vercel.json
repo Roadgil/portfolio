@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/code/:path*", "destination": "/", "permanent": false }
+  ]
+}
