@@ -80,6 +80,7 @@
     .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
     .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
     .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+    .mod-card.c4 .mpoint-dot{background:var(--accent4);}.mod-card.c4 .mod-title{color:var(--accent4);}
 
     /* pipeline */
     .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
@@ -139,13 +140,13 @@
       <div class="hero-tag">OEM Procurement · AI Agent</div>
       <h1 class="hero-title"><span class="a1" data-ko>OEM 구매</span><span class="a1" data-en>OEM</span><br><span class="a2" data-ko>P2P 에이전트</span><span class="a2" data-en>PROCURE-TO-PAY</span></h1>
       <p class="hero-desc">
-        <span data-ko>독일 OEM 공급사(Zimmer) 장비 구매 업무를 인수인계받은 당일, Claude Code 에이전트와 함께 대표 승인요청부터 Oracle Fusion 구매요청(PR) 입력, 미국 Global Buyer PO 전환 요청까지 처리한 사례. 에이전트가 SOP 문서의 화면 캡처를 읽고 Oracle 화면을 직접 입력하되, Submit과 메일 발송은 사람이 결정한다.</span>
-        <span data-en>On the day the German OEM supplier (Zimmer) purchasing work was handed over, the approval request, Oracle Fusion requisition entry and the PO conversion request to the U.S. global buyer were all completed together with a Claude Code agent. The agent reads the SOP screenshots and fills in the Oracle screens itself, while Submit and outgoing emails stay a human decision.</span>
+        <span data-ko>독일 OEM 공급사(Zimmer) 장비 구매의 Procure-to-Pay 전 과정을 담당. 대표 승인, Oracle Fusion 구매요청(PR), 미국 Global Buyer의 PO 전환, 공급사 발주와 PI/OC 검증, Finance 선결제, 송금증 전달과 제작 요청, 제작 완료 후 픽업까지 16단계 SOP로 운영한다. 반복 입력과 서류 대조는 Claude Code 에이전트가 맡고, Submit과 메일 발송은 사람이 결정한다.</span>
+        <span data-en>Owns the full procure-to-pay cycle for equipment from a German OEM supplier (Zimmer): CEO approval, the Oracle Fusion requisition, PO conversion by the U.S. global buyer, supplier ordering with PI/OC checks, Finance prepayment, remittance and production request, and pickup once production is done, run as a 16-step SOP. A Claude Code agent handles the repetitive entry and document matching, while Submit and outgoing emails stay a human decision.</span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">1</span><span class="stat-label" data-ko>일 (인수인계→PO 요청)</span><span class="stat-label" data-en>Day, Handover to PO Request</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent2);">16</span><span class="stat-label" data-ko>SOP 단계</span><span class="stat-label" data-en>SOP Steps</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent3);">4</span><span class="stat-label" data-ko>종 서류 단가 대조</span><span class="stat-label" data-en>Docs Cross-checked</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">4</span><span class="stat-label" data-ko>종 문서번호 관리</span><span class="stat-label" data-en>Document IDs Tracked</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>에이전트 단독 Submit</span><span class="stat-label" data-en>Agent-only Submits</span></div>
       </div>
     </div>
@@ -165,8 +166,7 @@
         <div class="mod-desc" data-en>Reads the three handover emails and the supplier thread, separates the in-flight order from the new one, and drafts the CEO approval request in the same format as past approvals.</div>
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>단가는 직전 주문의 PO·PI·OC·PR 4종 서류 금액과 대조한 뒤 기입</span><span data-en>Unit price filled only after matching four documents from the previous order: PO, PI, OC and PR</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PR 번호를 PO 번호로 잘못 보내 공급사 PI/OC를 재발행받아야 했던 진행 건의 원인을 짚어 정리</span><span data-en>Explained why an in-flight order needed reissued PI/OC: a requisition number had been sent to the supplier as the PO number</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일은 초안으로만 저장, 발송은 담당자가 직접</span><span data-en>Saved as a draft only; the owner sends it</span></div>
+                    <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일은 초안으로만 저장, 발송은 담당자가 직접</span><span data-en>Saved as a draft only; the owner sends it</span></div>
         </div>
       </div>
 
@@ -187,7 +187,7 @@
 
       <div class="mod-card c3 reveal" style="position:relative;background:var(--surf2);transition-delay:0.16s">
         <div class="mod-head">
-          <div class="mod-file">STEP 11–16</div>
+          <div class="mod-file">STEP 11–12</div>
           <div class="mod-title" data-ko>PO 전환 요청 · 증빙 정리</div>
           <div class="mod-title" data-en>PO Conversion · Evidence Filing</div>
         </div>
@@ -196,7 +196,23 @@
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>발송 전 보낸편지함 중복 확인</span><span data-en>Sent Items checked for duplicates before sending</span></div>
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>주문건 폴더명에 PR·PO 번호와 현재 단계를 함께 표기</span><span data-en>Folder name carries PR and PO numbers plus the current stage</span></div>
-          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>이후 PI/OC 검증 · Finance 선결제 요청 · 제작 팔로업으로 이어짐</span><span data-en>Continues into PI/OC checks, Finance prepayment and production follow-up</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PO 생성 회신과 Oracle Implemented 알림 2종으로 PO 번호 확정</span><span data-en>PO number confirmed from both the buyer reply and the Oracle "Implemented" notice</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c4 reveal" style="position:relative;background:var(--surf2);transition-delay:0.24s">
+        <div class="mod-head">
+          <div class="mod-file">STEP 13–16</div>
+          <div class="mod-title" data-ko>공급사 발주 · 선결제 · 제작 팔로업</div>
+          <div class="mod-title" data-en>Supplier Order · Prepayment · Production</div>
+        </div>
+        <div class="mod-desc" data-ko>공급사 양식의 발주서에 Oracle PO 번호를 그대로 넣어 보내고, 회신받은 PI/OC를 PO와 대조한 뒤 Finance에 선결제를 요청한다. 송금이 끝나면 송금증을 보내 제작을 시작시키고 출하 예정일을 받아 픽업까지 챙긴다.</div>
+        <div class="mod-desc" data-en>Sends the supplier-format order carrying the Oracle PO number, matches the returned PI/OC against the PO, then requests prepayment from Finance. Once paid, forwards the remittance to start production, gets the ship date and follows through to pickup.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>OC 품목·수량·단가·총액을 PO와 재대조, PI 번호 기록</span><span data-en>OC items, quantities, unit price and total rechecked against the PO; PI number logged</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PR·PO·PI·OC 4종 첨부, 월 1·2차 지급일에 맞춘 Finance 지급요청</span><span data-en>Finance payment request with PR, PO, PI and OC attached, timed to the monthly payment runs</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>선결제 조건이라 지급이 밀리면 제작·출하도 밀림, 결제 후 약 3~4주 제작</span><span data-en>Prepayment terms: a late payment delays production and shipment; about 3 to 4 weeks of production after payment</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PR 번호를 PO 번호로 보내 PI/OC 재발행이 필요했던 건을 계기로 발주 전 번호 형식(KRR/KR) 확인</span><span data-en>After a requisition number was once sent as the PO number and the PI/OC had to be reissued, the number format is checked before every order</span></div>
         </div>
       </div>
     </div>
@@ -204,13 +220,14 @@
 
   <section class="pipeline-section reveal">
     <div class="section-label">Workflow</div>
-    <h2 class="section-title"><span data-ko>구매 승인부터</span><span data-en>From purchase approval</span><br><em><span data-ko>선결제까지</span><span data-en>to prepayment</span></em></h2>
+    <h2 class="section-title"><span data-ko>구매 승인부터</span><span data-en>From purchase approval</span><br><em><span data-ko>픽업까지</span><span data-en>to pickup</span></em></h2>
     <div class="pipeline">
       <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">✍️</div><div class="pipe-title" data-ko>대표 승인</div><div class="pipe-title" data-en>CEO Approval</div><div class="pipe-desc" data-ko>과거 형식 재사용 · 단가 4종 대조</div><div class="pipe-desc" data-en>Past format reused, price checked against 4 docs</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🧾</div><div class="pipe-title" data-ko>Oracle PR</div><div class="pipe-title" data-en>Oracle Requisition</div><div class="pipe-desc" data-ko>에이전트 입력 · Submit은 사람</div><div class="pipe-desc" data-en>Agent fills it in, a person submits</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🔁</div><div class="pipe-title" data-ko>PO 전환</div><div class="pipe-title" data-en>PO Conversion</div><div class="pipe-desc" data-ko>미국 Global Buyer 요청</div><div class="pipe-desc" data-en>Request to the U.S. global buyer</div></div>
       <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📄</div><div class="pipe-title" data-ko>공급사 발주</div><div class="pipe-title" data-en>Supplier Order</div><div class="pipe-desc" data-ko>PI/OC 수령 후 PO와 대조</div><div class="pipe-desc" data-en>PI/OC received and matched to the PO</div></div>
-      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">💶</div><div class="pipe-title" data-ko>선결제 · 제작</div><div class="pipe-title" data-en>Prepay · Production</div><div class="pipe-desc" data-ko>Finance 지급요청 · 송금증 전달</div><div class="pipe-desc" data-en>Finance payment request, remittance sent on</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">💶</div><div class="pipe-title" data-ko>선결제</div><div class="pipe-title" data-en>Prepayment</div><div class="pipe-desc" data-ko>서류 4종 첨부 Finance 지급요청</div><div class="pipe-desc" data-en>Finance request with all 4 documents</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">🚚</div><div class="pipe-title" data-ko>제작 · 픽업</div><div class="pipe-title" data-en>Production · Pickup</div><div class="pipe-desc" data-ko>송금증 전달 · 출하일 확인 · 입고</div><div class="pipe-desc" data-en>Remittance sent, ship date, receipt</div></div>
     </div>
   </section>
 
