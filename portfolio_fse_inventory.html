@@ -164,19 +164,54 @@
         <div class="fse-node"><div class="fse-node-label">On-Hand</div><div class="fse-node-val" data-ko>수량·금액·비중</div><div class="fse-node-val" data-en>Qty · Value · Share</div></div>
         <div class="fse-node"><div class="fse-node-label">Avg. Consumption</div><div class="fse-node-val" data-ko>월평균 소비</div><div class="fse-node-val" data-en>Monthly avg. issue</div></div>
         <div class="fse-node"><div class="fse-node-label">Avg. Receipt</div><div class="fse-node-val" data-ko>월평균 입고</div><div class="fse-node-val" data-en>Monthly avg. receipt</div></div>
-        <div class="fse-node"><div class="fse-node-label">Turnover</div><div class="fse-node-val" data-ko>소비 ÷ 온핸드</div><div class="fse-node-val" data-en>consumption ÷ on-hand</div></div>
+        <div class="fse-node"><div class="fse-node-label">Turnover</div><div class="fse-node-val" data-ko>소비 ÷ 익월 예상재고</div><div class="fse-node-val" data-en>consumption ÷ next-month stock</div></div>
       </div>
       <div class="fse-flags">
-        <div class="flag blue"><div class="flag-dot"></div><span data-ko>회전율 &lt;50% — 🔵 과다재고 의심</span><span data-en>Turnover &lt;50% — 🔵 possible excess stock</span></div>
-        <div class="flag green"><div class="flag-dot"></div><span data-ko>회전율 50~150% — 🟢 적정</span><span data-en>Turnover 50–150% — 🟢 healthy</span></div>
-        <div class="flag red"><div class="flag-dot"></div><span data-ko>회전율 &gt;150% — 🔴 부족 위험</span><span data-en>Turnover &gt;150% — 🔴 risk of shortage</span></div>
+        <div class="flag blue"><div class="flag-dot"></div><span data-ko>회전율 &lt;50% — 🔵 과다 쪽 (33~50% 과다 주의, &lt;33% 과다재고)</span><span data-en>Turnover &lt;50% — 🔵 excess side (33–50% watch, &lt;33% excess)</span></div>
+        <div class="flag green"><div class="flag-dot"></div><span data-ko>회전율 50~100% — 🟢 적정 (67% 이상 적정, 50~67% 적정 상단)</span><span data-en>Turnover 50–100% — 🟢 healthy (≥67% healthy, 50–67% upper band)</span></div>
+        <div class="flag red"><div class="flag-dot"></div><span data-ko>회전율 &gt;100% — 🔴 부족 쪽 (100~150% 부족 주의, 150~200% 부족 위험, 200% 이상 긴급 부족)</span><span data-en>Turnover &gt;100% — 🔴 shortage side (100–150% watch, 150–200% risk, ≥200% urgent)</span></div>
       </div>
     </div>
     <div class="note-box reveal">
-      <div class="note-label" data-ko>잠정치라고 명시한 이유</div>
-      <div class="note-label" data-en>Why the thresholds are marked provisional</div>
-      <div class="note-text" data-ko>50%/150% 회전율 구간은 코드에도 "잠정치"라고 그대로 적어뒀다 - 아직 한두 달치 실측으로만 잡은 초안 기준이라 확정 정책으로 내세우지 않는다. 또 "SP에서 이동"이라는 구두 설명과 달리 실제 FSE 입고 트랜잭션의 소스 서브인벤토리는 STG였다 - 사람의 설명보다 실제 데이터를 항상 우선했다.</div>
-      <div class="note-text" data-en>The code itself labels the 50%/150% bands "provisional" — they're a first-pass draft from just one or two months of real data, not a finalized policy. Separately, FSE receipt transactions were verbally described as moving "from SP," but the actual source subinventory in the data was STG — real data was trusted over the verbal description.</div>
+      <div class="note-label" data-ko>판정 기준을 바꾼 이유</div>
+      <div class="note-label" data-en>Why the verdict logic changed</div>
+      <div class="note-text" data-ko>처음엔 50~150%를 모두 "적정"으로 묶고 현재 온핸드만 봤다. 그러자 입고가 소비를 넘어 재고가 쌓이는 담당자도 적정으로 나왔고, 기준선 바로 위아래(50.0%와 49.9%)가 같은 "50%"로 표시돼 판정이 엇갈려 보였다. 판정 기준을 익월 예상재고(온핸드 + 월평균 입고 - 월평균 소비)로 바꾸고 구간을 7단계로 나눴으며, 소수 첫째 자리까지 비교한다. 현재고가 한 달치에 못 미치면 입고 전 부족 경고를 따로 붙인다. 구간 수치는 여전히 잠정 기준이다. 또 "SP에서 이동"이라는 구두 설명과 달리 실제 FSE 입고 트랜잭션의 소스 서브인벤토리는 STG였다 - 사람의 설명보다 실제 데이터를 항상 우선했다.</div>
+      <div class="note-text" data-en>At first the whole 50–150% range read as "healthy" and only current on-hand was considered, so engineers whose receipts kept outrunning consumption still came out healthy, and 50.0% versus 49.9% both displayed as "50%" with different verdicts. The verdict now runs on next-month projected stock (on-hand + average receipts - average consumption) across seven bands, compared to one decimal place, with a separate warning when current stock covers less than a month. The band values remain provisional. Separately, FSE receipts were verbally described as moving "from SP," but the actual source subinventory in the data was STG - data always won over verbal explanation.</div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="section-label">SLOB Management</div>
+    <h2 class="section-title reveal"><span data-ko>FSE 로케이션의</span><span data-en>Tracking idle stock</span><br><em><span data-ko>장기 미소모 재고를 추적한다</span><span data-en>in FSE locations</span></em></h2>
+    <div class="trap-grid">
+      <div class="trap-card reveal">
+        <div class="trap-icon">🕰️</div>
+        <div class="trap-title" data-ko>마지막 소모월 하나만 보여주는 SLOB 추적</div>
+        <div class="trap-title" data-en>SLOB tracking that shows one value: last consumption month</div>
+        <div class="trap-desc" data-ko>최근 6개월 동안 담당자가 한 번도 소모하지 않았는데 재고가 있는 품목을 담당자별로 모아, 품목마다 마지막 소모월만 보여준다. 마지막 소모가 6개월을 넘으면 FSE 간 이동 없이 SP 또는 FG로 반납한다. 등급 구분이나 반환처 추정 같은 파생 열은 넣었다가 모두 뺐고, 현업이 바로 판단할 수 있는 값 하나만 남겼다.</div>
+        <div class="trap-desc" data-en>Items an engineer holds but has not consumed even once in the past six months are grouped per engineer, showing only each item's last consumption month. Past six months, stock goes back to SP or FG rather than moving between engineers. Derived columns such as grade or return-destination guesses were tried and removed, leaving the one value operations can act on.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">🔧</div>
+        <div class="trap-title" data-ko>소모되지 않는 공구는 계산에서 뺀다</div>
+        <div class="trap-title" data-en>Tools that are never consumed are left out</div>
+        <div class="trap-desc" data-ko>공구·지그는 재고지만 부품을 고치는 데 쓰는 도구라 소모되지 않는다. 그대로 두면 회전율이 낮아 보이고 SLOB 후보도 부풀려진다. 사용자가 확정한 품목 목록을 설정 파일로 분리해 회전율·SLOB 계산에서만 제외하고, 마감 보고용 재고 수량·금액에는 실제 재고이므로 그대로 포함한다. 새 월을 저장할 때도 같은 목록으로 공구 제외본이 자동으로 만들어진다.</div>
+        <div class="trap-desc" data-en>Tools and fixtures are stock, yet they are used to repair parts and never consumed. Left in, they make turnover look low and inflate SLOB candidates. A user-confirmed item list sits in a config file and is excluded only from turnover and SLOB calculations; month-end reporting still counts them as real stock. Saving a new month builds the tool-free view automatically from the same list.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">🔍</div>
+        <div class="trap-title" data-ko>소모 리포트에 숨어 있던 "Closed 제외" 필터</div>
+        <div class="trap-title" data-en>A hidden "exclude Closed" filter in the consumption report</div>
+        <div class="trap-desc" data-ko>Salesforce 소모 리포트의 저장된 기본 필터에 Work Order Status가 Closed가 아닌 건만 보도록 걸려 있어, 이미 마감된 작업의 소모가 빠지고 있었다. 더구나 내보내기 주소는 화면에서 지정한 기간도 무시해 월별 파일이 서로 같게 나왔다. 필터를 이번 실행에서만 해제하고 화면 폼 상태 그대로 내보내는 방식으로 바꿨고, 기존 수기 집계와 같은 달 값이 수량·금액까지 일치하는지로 검증했다.</div>
+        <div class="trap-desc" data-en>The saved default filter on the Salesforce consumption report kept only work orders not yet Closed, so consumption on already-closed work orders went missing. The export URL also ignored the date range picked on screen, producing identical files for different months. The filter is now cleared for that run only and the on-screen form state is exported as-is, verified by matching existing manual month totals on both quantity and value.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">📉</div>
+        <div class="trap-title" data-ko>부품은 포캐스팅이 어렵다 - Hot Part는 이력으로 고른다</div>
+        <div class="trap-title" data-en>Parts resist forecasting - Hot Parts are picked from history</div>
+        <div class="trap-desc" data-ko>부품 수요는 수리와 고장 발생에 따라 불규칙해 포캐스팅이 잘 맞지 않고, 그래서 Hot Part를 미리 정해 추적하기 어렵다. 부족을 더 일찍 잡는 별도 판정 구간은 구조만 마련했고, 대상은 예측이 아니라 실제 소모 이력(자주·많이 소모되는 품목)으로 후보를 골라 참고 지표로 관리하는 방향이다.</div>
+        <div class="trap-desc" data-en>Parts demand follows repairs and breakdowns, so forecasts rarely hold and naming Hot Parts in advance is hard. A separate band that flags shortage earlier is built in structurally, while candidates come from actual consumption history (frequent, high-volume items) as a reference indicator rather than from prediction.</div>
+      </div>
     </div>
   </section>
 
