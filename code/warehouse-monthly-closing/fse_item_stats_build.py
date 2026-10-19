@@ -114,7 +114,9 @@ def load_onhand():
         qty = next(c for c in cols if c.startswith("On-hand Qty"))
         df = df[df[sub].astype(str).str.startswith("FSE")]
         out = pd.DataFrame({"fse": df[sub].astype(str), "item": df[item].astype(str).str.strip(),
-                            "desc": df[desc].astype(str), "qty": pd.to_numeric(df[qty], errors="coerce").fillna(0)})
+                            "desc": df[desc].astype(str), "qty": pd.to_numeric(df[qty], errors="coerce").fillna(0),
+                            # Oracle 온핸드 리포트의 품목별 재고금액(USD) - 단가표(ITEM_COST_LOOKUP)에 없는 품목도 장부 금액을 알 수 있다
+                            "val": pd.to_numeric(df["Item Value USD"], errors="coerce").fillna(0) if "Item Value USD" in df.columns else 0.0})
         out = out[~out["item"].isin(TOOL_ITEMS)]    # 공구는 재고 구성 분석에서 제외
         return out, run, Path(p).name
     raise RuntimeError("On-hand 파일 없음")

@@ -5,13 +5,13 @@ Monthly Closing 대시보드(../warehouse-monthly-closing)에 들어가는 월�
 3종(소모/입고/온핸드)을 Oracle Fusion Cloud + Salesforce에서 Playwright로 자동 수집해
 대시보드 자체 UI/데이터 구조에 직접 반영하는 파이프라인. 나머지 1종(Intransit)은
 이미 있던 별도 메일 다운로드 자동화가 매일 채워주므로 파일 존재만 확인한다.
-수집이 전부 성공하면 이어서 대시보드 반영과 SLOB(6개월 미소모) 재고 갱신까지 한다.
+수집이 전부 성공하면 이어서 대시보드 반영과 SLOB(12개월 미소모·$1,000 이상) 재고 갱신까지 한다.
 
 - **oracle_login.py**: Oracle Fusion Cloud 공용 로그인. "Sign in with AzureAD" 버튼 클릭
   한 번으로 세션 진입(브라우저 영속 프로필이라 이후 재실행 시 로그인 생략).
 - **fse_consumption_puller.py**: Salesforce Classic 소모 리포트를 받는다. 리포트의 저장된
   기본 필터("Work Order Status not equal to Closed")를 이번 실행에서만 해제하고, 12개월치를
-  화면 폼 상태 그대로 POST로 내보낸 뒤 Scheduled Date 기준으로 월별 파일로 나눈다.
+  화면 폼 상태 그대로 POST로 내보낸 뒤 Scheduled Date 기준으로 월별 파일로 나눈다(SLOB 12개월 판정을 위해 2025-10부터 보관).
 - **fse_receipt_puller.py**: Oracle Fusion "Review Completed Transactions"에서
   Transfer Order 입고 내역을 Export to Excel로 받는다. 종료일 입력을 확정·재확인하고,
   월 범위/5000행 잘림 검증을 통과한 파일만 월별로 보관한다.
@@ -34,9 +34,10 @@ Monthly Closing 대시보드(../warehouse-monthly-closing)에 들어가는 월�
   시작하며, 같은 달을 다시 저장할 때는 기존 특이사항을 입력칸에 채워 보존한다.
 - **fse_item_stats_build.py**: 월별 입고/소모 원본과 최신 On-hand를 읽어 품목별 통계를 만드는
   로더 모음. 소모되지 않는 공구 품목 목록(설정 파일)을 읽어 재고 구성 분석에서 제외한다.
-- **fse_dead_stock_build.py**: 최근 6개월 동안 그 담당자가 한 번도 소모하지 않았는데 재고가
-  있는 품목(SLOB)을 담당자별 "마지막 소모월"과 함께 엑셀과 대시보드 SEED 블록으로 낸다.
-  FSE 간 이동은 하지 않고 6개월이 넘으면 SP/FG로 반납해 관리한다.
+- **fse_dead_stock_build.py**: 최근 12개월 동안 그 담당자가 한 번도 소모하지 않았는데 재고가 있고 재고금액(Oracle 온핸드의
+  품목별 장부 금액)이 $1,000 이상인 품목(SLOB 반납 대상)을 담당자별 "마지막 소모월"과 함께 엑셀과 대시보드 SEED 블록으로
+  낸다. FSE 간 이동은 하지 않고 창고(SP/FG)로 반납한다. 기준은 처음 6개월/전 금액이었으나 엔지니어 확인 결과 실제 소모를
+  전산 처리하지 않은 건이 많아 12개월/$1,000로 바꿨다.
 
 **실행 방법**: 사내 Oracle Fusion Cloud / Salesforce 인스턴스 접근 권한과 SSO 세션이
 필요해 그대로 실행할 수 없다(사내 전용 자동화). Oracle/Salesforce 인스턴스 URL과 리포트 ID는

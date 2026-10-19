@@ -127,13 +127,13 @@ def split_and_save(csv_text, target_month):
             & (df["Work Order Status"] != "Canceled") & df["ym"].notna()]
     months = sorted(df["ym"].unique())
     for m in months:
-        if m < "2026-01":
-            continue  # 마감 이력 시작(2026-01) 이전은 보관하지 않음
+        if m < "2025-10":
+            continue  # SLOB(1년 미소모) 판정에 12개월이 필요해 2025-10부터 보관(그 이전은 보관하지 않음)
         df[df["ym"] == m].drop(columns="ym").to_csv(OUT_DIR / f"sf_consumed_{m}.csv", index=False, encoding="utf-8-sig")
     tgt = df[df["ym"] == target_month]
     if tgt.empty:
         raise RuntimeError(f"대상월 {target_month} 소모 행이 하나도 없음 (필터/기간 이상 가능)")
-    log(f"  저장 완료: {len([m for m in months if m >= '2026-01'])}개월분 / 대상월 {target_month} 소모 {int(tgt['Line Qty'].sum())}개, {len(tgt)}행")
+    log(f"  저장 완료: {len([m for m in months if m >= '2025-10'])}개월분 / 대상월 {target_month} 소모 {int(tgt['Line Qty'].sum())}개, {len(tgt)}행")
     for code, g in tgt.groupby("Oracle Subinventory"):
         log(f"  {code}: qty={int(g['Line Qty'].sum())}, lines={len(g)}")
 

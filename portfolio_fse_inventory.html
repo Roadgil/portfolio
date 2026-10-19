@@ -188,8 +188,8 @@
         <div class="trap-icon">🕰️</div>
         <div class="trap-title" data-ko>마지막 소모월 하나만 보여주는 SLOB 추적</div>
         <div class="trap-title" data-en>SLOB tracking that shows one value: last consumption month</div>
-        <div class="trap-desc" data-ko>최근 6개월 동안 담당자가 한 번도 소모하지 않았는데 재고가 있는 품목을 담당자별로 모아, 품목마다 마지막 소모월만 보여준다. 마지막 소모가 6개월을 넘으면 FSE 간 이동 없이 SP 또는 FG로 반납한다. 등급 구분이나 반환처 추정 같은 파생 열은 넣었다가 모두 뺐고, 현업이 바로 판단할 수 있는 값 하나만 남겼다.</div>
-        <div class="trap-desc" data-en>Items an engineer holds but has not consumed even once in the past six months are grouped per engineer, showing only each item's last consumption month. Past six months, stock goes back to SP or FG rather than moving between engineers. Derived columns such as grade or return-destination guesses were tried and removed, leaving the one value operations can act on.</div>
+        <div class="trap-desc" data-ko>최근 12개월 동안 담당자가 한 번도 소모하지 않았는데 재고가 있고 재고금액이 $1,000 이상인 품목을 담당자별로 모아, 품목마다 마지막 소모월만 보여준다. 해당 품목은 FSE 간 이동 없이 SP 또는 FG로 반납한다. 처음엔 6개월·전 금액 기준이었지만 엔지니어에게 확인해 보니 실제로는 소모했는데 전산 처리를 하지 않은 경우가 대부분이어서 12개월·고가 품목 기준으로 바꿨다. 등급 구분이나 반환처 추정 같은 파생 열은 넣었다가 모두 뺐고, 현업이 바로 판단할 수 있는 값 하나만 남겼다.</div>
+        <div class="trap-desc" data-en>Items an engineer holds, has not consumed even once in the past 12 months, and that carry $1,000 or more of stock value are grouped per engineer, showing only each item's last consumption month. Those items go back to SP or FG rather than moving between engineers. The first cut was six months across all values, but checking with the engineers showed most items had in fact been used without the system transaction being posted, so the rule moved to 12 months and high-value items. Derived columns such as grade or return-destination guesses were tried and removed, leaving the one value operations can act on.</div>
       </div>
       <div class="trap-card reveal">
         <div class="trap-icon">🔧</div>
@@ -209,8 +209,8 @@
         <div class="trap-icon">📉</div>
         <div class="trap-title" data-ko>부품은 포캐스팅이 어렵다 - Hot Part는 이력으로 고른다</div>
         <div class="trap-title" data-en>Parts resist forecasting - Hot Parts are picked from history</div>
-        <div class="trap-desc" data-ko>부품 수요는 수리와 고장 발생에 따라 불규칙해 포캐스팅이 잘 맞지 않고, 그래서 Hot Part를 미리 정해 추적하기 어렵다. 부족을 더 일찍 잡는 별도 판정 구간은 구조만 마련했고, 대상은 예측이 아니라 실제 소모 이력(자주·많이 소모되는 품목)으로 후보를 골라 참고 지표로 관리하는 방향이다.</div>
-        <div class="trap-desc" data-en>Parts demand follows repairs and breakdowns, so forecasts rarely hold and naming Hot Parts in advance is hard. A separate band that flags shortage earlier is built in structurally, while candidates come from actual consumption history (frequent, high-volume items) as a reference indicator rather than from prediction.</div>
+        <div class="trap-desc" data-ko>부품 수요는 수리와 고장 발생에 따라 불규칙해 포캐스팅이 잘 맞지 않고, 그래서 Hot Part를 미리 정해 추적하기 어렵다. 부족을 더 일찍 잡는 별도 판정 구간은 구조만 마련했고, 현실적으로 관리 가능한 쪽은 12개월 넘게 쓰지 않은 고가 재고부터 창고로 돌려보내는 것이라고 판단해 그 방향을 제안했다.</div>
+        <div class="trap-desc" data-en>Parts demand follows repairs and breakdowns, so forecasts rarely hold and naming Hot Parts in advance is hard. A separate band that flags shortage earlier is built in structurally, but the realistic lever is returning high-value stock that has sat unused for over 12 months to the warehouse first, which is the direction proposed.</div>
       </div>
     </div>
   </section>
