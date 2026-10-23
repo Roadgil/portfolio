@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Warehouse Expansion Case · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#93c5fd; --accent2:#0faaa0; --accent3:#e09c10; --accent4:#5b4fcf;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;}
+    .hero-left{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(147,197,253,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,8.5vw,116px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:600px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
+    .hero-right-bg-cell{background:white;}
+    .hero-right-bg-cell:nth-child(odd){background:transparent;}
+    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
+    .flow-step{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}
+    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
+    .flow-icon{font-size:19px;width:34px;text-align:center;flex-shrink:0;}
+    .flow-info{flex:1;}
+    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+    .flow-role{font-size:11px;color:rgba(255,255,255,0.4);}
+    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
+    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
+    .badge-orange{background:rgba(196,98,26,0.4);color:#fdba74;border:1px solid rgba(253,186,116,0.3);}
+    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
+    .badge-red{background:rgba(124,45,18,0.5);color:#fca5a5;border:1px solid rgba(252,165,165,0.3);}
+    .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
+    .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
+    .section-title em{font-style:italic;color:var(--accent);}
+
+    /* module cards */
+    .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .mod-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .mod-card:hover{transform:translateY(-5px);border-color:var(--accent);}
+    .mod-head{padding:26px 28px 0;}
+    .mod-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;background:var(--surf2);padding:5px 10px;border-radius:5px;display:inline-block;margin-bottom:14px;}
+    .mod-title{font-family:'DM Serif Display',serif;font-size:21px;margin-bottom:10px;}
+    .mod-desc{font-size:12.5px;color:var(--muted);line-height:1.75;padding:0 28px 18px;}
+    .mod-points{padding:0 28px 26px;display:flex;flex-direction:column;gap:8px;}
+    .mpoint{font-size:11.5px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .mpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
+    .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
+    .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+    .mod-card.c4 .mpoint-dot{background:var(--accent4);}.mod-card.c4 .mod-title{color:var(--accent4);}
+
+    /* pipeline */
+    .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pipeline{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .pipe-step{flex:1;padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+    .pipe-step:last-child{border-right:none;}
+    .pipe-step:hover{background:var(--surf2);}
+    .pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+    .pipe-icon{font-size:24px;margin-bottom:14px;}
+    .pipe-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
+    .pipe-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+    body.en div[data-en]{display:block;}
+
+    @media (max-width:900px){
+      .topbar{padding:16px 24px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-left,.hero-right{padding:90px 24px 50px;}
+      .hero-right{min-height:60vh;}
+      .section,.pipeline-section{padding:90px 24px 50px;}
+      .pipeline{flex-direction:column;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-tag">Warehouse Expansion · Data Case</div>
+      <h1 class="hero-title"><span class="a1" data-ko>창고 확장</span><span class="a1" data-en>WAREHOUSE</span><br><span class="a2" data-ko>데이터 근거</span><span class="a2" data-en>EXPANSION CASE</span></h1>
+      <p class="hero-desc">
+        <span data-ko>"창고가 좁아졌다"는 체감을 숫자로 바꿔 APAC 리전을 설득한 프로젝트. Oracle Fusion에서 2022년 1월부터 4년 9개월치 입출고 트랜잭션을 월별로 전수 추출하고, 입고·창고 출고·고객 출고를 트랜잭션 유형으로 나눠 다시 셌다. 연도 비교는 완결 연도는 연간 전체, 진행 중인 2026년은 1~9월 실적에 4/3을 곱한 연간 추정치로 맞췄고, 평균만이 아니라 바쁜 날과 피크 주까지 보여주는 한·영 보고서로 정리해 리전 설득 자료로 썼다.</span>
+        <span data-en>Turned the sense that the warehouse had outgrown its space into numbers that persuaded the APAC region. Pulled every inbound and outbound transaction from Oracle Fusion month by month from January 2022, 4 years and 9 months in total, and recounted them by transaction type as inbound, warehouse outbound and customer outbound. Completed years were compared in full and 2026 as Jan to Sep actuals annualised by 4/3, and the result went into a Korean and English report that shows busy days and peak weeks as well as averages, used as the case for the region.</span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">2.1×</span><span class="stat-label" data-ko>창고 처리량 (2022→2026 추정)</span><span class="stat-label" data-en>Warehouse Volume, 2022 to 2026E</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">21%</span><span class="stat-label" data-ko>연평균 증가</span><span class="stat-label" data-en>CAGR</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">1.8×</span><span class="stat-label" data-ko>바쁜 날 처리량</span><span class="stat-label" data-en>Busy-Day Load</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">114</span><span class="stat-label" data-ko>건 월별 원본 추출</span><span class="stat-label" data-en>Monthly Exports Pulled</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);">
+        <div class="mod-head">
+          <div class="mod-file">01 · COLLECT</div>
+          <div class="mod-title" data-ko>4년 9개월치 전수 추출</div>
+          <div class="mod-title" data-en>Full Pull, 57 Months</div>
+        </div>
+        <div class="mod-desc" data-ko>Oracle "Review Completed Transactions" 화면을 Playwright로 조작해 Sales Order와 Transfer Order를 월별로 export. 브라우저 하나로 필터만 바꿔가며 반복하고, 받은 파일마다 거래일이 그 달 안인지, 5,000행 제한에 잘리지 않았는지 검사한 뒤에만 저장한다.</div>
+        <div class="mod-desc" data-en>Drives Oracle's "Review Completed Transactions" screen with Playwright and exports Sales Orders and Transfer Orders month by month in one browser session. Each file is saved only after checking that every transaction date falls in that month and that the 5,000-row export limit was not hit.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>5,000행에 걸리면 기간을 반으로 쪼개 다시 받기</span><span data-en>Splits the period in half and re-pulls when the row limit is hit</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>검색 결과가 이전 달 그대로 남는 화면 동작을 날짜 검사로 잡아 재검색</span><span data-en>Catches the screen silently keeping the previous month's results and searches again</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>브라우저가 멈추면 시간 제한 후 새로 띄워 빠진 달만 이어받기</span><span data-en>On a browser hang, times out, relaunches and resumes only the missing months</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c2 reveal" style="position:relative;background:var(--surf2);transition-delay:0.08s">
+        <div class="mod-head">
+          <div class="mod-file">02 · DEFINE</div>
+          <div class="mod-title" data-ko>입고 · 출고 기준 정의</div>
+          <div class="mod-title" data-en>Inbound and Outbound, Defined</div>
+        </div>
+        <div class="mod-desc" data-ko>출고는 FG·SP에서 바로 나가는 건과 엔지니어(FSE) 재고를 거쳐 나가는 건이 섞여 있어 기준부터 세웠다. 창고 작업량은 직출고 + FSE 이관 + 해외 반출, 고객 출고는 직출고 + FSE 현장 사용으로 따로 보고, 창고 안 Pick 이동은 뺐다.</div>
+        <div class="mod-desc" data-en>Outbound mixes direct shipments from FG and SP with parts that leave through field engineer (FSE) stock, so the basis came first. Warehouse workload counts direct shipments, FSE transfers and exports; customer outbound counts direct shipments and FSE on-site use; picks inside the warehouse are left out.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>FSE 이관은 월마감 엔지니어 입고 집계와 같은 규칙으로 판정</span><span data-en>FSE transfers judged with the same rule as the monthly-close engineer receipts</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>건수는 아이템 라인과 오더 두 가지로 모두 집계</span><span data-en>Counted both as item lines and as orders</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c3 reveal" style="position:relative;background:var(--surf2);transition-delay:0.16s">
+        <div class="mod-head">
+          <div class="mod-file">03 · COMPARE</div>
+          <div class="mod-title" data-ko>질문이 안 나오는 비교 기준</div>
+          <div class="mod-title" data-en>A Comparison Nobody Questions</div>
+        </div>
+        <div class="mod-desc" data-ko>완결된 연도는 1~12월 연간 전체로, 진행 중인 2026년은 1~9월 실적 × 4/3 연간 추정치로 비교했다. 같은 추정을 2022~2025년에 적용해 보면 실제 연간 대비 오차가 -3.9%~+0.8%라 약간 보수적이다. 데이터를 뜯어보다 엔지니어 현장 사용 기록이 2022년 4월부터 시작된다는 걸 발견해, 확장 판단은 그 영향이 없는 창고 처리량 기준으로 세웠다.</div>
+        <div class="mod-desc" data-en>Completed years are compared Jan to Dec and 2026 as Jan to Sep actuals × 4/3; run on 2022 to 2025, the same estimate lands within -3.9% to +0.8% of the real full year, slightly conservative. Digging into the data showed that engineer on-site usage was only recorded from April 2022, so the expansion case rests on warehouse volume, which that gap does not affect.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>창고 처리량 매년 증가: +23%, +29%, +11%, 2026년 추정 +20%</span><span data-en>Warehouse volume up every year: +23%, +29%, +11%, then +20% for 2026E</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>2022년 대비 2.1배, 연평균 21%</span><span data-en>2.1 times the 2022 level, 21% a year</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c4 reveal" style="position:relative;background:var(--surf2);transition-delay:0.24s">
+        <div class="mod-head">
+          <div class="mod-file">04 · PEAK</div>
+          <div class="mod-title" data-ko>평균이 아니라 바쁜 날</div>
+          <div class="mod-title" data-en>Busy Days, Not Averages</div>
+        </div>
+        <div class="mod-desc" data-ko>공간과 인력은 평균이 아니라 바쁜 날을 버텨야 해서, 거래일 단위로 평균일·상위 10% 날·최대 피크일을 나눠 보고 주간·월간 피크를 함께 짚었다. 결과는 한국어와 영어 두 버전의 인터랙티브 보고서로 만들어 APAC 리전에 공유했다.</div>
+        <div class="mod-desc" data-en>Space and staff have to cover busy days, not averages, so each year was split into the average day, the top 10% of days and the single peak day, alongside weekly and monthly peaks. The result was built as an interactive report in Korean and English and shared with the APAC region.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>상위 10% 날 처리량 1.8배, 평균일 2.1배 (2026년은 1~9월 실적)</span><span data-en>Top-10% days carry 1.8 times the 2022 load, average days 2.1 times (2026 on Jan to Sep actuals)</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>피크 월 상위 5개 중 4개가 2026년</span><span data-en>Four of the five busiest months fall in 2026</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>외부 라이브러리 없는 단일 HTML, 표 보기·다크 모드 지원</span><span data-en>Single HTML file with no external libraries, table view and dark mode</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pipeline-section reveal">
+    <div class="section-label">Workflow</div>
+    <h2 class="section-title"><span data-ko>체감에서</span><span data-en>From a hunch</span><br><em><span data-ko>리전 설득까지</span><span data-en>to a regional case</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📥</div><div class="pipe-title" data-ko>전수 추출</div><div class="pipe-title" data-en>Full Pull</div><div class="pipe-desc" data-ko>SO·TO 월별 export 114건</div><div class="pipe-desc" data-en>114 monthly SO and TO exports</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🧪</div><div class="pipe-title" data-ko>검증</div><div class="pipe-title" data-en>Validate</div><div class="pipe-desc" data-ko>날짜 범위 · 행 제한 · 중복</div><div class="pipe-desc" data-en>Date range, row limit, duplicates</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🏷️</div><div class="pipe-title" data-ko>분류</div><div class="pipe-title" data-en>Classify</div><div class="pipe-desc" data-ko>입고 · 창고 출고 · 고객 출고</div><div class="pipe-desc" data-en>Inbound, warehouse and customer outbound</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📈</div><div class="pipe-title" data-ko>증가율</div><div class="pipe-title" data-en>Growth</div><div class="pipe-desc" data-ko>연간 전체 + 2026 연환산 추정</div><div class="pipe-desc" data-en>Full years plus 2026 annualised</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">⛰️</div><div class="pipe-title" data-ko>피크</div><div class="pipe-title" data-en>Peaks</div><div class="pipe-desc" data-ko>바쁜 날 · 피크 주 · 피크 월</div><div class="pipe-desc" data-en>Busy days, peak weeks and months</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">🌏</div><div class="pipe-title" data-ko>APAC 설득</div><div class="pipe-title" data-en>APAC Case</div><div class="pipe-desc" data-ko>한·영 보고서로 리전 설득</div><div class="pipe-desc" data-en>Korean and English report to the region</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="stack-emoji">🎭</div><div class="stack-name">Playwright</div><div class="stack-role" data-ko>Oracle 화면 반복 export</div><div class="stack-role" data-en>Repeated Oracle screen exports</div></div>
+      <div class="stack-item"><div class="stack-emoji">🏢</div><div class="stack-name">Oracle Fusion</div><div class="stack-role" data-ko>Review Completed Transactions</div><div class="stack-role" data-en>Review Completed Transactions</div></div>
+      <div class="stack-item"><div class="stack-emoji">🐼</div><div class="stack-name">pandas</div><div class="stack-role" data-ko>월·주·일 단위 집계</div><div class="stack-role" data-en>Monthly, weekly and daily rollups</div></div>
+      <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">HTML · SVG</div><div class="stack-role" data-ko>라이브러리 없는 인터랙티브 차트</div><div class="stack-role" data-en>Interactive charts, no libraries</div></div>
+      <div class="stack-item"><div class="stack-emoji">📗</div><div class="stack-name">openpyxl</div><div class="stack-role" data-ko>월·분기·연도별 엑셀 원표</div><div class="stack-role" data-en>Monthly, quarterly and yearly workbook</div></div>
+      <div class="stack-item"><div class="stack-emoji">🤖</div><div class="stack-name">Claude Code</div><div class="stack-role" data-ko>기준 설계 · 검증 · 보고서 작성</div><div class="stack-role" data-en>Basis design, checks and the report</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">WAREHOUSE CASE</div>
+    <div class="footer-note">PLAYWRIGHT · ORACLE FUSION · PANDAS · HTML/SVG · CLAUDE CODE</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
