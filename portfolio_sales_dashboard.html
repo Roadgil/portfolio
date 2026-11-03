@@ -419,8 +419,8 @@
       <div class="mod reveal" style="transition-delay:0.05s">
         <div class="mod-n">02 · ANALYTICS</div>
         <div class="mod-t" data-ko>상세 분석 리포트</div><div class="mod-t" data-en>Detail Report</div>
-        <div class="mod-d" data-ko>팀 전체 실적을 차트로 편다. 팀원별 달성률은 각자의 목표 100%를 기준선으로 그려, 실적이 큰 사람에게 눌려 보이지 않게 했다.</div>
-        <div class="mod-d" data-en>Charts the whole team's performance. Per-member attainment is drawn against each person's own 100% target, so a high performer no longer flattens everyone else's bar.</div>
+        <div class="mod-d" data-ko>팀 전체 실적을 차트로 편다. 팀원별 달성률은 각자의 목표 100%를 기준선으로 그려, 실적이 큰 사람에게 눌려 보이지 않게 했다. 반기 영업 회의 덱도 이 화면으로 옮겨, 발표와 인쇄를 여기서 바로 한다.</div>
+        <div class="mod-d" data-en>Charts the whole team's performance. Per-member attainment is drawn against each person's own 100% target, so a high performer no longer flattens everyone else's bar. The half-year sales meeting deck now lives here too, presented and printed straight from this screen.</div>
       </div>
       <div class="mod reveal" style="transition-delay:0.1s">
         <div class="mod-n">03 · REPORT</div>
@@ -522,6 +522,40 @@
       <div class="dr-foot">
         <span data-ko>달성률 바는 팀 최고 실적이 아니라 각자의 목표를 100%로 잡고 그린다 — 실적 큰 사람 하나가 나머지를 다 눌러버리던 걸 고친 부분이다</span>
         <span data-en>Attainment bars are drawn against each rep's own target rather than the team's best number, which is what stopped one strong performer from flattening everyone else's bar</span>
+      </div>
+    </div>
+
+    <div class="mods-label"><span data-ko>2026.11 업데이트 · 회의 덱을 대시보드로</span><span data-en>2026.11 update · the meeting deck, rebuilt as a dashboard</span></div>
+    <div class="sync-notes">
+      <div class="sn-item reveal">
+        <div class="sn-label" data-ko>덱 슬라이드를 실데이터로</div><div class="sn-label" data-en>Deck slides on live data</div>
+        <span data-ko>반기 영업 회의 때마다 손으로 만들던 슬라이드(팀·담당자 목표 대비 실적, 연간 대수, 분기 추이, 제품 구성비, 연도 비교, 신규/기존 · 고객군 · 체인 비중)를 Detail Report 섹션으로 옮겼다. 상반기 실적과 분기별 대수가 기존 덱 수치와 일치하는지 대조한 뒤 반영했다.</span>
+        <span data-en>The slides rebuilt by hand for every half-year sales meeting (team and rep target vs actual, annual units, quarterly trend, product mix, year-over-year, new vs existing, customer segment and chain share) now live as Detail Report sections. H1 revenue and quarterly units were reconciled against the existing deck before release.</span>
+      </div>
+      <div class="sn-item reveal" style="transition-delay:0.05s">
+        <div class="sn-label" data-ko>과거 수치는 코드 밖에</div><div class="sn-label" data-en>History kept out of the code</div>
+        <span data-ko>저장소가 공개라 2019~2025년 과거 실적을 코드에 넣지 않고 로그인 뒤에만 읽히는 DB 설정 문서에 두었다. 수치를 고칠 때도 코드 배포 없이 문서만 바꾸면 된다.</span>
+        <span data-en>The repository is public, so 2019 to 2025 history sits in a settings document readable only after login rather than in the code. Correcting a figure means editing that document, with no redeploy.</span>
+      </div>
+      <div class="sn-item reveal" style="transition-delay:0.1s">
+        <div class="sn-label" data-ko>덱과 숫자가 다를 때</div><div class="sn-label" data-en>When the deck disagrees</div>
+        <span data-ko>비어 있던 신규/기존 구분 256건은 Salesforce 거래 유형을 주문번호로 매칭해 채웠고, 상반기 신규/기존 대수가 덱과 정확히 맞았다. 고객군 비중이 어긋난 슬라이드는 원본 엑셀까지 거슬러 올라가 덱 쪽 입력 오류임을 확인했다.</span>
+        <span data-en>256 deals missing a new-vs-existing flag were filled by matching Salesforce opportunity type on order number, after which H1 new and existing units matched the deck exactly. Where a segment-share slide disagreed, tracing it back to the source workbook showed the error was in the deck.</span>
+      </div>
+      <div class="sn-item reveal" style="transition-delay:0.15s">
+        <div class="sn-label" data-ko>회의에서 바로 쓰는 화면</div><div class="sn-label" data-en>Built to present from</div>
+        <span data-ko>그래프나 표를 누르면 전체 화면으로 커지고 ← → 로 넘기는 발표 모드, 분기 추이 추세선, 수치 라벨 표시 토글을 넣었다. 작은 도넛 조각 라벨은 바깥으로 빼 지시선으로 연결해 겹치지 않게 했다.</span>
+        <span data-en>Click any chart or table for a full-screen presentation mode navigated with the arrow keys; quarterly trends carry a trend line, and value labels can be toggled on. Labels for thin donut slices move outside on leader lines so nothing overlaps.</span>
+      </div>
+      <div class="sn-item reveal" style="transition-delay:0.2s">
+        <div class="sn-label" data-ko>거래 구분별 실적</div><div class="sn-label" data-en>Results by deal channel</div>
+        <span data-ko>직판 · 간접판매 · 홀딩스 거래 구분별 실적 섹션을 추가하고, 입력 폼은 영업팀 요청으로 거래 구분마다 고를 수 있는 딜러 목록을 나눴다. 구분이 비어 있는 과거 건은 딜러명 규칙으로 분류해 보여준다.</span>
+        <span data-en>A new section breaks results out by direct, indirect and holdings channels, and at the sales team's request the entry form now offers a separate dealer list per channel. Older deals with no channel are classified by dealer-name rules for display.</span>
+      </div>
+      <div class="sn-item reveal" style="transition-delay:0.25s">
+        <div class="sn-label" data-ko>그대로 인쇄되는 리포트</div><div class="sn-label" data-en>Prints the way it looks</div>
+        <span data-ko>A4 가로, 섹션마다 새 페이지, 배경색 출력, 담당자 탭 전원 인쇄로 맞췄다. 인쇄 배치를 화면에 먼저 적용하고 그래프 크기를 다시 계산하게 해서, 인쇄할 때 차트가 찌그러지던 문제를 없앴다.</span>
+        <span data-en>A4 landscape, a new page per section, background colours kept, every rep tab included. The print layout is applied on screen first and charts are resized against it, which ended the squashed charts on paper.</span>
       </div>
     </div>
   </section>
