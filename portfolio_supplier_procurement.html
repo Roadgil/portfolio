@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Supplier Procurement · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#93c5fd; --accent2:#0faaa0; --accent3:#e09c10; --accent4:#5b4fcf;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;}
+    .hero-left{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(147,197,253,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,8.5vw,116px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:600px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
+    .hero-right-bg-cell{background:white;}
+    .hero-right-bg-cell:nth-child(odd){background:transparent;}
+    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
+    .flow-step{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}
+    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
+    .flow-icon{font-size:19px;width:34px;text-align:center;flex-shrink:0;}
+    .flow-info{flex:1;}
+    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+    .flow-role{font-size:11px;color:rgba(255,255,255,0.4);}
+    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
+    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
+    .badge-orange{background:rgba(196,98,26,0.4);color:#fdba74;border:1px solid rgba(253,186,116,0.3);}
+    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
+    .badge-red{background:rgba(124,45,18,0.5);color:#fca5a5;border:1px solid rgba(252,165,165,0.3);}
+    .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
+    .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
+    .section-title em{font-style:italic;color:var(--accent);}
+
+    /* module cards */
+    .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .mod-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .mod-card:hover{transform:translateY(-5px);border-color:var(--accent);}
+    .mod-head{padding:26px 28px 0;}
+    .mod-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;background:var(--surf2);padding:5px 10px;border-radius:5px;display:inline-block;margin-bottom:14px;}
+    .mod-title{font-family:'DM Serif Display',serif;font-size:21px;margin-bottom:10px;}
+    .mod-desc{font-size:12.5px;color:var(--muted);line-height:1.75;padding:0 28px 18px;}
+    .mod-points{padding:0 28px 26px;display:flex;flex-direction:column;gap:8px;}
+    .mpoint{font-size:11.5px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .mpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
+    .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
+    .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+    .mod-card.c4 .mpoint-dot{background:var(--accent4);}.mod-card.c4 .mod-title{color:var(--accent4);}
+
+    /* pipeline */
+    .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pipeline{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .pipe-step{flex:1;padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+    .pipe-step:last-child{border-right:none;}
+    .pipe-step:hover{background:var(--surf2);}
+    .pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+    .pipe-icon{font-size:24px;margin-bottom:14px;}
+    .pipe-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
+    .pipe-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+    body.en div[data-en]{display:block;}
+
+    @media (max-width:900px){
+      .topbar{padding:16px 24px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-left,.hero-right{padding:90px 24px 50px;}
+      .hero-right{min-height:60vh;}
+      .section,.pipeline-section{padding:90px 24px 50px;}
+      .pipeline{flex-direction:column;}
+      footer{padding:40px 24px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="portfolio_supply_chain.html">← <span data-ko>Supply Chain</span><span data-en>Supply Chain</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-tag">Supplier Procurement · AI Agent</div>
+      <h1 class="hero-title"><span class="a1" data-ko>공급사 구매</span><span class="a1" data-en>SUPPLIER</span><br><span class="a2" data-ko>P2P 에이전트</span><span class="a2" data-en>PROCURE-TO-PAY</span></h1>
+      <p class="hero-desc">
+        <span data-ko>독일 공급사 Zimmer에서 완제품(Cryo 7)과 부품을 사오는 Procure-to-Pay 전 과정을 담당. 대표 승인, Oracle Fusion 구매요청(PR), 미국 Global Buyer의 PO 전환, 공급사 발주와 PI/OC 검증, Finance 선결제, 송금증 전달과 제작 요청, 제작 완료 후 픽업까지 16단계 SOP로 운영한다. 반복 입력과 서류 대조는 Claude Code 에이전트가 맡고, Submit과 메일 발송은 사람이 결정한다.</span>
+        <span data-en>Owns the full procure-to-pay cycle for finished goods (Cryo 7) and parts bought from the German supplier Zimmer: CEO approval, the Oracle Fusion requisition, PO conversion by the U.S. global buyer, supplier ordering with PI/OC checks, Finance prepayment, remittance and production request, and pickup once production is done, run as a 16-step SOP. A Claude Code agent handles the repetitive entry and document matching, while Submit and outgoing emails stay a human decision.</span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">1</span><span class="stat-label" data-ko>일 (인수인계→PO 요청)</span><span class="stat-label" data-en>Day, Handover to PO Request</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">16</span><span class="stat-label" data-ko>SOP 단계</span><span class="stat-label" data-en>SOP Steps</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">4</span><span class="stat-label" data-ko>종 문서번호 관리</span><span class="stat-label" data-en>Document IDs Tracked</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">0</span><span class="stat-label" data-ko>에이전트 단독 Submit</span><span class="stat-label" data-en>Agent-only Submits</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="mod-card c1 reveal" style="position:relative;background:var(--surf2);">
+        <div class="mod-head">
+          <div class="mod-file">STEP 1–2</div>
+          <div class="mod-title" data-ko>인수인계 해석 · 승인요청</div>
+          <div class="mod-title" data-en>Handover Read · Approval Request</div>
+        </div>
+        <div class="mod-desc" data-ko>인수인계 메일 3건과 공급사 영문 스레드를 읽어 진행 중인 건과 신규 건을 구분하고, 과거 승인 메일 형식 그대로 대표 승인요청 초안을 만든다.</div>
+        <div class="mod-desc" data-en>Reads the three handover emails and the supplier thread, separates the in-flight order from the new one, and drafts the CEO approval request in the same format as past approvals.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>단가는 직전 주문의 PO·PI·OC·PR 4종 서류 금액과 대조한 뒤 기입</span><span data-en>Unit price filled only after matching four documents from the previous order: PO, PI, OC and PR</span></div>
+                    <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일은 초안으로만 저장, 발송은 담당자가 직접</span><span data-en>Saved as a draft only; the owner sends it</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c2 reveal" style="position:relative;background:var(--surf2);transition-delay:0.08s">
+        <div class="mod-head">
+          <div class="mod-file">STEP 3–10</div>
+          <div class="mod-title" data-ko>Oracle PR 에이전트 입력</div>
+          <div class="mod-title" data-en>Agent-Driven Oracle Requisition</div>
+        </div>
+        <div class="mod-desc" data-ko>SOP 워드 문서에 들어 있는 화면 캡처를 꺼내 읽고, Oracle Fusion Redwood 구매요청 화면을 Playwright로 한 칸씩 입력한다. 매 단계 스크린샷으로 값을 확인하고 Submit 직전에서 멈춘다.</div>
+        <div class="mod-desc" data-en>Pulls the screenshots out of the SOP Word file, then fills the Oracle Fusion Redwood requisition screen field by field with Playwright, confirming each step by screenshot and stopping right before Submit.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Destination Type Inventory · 공급사/사이트 · 통화 EUR · Negotiated까지 SOP 그림과 1:1 대조</span><span data-en>Destination type, supplier and site, EUR currency and the Negotiated flag matched one to one against the SOP figures</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>공급사 선택 시 납기일이 기본값으로 되돌아가는 화면 동작을 발견, 날짜는 마지막에 다시 입력</span><span data-en>Found that picking the supplier silently resets the delivery date, so the date is entered last</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>회사 SSO 버튼 로그인, 다른 자동화와 겹치지 않는 전용 브라우저 사용</span><span data-en>Company SSO sign-in in a dedicated browser that never collides with the other automations</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c3 reveal" style="position:relative;background:var(--surf2);transition-delay:0.16s">
+        <div class="mod-head">
+          <div class="mod-file">STEP 11–12</div>
+          <div class="mod-title" data-ko>PO 전환 요청 · 증빙 정리</div>
+          <div class="mod-title" data-en>PO Conversion · Evidence Filing</div>
+        </div>
+        <div class="mod-desc" data-ko>PR 자동승인 메일에 붙은 PR PDF를 꺼내 번호·금액·납기를 확인한 뒤, 미국 Global Buyer에게 PO 전환 요청을 보낸다. 주고받은 메일과 서류는 주문건 폴더에 단계 번호를 붙여 저장한다.</div>
+        <div class="mod-desc" data-en>Takes the requisition PDF from the auto-approval email, checks number, amount and delivery date, then sends the PO conversion request to the U.S. global buyer. Every email and document is filed into the order's folder with a step number.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>발송 전 보낸편지함 중복 확인</span><span data-en>Sent Items checked for duplicates before sending</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>주문건 폴더명에 PR·PO 번호와 현재 단계를 함께 표기</span><span data-en>Folder name carries PR and PO numbers plus the current stage</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PO 생성 회신과 Oracle Implemented 알림 2종으로 PO 번호 확정</span><span data-en>PO number confirmed from both the buyer reply and the Oracle "Implemented" notice</span></div>
+        </div>
+      </div>
+
+      <div class="mod-card c4 reveal" style="position:relative;background:var(--surf2);transition-delay:0.24s">
+        <div class="mod-head">
+          <div class="mod-file">STEP 13–16</div>
+          <div class="mod-title" data-ko>공급사 발주 · 선결제 · 제작 팔로업</div>
+          <div class="mod-title" data-en>Supplier Order · Prepayment · Production</div>
+        </div>
+        <div class="mod-desc" data-ko>공급사 양식의 발주서에 Oracle PO 번호를 그대로 넣어 보내고, 회신받은 PI/OC를 PO와 대조한 뒤 Finance에 선결제를 요청한다. 송금이 끝나면 송금증을 보내 제작을 시작시키고 출하 예정일을 받아 픽업까지 챙긴다.</div>
+        <div class="mod-desc" data-en>Sends the supplier-format order carrying the Oracle PO number, matches the returned PI/OC against the PO, then requests prepayment from Finance. Once paid, forwards the remittance to start production, gets the ship date and follows through to pickup.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>OC 품목·수량·단가·총액을 PO와 재대조, PI 번호 기록</span><span data-en>OC items, quantities, unit price and total rechecked against the PO; PI number logged</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PR·PO·PI·OC 4종 첨부, 월 1·2차 지급일에 맞춘 Finance 지급요청</span><span data-en>Finance payment request with PR, PO, PI and OC attached, timed to the monthly payment runs</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>선결제 조건이라 지급이 밀리면 제작·출하도 밀림, 결제 후 약 3~4주 제작</span><span data-en>Prepayment terms: a late payment delays production and shipment; about 3 to 4 weeks of production after payment</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>PR 번호를 PO 번호로 보내 PI/OC 재발행이 필요했던 건을 계기로 발주 전 번호 형식(KRR/KR) 확인</span><span data-en>After a requisition number was once sent as the PO number and the PI/OC had to be reissued, the number format is checked before every order</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pipeline-section reveal">
+    <div class="section-label">Workflow</div>
+    <h2 class="section-title"><span data-ko>구매 승인부터</span><span data-en>From purchase approval</span><br><em><span data-ko>픽업까지</span><span data-en>to pickup</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">✍️</div><div class="pipe-title" data-ko>대표 승인</div><div class="pipe-title" data-en>CEO Approval</div><div class="pipe-desc" data-ko>과거 형식 재사용 · 단가 4종 대조</div><div class="pipe-desc" data-en>Past format reused, price checked against 4 docs</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">🧾</div><div class="pipe-title" data-ko>Oracle PR</div><div class="pipe-title" data-en>Oracle Requisition</div><div class="pipe-desc" data-ko>에이전트 입력 · Submit은 사람</div><div class="pipe-desc" data-en>Agent fills it in, a person submits</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🔁</div><div class="pipe-title" data-ko>PO 전환</div><div class="pipe-title" data-en>PO Conversion</div><div class="pipe-desc" data-ko>미국 Global Buyer 요청</div><div class="pipe-desc" data-en>Request to the U.S. global buyer</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">📄</div><div class="pipe-title" data-ko>공급사 발주</div><div class="pipe-title" data-en>Supplier Order</div><div class="pipe-desc" data-ko>PI/OC 수령 후 PO와 대조</div><div class="pipe-desc" data-en>PI/OC received and matched to the PO</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">💶</div><div class="pipe-title" data-ko>선결제</div><div class="pipe-title" data-en>Prepayment</div><div class="pipe-desc" data-ko>서류 4종 첨부 Finance 지급요청</div><div class="pipe-desc" data-en>Finance request with all 4 documents</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 06</div><div class="pipe-icon">🚚</div><div class="pipe-title" data-ko>제작 · 픽업</div><div class="pipe-title" data-en>Production · Pickup</div><div class="pipe-desc" data-ko>송금증 전달 · 출하일 확인 · 입고</div><div class="pipe-desc" data-en>Remittance sent, ship date, receipt</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="stack-emoji">🤖</div><div class="stack-name">Claude Code</div><div class="stack-role" data-ko>SOP 해석 · 단계별 판단</div><div class="stack-role" data-en>SOP reading, step-by-step judgment</div></div>
+      <div class="stack-item"><div class="stack-emoji">🎭</div><div class="stack-name">Playwright (CDP)</div><div class="stack-role" data-ko>Oracle 화면 입력 · 스크린샷 확인</div><div class="stack-role" data-en>Oracle screen entry, screenshot checks</div></div>
+      <div class="stack-item"><div class="stack-emoji">🏢</div><div class="stack-name">Oracle Fusion</div><div class="stack-role" data-ko>Self Service Procurement (Redwood)</div><div class="stack-role" data-en>Self Service Procurement (Redwood)</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 초안 · 발송 · .msg 저장</div><div class="stack-role" data-en>Outlook drafts, sending, .msg filing</div></div>
+      <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Microsoft 365</div><div class="stack-role" data-ko>메일 스레드 검색 · 열람</div><div class="stack-role" data-en>Mail thread search and reading</div></div>
+      <div class="stack-item"><div class="stack-emoji">📑</div><div class="stack-name">pypdf</div><div class="stack-role" data-ko>PR · PO · PI · OC 금액 대조</div><div class="stack-role" data-en>PR, PO, PI and OC amount checks</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">SUPPLIER P2P</div>
+    <div class="footer-note">CLAUDE CODE · PLAYWRIGHT · ORACLE FUSION · WIN32COM · HUMAN-IN-THE-LOOP</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
