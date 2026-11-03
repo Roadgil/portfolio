@@ -31,9 +31,11 @@ import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent
 DOWNLOAD_DIR = BASE_DIR / "downloads"
-DASHBOARD_PATH = Path(
-    r"C:\Users\yoongil.chae\OneDrive - Candela\바탕 화면\Monthly Closing\monthly_closing_dashboard.html"
-)
+import os
+DASHBOARD_PATH = Path(os.environ.get("FSE_DASHBOARD_PATH") or
+    r"C:\Users\yoongil.chae\OneDrive - Candela\Syneron-Candela Korea - Operation\19. Monthly Closing\monthly_closing_dashboard.html"
+)  # 시험 시 환경변수 FSE_DASHBOARD_PATH로 복사본을 가리킬 수 있음
+ITEM_STATS_DIR = DOWNLOAD_DIR / "item_stats"
 
 KOREA_FSE_CODES = {
     "FSE002", "FSE003", "FSE004", "FSE006", "FSE007", "FSE012",
@@ -41,6 +43,15 @@ KOREA_FSE_CODES = {
 }
 
 PN_RE = re.compile(r"PN:(\S+)")
+
+
+def load_tool_items():
+    """소모되지 않는 공구/지그(fse_tool_items.json) - 회전율용 소모·입고 집계에서 제외 (2026-10-15)."""
+    p = BASE_DIR / "fse_tool_items.json"
+    return set(json.loads(p.read_text(encoding="utf-8")).get("items", {})) if p.exists() else set()
+
+
+TOOL_ITEMS = load_tool_items()
 
 
 def log(msg):
@@ -90,13 +101,13 @@ def extract_pn(raw):
 
 def compute_consumption(month_str, item_cost):
     y, mth = map(int, month_str.split("-"))
-    first = date(y, mth, 1)
-    last = date(y, mth, calendar.monthrange(y, mth)[1])
-    csv_path = DOWNLOAD_DIR / f"korea_fse_consumed_{first.isoformat()}_{last.isoformat()}.csv"
+    # 2026-10-07: 새 소모 풀러가 만든 월별 파일(Closed 필터 해제, Scheduled 월 기준, Canceled 제외 - 기존 수기 집계와 일치 검증됨)
+    csv_path = ITEM_STATS_DIR / f"sf_consumed_{y}-{mth:02d}.csv"
     if not csv_path.exists():
         raise RuntimeError(f"소모량 원본 파일 없음: {csv_path} - fse_consumption_puller.py를 먼저 실행하세요")
-    df = pd.read_csv(csv_path, encoding="utf-8")
+    df = pd.read_csv(csv_path, encoding="utf-8-sig")
     df = df[df["Oracle Subinventory"].astype(str).isin(KOREA_FSE_CODES)]
+    df = df[~df["Consumed Part Code and Serial"].map(extract_pn).isin(TOOL_ITEMS)]   # 공구 제외
 
     result = {}
     for code, sub in df.groupby("Oracle Subinventory"):
@@ -110,25 +121,24 @@ def compute_consumption(month_str, item_cost):
             if cost is not None:
                 amt += q * cost
                 matched_amt = True
-        result[code] = {"q": -float(qty), "a": -float(amt) if matched_amt else None}
+        result[code] = {"q": int(round(-qty)), "a": round(float(-amt), 2) if matched_amt else None}
     return result
 
 
 def compute_receipt(month_str, item_cost):
-    # 최신 receipt_completed_transactions_*.xlsx 중 이 달에 해당하는 걸 못
-    # 구분하므로(파일명에 타임스탬프만 있음), 가장 최근 파일을 그 달 것으로 간주한다
-    # - fse_receipt_puller.py를 그 달 마감 시점에 막 돌린 뒤 바로 이 스크립트를
-    # 실행하는 흐름을 전제로 한다.
-    files = sorted(DOWNLOAD_DIR.glob("receipt_completed_transactions_*.xlsx"), key=lambda p: p.stat().st_mtime)
-    if not files:
-        raise RuntimeError("입고 원본 파일이 없음 - fse_receipt_puller.py를 먼저 실행하세요")
-    latest = files[-1]
+    # 2026-10-07: 입고 풀러가 월별로 보관한 파일(item_stats/receipt_YYYY-MM.xlsx, 거래일 월범위 검증 통과본)을 쓴다.
+    # (예전엔 '가장 최근 다운로드'를 그 달 것으로 간주해서 다른 달 파일을 집을 위험이 있었음)
+    latest = ITEM_STATS_DIR / f"receipt_{month_str}.xlsx"
+    if not latest.exists():
+        raise RuntimeError(f"입고 원본 파일이 없음: {latest} - fse_receipt_puller.py를 먼저 실행하세요")
     log(f"입고 원본 파일: {latest.name}")
     tables = pd.read_html(latest, encoding="utf-8")
     df = max(tables, key=len)
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = [c[-1] for c in df.columns]
     df = df[df["Subinventory"].astype(str).str.startswith("FSE", na=False)]
+    df = df[df["Transaction Type"] == "Transfer Order Intraorganization Transfer"]   # 대시보드 입고 정의와 동일
+    df = df[~df["Item"].astype(str).str.strip().isin(TOOL_ITEMS)]                     # 공구 제외
     df = df[pd.to_numeric(df["Transaction Quantity"], errors="coerce") > 0]
 
     result = {}
@@ -143,7 +153,7 @@ def compute_receipt(month_str, item_cost):
             if cost is not None:
                 amt += q * cost
                 matched_amt = True
-        result[code] = {"q": float(qty), "a": float(amt) if matched_amt else None}
+        result[code] = {"q": int(round(qty)), "a": round(float(amt), 2) if matched_amt else None}
     return result
 
 

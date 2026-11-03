@@ -36,9 +36,10 @@ except Exception:
 
 BASE_DIR = Path(__file__).resolve().parent
 DOWNLOAD_DIR = BASE_DIR / "downloads"
-DASHBOARD_PATH = Path(
-    r"C:\Users\yoongil.chae\OneDrive - Candela\바탕 화면\Monthly Closing\monthly_closing_dashboard.html"
-)
+import os
+DASHBOARD_PATH = Path(os.environ.get("FSE_DASHBOARD_PATH") or
+    r"C:\Users\yoongil.chae\OneDrive - Candela\Syneron-Candela Korea - Operation\19. Monthly Closing\monthly_closing_dashboard.html"
+)  # 시험 시 환경변수 FSE_DASHBOARD_PATH로 복사본을 가리킬 수 있음
 INTRANSIT_DIR = Path(
     r"C:\Users\yoongil.chae\OneDrive - Candela\Syneron-Candela Korea - Operation"
     r"\10. 수입\Intransit Details Report"
@@ -92,6 +93,12 @@ def main():
         log("대시보드 열기...")
         page.goto(DASHBOARD_PATH.as_uri())
         page.wait_for_load_state("load", timeout=15000)
+        # 2026-10-07: 이 프로필의 localStorage에 이전 자동 실행이 저장해 둔 월 데이터가 남아 있으면 대시보드가
+        # 파일에 구워진 값(사용자가 나중에 적은 특이사항 등)보다 그 저장본을 우선해서, 내보내기 때 지난달
+        # 특이사항이 통째로 지워진다(시험에서 2026.9 MRB/RMA_NV 특이사항 소실로 발견). 매번 비우고 파일 기준으로 시작.
+        page.evaluate("() => { try { localStorage.clear(); } catch (e) {} }")
+        page.reload()
+        page.wait_for_load_state("load", timeout=15000)
         page.wait_for_timeout(1000)
 
         log("'현재 월 업로드' 탭 클릭...")
@@ -118,6 +125,24 @@ def main():
         label_input.fill("")
         label_input.fill(args.month)
 
+        # 같은 기간을 다시 저장(재시도/재실행)하면 대시보드가 입력칸 값만 쓰기 때문에 그 달에 이미 적혀 있던
+        # 특이사항이 지워진다 - 기존 특이사항을 미리 입력칸에 채워 넣어 보존한다.
+        existing = page.evaluate("""(l) => {
+            const d = (typeof savedPeriods !== 'undefined' && savedPeriods[l]) || (TS_DATA.data && TS_DATA.data[l]);
+            if (!d) return {};
+            const o = {};
+            CATEGORIES.forEach(c => { if (d[c] && d[c].r) o[c] = d[c].r; });
+            return o;
+        }""", args.month)
+        if existing:
+            filled = 0
+            for cat, text in existing.items():
+                inp = page.locator(f'#live-table-wrap input.remark-input[data-mode="live"][data-cat="{cat}"]')
+                if inp.count() and not inp.first.input_value().strip():
+                    inp.first.fill(text)
+                    filled += 1
+            log(f"기존 특이사항 {filled}건 보존(같은 기간 재저장)")
+
         log("저장 & 시계열에 추가 클릭...")
         save_btn.click()
         page.wait_for_timeout(2000)
@@ -128,12 +153,17 @@ def main():
             page.screenshot(path=str(path))
             log(f"[경고] 저장 성공 여부 불확실 - 스크린샷 확인: {path}")
 
-        log("공유용 HTML 다운로드 클릭...")
-        with page.expect_download(timeout=30000) as dl_info:
-            page.get_by_text("공유용 HTML 다운로드", exact=False).click()
-        download = dl_info.value
+        # 2026-10-07: "공유용 HTML 다운로드" 버튼 클릭 + download 이벤트 방식은 이 환경에서 불안정해서
+        # (Download.save_as: Target page, context or browser has been closed - 시험 중 실제 발생) 쓰지 않는다.
+        # 대시보드의 buildStandaloneHTML()이 돌려주는 문자열을 직접 받아 파일로 쓴다(같은 내용, 다운로드 경로 없음).
+        log("공유용 HTML 생성(buildStandaloneHTML)...")
+        html = page.evaluate("() => { const b = buildStandaloneHTML(); return b ? b.html : null; }")
+        if not html or not html.rstrip().endswith("</html>"):
+            raise RuntimeError("공유용 HTML 생성 실패(문자열이 비었거나 </html>로 끝나지 않음)")
+        if f'"{args.month}"' not in html:
+            raise RuntimeError(f"생성된 HTML에 새 기간 '{args.month}'이 없음 - 원본을 교체하지 않음")
         tmp_path = DOWNLOAD_DIR / f"dashboard_export_{int(time.time())}.html"
-        download.save_as(str(tmp_path))
+        tmp_path.write_text(html, encoding="utf-8", newline="")
         log(f"내보내기 완료: {tmp_path} ({tmp_path.stat().st_size} bytes)")
 
         context.close()
