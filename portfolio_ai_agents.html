@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>AI Agents · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0c10; --surf:#13151c; --surf2:#1a1d27; --border:#252836;
+      --accent:#c4b5fd; --accent2:#0faaa0; --accent3:#e09c10; --accent4:#5b4fcf;
+      --text:#eef0f8; --muted:#6b6f84; --green:#0fa878;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(to bottom,rgba(11,12,16,0.9),transparent);}
+    .back-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .back-link:hover{color:var(--text);}
+    .lang-toggle{display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-family:'DM Mono',monospace;font-size:10px;}
+    .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+    .lang-toggle button.active{background:var(--accent);color:#0b0c10;}
+
+    .hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;}
+    .hero-left{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+    .hero-bg-glow{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(196,181,253,0.14) 0%,transparent 70%);top:-180px;left:-160px;animation:floatGlow 9s ease-in-out infinite;}
+    @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(28px) scale(1.05);}}
+    .hero-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;animation:fadeUp 0.8s ease both;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--accent);}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,8.5vw,116px);line-height:0.9;letter-spacing:-1px;margin-bottom:32px;animation:fadeUp 0.8s ease 0.1s both;}
+    .hero-title .a1{color:var(--accent);}.hero-title .a2{color:var(--accent2);}
+    .hero-desc{font-size:15px;color:var(--muted);max-width:600px;line-height:1.85;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:48px;}
+    .hero-stats{display:flex;gap:40px;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1;}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    .hero-right{padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--surf);}
+    .hero-right-bg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(8,1fr);gap:1px;opacity:0.08;}
+    .hero-right-bg-cell{background:white;}
+    .hero-right-bg-cell:nth-child(odd){background:transparent;}
+    .hero-flow{position:relative;display:flex;flex-direction:column;gap:0;}
+    .flow-step{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,0.1);animation:fadeRight 0.6s ease both;}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-step:nth-child(1){animation-delay:.1s}.flow-step:nth-child(2){animation-delay:.16s}.flow-step:nth-child(3){animation-delay:.22s}.flow-step:nth-child(4){animation-delay:.28s}.flow-step:nth-child(5){animation-delay:.34s}
+    .flow-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.25);width:24px;flex-shrink:0;}
+    .flow-icon{font-size:19px;width:34px;text-align:center;flex-shrink:0;}
+    .flow-info{flex:1;}
+    .flow-name{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.9);margin-bottom:3px;}
+    .flow-role{font-size:11px;color:rgba(255,255,255,0.4);}
+    .flow-badge{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:12px;letter-spacing:1px;flex-shrink:0;}
+    .badge-green{background:rgba(45,80,22,0.6);color:#86efac;border:1px solid rgba(134,239,172,0.3);}
+    .badge-orange{background:rgba(196,98,26,0.4);color:#fdba74;border:1px solid rgba(253,186,116,0.3);}
+    .badge-blue{background:rgba(26,74,110,0.5);color:#93c5fd;border:1px solid rgba(147,197,253,0.3);}
+    .badge-red{background:rgba(124,45,18,0.5);color:#fca5a5;border:1px solid rgba(252,165,165,0.3);}
+    .badge-gold{background:rgba(181,147,10,0.35);color:#fde68a;border:1px solid rgba(253,230,138,0.3);}
+    .badge-purple{background:rgba(91,79,207,0.4);color:#c4b5fd;border:1px solid rgba(196,181,253,0.3);}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
+
+    .section{padding:90px 60px;}
+    .section-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--accent);}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:56px;}
+    .section-title em{font-style:italic;color:var(--accent);}
+
+    /* module cards */
+    .mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .mod-card{background:var(--surf);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform 0.3s,border-color 0.3s;}
+    .mod-card:hover{transform:translateY(-5px);border-color:var(--accent);}
+    .mod-head{padding:26px 28px 0;}
+    .mod-file{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;background:var(--surf2);padding:5px 10px;border-radius:5px;display:inline-block;margin-bottom:14px;}
+    .mod-title{font-family:'DM Serif Display',serif;font-size:21px;margin-bottom:10px;}
+    .mod-desc{font-size:12.5px;color:var(--muted);line-height:1.75;padding:0 28px 18px;}
+    .mod-points{padding:0 28px 26px;display:flex;flex-direction:column;gap:8px;}
+    .mpoint{font-size:11.5px;color:var(--muted);display:flex;gap:9px;align-items:flex-start;}
+    .mpoint-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .mod-card.c1 .mpoint-dot{background:var(--accent);}.mod-card.c1 .mod-title{color:var(--accent);}
+    .mod-card.c2 .mpoint-dot{background:var(--accent2);}.mod-card.c2 .mod-title{color:var(--accent2);}
+    .mod-card.c3 .mpoint-dot{background:var(--accent3);}.mod-card.c3 .mod-title{color:var(--accent3);}
+    .mod-card.c4 .mpoint-dot{background:var(--accent4);}.mod-card.c4 .mod-title{color:var(--accent4);}
+
+    /* pipeline */
+    .pipeline-section{padding:90px 60px;background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pipeline{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .pipe-step{flex:1;padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+    .pipe-step:last-child{border-right:none;}
+    .pipe-step:hover{background:var(--surf2);}
+    .pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+    .pipe-icon{font-size:24px;margin-bottom:14px;}
+    .pipe-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text);margin-bottom:6px;}
+    .pipe-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;}
+    .stack-item{padding:30px 26px;border:1px solid var(--border);transition:background 0.2s;display:flex;flex-direction:column;gap:8px;}
+    .stack-item:hover{background:var(--surf2);}
+    .stack-emoji{font-size:26px;}
+    .stack-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;}
+    .stack-role{font-size:11px;color:var(--muted);}
+
+    footer{padding:60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);letter-spacing:2px;}
+    .footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    [data-en]{display:none;}
+    body.en [data-ko]{display:none;}
+    body.en [data-en]{display:inline;}
+    body.en div[data-en]{display:block;}
+
+    @media (max-width:900px){
+      .topbar{padding:16px 24px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-left,.hero-right{padding:90px 24px 50px;}
+      .hero-right{min-height:60vh;}
+      .section,.pipeline-section{padding:90px 24px 50px;}
+      .pipeline{flex-direction:column;}
+      footer{padding:40px 24px;}
+    }
+  
+    .ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .rung{padding:30px 24px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:10px;}
+    .rung:last-child{border-right:none;}
+    .rung-lv{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);}
+    .rung-t{font-family:'DM Serif Display',serif;font-size:20px;line-height:1.2;}
+    .rung-d{font-size:12px;color:var(--muted);line-height:1.7;}
+    .rung-g{font-family:'DM Mono',monospace;font-size:10px;padding:4px 10px;border-radius:12px;align-self:flex-start;margin-top:auto;}
+    .rule-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2px;margin-top:8px;}
+    .rule{padding:26px 26px;border:1px solid var(--border);}
+    .rule-k{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:10px;}
+    .rule-v{font-size:13px;color:var(--text);line-height:1.75;}
+    .rule-s{font-size:11.5px;color:var(--muted);line-height:1.7;margin-top:8px;}
+    .pipe-step.human{background:rgba(224,156,16,0.08);}
+    .pipe-step.human .pipe-num{color:var(--accent3);}
+    .link-card{display:block;text-decoration:none;color:inherit;}
+    .link-card .mod-file::after{content:' →';}
+    @media (max-width:900px){.ladder{grid-template-columns:1fr;}.rung{border-right:none;border-bottom:1px solid var(--border);}.rung:last-child{border-bottom:none;}}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="back-link" href="index.html">← <span data-ko>프로젝트 목록</span><span data-en>All projects</span></a>
+    <div class="lang-toggle">
+      <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-tag">AI Agents · Claude Code</div>
+      <h1 class="hero-title"><span class="a1" data-ko>업무를 맡는</span><span class="a1" data-en>AGENTS THAT</span><br><span class="a2" data-ko>AI 에이전트</span><span class="a2" data-en>OWN A JOB</span></h1>
+      <p class="hero-desc">
+        <span data-ko>질문에 답하는 챗봇이 아니라, 한 업무를 처음부터 끝까지 맡는 에이전트를 직접 설계하고 운영한다. 업무를 먼저 Claude와 대화로 처리해 보면서 규칙을 확정하고, 확정된 규칙과 검증된 도구만 에이전트 정의 파일로 옮긴다. 대표 사례는 병원 출고 요청 메일을 Salesforce 파트오더로 만들고 Oracle 전송·릴리즈·창고 안내 메일까지 이어가는 파트오더 에이전트, 그리고 독일 공급사 구매를 16단계 SOP대로 진행하는 Zimmer 구매 에이전트. 되돌리기 어려운 단계(승인 요청, Submit, 메일 발송)는 사람이 결정한다.</span>
+        <span data-en>Not a chatbot that answers questions, but agents designed and run to own one job end to end. The work is first done with Claude in conversation until the rules settle, and only those settled rules and the tools that proved themselves move into an agent definition file. The main examples are a parts-order agent that turns hospital shipment-request emails into Salesforce parts orders and carries them through Oracle interface, release and the warehouse notice, and a Zimmer procurement agent that runs purchasing from a German supplier along a 16-step SOP. Steps that are hard to undo (approval requests, Submit, sending email) stay a human decision.</span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">4</span><span class="stat-label" data-ko>권한 단계별 에이전트 유형</span><span class="stat-label" data-en>Agent Types by Permission</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent2);">13</span><span class="stat-label" data-ko>파트오더 에이전트 허용 도구</span><span class="stat-label" data-en>Tools Whitelisted</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">5</span><span class="stat-label" data-ko>건 동시 승인요청 · 전송</span><span class="stat-label" data-en>Orders Sent in Parallel</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent4);">16</span><span class="stat-label" data-ko>단계 구매 SOP 수행</span><span class="stat-label" data-en>SOP Steps Run</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-right-bg">
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+        <div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div><div class="hero-right-bg-cell"></div>
+      </div>
+      <div class="hero-flow">
+        <div class="flow-step"><div class="flow-num">01</div><div class="flow-icon">💬</div><div class="flow-info"><div class="flow-name" data-ko>대화로 먼저 해본다</div><div class="flow-name" data-en>Do it in conversation first</div><div class="flow-role" data-ko>실제 건을 Claude와 같이 처리하며 예외를 모은다</div><div class="flow-role" data-en>Real cases handled with Claude to surface the exceptions</div></div><span class="flow-badge badge-blue">LEARN</span></div>
+        <div class="flow-step"><div class="flow-num">02</div><div class="flow-icon">📜</div><div class="flow-info"><div class="flow-name" data-ko>규칙을 정의 파일로</div><div class="flow-name" data-en>Rules into a definition file</div><div class="flow-role" data-ko>역할 · 허용 도구 · 절대 규칙 · 단계별 절차</div><div class="flow-role" data-en>Role, allowed tools, hard rules, step-by-step procedure</div></div><span class="flow-badge badge-purple">DEFINE</span></div>
+        <div class="flow-step"><div class="flow-num">03</div><div class="flow-icon">🧰</div><div class="flow-info"><div class="flow-name" data-ko>검증된 도구만 남긴다</div><div class="flow-name" data-en>Keep only proven tools</div><div class="flow-role" data-ko>임시 스크립트를 실전 검증 후 앱 폴더로 이동</div><div class="flow-role" data-en>Scratch scripts move to the app folder after live runs</div></div><span class="flow-badge badge-green">TOOL</span></div>
+        <div class="flow-step"><div class="flow-num">04</div><div class="flow-icon">🚦</div><div class="flow-info"><div class="flow-name" data-ko>사람 관문을 박는다</div><div class="flow-name" data-en>Hard-code the human gates</div><div class="flow-role" data-ko>승인 요청 · Submit · 발송은 명시적 지시가 있을 때만</div><div class="flow-role" data-en>Approval, Submit and send only on an explicit instruction</div></div><span class="flow-badge badge-orange">GATE</span></div>
+        <div class="flow-step"><div class="flow-num">05</div><div class="flow-icon">🔁</div><div class="flow-info"><div class="flow-name" data-ko>사고는 규칙이 된다</div><div class="flow-name" data-en>Incidents become rules</div><div class="flow-role" data-ko>누락 · 오매칭이 나면 같은 날 정의 파일에 반영</div><div class="flow-role" data-en>A miss or mismatch goes into the definition the same day</div></div><span class="flow-badge badge-gold">LOOP</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LADDER -->
+  <section class="section reveal">
+    <div class="section-label">Permission Ladder</div>
+    <h2 class="section-title"><span data-ko>맡기는 범위는</span><span data-en>How much it is trusted</span><br><em><span data-ko>권한 단계로 나눈다</span><span data-en>is set by permission level</span></em></h2>
+    <div class="ladder">
+      <div class="rung">
+        <div class="rung-lv">LEVEL 1 · READ</div>
+        <div class="rung-t" data-ko>조회 · 요약</div><div class="rung-t" data-en>Look up &amp; summarize</div>
+        <div class="rung-d" data-ko>직접 만든 MCP 서버(도구 16개)로 수입 실적·재무 일정·자동화 상태를 읽어 답하고, 평일 아침 브리핑을 쓴다. 운영 데이터는 바꿀 수 없다.</div>
+        <div class="rung-d" data-en>Answers from a self-built MCP server of sixteen tools covering import records, the finance calendar and automation status, and writes the weekday morning briefing. It cannot change operational data.</div>
+        <span class="rung-g badge-blue">READ-ONLY</span>
+      </div>
+      <div class="rung">
+        <div class="rung-lv">LEVEL 2 · WATCH</div>
+        <div class="rung-t" data-ko>감시 · 기록</div><div class="rung-t" data-en>Watch &amp; log</div>
+        <div class="rung-d" data-ko>엔지니어 Teams 문의를 헤드리스 Claude가 읽어 PO 번호를 뽑고 처리 여부를 대조한다. 실행 없이 기록만 하는 shadow 모드로 먼저 검증한다.</div>
+        <div class="rung-d" data-en>A headless Claude reads engineers' Teams requests, extracts the PO number and checks whether it was handled. It runs in shadow mode first, logging without acting.</div>
+        <span class="rung-g badge-purple">SHADOW</span>
+      </div>
+      <div class="rung">
+        <div class="rung-lv">LEVEL 3 · DRAFT</div>
+        <div class="rung-t" data-ko>입력 · 초안</div><div class="rung-t" data-en>Fill in &amp; draft</div>
+        <div class="rung-d" data-ko>Zimmer 구매처럼 서류가 많은 업무는 Oracle 구매요청 입력, 발주서 PDF, 재무 지급요청 메일까지 만들어 두고 Submit과 발송은 사람이 한다.</div>
+        <div class="rung-d" data-en>For document-heavy work like Zimmer purchasing, it fills in the Oracle requisition and builds the PO PDF and the finance payment request, while Submit and sending stay with a person.</div>
+        <span class="rung-g badge-gold">HUMAN SUBMITS</span>
+      </div>
+      <div class="rung">
+        <div class="rung-lv">LEVEL 4 · EXECUTE</div>
+        <div class="rung-t" data-ko>실행 · 관문 통과 후</div><div class="rung-t" data-en>Execute behind gates</div>
+        <div class="rung-d" data-ko>파트오더 에이전트는 주문 생성, Oracle 전송, 릴리즈까지 실제로 실행한다. 대신 승인 요청과 메일 발송은 사용자가 그 대화에서 직접 지시했을 때만 한다.</div>
+        <div class="rung-d" data-en>The parts-order agent actually creates orders, sends them to Oracle and releases them. Approval requests and outgoing email still happen only when the user says so in that conversation.</div>
+        <span class="rung-g badge-green">GATED</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART ORDER PIPELINE -->
+  <section class="pipeline-section reveal">
+    <div class="section-label">Case 01 · Part Order Agent</div>
+    <h2 class="section-title"><span data-ko>요청 메일 한 통에서</span><span data-en>From one request email</span><br><em><span data-ko>창고 안내 메일까지</span><span data-en>to the warehouse notice</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📨</div><div class="pipe-title" data-ko>요청 수집</div><div class="pipe-title" data-en>Collect</div><div class="pipe-desc" data-ko>담당자 두 명의 메일 폴더 전체 순회</div><div class="pipe-desc" data-en>Walks both coordinators' mail folders</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">💳</div><div class="pipe-title" data-ko>입금 확인</div><div class="pipe-title" data-en>Deposit check</div><div class="pipe-desc" data-ko>금액 · 입금자 · 지점명 대조, 분할입금 합산</div><div class="pipe-desc" data-en>Amount, payer and branch; split payments summed</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">🧾</div><div class="pipe-title" data-ko>주문 생성</div><div class="pipe-title" data-en>Create</div><div class="pipe-desc" data-ko>공급가 × 1.1 = 입금액 검증 후 전용 탭에서 동시 생성</div><div class="pipe-desc" data-en>Price × 1.1 must equal the deposit; built in parallel tabs</div></div>
+      <div class="pipe-step human"><div class="pipe-num">GATE</div><div class="pipe-icon">🙋</div><div class="pipe-title" data-ko>승인 요청</div><div class="pipe-title" data-en>Approval</div><div class="pipe-desc" data-ko>사용자 지시가 있을 때만, 누른 시각까지 보고</div><div class="pipe-desc" data-en>Only on instruction; reports the exact time pressed</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">⚡</div><div class="pipe-title" data-ko>Oracle 전송</div><div class="pipe-title" data-en>Oracle interface</div><div class="pipe-desc" data-ko>5건씩 병렬, 막히면 수동 처리 경로</div><div class="pipe-desc" data-en>Five at a time, with a manual fallback path</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📦</div><div class="pipe-title" data-ko>릴리즈</div><div class="pipe-title" data-en>Release</div><div class="pipe-desc" data-ko>2건씩 동시, 품목별 FG · SP 규칙</div><div class="pipe-desc" data-en>Two at a time, FG or SP by item rule</div></div>
+      <div class="pipe-step human"><div class="pipe-num">GATE</div><div class="pipe-icon">✉️</div><div class="pipe-title" data-ko>창고 안내</div><div class="pipe-title" data-en>Warehouse notice</div><div class="pipe-desc" data-ko>초안 저장, 발송 전 보낸편지함 중복 확인</div><div class="pipe-desc" data-en>Saved as draft; Sent Items checked before any send</div></div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section class="section reveal">
+    <div class="section-label">Agent Definition</div>
+    <h2 class="section-title"><span data-ko>정의 파일에 들어간</span><span data-en>What the definition</span><br><em><span data-ko>규칙들</span><span data-en>file holds</span></em></h2>
+    <div class="rule-list">
+      <div class="rule">
+        <div class="rule-k">ROLE · TOOLS</div>
+        <div class="rule-v" data-ko>역할과 허용 도구를 먼저 못 박는다. 메일 검색 · Salesforce 조회 · 로컬 스크립트 실행 등 13개만 쓸 수 있다.</div>
+        <div class="rule-v" data-en>Role and allowed tools come first: thirteen, covering mail search, Salesforce queries and local scripts.</div>
+        <div class="rule-s" data-ko>메인 대화에서 "파트오더 만들어줘", "승인 났어 릴리즈 해줘"라고 하면 이 에이전트로 넘어간다.</div>
+        <div class="rule-s" data-en>Phrases like "create the parts orders" or "approved, release them" route the work to this agent.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-k">HARD RULES</div>
+        <div class="rule-v" data-ko>승인 요청은 직접 지시가 있을 때만. 메일은 기본 초안. 상태 파일과 업무 엑셀은 백업 없이 고치지 않는다.</div>
+        <div class="rule-v" data-en>Approval only on direct instruction. Email defaults to draft. State files and working spreadsheets are never edited without a backup.</div>
+        <div class="rule-s" data-ko>누른 버튼은 몇 시 몇 분에 눌렀는지까지 보고해, 사람이 한 번 더 누르는 중복을 막는다.</div>
+        <div class="rule-s" data-en>Every click is reported with its time, so nobody presses it a second time.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-k">INCIDENT → RULE</div>
+        <div class="rule-v" data-ko>오후 요청 2건이 빠진 날 이후, 하루 끝에 그날 요청 메일 전체와 생성된 주문을 대조하는 단계를 추가했다.</div>
+        <div class="rule-v" data-en>After a day when two afternoon requests were missed, an end-of-day check was added that matches every request email against the orders created.</div>
+        <div class="rule-s" data-ko>체인 병원 지점 간 입금 오매칭이 나온 뒤에는 지점명까지 일치해야 확인으로 인정하도록 바꿨다.</div>
+        <div class="rule-s" data-en>After a deposit matched the wrong branch of a clinic chain, a match now requires the branch name too.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-k">PORTABLE</div>
+        <div class="rule-v" data-ko>에이전트 본체와 설치 가이드를 공유 폴더에 두어, 다른 PC의 Claude Code에도 같은 에이전트를 심을 수 있게 했다.</div>
+        <div class="rule-v" data-en>The agent definition and an install guide live in a shared folder, so the same agent can be set up in Claude Code on another PC.</div>
+        <div class="rule-s" data-ko>가이드에는 준비물, 하루 흐름(사용자 말 → 에이전트 동작 → 도구), 알려진 함정을 표로 정리했다.</div>
+        <div class="rule-s" data-en>The guide tabulates prerequisites, the daily flow (what the user says, what the agent does, which tool) and known traps.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZIMMER -->
+  <section class="section reveal" style="padding-top:0;">
+    <div class="section-label">Case 02 · Zimmer Procurement Agent</div>
+    <h2 class="section-title"><span data-ko>인수인계 받은 업무를</span><span data-en>A job handed over,</span><br><em><span data-ko>SOP째로 맡긴다</span><span data-en>run straight from the SOP</span></em></h2>
+    <div class="mod-grid">
+      <div class="mod-card c1">
+        <div class="mod-head"><div class="mod-file">SOP · 16 STEPS</div><div class="mod-title" data-ko>SOP를 읽고 단계별로 진행</div><div class="mod-title" data-en>Reads the SOP, works step by step</div></div>
+        <div class="mod-desc" data-ko>대표 승인 요청부터 Oracle 구매요청, PO 전환 요청, 공급사 발주서, PI/OC 대조, 재무 지급요청, 제작 요청, 수입 운송 예약까지 16단계를 에이전트가 이어간다.</div>
+        <div class="mod-desc" data-en>From the approval request through the Oracle requisition, PO conversion, supplier order, PI/OC check, finance payment request, production request and import booking, the agent carries all sixteen steps.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Oracle 구매요청은 Playwright로 장바구니까지만 채우고 Submit은 사람</span><span data-en>Playwright fills the Oracle requisition up to the cart; a person submits</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>지급요청 날짜는 재무 지급 일정에 맞춰 제안</span><span data-en>Payment requests are dated to the finance payment calendar</span></div>
+        </div>
+      </div>
+      <div class="mod-card c2">
+        <div class="mod-head"><div class="mod-file">EXCEPTION → SOP</div><div class="mod-title" data-ko>예외를 SOP에 다시 쓴다</div><div class="mod-title" data-en>Writes exceptions back into the SOP</div></div>
+        <div class="mod-desc" data-ko>품목코드가 없는 부품은 기존 SOP에 절차가 없었다. 실제 건으로 입력 경로와 계정을 확정한 뒤, 같은 방식으로 자동 PO 생성까지 확인하고 SOP 문서에 예외 장으로 추가했다.</div>
+        <div class="mod-desc" data-en>Parts with no item code had no procedure in the SOP. The entry path and account were settled on a live order, automatic PO creation was confirmed, and the result was added to the SOP as an exceptions chapter.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>문서 하단 고정 문구를 계좌 변경으로 오판한 뒤 IBAN 비교로 판단 기준 변경</span><span data-en>After misreading a boilerplate footer as a bank change, the check moved to comparing IBANs</span></div>
+        </div>
+      </div>
+      <a class="mod-card c3 link-card" href="portfolio_supplier_procurement.html">
+        <div class="mod-head"><div class="mod-file">FULL CASE</div><div class="mod-title" data-ko>공급사 구매 P2P 상세</div><div class="mod-title" data-en>Supplier P2P in full</div></div>
+        <div class="mod-desc" data-ko>단계별 화면, 발주서 생성, 수입 운송·통관 기록 연계는 공급사 구매 페이지에 정리했다.</div>
+        <div class="mod-desc" data-en>Screens per step, PO generation and the import freight and customs records are on the supplier procurement page.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="section reveal">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title"><span data-ko>사용된</span><span data-en>Tech</span> <em><span data-ko>기술</span><span data-en>Stack</span></em></h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="stack-emoji">🤖</div><div class="stack-name">Claude Code Subagents</div><div class="stack-role" data-ko>역할 · 도구 · 규칙을 정의한 전용 에이전트</div><div class="stack-role" data-en>Dedicated agents with role, tools and rules</div></div>
+      <div class="stack-item"><div class="stack-emoji">🔌</div><div class="stack-name">MCP</div><div class="stack-role" data-ko>직접 만든 업무 조회 서버 + M365 · Salesforce 커넥터</div><div class="stack-role" data-en>Self-built lookup server plus M365 and Salesforce connectors</div></div>
+      <div class="stack-item"><div class="stack-emoji">🎭</div><div class="stack-name">Playwright</div><div class="stack-role" data-ko>Salesforce · Oracle 화면 실행</div><div class="stack-role" data-en>Drives Salesforce and Oracle screens</div></div>
+      <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">Outlook COM</div><div class="stack-role" data-ko>초안 저장 · 중복 확인</div><div class="stack-role" data-en>Drafts and duplicate checks</div></div>
+      <div class="stack-item"><div class="stack-emoji">🧠</div><div class="stack-name">Agent Memory</div><div class="stack-role" data-ko>사고 · 사용자 지시를 다음 작업 규칙으로</div><div class="stack-role" data-en>Incidents and instructions carried into the next run</div></div>
+      <div class="stack-item"><div class="stack-emoji">🐍</div><div class="stack-name">Python</div><div class="stack-role" data-ko>병렬 실행 · 입금 대조 · 문서 생성 도구</div><div class="stack-role" data-en>Parallel runners, deposit checks, document builders</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">AI AGENTS</div>
+    <div class="footer-note">CLAUDE CODE · MCP · PLAYWRIGHT · OUTLOOK COM · PYTHON</div>
+  </footer>
+
+  <script>
+    function setLang(l){
+      document.body.classList.toggle('en',l==='en');
+      document.getElementById('btn-ko').classList.toggle('active',l==='ko');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+      try{localStorage.setItem('pf_lang',l);}catch(e){}
+    }
+    (function(){try{const s=localStorage.getItem('pf_lang')||'en';setLang(s);}catch(e){setLang('en');}})();
+    const observer=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
