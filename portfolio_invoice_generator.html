@@ -90,6 +90,9 @@
       .stats-bar{grid-template-columns:1fr 1fr;}
       footer{padding:40px 28px;}
     }
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -109,8 +112,8 @@
         <h1 class="hero-title"><span data-ko>거래</span><span data-en>STATEMENT</span><br><span class="a1" data-ko>명세서</span><span class="a1" data-en>AUTO</span><br><span class="a2" data-ko>생성기</span><span class="a2" data-en>BUILDER</span></h1>
       </div>
       <p class="hero-desc">
-        <span data-ko>559개 품목 단가 DB와 코드 별칭 시스템을 내장해, 품목코드만 입력하면 거래명세서가 자동으로 완성되는 HTML 툴. 손으로 단가 찾던 작업을 제거.</span>
-        <span data-en>An HTML tool with a built-in 559-item price DB and code-alias system — type an item code and the statement builds itself. No more manual price lookups.</span>
+        <span data-ko><span class="pbr"><b>문제</b>거래명세서를 쓸 때마다 품목 단가를 손으로 찾아 입력</span><span class="pbr"><b>해결</b>559개 품목 단가 DB와 코드 별칭을 내장한 HTML 툴</span><span class="pbr"><b>성과</b>품목코드만 입력하면 명세서 완성, 단가 조회 수작업 제거</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>Every statement meant looking up item prices by hand</span><span class="pbr"><b>Built</b>An HTML tool with a built-in 559-item price DB and code aliases</span><span class="pbr"><b>Result</b>Type the item code and the statement builds itself; no manual price lookup</span></span>
       </p>
     </div>
     <div class="hero-right">

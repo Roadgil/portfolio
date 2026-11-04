@@ -99,6 +99,9 @@
       .ln{display:block;position:relative;padding-left:16px;margin-bottom:6px;overflow-wrap:anywhere;}
     .ln::before{content:'';position:absolute;left:0;top:.8em;width:7px;height:1px;background:currentColor;opacity:.55;}
     .ov-since{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;opacity:.6;margin-left:6px;white-space:nowrap;}
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -116,9 +119,9 @@
     <div class="hero-tag">Monthly Closing · Warehouse Inventory · Single-file App</div>
     <h1 class="hero-title"><span class="a1" data-ko>Warehouse</span><span class="a1" data-en>WAREHOUSE</span><br><span class="a2" data-ko>월마감 대시보드</span><span class="a2" data-en>CLOSING DASHBOARD</span></h1>
     <p class="hero-desc">
-      <span data-ko><span class="ln">FG·SP·MRB·RMA_NV·Scrap·Intransit 등 11개 재고 카테고리를 한 화면에서 보는 창고 월마감(Monthly Closing) 대시보드</span><span class="ln">따로 관리되지 않던 FSE 로케이션을 분리해 담당자 10명별 온핸드·소비·입고·회전율 트래킹 모듈 추가</span><span class="ln">Oracle export의 함정(5,000행 무경고 절삭, 재고실사 주간 트랜잭션 공백, 단가 없는 리포트)을 하나씩 규칙으로 흡수</span><span class="ln">월마감 시점 소비·입고·온핸드 수집은 Playwright로 자동화해 Salesforce·Oracle에서 대시보드로 직접 입력</span></span>
-      <span data-en>A warehouse-wide Monthly Closing dashboard covering 11 inventory categories — FG, SP, MRB, RMA_NV, Scrap, Intransit, and more — in one view. Inside it sits a dedicated tracking module that breaks out just the field service engineer (FSE) location, previously lumped in with everything else, into per-engineer on-hand/consumption/receipt/turnover for 10 engineers. Built directly on raw Oracle Material Transactions exports, it absorbs every trap those exports hide — a 5,000-row limit that truncates silently, transaction blackout weeks during physical counts, and a report with no price column. Monthly consumption/receipt/on-hand collection is now Playwright-automated, pushing straight from Salesforce and Oracle into the dashboard's own upload UI.</span>
-    </p>
+        <span data-ko><span class="pbr"><b>문제</b>필드 엔지니어(FSE) 재고가 다른 재고에 섞여 엔지니어별 소비·회전율을 볼 수 없었음</span><span class="pbr"><b>해결</b>11개 재고 카테고리 월마감 대시보드 + 엔지니어 10명별 온핸드·소비·입고·회전율 모듈, 월마감 수집은 Playwright로 자동화</span><span class="pbr"><b>성과</b>월마감 수집 4분 → 2분 21초(병렬), Oracle export 함정(5,000행 무경고 절삭 등)을 규칙으로 차단</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>Field engineer (FSE) stock was mixed into everything else, so per-engineer consumption and turnover were invisible</span><span class="pbr"><b>Built</b>A month-end dashboard across 11 inventory categories plus a per-engineer module (on-hand, consumption, receipts, turnover for 10 engineers); month-end collection automated with Playwright</span><span class="pbr"><b>Result</b>Collection cut from 4 min to 2 min 21 s in parallel; Oracle export traps such as a silent 5,000-row cut are blocked by rule</span></span>
+      </p>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num" style="color:var(--accent2);">11</span><span class="stat-label" data-ko>재고 카테고리 · 11개월 데이터</span><span class="stat-label" data-en>inventory categories · 11 months</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent);">10</span><span class="stat-label" data-ko>FSE 모듈 - 엔지니어별 추적</span><span class="stat-label" data-en>FSE module - engineers tracked</span></div>

@@ -120,6 +120,9 @@
       .pipeline{flex-direction:column;}
       footer{padding:40px 24px;}
     }
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -138,8 +141,8 @@
       <div class="hero-tag">Cost Reconciliation · E2E Automation</div>
       <h1 class="hero-title"><span class="a1" data-ko>W&amp;D 비용</span><span class="a1" data-en>W&amp;D COST</span><br><span class="a2" data-ko>리포트 트래킹</span><span class="a2" data-en>REPORT TRACKING</span></h1>
       <p class="hero-desc">
-        <span data-ko>Oracle Fusion의 인보이스 승인 메일(Approval of Invoice)을 소스로, 물류·폐기 8개 벤더의 월별 비용을 자동으로 집계해 W&amp;D Cost 리포트에 채워 넣는 E2E 시스템. 사람이 하던 "메일 열어서 금액 옮겨 적기"를 없애면서, 그 과정에서 과거 수기 입력 오류 2건도 함께 찾아냈다.</span>
-        <span data-en>An end-to-end system that sources Oracle Fusion's Approval-of-Invoice emails to auto-aggregate monthly costs across 8 logistics/disposal vendors and write them straight into the W&amp;D Cost report. It removes the manual "open the email, copy the number" step — and in the process caught 2 pre-existing manual-entry errors in the historical data.</span>
+        <span data-ko><span class="pbr"><b>문제</b>물류·폐기 8개 벤더 비용을 인보이스 승인 메일에서 손으로 옮겨 적음</span><span class="pbr"><b>해결</b>Oracle 인보이스 승인 메일을 읽어 벤더별 월 비용을 자동 집계하고 W&amp;D Cost 리포트에 기입 (수기 2025.12~, 자동화 2026.07~)</span><span class="pbr"><b>성과</b>매출 대비 W&amp;D 2.5% 이내 관리, 과거 수기 입력 오류 2건 발견</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>Costs for 8 logistics and disposal vendors copied by hand from invoice-approval emails</span><span class="pbr"><b>Built</b>Reads Oracle's invoice-approval emails, totals each vendor's monthly cost and writes it into the W&amp;D Cost report (manual since 2025.12, automated since 2026.07)</span><span class="pbr"><b>Result</b>W&amp;D held within 2.5% of revenue; 2 historical manual-entry errors found</span></span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">8</span><span class="stat-label" data-ko>벤더 자동 매핑</span><span class="stat-label" data-en>Vendors Mapped</span></div>

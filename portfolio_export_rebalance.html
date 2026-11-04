@@ -251,6 +251,9 @@
       .pp-grid{grid-template-columns:1fr;}
       footer{padding:40px 24px;}
     }
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -269,8 +272,8 @@
       <div class="hero-tag">Export Operations · Rebalance / HQ RMA / FedEx · 2026</div>
       <h1 class="hero-title"><span data-ko>수출 오퍼레이션</span><span data-en>EXPORT OPERATIONS</span><br><span class="a1" data-ko>3개 트랙</span><span class="a1" data-en>THREE TRACKS</span><br><span class="a2" data-ko>풀사이클 자동화</span><span class="a2" data-en>FULL-CYCLE AUTOMATION</span></h1>
       <p class="hero-desc">
-        <span data-ko>한국(KRP) 창고에서 나가는 수출 물량 세 갈래 — 해외 법인으로 재고를 옮기는 국가간 재배치(Rebalance), 미국 본사로 되돌려 보내는 반송(HQ RMA), 그리고 그 둘을 실제로 실어 보내는 FedEx 발송 어레인지 — 를 하나의 파이프라인으로 묶었다. 알림 감지부터 3PL 창고 조율, Oracle 트랜잭션, 통관 서류 발급, 수출신고실적 기입, FedEx 발송물 생성과 트래킹 번호 회수까지 이어진다.</span>
-        <span data-en>Three outbound tracks leaving the Korea (KRP) warehouse — cross-border inventory rebalance to sister companies, RMA returns to US headquarters, and the FedEx booking that physically carries both — wired into a single pipeline. It runs from the first system alert through 3PL warehouse coordination, the Oracle transaction, customs paperwork, the export declaration, and on to creating the FedEx shipment and collecting the tracking number.</span>
+        <span data-ko><span class="pbr"><b>문제</b>해외 법인 재배치·본사 반송·FedEx 발송이 창고 조율, Oracle, 통관 서류, 실적 기입에 흩어진 수작업</span><span class="pbr"><b>해결</b>알림 감지 → 3PL 창고 조율 → Oracle 트랜잭션 → 통관 서류 → 수출신고실적 → FedEx 발송·트래킹 회수를 하나의 파이프라인으로 연결</span><span class="pbr"><b>성과</b>수출 SOP 14/14단계 코드화, 수출신고실적 13/13 컬럼 자동 기입</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>Rebalance exports, returns to HQ and FedEx bookings spread across warehouse coordination, Oracle, customs paperwork and ledger entry, all by hand</span><span class="pbr"><b>Built</b>One pipeline from the system alert through 3PL coordination, the Oracle transaction, customs documents and the export ledger to the FedEx shipment and tracking number</span><span class="pbr"><b>Result</b>14 of 14 export SOP steps coded; 13 of 13 export-ledger columns filled automatically</span></span>
       </p>
       <p class="hero-desc" style="margin-top:-30px;">
         <span data-ko>수기 SOP를 그대로 옮겨 적은 것이 아니라, 코드로 옮기는 과정에서 SOP 자체를 다시 세웠다 — 창고에 보내는 요청 서식, 처리의 최소 단위, 실적의 출처, 되돌릴 수 없는 지점의 정의까지 8개 규칙을 재정립했다.</span>

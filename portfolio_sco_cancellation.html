@@ -105,6 +105,9 @@
       .pipeline{flex-direction:column;}
       footer{padding:40px 24px;}
     }
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -123,8 +126,8 @@
       <div class="hero-tag">SCO Cancellation · Oracle Fusion · 2026</div>
       <h1 class="hero-title"><span class="a1" data-ko>백오더</span><span class="a1" data-en>BACKORDER</span><br><span class="a2" data-ko>취소 자동화</span><span class="a2" data-en>CANCELLATION</span></h1>
       <p class="hero-desc">
-        <span data-ko>Oracle BI Publisher가 매달 말일 자동 발송하는 Open Sales/Transfer Order 리포트에서 30~90일째 열려 있는 SCO 라인만 골라내, Oracle Fusion Transfer Order 화면에서 직접 취소하거나 수량을 실제 처리분에 맞게 정정한다. Shipped/Received/Delivered 값이 서로 안 맞는 애매한 케이스만 사람 확인 알림으로 남긴다.</span>
-        <span data-en>Filters the monthly, auto-emailed Oracle BI Publisher Open Sales/Transfer Order report down to SCO lines that have sat open for 30–90 days, then either cancels them or corrects the requested quantity to match what's already been fulfilled — directly inside Oracle Fusion's Transfer Order screen. Only cases where Shipped/Received/Delivered disagree with each other are left as an alert for manual review.</span>
+        <span data-ko><span class="pbr"><b>문제</b>30~90일째 열린 SCO(백오더) 라인이 쌓여 월마감마다 손으로 정리</span><span class="pbr"><b>해결</b>월말 BI Publisher 리포트에서 대상 라인을 골라 Oracle에서 직접 취소·수량 정정, 수치가 서로 안 맞는 건만 알림</span><span class="pbr"><b>성과</b>누적 95라인 처리 · 에러 0</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>SCO backorder lines open for 30-90 days piled up and were cleaned by hand at every month-end</span><span class="pbr"><b>Built</b>Picks the lines from the month-end BI Publisher report and cancels or corrects them in Oracle; only lines with conflicting quantities raise an alert</span><span class="pbr"><b>Result</b>95 lines processed with zero errors</span></span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">95</span><span class="stat-label" data-ko>라인 자동 취소/정정(누적)</span><span class="stat-label" data-en>Lines Auto-Processed (to date)</span></div>
