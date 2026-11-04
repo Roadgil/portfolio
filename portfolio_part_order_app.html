@@ -292,6 +292,19 @@
         <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>백오더·출고 라인 0건은 창고 메일을 보류</span><span data-en>Backorders and zero-line releases hold the warehouse mail</span></div></div>
         </div>
       </div>
+      <div class="mod-card c1 reveal">
+        <div class="mod-head">
+          <div class="mod-file">Process · 2026.11</div>
+          <div class="mod-title" data-ko>승인 라인 재설계</div>
+          <div class="mod-title" data-en>Approval Flow Redesign</div>
+        </div>
+        <div class="mod-desc"><span data-ko>자동화가 아니라 절차 자체를 고친 개선. 파트오더 승인은 생성자 → 서비스팀(차장 이상) → 재무의 2단계였다. 유상(Billable)은 서비스팀 대신 출고를 실제로 처리하는 Operation팀이 1차 승인하도록 직접 제안해 바꿨고, 무상(Non-billable)은 서비스팀 승인을 빼 재무 1단계로 줄이는 안을 함께 제안해 확정을 기다리는 중이다.</span><span data-en>A fix to the procedure itself, not an automation. Parts orders needed two sign-offs after creation: the service team (manager level or above), then finance. I proposed and put in place a change for billable orders: the first approval now sits with the Operation team, which actually runs the shipment, instead of the service team. A companion proposal to drop the service-team step for non-billable orders, leaving finance alone, is awaiting sign-off.</span></div>
+        <div class="mod-points">
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>[적용] Billable 1차 승인자를 서비스팀 → Operation팀으로 이전 - 재고·출고 가능 여부를 아는 쪽이 확인</span><span data-en>[Live] Billable first approval moved from the service team to Operation, so the reviewer is the one who knows stock and shipping status</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>[제안] Non-billable 승인 2단계 → 1단계 (서비스팀 승인 제외), 확정 후 반영 예정</span><span data-en>[Proposed] Non-billable approvals from two steps to one by removing the service-team step, pending sign-off</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>당일 출고 마감 안에 승인이 끝나야 하는 구조라, 승인 단계 하나가 곧 출고 하루 지연 리스크</span><span data-en>Orders must clear approval before the same-day shipping cutoff, so every extra sign-off was a risk of slipping a day</span></div></div>
+        </div>
+      </div>
       <div class="mod-card c3 reveal">
         <div class="mod-head">
           <div class="mod-file">Non-billable · 2026.10</div>
