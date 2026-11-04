@@ -141,6 +141,9 @@
     .link-card .mod-file::after{content:' →';}
     .sop-cards .mod-card{background:var(--bg);}
     @media (max-width:900px){.ladder{grid-template-columns:1fr;}.rung{border-right:none;border-bottom:1px solid var(--border);}.rung:last-child{border-bottom:none;}}
+      .ln{display:block;position:relative;padding-left:16px;margin-bottom:6px;overflow-wrap:anywhere;}
+    .ln::before{content:'';position:absolute;left:0;top:.8em;width:7px;height:1px;background:currentColor;opacity:.55;}
+    .ov-since{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;opacity:.6;margin-left:6px;white-space:nowrap;}
   </style>
 </head>
 <body>
@@ -159,7 +162,7 @@
       <div class="hero-tag">AI Agents · Claude Code</div>
       <h1 class="hero-title"><span class="a1" data-ko>업무를 맡는</span><span class="a1" data-en>AGENTS THAT</span><br><span class="a2" data-ko>AI 에이전트</span><span class="a2" data-en>OWN A JOB</span></h1>
       <p class="hero-desc">
-        <span data-ko>질문에 답하는 챗봇이 아니라, 한 업무를 처음부터 끝까지 맡는 에이전트를 직접 설계하고 운영한다. 업무를 먼저 Claude와 대화로 처리해 보면서 규칙을 확정하고, 확정된 규칙과 검증된 도구만 에이전트 정의 파일로 옮긴다. 대표 사례는 병원 출고 요청 메일을 Salesforce 파트오더로 만들고 Oracle 전송·릴리즈·창고 안내 메일까지 이어가는 파트오더 에이전트, 그리고 독일 공급사 구매를 16단계 SOP대로 진행하는 Zimmer 구매 에이전트. 업무 SOP는 사람용 Word와 Claude용 md로 같이 쓰고, CLAUDE.md · 에이전트 · MCP · 스케줄러를 묶은 재구축 패키지로 빈 Claude도 같은 환경을 세울 수 있게 했다. 되돌리기 어려운 단계(승인 요청, Submit, 메일 발송)는 사람이 결정한다.</span>
+        <span data-ko><span class="ln">질문에 답하는 챗봇이 아니라, 업무 하나를 처음부터 끝까지 맡는 에이전트를 설계·운영</span><span class="ln">실제 건을 Claude와 대화로 먼저 처리하며 규칙 확정 → 검증된 규칙과 도구만 정의 파일로 이전</span><span class="ln">파트오더 에이전트: 병원 출고 요청 메일 → Salesforce 파트오더 생성 → Oracle 전송·릴리즈 → 창고 안내 메일</span><span class="ln">Zimmer 구매 에이전트: 독일 공급사 구매를 16단계 SOP에 따라 진행</span><span class="ln">업무 SOP는 사람용 Word와 Claude용 md로 함께 작성, 재구축 패키지로 새 환경에서도 같은 구성 재현</span><span class="ln">승인 요청·Submit·메일 발송처럼 되돌리기 어려운 단계는 사람이 결정</span></span>
         <span data-en>Not a chatbot that answers questions, but agents designed and run to own one job end to end. The work is first done with Claude in conversation until the rules settle, and only those settled rules and the tools that proved themselves move into an agent definition file. The main examples are a parts-order agent that turns hospital shipment-request emails into Salesforce parts orders and carries them through Oracle interface, release and the warehouse notice, and a Zimmer procurement agent that runs purchasing from a German supplier along a 16-step SOP. Job SOPs are written once for people in Word and for Claude in Markdown, and a rebuild package bundling CLAUDE.md, agents, MCP and scheduled tasks lets a blank Claude stand up the same setup. Steps that are hard to undo (approval requests, Submit, sending email) stay a human decision.</span>
       </p>
       <div class="hero-stats">

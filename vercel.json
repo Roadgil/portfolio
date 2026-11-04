@@ -1,5 +1,7 @@
 {
   "redirects": [
-    { "source": "/code/:path*", "destination": "/", "permanent": false }
+    { "source": "/code/:path*", "destination": "/", "permanent": false },
+    { "source": "/portfolio_warehouse_expansion.html", "destination": "/", "permanent": false },
+    { "source": "/portfolio_warehouse_expansion", "destination": "/", "permanent": false }
   ]
 }
