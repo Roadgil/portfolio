@@ -271,6 +271,10 @@
     .ln::before{content:'';position:absolute;left:0;top:.8em;width:7px;height:1px;background:currentColor;opacity:.55;}
     .ov-since{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;opacity:.6;margin-left:6px;display:inline-block;}
     .ov-mk{min-width:0;}
+      .ov-rows{max-width:600px;}
+    .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -317,37 +321,9 @@
           <span data-en>Moved the repeating parts of customs work into code, and then to an <em>AI agent</em>.</span>
         </h2>
 
-        <p class="ov-bio">
-          <span data-ko><span class="ln">수입 통관과 국가 간 재배치(Rebalance) 수출 담당</span><span class="ln">본사 Intransit 리포트 수신 → 통관 브로커와 C.I 대조 → 수입신고필증 반영 → 재무 월 대사까지, 매일 반복되던 구간을 Python 모듈 10개로 자동화</span><span class="ln">하루 2시간 걸리던 작업을 2분으로 단축, 사람이 직접 여는 화면 없음</span></span>
-          <span data-en>Runs import clearance and cross-border rebalance exports for a medical device affiliate in Seoul. The daily stretch from the HQ in-transit report through invoice reconciliation with the customs broker, declaration PDF parsing, and the monthly close with Finance now runs as ten Python modules. What took two hours a day takes two minutes, and nobody opens a screen for it.</span>
-        </p>
-        <p class="ov-bio">
-          <span data-ko><span class="ln">업무 데이터 조회용 MCP 서버(도구 16개)를 직접 만들어 Claude에 연결</span><span class="ln">조회 범위: 수입신고 실적·리드타임·variance, 재무 일정·DHL 청구서, C.I 검증, Pick Release, RMA 처리 이력, 자동화 실행 상태</span><span class="ln">"실적 요약", "urgent 확인"처럼 짧게 요청하면 에이전트가 맞는 도구를 골라 조회·요약</span><span class="ln">평일 아침마다 Urgent Item·DHL 청구서·재무 일정·자동화 상태를 점검해 브리핑 작성, 멈춘 자동화를 가장 먼저 보고</span></span>
-          <span data-en>Then layered AI on top. I built an MCP server of sixteen query tools — import declarations, lead time and variance, the finance calendar and DHL invoices, broker C.I. verification, Pick Release, RMA history, and automation run status — and connected it to Claude. A short prompt such as "summarize performance" or "check urgent items" is enough: the agent picks the right tool, queries it, and summarizes the result. Each weekday morning the same agent checks Urgent Items, DHL invoices, the finance calendar, and automation run status, writes the briefing, and flags stalled automations first.</span>
-        </p>
-        <p class="ov-bio">
-          <span data-ko><span class="ln">Finance Calendar 이미지: OCR로 지급 마감일을 읽고, Claude가 OCR 결과 없이 같은 이미지를 따로 읽어 교차 검증(불일치는 로그 기록)</span><span class="ln">엔지니어 Teams PO 예외 문의: 헤드리스 Claude + M365 커넥터로 PO 번호를 뽑아 처리 여부 대조, 실행 없이 기록만 하는 shadow 모드로 검증 중</span><span class="ln">파트오더·공급사 구매처럼 단계가 긴 업무는 전용 에이전트로 운영, 업무 SOP는 Claude가 읽는 md로도 작성</span></span>
-          <span data-en>It is not a single agent. For the finance team's Finance Calendar image, OCR reads the payment cut-off dates, and Claude then reads the same image independently, without seeing the OCR output, so the two can be compared; mismatches are logged. Engineers' PO exception requests on Teams are read by a watcher agent built on headless Claude and the M365 connector, which extracts the PO number and checks whether it was already handled — currently validated in shadow mode, logging only and executing nothing. Longer jobs such as parts orders and supplier purchasing run as dedicated agents, and the job SOPs are also kept in Markdown for Claude to read.</span>
-        </p>
-        <p class="ov-bio">
-          <span data-ko><span class="ln">조회·요약 에이전트는 읽기 전용, 운영 데이터 변경 불가</span><span class="ln">실제 실행은 검증된 규칙 기반 스크립트가 담당</span><span class="ln">실행으로 이어질 수 있는 에이전트는 shadow 모드에서 오탐·누락을 확인한 뒤에만 가동</span><span class="ln">판단·요약은 AI, 실행은 규칙 - AI가 틀려도 업무가 깨지지 않는 구조</span></span>
-          <span data-en>The scope given to AI is deliberately narrow. Agents that look up and summarize are read-only and cannot change operational data; execution stays with validated, rule-based scripts. An agent that could lead to execution runs in shadow mode first, and is switched on only after false positives and misses are checked. AI handles lookup and summary, rules handle action — so a wrong answer from an agent cannot break the work.</span>
-        </p>
-        <p class="ov-bio">
-          <span data-ko><span class="ln">자동화 자체보다 그로 인해 막는 리스크에 초점</span><span class="ln">본사의 이전가격(TP) 변경이 사전 통지 없이 반영되면 브로커가 옛 가격으로 신고할 위험 → 매 건 Oracle Fusion 실거래 금액과 대조해 통관 전에 적발</span><span class="ln">통관 정정신고 월 5~10건 → 1건 이하</span></span>
-          <span data-en>The automation matters less than the exposure it closes. HQ does not announce transfer price changes, so the broker could clear a shipment against a stale value; every invoice is now reconciled against the actual Oracle Fusion amount before filing. Correction filings fell from five to ten a month to under one.</span>
-        </p>
-        <p class="ov-bio">
-          <span data-ko><span class="ln">필증 PDF, Intransit 리포트, RMA 이력 등 문서마다 형식이 제각각</span><span class="ln">반복되는 예외를 규칙으로 정리해 자동화 파이프라인에 흡수하는 것이 공통된 방식</span></span>
-          <span data-en>Declaration PDFs, in-transit reports, RMA case histories — every document came in a different shape. Turning recurring exceptions into rules and folding them into the automation pipeline is the method behind all of these.</span>
-        </p>
-        <p class="ov-bio">
-          <span data-ko><span class="ln">이전 로레알 코리아 아시아 공급망 담당: 중국 서비스 레벨 80.5% → 95.4%, ODM 공급 리드타임 91일 → 74일</span><span class="ln">전공 AI·빅데이터</span></span>
-          <span data-en>Before this, handled Asia supply chain at L'Oréal Korea, raising China's service level from 80.5% to 95.4% and cutting ODM supply lead time from 91 days to 74. Studied AI and big data.</span>
-        </p>
-        <p class="ov-bio">
-          <span data-ko><span class="ln">모든 자동화는 지시가 아닌 자체 발의</span><span class="ln">문제 발견, 요건 정의, 설계·구현, 실측 검증, 운영까지 단독 수행</span><span class="ln">전부 빈 파일에서 시작해 실무에 붙였고, 현재도 스케줄러에서 운영 중</span></span>
-          <span data-en>None of the automation here was assigned. Finding the problem, defining it, designing, building, validating against live cases, and operating it afterwards — all of it is mine. Every tool started from an empty file and was carried end to end until it held real work, and they run on a scheduler today.</span>
+        <p class="ov-bio ov-rows">
+          <span data-ko><span class="pbr"><b>역할</b>수입 통관 · 국가 간 재배치 수출 · 출고 운영 (Operation Specialist)</span><span class="pbr"><b>자동화</b>수입 통관 전 구간을 Python 모듈 10개로 자동화, 하루 2시간 → 2분</span><span class="pbr"><b>리스크</b>매 건 Oracle 실거래 금액과 C.I 대조, 통관 정정신고 월 5~10건 → 1건 이하</span><span class="pbr"><b>AI</b>업무 조회 MCP 서버(도구 16개)와 파트오더·구매 전용 에이전트 운영, 실행은 규칙 기반 스크립트와 사람 승인 뒤</span><span class="pbr"><b>방식</b>모든 자동화 자체 발의, 문제 정의부터 설계·구현·운영까지 단독 수행</span><span class="pbr"><b>이전 경력</b>로레알 코리아 아시아 공급망: 중국 서비스 레벨 80.5% → 95.4%, ODM 리드타임 91일 → 74일 · 전공 AI·빅데이터</span></span>
+          <span data-en><span class="pbr"><b>Role</b>Import clearance, cross-border rebalance exports and outbound operations (Operation Specialist)</span><span class="pbr"><b>Automation</b>The full import-clearance cycle runs as 10 Python modules: 2 hours a day down to 2 minutes</span><span class="pbr"><b>Risk</b>Every invoice checked against the Oracle amount before filing: correction filings from 5-10 a month to under 1</span><span class="pbr"><b>AI</b>A 16-tool MCP server for lookups plus dedicated agents for parts orders and purchasing; execution stays with rule-based scripts and human approval</span><span class="pbr"><b>Ownership</b>Every automation self-initiated and carried solo from problem definition to daily operation</span><span class="pbr"><b>Before</b>L'Or&eacute;al Korea, Asia supply chain: China service level 80.5% to 95.4%, ODM lead time 91 to 74 days · B.S. AI &amp; Big Data</span></span>
         </p>
 
         <div class="ov-tags">

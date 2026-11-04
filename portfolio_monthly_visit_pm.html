@@ -96,6 +96,9 @@
       .hero,.section{padding:90px 24px 50px;}
       footer{padding:40px 24px;}
     }
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -113,9 +116,9 @@
     <div class="hero-tag">Warranty &amp; Contract PM · Google Apps Script · Personalized Alerts</div>
     <h1 class="hero-title"><span class="a1" data-ko>Monthly Visit</span><span class="a1" data-en>MONTHLY VISIT</span><br><span class="a2" data-ko>정기점검(PM) 자동알림</span><span class="a2" data-en>PM AUTO-ALERT WEBAPP</span></h1>
     <p class="hero-desc">
-      <span data-ko>Google Apps Script + Google Sheets로 만든 장비 정기점검(PM) 관리 웹앱. 장비구입(워런티 1년, 시작일+5/10개월)과 컨트랙(계약기간 무관, 시작일+3/7/10개월) 두 가지 규칙으로 방문 일정을 자동 계산한다. Brick(영업권역)별 담당 FSE에게는 URL 파라미터로 개인화한 링크를 발급해, 본인 담당 건만 팝업으로 Yes/No 응답과 비고를 받고 매주 월요일 자동 메일로 리마인드한다. 설치기반(ISB) 리포트를 xlsx 원본 그대로 업로드하면 브라우저에서 Billing Type만 걸러 일괄 등록된다.</span>
-      <span data-en>A Google Apps Script + Google Sheets webapp that manages equipment PM visits under two rules — warranty (1-year, start date +5/10 months) and contract (regardless of length, start date +3/7/10 months). Each FSE gets a Brick-specific link via URL parameter, so only their own units pop up for a Yes/No response with notes, plus a Monday auto-email reminder. Uploading the raw installed-base (ISB) report as-is filters by Billing Type in the browser and bulk-registers the rest.</span>
-    </p>
+        <span data-ko><span class="pbr"><b>문제</b>장비 정기점검(PM) 일정을 워런티·컨트랙 조건별로 손으로 계산하고 엔지니어에게 하나씩 확인</span><span class="pbr"><b>해결</b>Apps Script 웹앱: 두 가지 규칙으로 방문 일정 자동 계산, 엔지니어별 개인 링크로 담당 건만 Yes/No 응답, 매주 월요일 리마인드 메일</span><span class="pbr"><b>성과</b>설치기반(ISB) 리포트 원본 업로드 한 번으로 일괄 등록, 응답 확인이 개별 연락에서 링크 하나로</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>PM visit dates calculated by hand per warranty or contract terms, then confirmed engineer by engineer</span><span class="pbr"><b>Built</b>An Apps Script webapp that schedules visits under two rules, gives each engineer a personal link showing only their units for a Yes/No reply, and sends a Monday reminder</span><span class="pbr"><b>Result</b>One upload of the raw installed-base report registers everything; follow-up moves from individual calls to one link</span></span>
+      </p>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num" style="color:var(--accent2);">619</span><span class="stat-label" data-ko>설치 장비 자동등록</span><span class="stat-label" data-en>installed units registered</span></div>
       <div class="stat"><span class="stat-num" style="color:var(--accent);">7</span><span class="stat-label" data-ko>개 Brick 담당자 개인화 알림</span><span class="stat-label" data-en>Bricks with personalized alerts</span></div>

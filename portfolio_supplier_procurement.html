@@ -122,6 +122,9 @@
       .pipeline{flex-direction:column;}
       footer{padding:40px 24px;}
     }
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -140,8 +143,8 @@
       <div class="hero-tag">Supplier Procurement · AI Agent</div>
       <h1 class="hero-title"><span class="a1" data-ko>공급사 구매</span><span class="a1" data-en>SUPPLIER</span><br><span class="a2" data-ko>P2P 에이전트</span><span class="a2" data-en>PROCURE-TO-PAY</span></h1>
       <p class="hero-desc">
-        <span data-ko>독일 공급사 Zimmer에서 완제품(Cryo 7)과 부품을 사오는 Procure-to-Pay 전 과정을 담당. 대표 승인, Oracle Fusion 구매요청(PR), 미국 Global Buyer의 PO 전환, 공급사 발주와 PI/OC 검증, Finance 선결제, 송금증 전달과 제작 요청, 제작 완료 후 픽업까지 16단계 SOP로 운영한다. 반복 입력과 서류 대조는 Claude Code 에이전트가 맡고, Submit과 메일 발송은 사람이 결정한다.</span>
-        <span data-en>Owns the full procure-to-pay cycle for finished goods (Cryo 7) and parts bought from the German supplier Zimmer: CEO approval, the Oracle Fusion requisition, PO conversion by the U.S. global buyer, supplier ordering with PI/OC checks, Finance prepayment, remittance and production request, and pickup once production is done, run as a 16-step SOP. A Claude Code agent handles the repetitive entry and document matching, while Submit and outgoing emails stay a human decision.</span>
+        <span data-ko><span class="pbr"><b>문제</b>인수인계받은 Zimmer 구매는 승인·PR·PO·PI/OC·선결제·제작·픽업까지 16단계로 길고 서류 대조가 많음</span><span class="pbr"><b>해결</b>16단계 SOP로 정리하고, 반복 입력과 서류 대조는 Claude Code 에이전트가 수행</span><span class="pbr"><b>성과</b>SOP에 없던 예외(품목코드 없는 부품)까지 실제 건으로 절차 확정, Submit과 발송은 사람이 결정</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>The Zimmer purchasing handed over to me runs 16 steps, from approval through PR, PO, PI/OC, prepayment and production to pickup, with heavy document checks</span><span class="pbr"><b>Built</b>Captured as a 16-step SOP; a Claude Code agent handles the repetitive entry and document matching</span><span class="pbr"><b>Result</b>Exceptions the SOP never covered, such as parts with no item code, settled on live orders; Submit and sending stay human</span></span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">1</span><span class="stat-label" data-ko>일 (인수인계→PO 요청)</span><span class="stat-label" data-en>Day, Handover to PO Request</span></div>

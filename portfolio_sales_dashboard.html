@@ -270,6 +270,9 @@
       .arch-flow { flex-direction: column; }
       .arch-arrow { transform: rotate(90deg); }
     }
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -289,9 +292,9 @@
     <div class="hero-tag">Sales Dashboard · 2025–2026</div>
     <h1 class="hero-title"><span data-ko>영업</span><span data-en>SALES</span><br><span class="accent2" data-ko>대시보드</span><span class="accent2" data-en>DASHBOARD</span></h1>
     <p class="hero-desc">
-      <span data-ko>Firebase 기반의 실시간 영업 납품처 관리 시스템. 팀원별 분기 목표 추적, 다국어 지원, 대표 보고용 리포트까지 하나의 플랫폼에서 연결한 End-to-End 솔루션. Salesforce(CRM)는 실제 출하 확정(Ship Confirm) 여부와 무관하게 계약을 Closed Won으로 표시하기 때문에, CRM 상 계약 현황과 실제 매출 인식 시점 사이에 괴리가 생길 수 있다 — 이 대시보드는 Salesforce 데이터를 매주 자동 동기화하고, Ship Confirm을 매출 집계의 최종 게이트로 두어 그 괴리를 완화한다. 목표를 못 채울 것 같은 분기에는, 실제 데이터를 건드리지 않고 어떤 미확정 건을 추가로 확보하면 되는지 미리 계산해보는 가상 시나리오 모드도 함께 쓴다.</span>
-      <span data-en>A real-time Firebase sales-account management system. Per-member quarterly target tracking, multilingual UI, and an executive report — connected end-to-end in one platform. Salesforce (CRM) marks a deal Closed Won regardless of whether it has actually shipped, which can create a gap between what the CRM reports and when revenue is truly recognized. This dashboard closes that gap by auto-syncing Salesforce data every week and treating Ship Confirm as the sole gate for counting revenue. When a quarter looks short, a what-if scenario mode lets the team test which pending deals would close the gap — without ever touching the real numbers.</span>
-    </p>
+        <span data-ko><span class="pbr"><b>문제</b>Salesforce는 출하 전에도 Closed Won으로 표시해 CRM 실적과 실제 매출 인식 시점이 어긋남</span><span class="pbr"><b>해결</b>Firebase 실시간 대시보드: Salesforce 주간 자동 동기화, Ship Confirm을 매출 집계 기준으로, 팀원별 분기 목표·대표 보고 리포트</span><span class="pbr"><b>성과</b>출하 기준 실적으로 보고 일원화, 시나리오 모드로 분기 목표 부족분을 실데이터 변경 없이 사전 계산</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>Salesforce marks deals Closed Won before they ship, so CRM numbers and recognized revenue drift apart</span><span class="pbr"><b>Built</b>A real-time Firebase dashboard with a weekly Salesforce sync, Ship Confirm as the revenue gate, per-member quarterly targets and an executive report</span><span class="pbr"><b>Result</b>One shipment-based number for reporting; a what-if mode sizes a quarter's gap without touching real data</span></span>
+      </p>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num">3</span><span class="stat-label" data-ko>핵심 모듈</span><span class="stat-label" data-en>Core Modules</span></div>
       <div class="stat"><span class="stat-num">2</span><span class="stat-label" data-ko>지원 언어</span><span class="stat-label" data-en>Languages</span></div>

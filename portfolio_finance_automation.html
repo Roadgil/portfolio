@@ -121,6 +121,9 @@
       .pipeline{flex-direction:column;}
       footer{padding:40px 24px;}
     }
+      .pbr{display:block;position:relative;padding-left:76px;margin-bottom:10px;line-height:1.7;overflow-wrap:anywhere;}
+    .pbr>b{position:absolute;left:0;top:.3em;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--accent,#c4b5fd);text-transform:uppercase;}
+    @media (max-width:600px){.pbr{padding-left:0;}.pbr>b{position:static;display:block;margin-bottom:2px;}}
   </style>
 </head>
 <body>
@@ -139,8 +142,8 @@
       <div class="hero-tag">Finance Workflow · Automation</div>
       <h1 class="hero-title"><span class="a1" data-ko>지급요청</span><span class="a1" data-en>PAYMENT</span><br><span class="a2" data-ko>자동화</span><span class="a2" data-en>REQUEST AUTO</span></h1>
       <p class="hero-desc">
-        <span data-ko>관세·DHL 비용의 지급요청 메일을 Finance팀에 자동 생성·발송하는 파이썬 시스템. 한국 공휴일을 인식하는 2회차 결제 스케줄링과 중복 발송 방지, 그리고 이미지 메일에서 마감일을 읽어내는 OCR까지 포함.</span>
-        <span data-en>A Python system that auto-generates and sends customs &amp; DHL payment-request emails to Finance — with Korean-holiday-aware two-round scheduling, duplicate-send protection, and OCR that reads deadlines straight from image emails.</span>
+        <span data-ko><span class="pbr"><b>문제</b>관세·DHL 지급요청 메일을 지급 차수와 공휴일에 맞춰 매번 손으로 작성</span><span class="pbr"><b>해결</b>고지서·청구서를 읽어 지급요청 메일을 자동 생성, 한국 공휴일을 반영한 2회차 지급 스케줄링, 이미지 메일 속 마감일은 OCR로 판독</span><span class="pbr"><b>성과</b>지급요청 작성 수작업 제거, 같은 청구서의 중복 발송 차단</span></span>
+        <span data-en><span class="pbr"><b>Problem</b>Customs and DHL payment requests written by hand for every payment round and holiday shift</span><span class="pbr"><b>Built</b>Reads the notices and invoices, generates the payment-request emails, schedules two payment rounds around Korean holidays and reads deadlines from image emails with OCR</span><span class="pbr"><b>Result</b>Manual payment-request writing removed; the same invoice can never be sent twice</span></span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">2</span><span class="stat-label" data-ko>결제 회차/월</span><span class="stat-label" data-en>Payment Rounds/mo</span></div>
