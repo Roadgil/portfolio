@@ -139,6 +139,7 @@
     .pipe-step.human .pipe-num{color:var(--accent3);}
     .link-card{display:block;text-decoration:none;color:inherit;}
     .link-card .mod-file::after{content:' →';}
+    .sop-cards .mod-card{background:var(--bg);}
     @media (max-width:900px){.ladder{grid-template-columns:1fr;}.rung{border-right:none;border-bottom:1px solid var(--border);}.rung:last-child{border-bottom:none;}}
   </style>
 </head>
@@ -158,8 +159,8 @@
       <div class="hero-tag">AI Agents · Claude Code</div>
       <h1 class="hero-title"><span class="a1" data-ko>업무를 맡는</span><span class="a1" data-en>AGENTS THAT</span><br><span class="a2" data-ko>AI 에이전트</span><span class="a2" data-en>OWN A JOB</span></h1>
       <p class="hero-desc">
-        <span data-ko>질문에 답하는 챗봇이 아니라, 한 업무를 처음부터 끝까지 맡는 에이전트를 직접 설계하고 운영한다. 업무를 먼저 Claude와 대화로 처리해 보면서 규칙을 확정하고, 확정된 규칙과 검증된 도구만 에이전트 정의 파일로 옮긴다. 대표 사례는 병원 출고 요청 메일을 Salesforce 파트오더로 만들고 Oracle 전송·릴리즈·창고 안내 메일까지 이어가는 파트오더 에이전트, 그리고 독일 공급사 구매를 16단계 SOP대로 진행하는 Zimmer 구매 에이전트. 되돌리기 어려운 단계(승인 요청, Submit, 메일 발송)는 사람이 결정한다.</span>
-        <span data-en>Not a chatbot that answers questions, but agents designed and run to own one job end to end. The work is first done with Claude in conversation until the rules settle, and only those settled rules and the tools that proved themselves move into an agent definition file. The main examples are a parts-order agent that turns hospital shipment-request emails into Salesforce parts orders and carries them through Oracle interface, release and the warehouse notice, and a Zimmer procurement agent that runs purchasing from a German supplier along a 16-step SOP. Steps that are hard to undo (approval requests, Submit, sending email) stay a human decision.</span>
+        <span data-ko>질문에 답하는 챗봇이 아니라, 한 업무를 처음부터 끝까지 맡는 에이전트를 직접 설계하고 운영한다. 업무를 먼저 Claude와 대화로 처리해 보면서 규칙을 확정하고, 확정된 규칙과 검증된 도구만 에이전트 정의 파일로 옮긴다. 대표 사례는 병원 출고 요청 메일을 Salesforce 파트오더로 만들고 Oracle 전송·릴리즈·창고 안내 메일까지 이어가는 파트오더 에이전트, 그리고 독일 공급사 구매를 16단계 SOP대로 진행하는 Zimmer 구매 에이전트. 업무 SOP는 사람용 Word와 Claude용 md로 같이 쓰고, CLAUDE.md · 에이전트 · MCP · 스케줄러를 묶은 재구축 패키지로 빈 Claude도 같은 환경을 세울 수 있게 했다. 되돌리기 어려운 단계(승인 요청, Submit, 메일 발송)는 사람이 결정한다.</span>
+        <span data-en>Not a chatbot that answers questions, but agents designed and run to own one job end to end. The work is first done with Claude in conversation until the rules settle, and only those settled rules and the tools that proved themselves move into an agent definition file. The main examples are a parts-order agent that turns hospital shipment-request emails into Salesforce parts orders and carries them through Oracle interface, release and the warehouse notice, and a Zimmer procurement agent that runs purchasing from a German supplier along a 16-step SOP. Job SOPs are written once for people in Word and for Claude in Markdown, and a rebuild package bundling CLAUDE.md, agents, MCP and scheduled tasks lets a blank Claude stand up the same setup. Steps that are hard to undo (approval requests, Submit, sending email) stay a human decision.</span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">4</span><span class="stat-label" data-ko>권한 단계별 에이전트 유형</span><span class="stat-label" data-en>Agent Types by Permission</span></div>
@@ -297,6 +298,47 @@
         <div class="mod-desc" data-ko>단계별 화면, 발주서 생성, 수입 운송·통관 기록 연계는 공급사 구매 페이지에 정리했다.</div>
         <div class="mod-desc" data-en>Screens per step, PO generation and the import freight and customs records are on the supplier procurement page.</div>
       </a>
+    </div>
+  </section>
+
+  <!-- SOP → AGENT -->
+  <section class="pipeline-section reveal">
+    <div class="section-label">Case 03 · SOP → Agent</div>
+    <h2 class="section-title"><span data-ko>SOP를 사람용과 Claude용으로</span><span data-en>One SOP, written for people</span><br><em><span data-ko>같이 쓴다</span><span data-en>and for Claude</span></em></h2>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">STEP 01</div><div class="pipe-icon">📘</div><div class="pipe-title" data-ko>수작업 SOP</div><div class="pipe-title" data-en>Manual SOP</div><div class="pipe-desc" data-ko>자동화가 멈춰도 사람이 할 수 있게 STEP 번호 · 메일 원문 · 현재 화면 캡처로 작성</div><div class="pipe-desc" data-en>Written so a person can do the job if automation stops: numbered steps, real email text, current screenshots</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 02</div><div class="pipe-icon">📝</div><div class="pipe-title" data-ko>md 판</div><div class="pipe-title" data-en>Markdown copy</div><div class="pipe-desc" data-ko>같은 내용을 md로 두어 Claude가 지식 원천으로 읽음</div><div class="pipe-desc" data-en>The same content in Markdown, read by Claude as its knowledge source</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 03</div><div class="pipe-icon">📜</div><div class="pipe-title">CLAUDE.md</div><div class="pipe-desc" data-ko>업무 경로 · 용어 · 주의사항 + "업무 질문은 SOP부터 읽는다"</div><div class="pipe-desc" data-en>Paths, terms and cautions, plus "read the SOP first for any task question"</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 04</div><div class="pipe-icon">🤖</div><div class="pipe-title" data-ko>SOP 1개 = 에이전트 1개</div><div class="pipe-title" data-en>One SOP, one agent</div><div class="pipe-desc" data-ko>정의 파일 템플릿에 근거 SOP 섹션 · 허용 도구 · 공통 규칙을 채움</div><div class="pipe-desc" data-en>A definition template filled with the source SOP section, allowed tools and shared rules</div></div>
+      <div class="pipe-step"><div class="pipe-num">STEP 05</div><div class="pipe-icon">📦</div><div class="pipe-title" data-ko>재구축 패키지</div><div class="pipe-title" data-en>Rebuild package</div><div class="pipe-desc" data-ko>빈 Claude가 가이드 하나를 순서대로 읽고 환경 전체를 다시 세움</div><div class="pipe-desc" data-en>A blank Claude follows one guide in order and rebuilds the whole setup</div></div>
+    </div>
+    <div class="mod-grid sop-cards" style="margin-top:28px;">
+      <div class="mod-card c1">
+        <div class="mod-head"><div class="mod-file">SOP · 6 + 1</div><div class="mod-title" data-ko>업무 SOP 7종</div><div class="mod-title" data-en>Seven job SOPs</div></div>
+        <div class="mod-desc" data-ko>수입·통관, 출고·재고, 수출·RMA, 재무·비용처리, 재고보고·월마감과 총괄 문서. 파트오더는 OM 업무라 별도 SOP로 분리했다. Word와 md가 같은 내용이다.</div>
+        <div class="mod-desc" data-en>Import and customs, outbound and inventory, export and RMA, finance and cost processing, inventory reporting and month-end, plus an overview. Parts orders belong to Order Management and sit in a separate SOP. Word and Markdown carry the same content.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>Oracle 현재 화면을 새로 캡처하고, 클릭할 곳을 빨간 박스로 표시</span><span data-en>Fresh Oracle screenshots with the click target boxed in red</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>메일 양식은 최근 실제 발송분 기준, 비밀번호는 기재하지 않음</span><span data-en>Email templates taken from recent real sends; no passwords written down</span></div>
+        </div>
+      </div>
+      <div class="mod-card c2">
+        <div class="mod-head"><div class="mod-file">AGENT TEMPLATE</div><div class="mod-title" data-ko>SOP에서 에이전트로</div><div class="mod-title" data-en>From SOP to agent</div></div>
+        <div class="mod-desc" data-ko>정의 파일은 언제 부를지 한 문장, 허용 도구, 따를 SOP 섹션, 공통 규칙(메일은 초안 · 번호는 두 번 확인 · 엑셀은 백업 후 수정 · 삭제는 확인)으로 구성한다. C.I 확인, 신고 입력, Pick Release, Rebalance 수출, RMA 회신, 지급요청, 월마감 등 8개 후보를 근거 SOP와 짝지어 두었다.</div>
+        <div class="mod-desc" data-en>A definition holds one sentence on when to call it, the allowed tools, the SOP section to follow and the shared rules (email as draft, numbers checked twice, spreadsheets backed up before edits, deletes confirmed). Eight candidates, from C.I checks and declaration entry to Pick Release, Rebalance export, RMA replies, payment requests and month-end, are paired with their source SOP.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>운영 중인 정의 파일은 파트오더 에이전트, 나머지는 SOP 매핑까지</span><span data-en>The parts-order agent is live; the rest are mapped to their SOP</span></div>
+        </div>
+      </div>
+      <div class="mod-card c3">
+        <div class="mod-head"><div class="mod-file">REBUILD · 22 TASKS</div><div class="mod-title" data-ko>Claude 환경 재구축</div><div class="mod-title" data-en>Rebuilding the Claude setup</div></div>
+        <div class="mod-desc" data-ko>프로젝트 · 전역 CLAUDE.md, 권한 설정, 직접 만든 MCP 서버(도구 16개)와 도구 명세, 파트오더 에이전트, 작업 스케줄러 22개, OTBI 분석 원본을 한 폴더에 묶었다. 가이드는 설치 순서, 사용 안 함 상태였던 작업, 상태 파일 복사, 완료 체크리스트 8항목까지 담는다.</div>
+        <div class="mod-desc" data-en>Project and global CLAUDE.md, permissions, the self-built MCP server (sixteen tools) with a tool spec, the parts-order agent, twenty-two scheduled tasks and the OTBI analysis source sit in one folder. The guide covers install order, which tasks were disabled, copying state files, and an eight-item completion checklist.</div>
+        <div class="mod-points">
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>상태 파일 없이 시작하면 지난 메일을 신규로 보고 중복 발송하는 함정까지 명시</span><span data-en>Spells out the trap of starting without state files: old mail read as new and sent twice</span></div>
+          <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>코드가 없어져도 다시 짤 수 있게 도구별 입력 · 읽는 데이터를 표로 정리</span><span data-en>Each tool's inputs and data sources are tabled so it can be rewritten if the code is lost</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
