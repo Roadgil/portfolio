@@ -266,6 +266,11 @@
       .proj-card { padding: 36px 28px; border-right: none; }
       footer { margin: 0 24px; }
     }
+      .ln{display:block;position:relative;padding-left:16px;margin-bottom:6px;overflow-wrap:anywhere;}
+    .ov-grid>*{min-width:0;}
+    .ln::before{content:'';position:absolute;left:0;top:.8em;width:7px;height:1px;background:currentColor;opacity:.55;}
+    .ov-since{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;opacity:.6;margin-left:6px;display:inline-block;}
+    .ov-mk{min-width:0;}
   </style>
 </head>
 <body>
@@ -313,35 +318,35 @@
         </h2>
 
         <p class="ov-bio">
-          <span data-ko>수입 통관과 국가간 재배치 수출을 맡고 있다. 본사 Intransit 리포트 수신부터 통관 브로커와의 C.I. 대사, 수입신고필증 파싱, Finance 월 대사까지 매일 반복되던 구간을 파이썬 모듈 10개로 옮겼다. 하루 두 시간 걸리던 일이 지금은 2분이고, 사람이 여는 화면은 없다.</span>
+          <span data-ko><span class="ln">수입 통관과 국가 간 재배치(Rebalance) 수출 담당</span><span class="ln">본사 Intransit 리포트 수신 → 통관 브로커와 C.I 대조 → 수입신고필증 반영 → 재무 월 대사까지, 매일 반복되던 구간을 Python 모듈 10개로 자동화</span><span class="ln">하루 2시간 걸리던 작업을 2분으로 단축, 사람이 직접 여는 화면 없음</span></span>
           <span data-en>Runs import clearance and cross-border rebalance exports for a medical device affiliate in Seoul. The daily stretch from the HQ in-transit report through invoice reconciliation with the customs broker, declaration PDF parsing, and the monthly close with Finance now runs as ten Python modules. What took two hours a day takes two minutes, and nobody opens a screen for it.</span>
         </p>
         <p class="ov-bio">
-          <span data-ko>여기에 AI를 얹었다. 수입신고 실적·리드타임·variance, 재무 일정과 DHL 청구서, 인천관세법인 C.I 검증, Pick Release, RMA 처리 이력, 자동화 실행 상태까지 업무 데이터를 조회하는 MCP 서버를 직접 만들어(도구 16개) Claude에 연결했다. "실적 요약", "urgent 확인"처럼 짧게 물으면 에이전트가 알맞은 도구를 골라 조회하고 결과를 요약해 준다. 평일 아침에는 같은 에이전트가 Urgent Item·DHL 청구서·재무 일정·자동화 실행 상태를 점검해 브리핑을 쓰고, 멈춘 자동화를 가장 먼저 알린다.</span>
+          <span data-ko><span class="ln">업무 데이터 조회용 MCP 서버(도구 16개)를 직접 만들어 Claude에 연결</span><span class="ln">조회 범위: 수입신고 실적·리드타임·variance, 재무 일정·DHL 청구서, C.I 검증, Pick Release, RMA 처리 이력, 자동화 실행 상태</span><span class="ln">"실적 요약", "urgent 확인"처럼 짧게 요청하면 에이전트가 맞는 도구를 골라 조회·요약</span><span class="ln">평일 아침마다 Urgent Item·DHL 청구서·재무 일정·자동화 상태를 점검해 브리핑 작성, 멈춘 자동화를 가장 먼저 보고</span></span>
           <span data-en>Then layered AI on top. I built an MCP server of sixteen query tools — import declarations, lead time and variance, the finance calendar and DHL invoices, broker C.I. verification, Pick Release, RMA history, and automation run status — and connected it to Claude. A short prompt such as "summarize performance" or "check urgent items" is enough: the agent picks the right tool, queries it, and summarizes the result. Each weekday morning the same agent checks Urgent Items, DHL invoices, the finance calendar, and automation run status, writes the briefing, and flags stalled automations first.</span>
         </p>
         <p class="ov-bio">
-          <span data-ko>에이전트는 이 하나로 끝나지 않는다. 재무팀 Finance Calendar 이미지는 OCR로 지급 마감일을 읽은 뒤, Claude가 OCR 결과를 보지 않고 같은 이미지를 따로 읽어 날짜를 대조하도록 검증 단계를 붙였다(불일치는 로그에 남긴다). 엔지니어가 Teams로 보내는 PO 예외 문의는 헤드리스 Claude와 M365 커넥터로 읽어 PO 번호를 뽑고 처리 여부를 대조하는 감시 에이전트로 만들어, 지금은 실행 없이 기록만 하는 shadow 모드로 검증 중이다.</span>
-          <span data-en>It is not a single agent. For the finance team's Finance Calendar image, OCR reads the payment cut-off dates, and Claude then reads the same image independently, without seeing the OCR output, so the two can be compared; mismatches are logged. Engineers' PO exception requests on Teams are read by a watcher agent built on headless Claude and the M365 connector, which extracts the PO number and checks whether it was already handled — currently validated in shadow mode, logging only and executing nothing.</span>
+          <span data-ko><span class="ln">Finance Calendar 이미지: OCR로 지급 마감일을 읽고, Claude가 OCR 결과 없이 같은 이미지를 따로 읽어 교차 검증(불일치는 로그 기록)</span><span class="ln">엔지니어 Teams PO 예외 문의: 헤드리스 Claude + M365 커넥터로 PO 번호를 뽑아 처리 여부 대조, 실행 없이 기록만 하는 shadow 모드로 검증 중</span><span class="ln">파트오더·공급사 구매처럼 단계가 긴 업무는 전용 에이전트로 운영, 업무 SOP는 Claude가 읽는 md로도 작성</span></span>
+          <span data-en>It is not a single agent. For the finance team's Finance Calendar image, OCR reads the payment cut-off dates, and Claude then reads the same image independently, without seeing the OCR output, so the two can be compared; mismatches are logged. Engineers' PO exception requests on Teams are read by a watcher agent built on headless Claude and the M365 connector, which extracts the PO number and checks whether it was already handled — currently validated in shadow mode, logging only and executing nothing. Longer jobs such as parts orders and supplier purchasing run as dedicated agents, and the job SOPs are also kept in Markdown for Claude to read.</span>
         </p>
         <p class="ov-bio">
-          <span data-ko>AI에게 맡기는 범위는 의도적으로 좁혔다. 조회·요약을 하는 에이전트는 읽기 전용이라 운영 데이터를 바꾸지 못하고, 실제 실행은 검증된 규칙 기반 스크립트가 맡는다. 실행까지 이어질 수 있는 에이전트는 shadow 모드로 먼저 돌려 오탐과 누락을 확인한 뒤에만 켠다. 판단과 요약은 AI가, 실행은 규칙이 하는 구조라 AI가 틀려도 업무가 망가지지 않는다.</span>
+          <span data-ko><span class="ln">조회·요약 에이전트는 읽기 전용, 운영 데이터 변경 불가</span><span class="ln">실제 실행은 검증된 규칙 기반 스크립트가 담당</span><span class="ln">실행으로 이어질 수 있는 에이전트는 shadow 모드에서 오탐·누락을 확인한 뒤에만 가동</span><span class="ln">판단·요약은 AI, 실행은 규칙 - AI가 틀려도 업무가 깨지지 않는 구조</span></span>
           <span data-en>The scope given to AI is deliberately narrow. Agents that look up and summarize are read-only and cannot change operational data; execution stays with validated, rule-based scripts. An agent that could lead to execution runs in shadow mode first, and is switched on only after false positives and misses are checked. AI handles lookup and summary, rules handle action — so a wrong answer from an agent cannot break the work.</span>
         </p>
         <p class="ov-bio">
-          <span data-ko>자동화 자체보다 그게 막아주는 리스크 쪽이 더 중요하다고 본다. 본사가 이전가격 변경을 미리 통지하지 않아 브로커가 옛 가격으로 신고할 위험이 있었는데, 매 건을 Oracle Fusion 실거래 금액과 대사해 통관 전에 잡아내도록 바꿨다. 정정신고는 월 5~10건에서 1건 이하로 내려갔다.</span>
+          <span data-ko><span class="ln">자동화 자체보다 그로 인해 막는 리스크에 초점</span><span class="ln">본사의 이전가격(TP) 변경이 사전 통지 없이 반영되면 브로커가 옛 가격으로 신고할 위험 → 매 건 Oracle Fusion 실거래 금액과 대조해 통관 전에 적발</span><span class="ln">통관 정정신고 월 5~10건 → 1건 이하</span></span>
           <span data-en>The automation matters less than the exposure it closes. HQ does not announce transfer price changes, so the broker could clear a shipment against a stale value; every invoice is now reconciled against the actual Oracle Fusion amount before filing. Correction filings fell from five to ten a month to under one.</span>
         </p>
         <p class="ov-bio">
-          <span data-ko>필증 PDF, 인트랜짓 리포트, RMA 처리 이력 — 다루는 문서마다 형식이 제각각이었다. 반복되는 예외를 규칙화해 자동화 파이프라인으로 흡수하는 것이 이 프로젝트들의 공통된 방식이다.</span>
+          <span data-ko><span class="ln">필증 PDF, Intransit 리포트, RMA 이력 등 문서마다 형식이 제각각</span><span class="ln">반복되는 예외를 규칙으로 정리해 자동화 파이프라인에 흡수하는 것이 공통된 방식</span></span>
           <span data-en>Declaration PDFs, in-transit reports, RMA case histories — every document came in a different shape. Turning recurring exceptions into rules and folding them into the automation pipeline is the method behind all of these.</span>
         </p>
         <p class="ov-bio">
-          <span data-ko>그 전에는 로레알 코리아에서 아시아 공급망을 담당해 중국 서비스 레벨을 80.5%에서 95.4%로, ODM 공급 리드타임을 91일에서 74일로 개선했다. 전공은 AI·빅데이터다.</span>
+          <span data-ko><span class="ln">이전 로레알 코리아 아시아 공급망 담당: 중국 서비스 레벨 80.5% → 95.4%, ODM 공급 리드타임 91일 → 74일</span><span class="ln">전공 AI·빅데이터</span></span>
           <span data-en>Before this, handled Asia supply chain at L'Oréal Korea, raising China's service level from 80.5% to 95.4% and cutting ODM supply lead time from 91 days to 74. Studied AI and big data.</span>
         </p>
         <p class="ov-bio">
-          <span data-ko>여기 있는 자동화는 지시받아 만든 것이 하나도 없다. 문제를 발견하고, 요건을 정하고, 설계·구현·실측 검증·운영까지 끌고 간 것이 전부 본인이다. 모두 빈 파일에서 시작해 실제 업무에 붙을 때까지 혼자 만들었고, 지금도 스케줄러 위에서 돌고 있다.</span>
+          <span data-ko><span class="ln">모든 자동화는 지시가 아닌 자체 발의</span><span class="ln">문제 발견, 요건 정의, 설계·구현, 실측 검증, 운영까지 단독 수행</span><span class="ln">전부 빈 파일에서 시작해 실무에 붙였고, 현재도 스케줄러에서 운영 중</span></span>
           <span data-en>None of the automation here was assigned. Finding the problem, defining it, designing, building, validating against live cases, and operating it afterwards — all of it is mine. Every tool started from an empty file and was carried end to end until it held real work, and they run on a scheduler today.</span>
         </p>
 
@@ -378,19 +383,23 @@
 
         <div class="ov-card">
           <div class="ov-card-label"><span data-ko>자동화 성과</span><span data-en>Automation Impact</span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>수입 통관 일일 작업</span><span class="ov-mk" data-en>Daily import clearance task</span><span class="ov-mv">2h → <b>2min</b> <span data-ko>(−98%)</span><span data-en>(−98%)</span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>통관 정정신고</span><span class="ov-mk" data-en>Correction filings</span><span class="ov-mv"><span data-ko>월 5–10건 → <b>1건 이하</b></span><span data-en>5–10/mo → <b>under 1</b></span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>구가격 신고 사전 적발</span><span class="ov-mk" data-en>Stale-price filings caught</span><span class="ov-mv"><span data-ko>45건 중 <b>4건</b></span><span data-en><b>4</b> of 45 shipments</span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>출고 건당 처리</span><span class="ov-mk" data-en>Order fulfillment handling</span><span class="ov-mv">1h → <b>10min</b> <span data-ko>(−83%)</span><span data-en>(−83%)</span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>Pick Release 누적 처리</span><span class="ov-mk" data-en>Pick Release orders run</span><span class="ov-mv"><b>363</b> <span data-ko>건 · 오류 0</span><span data-en>orders · zero errors</span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>RMA 자동답장</span><span class="ov-mk" data-en>RMA cases replied</span><span class="ov-mv"><b>53</b> <span data-ko>건 처리</span><span data-en>processed</span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>수출 재배치 SOP</span><span class="ov-mk" data-en>Rebalance export SOP</span><span class="ov-mv"><b>14/14</b> <span data-ko>단계 코드화</span><span data-en>steps coded</span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>수출신고실적 컬럼</span><span class="ov-mk" data-en>Export ledger columns</span><span class="ov-mv"><b>13/13</b> <span data-ko>자동 기입</span><span data-en>filled automatically</span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>W&amp;D 비용 관리</span><span class="ov-mk" data-en>W&amp;D cost held at</span><span class="ov-mv"><span data-ko>매출 대비 <b>2.5% 이내</b></span><span data-en><b>≤2.5%</b> of revenue</span></span></div>
-          <div class="ov-metric"><span class="ov-mk" data-ko>수입/통관 파이썬 모듈</span><span class="ov-mk" data-en>Python modules, import cycle</span><span class="ov-mv"><b>10</b> <span data-ko>개 무인 실행</span><span data-en>running unattended</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>수입 통관 일일 작업<i class="ov-since">2026.04~</i></span><span class="ov-mk" data-en>Daily import clearance task<i class="ov-since">since 2026.04</i></span><span class="ov-mv">2h → <b>2min</b> <span data-ko>(−98%)</span><span data-en>(−98%)</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>통관 정정신고<i class="ov-since">2026.07~</i></span><span class="ov-mk" data-en>Correction filings<i class="ov-since">since 2026.07</i></span><span class="ov-mv"><span data-ko>월 5–10건 → <b>1건 이하</b></span><span data-en>5–10/mo → <b>under 1</b></span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>구가격 신고 사전 적발<i class="ov-since">2026.07~</i></span><span class="ov-mk" data-en>Stale-price filings caught<i class="ov-since">since 2026.07</i></span><span class="ov-mv"><span data-ko>45건 중 <b>4건</b></span><span data-en><b>4</b> of 45 shipments</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>Pick Release 건당 처리 (택배·엔지니어 출고)<i class="ov-since">2026.07~</i></span><span class="ov-mk" data-en>Pick Release per order (parcel &amp; engineer shipments)<i class="ov-since">since 2026.07</i></span><span class="ov-mv">30min → <b>3min</b> <span data-ko>(−90%)</span><span data-en>(−90%)</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>Pick Release 누적 처리<i class="ov-since">2026.07~</i></span><span class="ov-mk" data-en>Pick Release orders run<i class="ov-since">since 2026.07</i></span><span class="ov-mv"><b>694</b> <span data-ko>건 · 오류 0</span><span data-en>orders · zero errors</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>RMA 자동답장<i class="ov-since">2026.07~</i></span><span class="ov-mk" data-en>RMA cases replied<i class="ov-since">since 2026.07</i></span><span class="ov-mv"><b>115</b> <span data-ko>건 처리</span><span data-en>processed</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>C.I 자동 대조 누적<i class="ov-since">2026.07~</i></span><span class="ov-mk" data-en>C.I. invoices auto-checked<i class="ov-since">since 2026.07</i></span><span class="ov-mv"><b>91</b> <span data-ko>건 · 불일치 8건 적발</span><span data-en>· 8 mismatches caught</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>파트오더 승인 → 릴리즈·창고 메일<i class="ov-since">2026.11~</i></span><span class="ov-mk" data-en>Parts order, approval → release &amp; warehouse mail<i class="ov-since">since 2026.11</i></span><span class="ov-mv"><b>5min</b></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>Non-billable 파트오더 일괄 생성<i class="ov-since">2026.10</i></span><span class="ov-mk" data-en>Non-billable parts orders batched<i class="ov-since">2026.10</i></span><span class="ov-mv"><b>46</b> <span data-ko>건 · 5건씩 병렬</span><span data-en>orders · five at a time</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>누락 필증 소급 반영<i class="ov-since">2026.10</i></span><span class="ov-mk" data-en>Missed declarations backfilled<i class="ov-since">2026.10</i></span><span class="ov-mv"><b>13</b> <span data-ko>건 · 44행</span><span data-en>filings · 44 rows</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>수출 재배치 SOP<i class="ov-since">2026.08~</i></span><span class="ov-mk" data-en>Rebalance export SOP<i class="ov-since">since 2026.08</i></span><span class="ov-mv"><b>14/14</b> <span data-ko>단계 코드화</span><span data-en>steps coded</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>수출신고실적 컬럼<i class="ov-since">2026.08~</i></span><span class="ov-mk" data-en>Export ledger columns<i class="ov-since">since 2026.08</i></span><span class="ov-mv"><b>13/13</b> <span data-ko>자동 기입</span><span data-en>filled automatically</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>W&amp;D 비용 관리<i class="ov-since">수기 2025.12~ · 자동화 2026.07~</i></span><span class="ov-mk" data-en>W&amp;D cost held at<i class="ov-since">manual 2025.12 · automated 2026.07</i></span><span class="ov-mv"><span data-ko>매출 대비 <b>2.5% 이내</b></span><span data-en><b>≤2.5%</b> of revenue</span></span></div>
+          <div class="ov-metric"><span class="ov-mk" data-ko>수입/통관 파이썬 모듈<i class="ov-since">2026.04~</i></span><span class="ov-mk" data-en>Python modules, import cycle<i class="ov-since">since 2026.04</i></span><span class="ov-mv"><b>10</b> <span data-ko>개 무인 실행</span><span data-en>running unattended</span></span></div>
           <div class="ov-foot">
-            <span data-ko>각 수치의 근거는 아래 프로젝트 페이지에 정리돼 있다.</span>
-            <span data-en>Each number is backed by the project pages below.</span>
+            <span data-ko>각 수치의 근거는 아래 프로젝트 페이지에 정리. 날짜는 운영 시작 시점(처리 이력 첫 기록 기준).</span>
+            <span data-en>Each number is backed by the project pages below. Dates mark when each automation went live, per its first processing record.</span>
           </div>
         </div>
 
@@ -564,29 +573,9 @@
       </div>
     </a>
 
-    <a class="proj-card p2" href="portfolio_warehouse_expansion.html" style="animation-delay:0.94s;">
+    <a class="proj-card p5" href="portfolio_ai_agents.html" style="animation-delay:0.94s;">
       <div class="proj-bg-num">10</div>
       <div class="proj-num">PROJECT · 10</div>
-      <div class="proj-tags">
-        <span class="tag tag-blue">Oracle Fusion</span>
-        <span class="tag tag-purple">Playwright</span>
-        <span class="tag tag-gold">APAC Case</span>
-      </div>
-      <h2 class="proj-title"><span data-ko>Warehouse</span><span data-en>Warehouse</span><br><em><span data-ko>창고 확장 데이터 근거</span><span data-en>Expansion Case</span></em></h2>
-      <p class="proj-desc">
-        <span data-ko>2022년부터 4년 9개월치 Oracle 입출고 트랜잭션을 월별로 전수 추출해 입고·창고 출고·고객 출고로 다시 세고, 연간 전체와 2026년 연환산 추정 기준으로 증가율을, 거래일 단위로 바쁜 날과 피크를 뽑았다. 한·영 인터랙티브 보고서로 정리해 APAC 리전에 창고 확장을 설득했다.</span>
-        <span data-en>Pulled every Oracle inbound and outbound transaction month by month since 2022, recounted them as inbound, warehouse outbound and customer outbound, measured growth on full years plus a 2026 annualised estimate, and found busy days and peaks at the daily level. Packaged as an interactive Korean and English report that persuaded the APAC region to expand the warehouse.</span>
-      </p>
-      <div class="proj-impact"><b>2.1×</b> <span data-ko>창고 처리량</span><span data-en>warehouse volume</span> · <b>21%</b> <span data-ko>연평균 증가</span><span data-en>CAGR</span></div>
-      <div class="proj-meta">
-        <div class="proj-stack">Playwright · Oracle Fusion · pandas<br>HTML/SVG · openpyxl · Claude Code</div>
-        <div class="proj-arrow">→</div>
-      </div>
-    </a>
-
-    <a class="proj-card p5" href="portfolio_ai_agents.html" style="animation-delay:1.02s;">
-      <div class="proj-bg-num">11</div>
-      <div class="proj-num">PROJECT · 11</div>
       <div class="proj-type"><span class="type-pill ax">AX</span></div>
       <div class="proj-tags">
         <span class="tag tag-purple">Claude Code</span>

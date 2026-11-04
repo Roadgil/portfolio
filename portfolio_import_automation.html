@@ -238,6 +238,9 @@
       .stats-bar { grid-template-columns: 1fr 1fr; }
       footer { padding: 40px 28px; flex-direction: column; gap: 20px; }
     }
+      .ln{display:block;position:relative;padding-left:16px;margin-bottom:6px;overflow-wrap:anywhere;}
+    .ln::before{content:'';position:absolute;left:0;top:.8em;width:7px;height:1px;background:currentColor;opacity:.55;}
+    .ov-since{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;opacity:.6;margin-left:6px;white-space:nowrap;}
   </style>
 </head>
 <body>
@@ -262,7 +265,7 @@
         </h1>
       </div>
       <p class="hero-desc">
-        <span data-ko>본사 Intransit 리포트 수신부터 인천관세법인 C.I. 대사(Oracle), 수입신고필증 파싱, Finance 월 대사(Report_202606)까지 — 수입/통관 전 구간을 잇는 10개 모듈 파이썬 시스템(+ 지원 도구 2개). 사람이 수기로 개입하던 마지막 예외 케이스(일본/중국/홍콩발 재고 재배치 등)까지 자동화되어 100% 무인으로 처리된다.</span>
+        <span data-ko><span class="ln">본사 Intransit 리포트 수신부터 인천관세법인 C.I 대조(Oracle), 수입신고필증 반영, 재무 월 대사(Report_202606)까지 수입·통관 전 구간 자동화</span><span class="ln">모듈 10개 + 지원 도구 2개로 구성된 Python 파이프라인</span><span class="ln">일본·중국·홍콩발 재고 재배치처럼 마지막까지 사람이 처리하던 예외 건도 자동 처리</span><span class="ln">2026년 10~11월: 엑셀 C.I, 공급사 직구매 건, 스캔본 필증 등 기존 패턴 밖의 메일까지 처리 범위 확대</span></span>
         <span data-en>From HQ's Intransit report, through customs-broker C.I. reconciliation on Oracle and declaration parsing, to the monthly Finance reconciliation against Report_202606 (an internal Oracle tax-by-org report) — a 10-module Python system spanning the entire import/customs clearance cycle (plus 2 supporting tools). The last manual exceptions (e.g. Japan/China/Hong Kong stock rebalancing) are now automated too — 100% of cases run with zero human touch.</span>
       </p>
     </div>
@@ -380,6 +383,10 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>메일을 하나씩 "제출 → 완료 대기 → 다음 건" 순서로 처리하다 보니 리포트 하나가 지연되면 뒤따르는 정상 건까지 함께 밀리던 구조를, 추출·제출을 전부 먼저 끝내고 완료 확인만 라운드로빈으로 도는 방식으로 재구성해 지연 전파 차단</span><span data-en>Restructured from strict one-mail-at-a-time processing — where a single delayed report stalled every case behind it — into extract-and-submit-everything-upfront, then round-robin completion checks, so one slow report no longer blocks the rest</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>리포트가 몇 시간(최대 8시간)까지 지연되는 경우, 기존 날짜/개수 기반 검색 필터에 걸려 자기가 제출한 건을 화면에서 놓치던 문제를 Process ID 직접 검색으로 전환해 해결</span><span data-en>When a report was delayed for hours (up to 8, in one case), the automation would lose track of its own submission under a date/count-based search filter — fixed by searching directly by Process ID instead</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>2026-08-03 실제 운영 메일 3건으로 라이브 검증 — 동시 제출 후 라운드로빈으로 완료 확인, 금액 일치 판정된 즉시 원본 그대로 자동 발송까지 전부 정상 완료</span><span data-en>Verified live on 2026-08-03 against 3 real production cases — submitted together, each confirmed via round-robin polling, and auto-sent the original invoice the moment its price matched</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>[2026.11] 한 포워더 건은 C.I가 PDF가 아닌 엑셀로 와서 감시 대상에서 빠져 있었음 → 엑셀에서 Delivery 번호·총액·SO를 읽어 같은 대조 흐름에 연결, PDF로 오면 PDF 판독으로 대체</span><span data-en>[2026.11] One forwarder sends the C.I. as an Excel sheet rather than a PDF, so those shipments slipped past the watcher; it now reads the Delivery number, total and SO from the sheet and joins the same reconciliation, falling back to the PDF when that is what arrives</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>[2026.10] 공급사 직구매 건은 Oracle 거래가 없어 대조 대상이 아님 → 수출업체로 판별해 "해당 invoice로 진행" 회신을 즉시 발송. 프랑스어 C.I(Livraison)의 Delivery 번호 인식 실패도 라벨 기준 재판독으로 해결</span><span data-en>[2026.10] Direct supplier purchases have no Oracle transaction to reconcile, so they are identified by exporter and answered at once with "proceed with this invoice". Delivery numbers on French-language C.I.s (Livraison) that failed to read are now re-read around the label</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>[2026.09] 시험용 의료기기 3개 품목이 C.I에 있으면 시료 확인서 PDF를 회신에 자동 첨부, 품목당 1회만</span><span data-en>[2026.09] When any of three test-use device items appears on a C.I., the sample confirmation PDF is attached to the reply automatically, once per item</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent4);"></div><span data-ko>[2026.10] Oracle SSO 재로그인 뒤 동의(consent) 화면에서 약 2분씩 멈추던 현상 → 10초 이상 머물면 Oracle 홈으로 재진입</span><span data-en>[2026.10] After an SSO re-login the flow could hang about two minutes on the consent page; it now jumps back to the Oracle home after ten seconds there</span></div>
         </div>
       </div>
 
@@ -393,6 +400,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>State JSON 기반 마지막 실행 추적</span><span data-en>State-JSON tracks last run</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>cutoff 이후만 스캔</span><span data-en>Scans only after cutoff</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>동일 파일명 덮어쓰기 (수정신고)</span><span data-en>Overwrites on amended filings</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--gold);"></div><span data-ko>[2026.10] 두 번째 관세사(SJ관세사무소) 발송분 추가 - 파일명이 IMP_로 시작하지 않는 스캔본이 섞여 있어 발신처 + 본문 '수입신고필증' + PDF 첨부 조건으로 식별</span><span data-en>[2026.10] Added a second customs broker, whose filings include scans not named IMP_; they are identified by sender, the declaration phrase in the body and a PDF attachment</span></div>
         </div>
       </div>
 
@@ -421,6 +429,7 @@
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>C.I. 가격 불일치 검증 + 통관 알림 메일</span><span data-en>C.I. price check + clearance alert</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>상반기(H1) 154건 신고 중 151건(98%) 자동 반영</span><span data-en>151 of 154 H1 declarations (98%) auto-reflected</span></div>
           <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>파싱은 되는데 실적에 조용히 안 채워지는 사례를 단계별로 진단 — float 표기 Delivery Number 매칭 함정을 재확인하고, 동일 파일을 저장하는 다른 스크립트와의 race condition 가능성도 식별</span><span data-en>Diagnosed a silent parse-succeeds-but-never-writes case step by step — reconfirmed a float-formatted Delivery Number matching pitfall and flagged a possible race condition with another script saving the same file</span></div>
+          <div class="mpoint"><div class="mpoint-dot" style="background:var(--accent2);"></div><span data-ko>[2026.10] Oracle TO·Delivery가 없는 DCD 캔 수입 건은 실적에서 통째로 빠져 있었음 → 신고 란마다 행을 만들어 신고일자 순서대로 삽입, USD 금액은 필증 환율로 원화 환산. 텍스트 없는 스캔본은 OCR로 읽고 결제금액·과세가격 합계 검증을 통과할 때만 기입. 2026년 1~10월 누락분 13건(44행) 소급 반영</span><span data-en>[2026.10] DCD canister imports have no Oracle TO or Delivery, so they were missing from the record entirely. Each declaration line now becomes a row inserted in filing-date order, with USD converted at the declaration's exchange rate. Scans without text are read by OCR and written only when payment and taxable totals reconcile. 13 filings (44 rows) from Jan to Oct 2026 were backfilled</span></div>
         </div>
       </div>
 

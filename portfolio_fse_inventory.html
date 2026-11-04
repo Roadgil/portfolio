@@ -96,6 +96,9 @@
       .hero,.section{padding:90px 24px 50px;}
       footer{padding:40px 24px;}
     }
+      .ln{display:block;position:relative;padding-left:16px;margin-bottom:6px;overflow-wrap:anywhere;}
+    .ln::before{content:'';position:absolute;left:0;top:.8em;width:7px;height:1px;background:currentColor;opacity:.55;}
+    .ov-since{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;opacity:.6;margin-left:6px;white-space:nowrap;}
   </style>
 </head>
 <body>
@@ -113,7 +116,7 @@
     <div class="hero-tag">Monthly Closing · Warehouse Inventory · Single-file App</div>
     <h1 class="hero-title"><span class="a1" data-ko>Warehouse</span><span class="a1" data-en>WAREHOUSE</span><br><span class="a2" data-ko>월마감 대시보드</span><span class="a2" data-en>CLOSING DASHBOARD</span></h1>
     <p class="hero-desc">
-      <span data-ko>FG·SP·MRB·RMA_NV·Scrap·Intransit 등 11개 재고 카테고리를 한눈에 보는 창고 전체 월마감(Monthly Closing) 대시보드. 그 안에 그동안 따로 안 잡히던 필드 서비스 엔지니어(FSE) 로케이션만 떼어내 담당자 10명별 온핸드·소비·입고·회전율을 보는 전용 트래킹 모듈을 얹었다. Oracle Material Transactions 원본 export를 그대로 다루다 보니 겪은 함정들 — 5000행에서 말없이 잘리는 export 제한, 재고실사 주간의 트랜잭션 공백, 단가 없는 리포트 — 을 하나씩 규칙으로 흡수했다. 매달 마감 시점의 소비/입고/온핸드 수집은 Playwright로 자동화해 Salesforce·Oracle에서 대시보드 UI로 직접 밀어 넣는다.</span>
+      <span data-ko><span class="ln">FG·SP·MRB·RMA_NV·Scrap·Intransit 등 11개 재고 카테고리를 한 화면에서 보는 창고 월마감(Monthly Closing) 대시보드</span><span class="ln">따로 관리되지 않던 FSE 로케이션을 분리해 담당자 10명별 온핸드·소비·입고·회전율 트래킹 모듈 추가</span><span class="ln">Oracle export의 함정(5,000행 무경고 절삭, 재고실사 주간 트랜잭션 공백, 단가 없는 리포트)을 하나씩 규칙으로 흡수</span><span class="ln">월마감 시점 소비·입고·온핸드 수집은 Playwright로 자동화해 Salesforce·Oracle에서 대시보드로 직접 입력</span></span>
       <span data-en>A warehouse-wide Monthly Closing dashboard covering 11 inventory categories — FG, SP, MRB, RMA_NV, Scrap, Intransit, and more — in one view. Inside it sits a dedicated tracking module that breaks out just the field service engineer (FSE) location, previously lumped in with everything else, into per-engineer on-hand/consumption/receipt/turnover for 10 engineers. Built directly on raw Oracle Material Transactions exports, it absorbs every trap those exports hide — a 5,000-row limit that truncates silently, transaction blackout weeks during physical counts, and a report with no price column. Monthly consumption/receipt/on-hand collection is now Playwright-automated, pushing straight from Salesforce and Oracle into the dashboard's own upload UI.</span>
     </p>
     <div class="hero-stats">
@@ -210,6 +213,13 @@
         <div class="trap-title" data-en>Editing a remark silently wiped on-hand detail</div>
         <div class="trap-desc" data-ko>대시보드 자체에서 나온 버그: 어떤 달에 "특이사항"이 하나라도 있으면 그 달 데이터를 카테고리별로 재조립하는데, 이 재조립 로직이 온핸드 담당자별 상세(fseDetail)와 FG/DEMO 시스템 대수(keyEquip)를 챙기지 않고 버렸다. 재고관리 지표 표가 전부 0/판단불가로 보이는 증상으로 발견해 원본 필드를 그대로 펼친 뒤 특이사항만 덮어쓰도록 고쳤다.</div>
         <div class="trap-desc" data-en>A bug in the dashboard itself: any month with even one remark note triggered a per-category rebuild that dropped the per-engineer on-hand breakdown (fseDetail) and FG/DEMO system counts (keyEquip) entirely. Surfaced as every row in the inventory-metrics table reading zero/undetermined; fixed by spreading the original fields through and overlaying only the remark text.</div>
+      </div>
+      <div class="trap-card reveal">
+        <div class="trap-icon">📮</div>
+        <div class="trap-title" data-ko>월말 Unused Return 확인 요청 자동화 (2026.10~)</div>
+        <div class="trap-title" data-en>Month-end Unused Return chase, automated (since 2026.10)</div>
+        <div class="trap-desc" data-ko>엔지니어가 반납한 미사용 재고가 실물은 돌아왔는데 전산 처리가 안 되면 In-transit(FSE_UNUSED)으로 남아 월마감에 걸린다. 매달 수기로 보내던 확인 요청을, 월 마지막 영업일 5영업일 전에 최신 Intransit 리포트에서 해당 건을 추려 엔지니어별 표 메일 초안으로 만들도록 바꿨다(회신 기한 = 마감 전날 12시). 첫 회 21건 · 6명. 발송은 사람이 확인 후.</div>
+        <div class="trap-desc" data-en>When an engineer returns unused stock physically but not in the system, it sits in transit (FSE_UNUSED) and blocks the month-end close. The monthly chase that used to be written by hand is now drafted five business days before the last business day: the latest Intransit report is filtered and one table mail per engineer is prepared, due noon the day before close. First run: 21 lines across 6 engineers, sent after a human check.</div>
       </div>
     </div>
   </section>

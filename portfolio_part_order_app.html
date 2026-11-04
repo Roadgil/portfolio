@@ -123,6 +123,9 @@
       .pipeline{flex-direction:column;}
       footer{padding:40px 24px;}
     }
+      .ln{display:block;position:relative;padding-left:16px;margin-bottom:6px;overflow-wrap:anywhere;}
+    .ln::before{content:'';position:absolute;left:0;top:.8em;width:7px;height:1px;background:currentColor;opacity:.55;}
+    .ov-since{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;opacity:.6;margin-left:6px;white-space:nowrap;}
   </style>
 </head>
 <body>
@@ -141,12 +144,12 @@
       <div class="hero-tag">Order-to-Ship · Salesforce/ServiceMax + Oracle TO · 2026</div>
       <h1 class="hero-title"><span class="a1" data-ko>파트오더</span><span class="a1" data-en>ORDER-TO-SHIP</span><br><span class="a2" data-ko>전 구간 자동화</span><span class="a2" data-en>PART ORDER CYCLE</span></h1>
       <p class="hero-desc">
-        <span data-ko>원래 맡은 구간은 오라클 Pick Release 한 단계였다. 주문 접수와 Parts Order 생성은 서비스팀, 릴리즈는 나. 그 한 단계를 자동화한 Pick Release Watcher(누적 372건)를 기점으로 앞뒤 공정을 하나씩 흡수해, 출고요청 메일 수신부터 입금 대조 · Case/Parts Order 생성 · 오라클 전송 · 릴리즈 · 물류창고 완료통보까지 7단계를 한 앱에서 처리한다. 사람이 남긴 지점은 Send to Approval 한 번. 소모품 파트오더(Track A)와 엔지니어(FSE) Shipping Only 파트오더(Track B)를 같은 앱의 탭으로 묶었고, 진행 상태는 앱이 적어둔 메모가 아니라 릴리즈 상태파일 · 보낸편지함 · 승인/취소 알림 메일이라는 실제 흔적으로만 판정한다.</span>
-        <span data-en>My original scope was a single step: Oracle Pick Release. Order intake and Parts Order creation belonged to the service team; release was mine. Starting from Pick Release Watcher (372 orders to date), which automated that one step, the pipeline absorbed the stages on either side — request email, deposit verification, Case/Parts Order creation, Oracle interface, release, and the completion notice to the 3PL warehouse: seven stages in one app. Exactly one human checkpoint remains: Send to Approval. Consumables orders (Track A) and engineer-facing Shipping-Only orders (Track B) share the app as tabs, and progress is never read from notes the app wrote — only from real traces: the release state file, Sent Items, and approval/cancellation notification mails.</span>
+        <span data-ko><span class="ln">출발점은 오라클 Pick Release 한 단계 (주문 접수·Parts Order 생성은 서비스팀, 릴리즈는 본인 담당)</span><span class="ln">Pick Release Watcher(누적 694건, 오류 0)를 시작으로 앞뒤 공정을 하나씩 흡수</span><span class="ln">출고요청 메일 수신 → 입금 대조 → Case/Parts Order 생성 → 오라클 전송 → 릴리즈 → 물류창고 완료 통보를 한 앱에서 처리</span><span class="ln">사람이 직접 누르는 지점은 Send to Approval 한 번</span><span class="ln">소모품 파트오더(Track A)와 엔지니어 Shipping Only 파트오더(Track B)를 한 앱의 탭으로 통합</span><span class="ln">진행 상태는 앱 메모가 아닌 실제 흔적(릴리즈 상태파일·보낸편지함·승인/취소 알림 메일)으로만 판정</span></span>
+        <span data-en>My original scope was a single step: Oracle Pick Release. Order intake and Parts Order creation belonged to the service team; release was mine. Starting from Pick Release Watcher (694 orders to date), which automated that one step, the pipeline absorbed the stages on either side — request email, deposit verification, Case/Parts Order creation, Oracle interface, release, and the completion notice to the 3PL warehouse: seven stages in one app. Exactly one human checkpoint remains: Send to Approval. Consumables orders (Track A) and engineer-facing Shipping-Only orders (Track B) share the app as tabs, and progress is never read from notes the app wrote — only from real traces: the release state file, Sent Items, and approval/cancellation notification mails.</span>
       </p>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num" style="color:var(--accent);">6/7</span><span class="stat-label" data-ko>공정 자동화 단계 - 승인만 사람</span><span class="stat-label" data-en>stages automated - approval stays human</span></div>
-        <div class="stat"><span class="stat-num" style="color:var(--accent3);">372</span><span class="stat-label" data-ko>Pick Release 누적 - 확장의 출발점</span><span class="stat-label" data-en>orders released to date - the starting point</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent3);">694</span><span class="stat-label" data-ko>Pick Release 누적 - 확장의 출발점</span><span class="stat-label" data-en>orders released to date - the starting point</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent2);">20~30분</span><span class="stat-label" data-ko>건당 수작업 → 승인 클릭 1회</span><span class="stat-label" data-en>manual minutes per order → one approval click</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent4);">2건</span><span class="stat-label" data-ko>실전 오발송 사고 - 당일 원인수정·회수</span><span class="stat-label" data-en>live mis-send incidents - same-day root-caused &amp; recalled</span></div>
       </div>
@@ -243,6 +246,8 @@
         <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>입금자가 병원이 아니라 원장·직원 개인 이름인 경우가 흔해 이름 일치는 필수 조건이 아니라 등급 구분에 씀 - 입금확인 / 이름불일치 / 입금없음</span><span data-en>Remitters are often an individual, not the clinic, so a name match grades the result rather than gating it - verified / name-mismatch / not-found</span></div></div>
         <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>지점명만 겹쳐 다른 병원 입금을 잡던 오탐을 브랜드명 우선 매칭으로 교정</span><span data-en>Fixed a false positive where a shared branch token matched a different clinic, by requiring the brand token</span></div></div>
         <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>일괄 생성에서는 미확인 건을 자동 제외, 단건은 경고 후 사람이 판단</span><span data-en>Batch creation drops unverified orders; single creation warns and leaves the call to a human</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>[2026.10] 분할 입금 인식 - 이름이 맞는 입금 2~3건의 합이 주문 금액과 같으면 확인 처리, 같은 입금을 두 병원에 중복 배정하지 않음</span><span data-en>[2026.10] Split payments: two or three name-matched deposits that sum to the order amount count as verified, and one deposit is never assigned to two clinics</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>[2026.10] 오라클 오더번호가 나오면 재무 입금 원장에 기입 - 공동편집 중인 열린 엑셀에 붙어 해당 셀만 수정</span><span data-en>[2026.10] Once the Oracle order number exists it is written back to the finance deposit ledger, by attaching to the open co-authored workbook and touching only that cell</span></div></div>
         </div>
       </div>
       <div class="mod-card c1 reveal">
@@ -269,6 +274,31 @@
         <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>병렬 이득은 최대 4분 걸리는 오라클 전송 대기가 겹치는 구간 - 릴리즈를 억지로 겹치면 잠금 대기로 오히려 느려진다</span><span data-en>The gain comes from overlapping the Oracle interface poll (up to 4 min); forcing release to overlap only burns lock-wait</span></div></div>
         <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>워커마다 전용 브라우저 탭 - 로그인 탭을 공유하면 서로 다른 주소로 끌고 다녀 양쪽이 깨진다</span><span data-en>Each worker gets its own browser tab; sharing the logged-in tab makes both sides navigate it out from under each other</span></div></div>
         <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>여러 건 생성은 Location을 먼저 전부 조회해 후보가 갈리는 건만 시작 전에 사람이 고른다</span><span data-en>Multi-create resolves every Location up front, asking a human only where candidates are ambiguous</span></div></div>
+        </div>
+      </div>
+      <div class="mod-card c4 reveal">
+        <div class="mod-head">
+          <div class="mod-file">po_after_approval.py · 2026.11</div>
+          <div class="mod-title" data-ko>승인 후 원스톱 처리</div>
+          <div class="mod-title" data-en>One Pass After Approval</div>
+        </div>
+        <div class="mod-desc"><span data-ko>승인이 끝난 주문을 한 번에 넘기면 오라클 전송을 병렬로 누르고, 오라클 번호가 나오는 건부터 릴리즈 대기열에 올린다. 릴리즈는 2건씩, 끝난 건부터 창고 안내 메일과 입금 원장 기입까지 이어간다. 실전에서 승인부터 원장 기입까지 5분.</span><span data-en>Approved orders go in as one batch: the Oracle interface is triggered in parallel, each order joins the release queue as soon as its Oracle number appears, releases run two at a time, and each finished order moves straight on to the warehouse notice and the ledger write-back. Five minutes from approval to ledger on a live order.</span></div>
+        <div class="mod-points">
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>릴리즈가 3번째 건마다 멈추던 원인 - 한 브라우저 프로세스가 2건 넘게 처리하면 새 창 진입이 타임아웃 → 라운드마다 새 프로세스로 실행</span><span data-en>Releases stalled on every third order because one browser process handling more than two timed out opening new windows; each round now runs in a fresh process</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>오라클 전송 결과가 'Processed'면 정상 진행 중으로 보고 대기, 비어 있을 때만 수동 처리 경로</span><span data-en>A 'Processed' interface status is treated as in progress and waited on; only a blank status takes the manual path</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>백오더·출고 라인 0건은 창고 메일을 보류</span><span data-en>Backorders and zero-line releases hold the warehouse mail</span></div></div>
+        </div>
+      </div>
+      <div class="mod-card c3 reveal">
+        <div class="mod-head">
+          <div class="mod-file">Non-billable · 2026.10</div>
+          <div class="mod-title" data-ko>빈캔 프로모션 · 불량캔 일괄 생성</div>
+          <div class="mod-title" data-en>Promotion &amp; Defect Orders in Bulk</div>
+        </div>
+        <div class="mod-desc"><span data-ko>빈캔 반납 프로모션과 불량캔 교환은 무상(Non-billable) 파트오더다. 확정 내역 엑셀 한 장으로 46건(85캔)의 Case와 PO를 만들고, 결과 PO 번호를 같은 엑셀에 다시 적었다. 생성·승인 요청·오라클 전송은 5건씩 병렬.</span><span data-en>Empty-canister promotions and defective-canister exchanges are non-billable parts orders. From one confirmed-list spreadsheet, 46 cases and orders (85 canisters) were created and their PO numbers written back to the same file. Creation, approval requests and Oracle interface run five at a time.</span></div>
+        <div class="mod-points">
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>불량(Billable)과 프로모션(Sales Support)은 Billing Type이 달라 같은 지점이라도 Case·PO를 분리</span><span data-en>Defect and promotion carry different billing types, so the same clinic gets separate cases and orders</span></div></div>
+        <div class="mpoint"><div class="mpoint-dot"></div><div><span data-ko>생성 폼이 수량 1로만 저장되는 제약 → 생성 직후 상세 화면에서 수량 수정</span><span data-en>The creation form only saves a quantity of one, so the quantity is corrected on the detail page right after</span></div></div>
         </div>
       </div>
 </div>
