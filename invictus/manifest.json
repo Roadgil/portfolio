@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "INVICTUS — 콜로세움의 검투사",
+  "short_name": "INVICTUS",
+  "description": "콜로세움 1대1 스와이프 검투 액션. 궤적을 읽고 반대로 그어 패링하라.",
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "portrait",
+  "background_color": "#120c08",
+  "theme_color": "#120c08",
+  "categories": ["games"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

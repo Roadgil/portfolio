@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#120c08">
+  <meta name="color-scheme" content="dark">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="INVICTUS">
+  <meta name="description" content="콜로세움 1대1 스와이프 검투 액션 — 방향을 읽고 패링하라.">
+  <title>INVICTUS — 콜로세움의 검투사</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" crossorigin>
+</head>
+<body>
+<div id="app">
+  <div id="stage"></div>
+  <div id="touch"></div>
+
+  <div id="fxLayer">
+    <div id="vignette"></div><div id="lowhp"></div><div id="bulletTint"></div><div id="deathTint"></div><div id="flash"></div>
+  </div>
+  <div id="popups"></div>
+
+  <!-- 전투 HUD -->
+  <div id="hud" class="hidden">
+    <div class="hud-top">
+      <button id="btnPause" class="icon-btn" aria-label="일시정지"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+      <div class="ebox">
+        <div class="erow"><span id="eLvl" class="lvl">Lv1</span><span id="eName">적</span><span id="eTags"></span></div>
+        <div class="bar ebar"><i class="ghost" id="eGhost"></i><i class="fill" id="eFill"></i><i class="ticks"></i></div>
+      </div>
+      <button id="btnMute" class="icon-btn" aria-label="음소거"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="pbox">
+      <div class="prow"><span class="tag">HP</span><div class="bar pbar"><i class="ghost" id="pGhost"></i><i class="fill" id="pFill"></i></div><b id="pTxt">100</b></div>
+      <div class="prow"><span class="tag">방패</span><div class="bar sbar"><i class="fill" id="sFill"></i></div></div>
+      <div class="prow"><span class="tag">분노</span><div class="bar rbar"><i class="fill" id="rFill"></i></div></div>
+    </div>
+    <div id="combo"><b id="comboN">0</b><span>COMBO</span><em id="comboM">×1.0</em></div>
+    <div id="staggerTag">STAGGER <em>×2</em></div>
+    <div id="counterTag">반격 준비</div>
+    <div id="warn"></div>
+    <div id="hint"><div class="harrow"><svg viewBox="0 0 100 40"><path d="M4 20h70M60 6l26 14-26 14" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><small>이 방향으로 패링!</small></div>
+    <div class="controls">
+      <button id="btnPotion" class="ctl round sm" aria-label="포션"><svg viewBox="0 0 24 24"><path d="M9 2h6v2h-1v4.2l4.6 7.6A3.5 3.5 0 0 1 15.6 21H8.4a3.5 3.5 0 0 1-3-5.2L10 8.2V4H9z"/><path class="liq" d="M7.3 15h9.4l1 1.8A1.8 1.8 0 0 1 16.1 19H7.9a1.8 1.8 0 0 1-1.6-2.2z"/></svg><b id="potN" class="badge">2</b></button>
+      <button id="btnFin" class="ctl round sm fin" aria-label="필살기"><svg viewBox="0 0 24 24"><path d="M3 3l8.5 8.5M5 3H3v2M21 21l-6-6M14 14l2.5 2.5M19 13l-6 6M17.6 18.4l2 2M21 3l-11 11M19 3h2v2M10 13l-6 6M4.4 18.4l-2 2M8 13l3 3" fill="none" stroke-width="2.2" stroke-linecap="round"/></svg><small>필살</small><i class="ring"></i></button>
+      <button id="btnDL" class="ctl round dodge" aria-label="왼쪽 회피"><svg viewBox="0 0 24 24"><path d="M14 5l-7 7 7 7M19 5l-7 7 7 7" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><small>회피</small></button>
+      <button id="btnShield" class="ctl round shield" aria-label="방패"><svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5.2-3.4 9.6-8 11-4.6-1.4-8-5.8-8-11V5z"/><path class="boss" d="M12 8.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg><small>방패</small></button>
+      <button id="btnDR" class="ctl round dodge" aria-label="오른쪽 회피"><svg viewBox="0 0 24 24"><path d="M10 5l7 7-7 7M5 5l7 7-7 7" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><small>회피</small></button>
+    </div>
+  </div>
+
+  <!-- 처형 QTE -->
+  <div id="qte" class="hidden">
+    <div class="qte-title" id="qteTitle">처형</div>
+    <div class="qte-row" id="qteRow"></div>
+    <div class="qte-big" id="qteBig"><svg viewBox="0 0 100 40"><path d="M4 20h70M60 6l26 14-26 14" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="qte-timer"><i id="qteBar"></i></div>
+    <div class="qte-sub">화살표 방향으로 연속해서 그어라!</div>
+  </div>
+
+  <!-- VS 카드 -->
+  <div id="vs" class="hidden">
+    <div class="vs-inner">
+      <div class="vs-league" id="vsLeague">브론즈 리그 · 1경기</div>
+      <div class="vs-name" id="vsName">루키우스</div>
+      <div class="vs-title" id="vsTitle">검방패병 · Lv1</div>
+      <div class="vs-tip" id="vsTip"></div>
+      <div class="vs-skip">화면을 탭하면 건너뜀</div>
+    </div>
+  </div>
+
+  <!-- 화면들 -->
+  <section id="scrLoading" class="screen show">
+    <div class="logo"><span class="logo-sub">COLOSSEUM</span><h1>INVICTUS</h1><span class="logo-ko">콜로세움의 검투사</span></div>
+    <div class="load-bar"><i id="loadFill"></i></div>
+    <div class="load-txt" id="loadTxt">아레나를 준비하는 중…</div>
+    <div class="load-err hidden" id="loadErr"></div>
+  </section>
+
+  <section id="scrMenu" class="screen">
+    <div class="cur-bar"><span class="gold"><i></i><b id="mGold">0</b></span><span class="gem"><i></i><b id="mGems">0</b></span><span class="pot"><i></i><b id="mPots">0</b></span></div>
+    <div class="logo small"><span class="logo-sub">COLOSSEUM</span><h1>INVICTUS</h1><span class="logo-ko">콜로세움의 검투사</span></div>
+    <div class="menu-next" id="menuNext"></div>
+    <nav class="menu-btns">
+      <button class="btn primary" id="mTour">토너먼트</button>
+      <button class="btn" id="mEndless">무한 아레나 <small id="mBest"></small></button>
+      <button class="btn" id="mArmory">무기고</button>
+      <div class="btn-row"><button class="btn ghost" id="mHow">조작법</button><button class="btn ghost" id="mSet">설정</button></div>
+    </nav>
+    <div class="ver" id="ver"></div>
+  </section>
+
+  <section id="scrTour" class="screen">
+    <header class="scr-head"><button class="back" data-back>‹</button><h2>토너먼트</h2><span></span></header>
+    <div class="tour-list" id="tourList"></div>
+  </section>
+
+  <section id="scrArmory" class="screen">
+    <header class="scr-head"><button class="back" data-back>‹</button><h2>무기고</h2><div class="cur-mini"><span class="gold"><i></i><b id="aGold">0</b></span><span class="gem"><i></i><b id="aGems">0</b></span></div></header>
+    <div class="tabs" id="armTabs"><button data-tab="weapons" class="on">무기</button><button data-tab="gear">방패·갑옷</button><button data-tab="shop">상점</button></div>
+    <div class="arm-list" id="armList"></div>
+  </section>
+
+  <section id="scrHow" class="screen">
+    <header class="scr-head"><button class="back" data-back>‹</button><h2>조작법</h2><span></span></header>
+    <div class="how">
+      <div class="how-item"><div class="how-ic swipe"></div><div><b>스와이프 베기</b><p>8방향으로 그어 공격. 이전과 <em>다른 방향</em>으로 이어 베면 콤보 배율이 올라간다. 중간에 <em>꺾어 그으면 페인트</em> — 방패를 무시한다.</p></div></div>
+      <div class="how-item"><div class="how-ic parry"></div><div><b>방향 일치 패링</b><p>적의 공격 궤적(주황)이 <em>번쩍이는 순간</em>, 궤적의 <em>반대 방향</em>으로 맞받아 그어라. 성공하면 적이 그로기(데미지 ×2). 방향이 틀리면 튕겨 나가 무방비가 된다.</p></div></div>
+      <div class="how-item"><div class="how-ic shield"></div><div><b>방패 (홀드)</b><p>일반 공격을 막는다. 내구도가 다하면 가드 브레이크. 맞기 직전에 들면 <em>저스트 가드</em> — 소모 0 + 다음 공격 반격 버프.</p></div></div>
+      <div class="how-item"><div class="how-ic dodge"></div><div><b>좌·우 회피</b><p><em>붉은 공격(가드 불가·잡기)</em>은 회피만 통한다. 타이밍 맞춰 피하면 <em>카운터 슬로우(불릿타임)</em>.</p></div></div>
+      <div class="how-item"><div class="how-ic rage"></div><div><b>분노 → 인빅투스</b><p>게이지가 차면 필살 버튼. 슬로우모션 속 화살표를 따라 그으면 시네마틱 3연속 피니시. 그로기 상태의 빈사 적은 <em>처형</em> 기회가 자동으로 열린다.</p></div></div>
+      <div class="how-item"><div class="how-ic pc"></div><div><b>PC</b><p>마우스 드래그 = 베기 · A/D(←/→) 회피 · S/Space 방패 · Q 포션 · E 필살 · Esc 일시정지</p></div></div>
+      <button class="btn primary" data-back>알겠다</button>
+    </div>
+  </section>
+
+  <section id="scrSet" class="screen">
+    <header class="scr-head"><button class="back" data-back>‹</button><h2>설정</h2><span></span></header>
+    <div class="set-list">
+      <label class="set-row"><span>사운드</span><input type="checkbox" id="sSound"><i class="sw"></i></label>
+      <label class="set-row"><span>진동 (햅틱)</span><input type="checkbox" id="sHaptic"><i class="sw"></i></label>
+      <label class="set-row"><span>전투 시작 시 전체화면</span><input type="checkbox" id="sFull"><i class="sw"></i></label>
+      <div class="set-row"><span>그래픽 품질</span><div class="seg" id="sQuality"><button data-v="auto">자동</button><button data-v="high">높음</button><button data-v="medium">중간</button><button data-v="low">낮음</button></div></div>
+      <div class="set-row"><span>프레임</span><div class="seg" id="sFps"><button data-v="auto">최대</button><button data-v="60">60 절전</button></div></div>
+      <div class="set-note" id="sInfo"></div>
+      <button class="btn danger" id="sReset">진행 데이터 초기화</button>
+    </div>
+  </section>
+
+  <section id="scrPause" class="screen modal">
+    <div class="modal-box">
+      <h2>일시정지</h2>
+      <button class="btn primary" id="pResume">계속 싸운다</button>
+      <button class="btn" id="pHow">조작법</button>
+      <button class="btn" id="pMute">사운드 끄기</button>
+      <button class="btn danger" id="pQuit">기권한다</button>
+    </div>
+  </section>
+
+  <section id="scrResult" class="screen modal">
+    <div class="modal-box result">
+      <div class="res-title" id="rTitle">승리!</div>
+      <div class="res-sub" id="rSub"></div>
+      <div class="res-rewards" id="rRewards"></div>
+      <div class="res-stats" id="rStats"></div>
+      <div class="res-btns" id="rBtns"></div>
+    </div>
+  </section>
+
+  <div id="toast"></div>
+  <div id="rotate">세로 화면으로 돌려주세요</div>
+</div>
+
+<script>
+  // 모듈 로드 실패 감시 (CDN 차단·오프라인 첫 실행 등)
+  window.__bootT = setTimeout(function () {
+    if (window.__gameBooted) return;
+    var e = document.getElementById('loadErr');
+    if (e) { e.textContent = '로딩이 지연되고 있습니다. 네트워크 연결을 확인한 뒤 새로고침 해주세요.'; e.classList.remove('hidden'); }
+  }, 20000);
+  window.addEventListener('error', function (ev) {
+    if (window.__gameBooted) return;
+    var e = document.getElementById('loadErr');
+    if (e && ev && ev.message) { e.textContent = '로딩 오류: ' + ev.message; e.classList.remove('hidden'); }
+  });
+</script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
