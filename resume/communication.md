@@ -67,3 +67,9 @@ Salesforce처럼 영업팀이 분기 목표 대비 매출을 관리하는 사내
 | 27 | 영업 데이터 무단 접근을 막기 위해 이메일 로그인 인증 도입 품의를 사용자 15명 기준으로 작성. | Drafted the approval request for email login on the sales system (15 users) to keep sales data from unauthorized access. | Security, Budget approval |
 | 28 | 포캐스트 데이터 정리 전에 제품 분류 기준과 원화·달러 가격 열 사용 기준을 영업 담당자에게 확인. | Confirmed product classification and KRW/USD price rules with Sales before cleaning the forecast data. | Data definition, Forecasting |
 
+
+## 로레알 코리아 · Director Assistant (2024.08 ~ 2025.11)
+
+| # | 한국어 | 영문 | JD 키워드 |
+|---|---|---|---|
+| 29 | SCM 업무와 함께 Director Assistant 역할을 맡아 매니저↔디렉터, 팀원↔디렉터 사이의 보고·요청 흐름을 이어 주며 의사결정 연결고리를 강화. | Bridged managers and team members to the Director as Director Assistant alongside the supply chain role, keeping reports and requests flowing both ways. | Executive support, Internal communication, Stakeholder management |
