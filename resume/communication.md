@@ -10,7 +10,7 @@
 
 | 한국어 | 영문 | JD 키워드 |
 |---|---|---|
-| APAC·미국·유럽 SCM, 3PL, 포워더·관세사, 재무·서비스팀과 영어로 재고·일정을 조율, 요청마다 근거 수치·수량·기한·선택지를 붙여 끝까지 마무리. | Aligned stock and timelines in English across APAC, U.S. and EMEA supply chain teams, a 3PL, forwarders, a customs broker, Finance and Service, attaching the numbers, quantity, need-by date and options to every request. | Stakeholder management, Cross-functional, Global SCM |
+| APAC·미국·유럽 9개 국가·지역(일본·중국·홍콩·호주·이스라엘·영국·스페인·벨기에·미국) SCM, 3PL, 포워더·관세사, 재무·서비스팀과 영어로 재고·일정을 조율, 요청마다 근거 수치·수량·기한·선택지를 붙여 끝까지 마무리. | Aligned stock and timelines in English with supply chain teams in nine countries across APAC, the U.S. and EMEA (Japan, China, Hong Kong, Australia, Israel, UK, Spain, Belgium, U.S.), a 3PL, forwarders, a customs broker, Finance and Service, attaching the numbers, quantity, need-by date and options to every request. | Stakeholder management, Cross-functional, Global SCM |
 
 ## Hot part · 긴급 할당 (APAC / 글로벌 플래닝)
 
