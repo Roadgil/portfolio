@@ -30,3 +30,7 @@ Candela Korea 수입/통관/재무/수출/파트오더/대시보드 업무를 �
 - 각 `code/<project>/` 폴더의 `NOTES.md`에 원본 로컬 경로, 실행 방식(스케줄러/트리거), **실제 재실행에 필요한 패키지/외부 의존성/환경변수, 재사용 시 고쳐야 할 것**이 정리되어 있다.
 - state/cache json, 실행 로그, `.bak` 백업 파일, PDF/Excel 데이터 파일은 전시 목적상 제외했다.
 - `code/export-rebalance/dhl_export_arrange.py`, `fedex_ship_watcher.py`의 물류포털 로그인 비밀번호는 하드코딩을 제거하고 환경변수(`DHL_PASSWORD`, `FEDEX_PASSWORD`)로 읽도록 코드를 고쳤다(2026-09-22).
+
+## 이력서용 불릿
+
+- [`resume/communication.md`](resume/communication.md): 커뮤니케이션·이해관계자 관리 불릿(EN/KR), JD별로 골라 쓰는 용도.
