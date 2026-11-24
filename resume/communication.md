@@ -39,6 +39,16 @@
 |---|---|---|---|
 | 12 | 물류·폐기 5개 업체 월 지급요청을 목적·금액(VAT 포함)·지급차수·계좌·PR/PO 5항목 양식으로 통일. | Unified monthly payment requests to Finance for five logistics and disposal vendors on one five-field format: purpose, VAT-inclusive amount, payment run, account and PR/PO. | Finance partnership, Standardization |
 | 13 | 대표님께 보고한 월마감 SLOB 수치에서 오류를 찾아 다음 영업일에 원인과 함께 먼저 정정 보고. | Corrected a slow-moving stock figure in the month-end report to the managing director on the next business day, explaining the cause. | Integrity, Executive reporting |
-| 14 | 입고 수량 차이를 부적합보고서(NCR)로 작성해 3PL·품질팀과 공유. | Filed a nonconformance report for an inbound count gap at the 3PL and shared it with Quality. | 3PL management, Quality |
-| 15 | Billable 승인라인 변경을 서비스팀에, 프로모션캔 QR 회수 절차를 전사에 공지. | Announced the billable approval-line change to Service and the promotional can QR recovery process company-wide. | Change management, Internal communication |
-| 16 | 월마감 전 미반납 Unused Return 7건을 담당 엔지니어 4명에게 건별로 확인 요청. | Followed up with 4 engineers on 7 unused returns before the month-end close. | Month-end close, Follow-through |
+| 14 | Billable 승인라인 변경을 서비스팀에, 프로모션캔 QR 회수 절차를 전사에 공지. | Announced the billable approval-line change to Service and the promotional can QR recovery process company-wide. | Change management, Internal communication |
+| 15 | 월마감 전 미반납 Unused Return 7건을 담당 엔지니어 4명에게 건별로 확인 요청. | Followed up with 4 engineers on 7 unused returns before the month-end close. | Month-end close, Follow-through |
+
+## 규제 · 품질 (RA / QA)
+
+| # | 한국어 | 영문 | JD 키워드 |
+|---|---|---|---|
+| 16 | RMA 반송 화물의 Regulatory Hold가 RA 승인 뒤에도 풀리지 않자, 승인이 한국행에만 적용되고 미국행은 그대로라는 원인을 찾아 RA와 해제. | Diagnosed why a Regulatory Hold on an RMA shipment to the U.S. survived RA approval, which covered only the Korea destination, and had RA release the U.S. hold. | Regulatory affairs, Root cause, Trade compliance |
+| 17 | 국내 단종 품목의 미국 반송 Regulatory Hold를 IT팀과 원인 확인 후 필요한 증빙을 먼저 제안해 1영업일 내 해제. | Resolved a Regulatory Hold on a discontinued item bound for the U.S. within one business day, confirming the cause with IT and offering RA the supporting documents up front. | Regulatory affairs, Cross-functional |
+| 18 | 인허가 시험용 신제품 시료 3품목을 시료확인서로 표준통관하도록 관세사와 조율하고, 3건으로 나뉜 신고 내역(품목·수량·신고번호·필증)을 정리해 RA 시험 의뢰 자료로 전달. | Cleared three pre-approval product samples for certification testing under a sample confirmation letter, working with the customs broker across three entries and giving RA a declaration summary for the test submission. | Medical device licensing, Customs, RA support |
+| 19 | 같은 LOT 13박스에서 박스당 1개씩 불량이 나오자 완박스 12개 재구성·2개만 소분하는 안을 RA에 제안, 허가 기준상 낱개 사용 가능 여부를 당일 확인. | Proposed rebuilding 12 full boxes and splitting only 2 units after one defect per box turned up across 13 boxes of one lot, and checked the license terms on single-unit use with RA the same day. | Quality, Inventory optimization |
+| 20 | 창고·병원에서 보고된 부적합품 4건을 케이스로 만들어 RAQA에 전달하고, MRB·Scrap 이동과 폐기 일정까지 회신. | Logged four nonconforming-product reports from the 3PL and clinics as cases for RAQA, then confirmed MRB or scrap moves and disposal timing. | Quality, NCR, 3PL management |
+| 21 | 수입실적보고에 필요한 자재코드·수량·통관 일정·필증과 표준통관예정보고서를 RA에 제공, 추가 요청은 당일 30분 안에 회신. | Supplied RA with item codes, quantities, clearance dates, permits and the standard clearance report for an import performance filing, answering the follow-up within 30 minutes. | Regulatory reporting, Customs |
