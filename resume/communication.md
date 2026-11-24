@@ -67,6 +67,15 @@ Salesforce처럼 영업팀이 분기 목표 대비 매출을 관리하는 사내
 | 27 | 포캐스트 데이터 정리 전에 제품 분류 기준과 원화·달러 가격 열 사용 기준을 영업 담당자에게 확인. | Confirmed product classification and KRW/USD price rules with Sales before cleaning the forecast data. | Data definition, Forecasting |
 
 
+## 업무 연속성 · 반복은 시스템, 소통은 사람
+
+2026년 11월 1주 휴가(백업 인력 없음) 기간의 자동화 처리 실적. 수치는 각 자동화의 처리 이력 기준.
+
+| # | 한국어 | 영문 | JD 키워드 |
+|---|---|---|---|
+| 29 | 1주 휴가 동안 백업 인력 없이 FSE 부품 출고 32건(31건 첫 시도 완료), 통관 C.I 가격 검증 7건(불일치 1건은 자동 보류), 해외 재배치 수출 1건(신규 오더 감지부터 운송장 생성, 3PL 전달, 실적·ERP 기입까지), RMA 3건이 자동 처리됨. | Kept operations running through a full week of PTO with no backup: 32 field-engineer part releases (31 on the first attempt), 7 customs invoice price checks with the one mismatch held for review, one cross-border rebalance export from order detection through label, 3PL handoff and ERP update, and 3 RMA cases. | Business continuity, Automation, Operational resilience |
+| 30 | 반복 업무는 스케줄 자동화로 옮기고 해외 SCM·3PL·관세사와의 소통과 예외 판단만 사람이 맡도록 업무를 나눠, 담당자 부재 시 백업 인수인계가 필요 없는 구조로 전환. | Split the role so scheduled automation carries the repetitive steps and only partner communication and exception calls stay with a person, removing the need for a backup handover during absences. | Process design, Single point of failure, Change management |
+
 ## 로레알 코리아 · Director Assistant (2024.08 ~ 2025.11)
 
 | # | 한국어 | 영문 | JD 키워드 |
