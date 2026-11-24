@@ -10,19 +10,19 @@
 
 | 한국어 | 영문 | JD 키워드 |
 |---|---|---|
-| APAC·미국·유럽 SCM, 3PL, 포워더·관세사, 재무·서비스팀과 영어로 재고·일정을 조율, 요청마다 근거 수치·수량·기한·선택지를 붙여 끝까지 마무리. | Aligned stock and timelines in English across APAC, U.S. and EMEA supply chain teams, a 3PL, forwarders, a customs broker, Finance and Service, attaching the numbers, quantity, need-by date and options to every request. | Stakeholder management, Cross-functional, Global SCM |
+| APAC·미국·유럽 9개 국가·지역(일본·중국·홍콩·호주·이스라엘·영국·스페인·벨기에·미국) SCM, 3PL, 포워더·관세사, 재무·서비스팀과 영어로 재고·일정을 조율, 요청마다 근거 수치·수량·기한·선택지를 붙여 끝까지 마무리. | Aligned stock and timelines in English with supply chain teams in nine countries across APAC, the U.S. and EMEA (Japan, China, Hong Kong, Australia, Israel, UK, Spain, Belgium, U.S.), a 3PL, forwarders, a customs broker, Finance and Service, attaching the numbers, quantity, need-by date and options to every request. | Stakeholder management, Cross-functional, Global SCM |
 
 ## Hot part · 긴급 할당 (APAC / 글로벌 플래닝)
 
 | # | 한국어 | 영문 | JD 키워드 |
 |---|---|---|---|
-| 1 | 세라믹 반사판 부족분을 주간 소모량(30~40개)과 입고 예정분(30개, 1주치)을 근거로 APAC 플래닝에 요청해 글로벌 할당 회의 안건으로 상정. | Escalated a ceramic reflector shortage to APAC planning, showing that the 30 units arriving covered only one week at 30-40 a week, which put it on the global allocation meeting agenda. | Escalation, Allocation, Demand planning |
-| 2 | 오픈 오더가 없어 막힌 LCD 할당 건을 서비스팀 오더 생성으로 풀고, 약 1시간 만에 오더 번호를 APAC에 회신. | Unblocked an LCD allocation stalled by missing open orders, getting Service to raise the orders and sending the order numbers back to APAC within about an hour. | Allocation, Responsiveness |
+| 1 | 소모성 hot part 부족분을 주간 소모량(30~40개)과 입고 예정분(1주치)을 근거로 APAC 플래닝에 요청해 글로벌 할당 회의 안건으로 상정. | Escalated a consumable hot-part shortage to APAC planning, showing that incoming stock covered only one week at 30-40 units a week, which put it on the global allocation meeting agenda. | Escalation, Allocation, Demand planning |
+| 2 | 오픈 오더가 없어 막힌 장비 수리 부품 할당 건을 서비스팀 오더 생성으로 풀고, 약 1시간 만에 오더 번호를 APAC에 회신. | Unblocked a system spare-part allocation stalled by missing open orders, getting Service to raise the orders and sending the order numbers back to APAC within about an hour. | Allocation, Responsiveness |
 | 3 | 새로 만든 오더가 오라클에는 있지만 Power BI에는 아직 안 보이는 이유를 스크린샷으로 APAC에 설명. | Explained to APAC, with screenshots, why new orders already in Oracle had not yet appeared in Power BI. | Data communication, ERP/BI |
 | 4 | 장비가 멈춘 고객 3건에 Customer Down 작업지시를 먼저 생성해 APAC에 할당 근거로 제시. | Opened Customer Down work orders for three system-down customers to justify the allocation to APAC. | Prioritization, Customer impact |
 | 5 | 업그레이드 키트를 뜯으면 나머지 구성품을 팔 수 없다는 점을 설명하고, 엔지니어와 협의해 차량 재고를 먼저 쓰고 부족할 때만 다시 요청하기로 정리. | Agreed with field engineers to use trunk stock first rather than open an upgrade kit, which would have left the rest of the kit unsellable, and to escalate again only if stock ran out. | Trade-off analysis, Inventory loss prevention |
-| 6 | 주간 백오더 리뷰에서 재배치가 가능한 PicoWay target·flat mirror도 보내면 예비 재고가 없어진다는 점을 들어 보유 권고. | Advised keeping PicoWay target and flat mirror stock in Korea during the weekly backorder review, since rebalancing it would have left no spare. | Backorder review, Risk judgment |
-| 7 | 서비스팀 대상 주간 Supply & Demand 부품 현황(hot part 추적표) 운영, 사유를 붙여 수요계획 조정(GMPP 판매 증가 → sapphire window kit). | Ran a weekly Supply and Demand part update for Service and adjusted the demand plan with stated reasons, such as rising GMPP sales driving sapphire window kit demand. | Demand planning, S&OP |
+| 6 | 주간 백오더 리뷰에서 국내 재배치가 가능한 hot part도 보내면 예비 재고가 없어진다는 점을 들어 보유 권고. | Advised keeping hot-part stock in Korea during the weekly backorder review, since rebalancing it would have left no spare. | Backorder review, Risk judgment |
+| 7 | 서비스팀 대상 주간 Supply & Demand 부품 현황(hot part 추적표) 운영, 사유를 붙여 수요계획 조정(장비 판매 증가 → 관련 소모성 키트 수요 상향). | Ran a weekly Supply and Demand part update for Service and adjusted the demand plan with stated reasons, such as rising system sales lifting demand for a related consumable kit. | Demand planning, S&OP |
 
 ## 국가 간 RMA · 통관 (미국 / 유럽 / APAC / 포워더)
 
