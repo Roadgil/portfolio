@@ -55,21 +55,20 @@
 
 ## 영업팀 · 사내 매출 관리 시스템 (PM 성격)
 
-Salesforce처럼 영업팀이 분기 목표 대비 매출을 관리하는 사내 웹 시스템을 Sales Admin과 공동으로 만든 사례. 뼈대(구조·데이터 흐름)는 직접 설계하고, 세부 기능은 현업 설명을 들으며 함께 채워 거의 반반으로 진행.
+Salesforce처럼 영업팀이 분기 목표 대비 매출을 관리하는 사내 웹 시스템을 현업 요구를 받아 기획·개발·배포·개선한 사례.
 
 | # | 한국어 | 영문 | JD 키워드 |
 |---|---|---|---|
-| 22 | 영업팀 매출 관리 시스템을 Sales Admin과 공동 개발, 구조와 데이터 흐름의 뼈대를 직접 설계하고 현업 설명을 들으며 세부 기능을 함께 구현. | Co-built an in-house sales tracking system with the Sales Admin, designing the structure and data flow and filling in features together from how the team actually worked. | Product management, Co-development |
-| 23 | 영업팀 요구사항 미팅에서 나온 수정 5건(출고 확정 목록, 경영진 보고 연동, 필터, 팀별 목표 달성률, 분기 지표 접근 제한)을 당일 반영해 영업팀 전체와 대표님께 배포 공지하고 추가 피드백 창구를 열어 둠. | Gathered five change requests in a sales requirements meeting (ship-confirm list, management report link, filters, team target attainment, restricted quarterly view) and shipped them the same day with a release note to the sales team and the managing director. | Product management, Requirements, Stakeholder management |
-| 24 | 영업부 내부 논의로 바뀐 거래 구분 체계를 약 3시간 만에 반영, 기존 255건을 재분류하고 불일치 10건·확인 필요 41건은 임의로 고치지 않고 시트로 정리해 확인 요청, 리포트에 거래 구분별 분석 섹션 추가. | Reclassified 255 records within about three hours after Sales changed its deal categories, sent 10 mismatches and 41 unclear cases back for confirmation instead of guessing, and added a category breakdown to the report. | Data quality, Responsiveness, Product iteration |
-| 25 | Sales Admin과 UI/UX 전면 개편(메뉴 4개, 목표 대비 달성률·GAP, 담당자별 실적 입력)을 함께 진행하고, 영업 회의 사용법 설명 담당으로 지정됨. | Co-led a full UI/UX overhaul with the Sales Admin (four menus, attainment and gap against target, per-rep entry) and was named to walk the sales team through it. | UX, Change management, Training |
-| 26 | 신규/기존 고객 분석 기능을 만들며 판정 기준을 정의하고 담당자별 입력 양식을 배포했다가, 데이터를 직접 찾아내 영업팀 입력 요청을 1시간 만에 철회. | Defined new-versus-existing customer rules for a customer analysis view and sent reps a pick-only input sheet, then sourced the data directly and withdrew the request within an hour. | Requirements, User empathy |
-| 27 | 영업 데이터 무단 접근을 막기 위해 이메일 로그인 인증 도입 품의를 사용자 15명 기준으로 작성. | Drafted the approval request for email login on the sales system (15 users) to keep sales data from unauthorized access. | Security, Budget approval |
-| 28 | 포캐스트 데이터 정리 전에 제품 분류 기준과 원화·달러 가격 열 사용 기준을 영업 담당자에게 확인. | Confirmed product classification and KRW/USD price rules with Sales before cleaning the forecast data. | Data definition, Forecasting |
+| 22 | 영업팀 요구사항 미팅에서 나온 수정 5건(출고 확정 목록, 경영진 보고 연동, 필터, 팀별 목표 달성률, 분기 지표 접근 제한)을 당일 반영해 영업팀 전체와 대표님께 배포 공지하고 추가 피드백 창구를 열어 둠. | Gathered five change requests in a sales requirements meeting (ship-confirm list, management report link, filters, team target attainment, restricted quarterly view) and shipped them the same day with a release note to the sales team and the managing director. | Product management, Requirements, Stakeholder management |
+| 23 | 영업부 내부 논의로 바뀐 거래 구분 체계를 약 3시간 만에 반영, 기존 255건을 재분류하고 불일치 10건·확인 필요 41건은 임의로 고치지 않고 시트로 정리해 확인 요청, 리포트에 거래 구분별 분석 섹션 추가. | Reclassified 255 records within about three hours after Sales changed its deal categories, sent 10 mismatches and 41 unclear cases back for confirmation instead of guessing, and added a category breakdown to the report. | Data quality, Responsiveness, Product iteration |
+| 24 | UI/UX 전면 개편(메뉴 4개, 목표 대비 달성률·GAP, 담당자별 실적 입력)을 진행하고, 영업 회의 사용법 설명 담당으로 지정됨. | Overhauled the UI/UX (four menus, attainment and gap against target, per-rep entry) and was named to walk the sales team through it. | UX, Change management, Training |
+| 25 | 신규/기존 고객 분석 기능을 만들며 판정 기준을 정의하고 담당자별 입력 양식을 배포했다가, 데이터를 직접 찾아내 영업팀 입력 요청을 1시간 만에 철회. | Defined new-versus-existing customer rules for a customer analysis view and sent reps a pick-only input sheet, then sourced the data directly and withdrew the request within an hour. | Requirements, User empathy |
+| 26 | 영업 데이터 무단 접근을 막기 위해 이메일 로그인 인증 도입 품의를 사용자 15명 기준으로 작성. | Drafted the approval request for email login on the sales system (15 users) to keep sales data from unauthorized access. | Security, Budget approval |
+| 27 | 포캐스트 데이터 정리 전에 제품 분류 기준과 원화·달러 가격 열 사용 기준을 영업 담당자에게 확인. | Confirmed product classification and KRW/USD price rules with Sales before cleaning the forecast data. | Data definition, Forecasting |
 
 
 ## 로레알 코리아 · Director Assistant (2024.08 ~ 2025.11)
 
 | # | 한국어 | 영문 | JD 키워드 |
 |---|---|---|---|
-| 29 | SCM 업무와 함께 Director Assistant 역할을 맡아 매니저↔디렉터, 팀원↔디렉터 사이의 보고·요청 흐름을 이어 주며 의사결정 연결고리를 강화. | Bridged managers and team members to the Director as Director Assistant alongside the supply chain role, keeping reports and requests flowing both ways. | Executive support, Internal communication, Stakeholder management |
+| 28 | SCM 업무와 함께 Director Assistant 역할을 맡아 매니저↔디렉터, 팀원↔디렉터 사이의 보고·요청 흐름을 이어 주며 의사결정 연결고리를 강화. | Bridged managers and team members to the Director as Director Assistant alongside the supply chain role, keeping reports and requests flowing both ways. | Executive support, Internal communication, Stakeholder management |
