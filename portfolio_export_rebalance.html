@@ -272,7 +272,7 @@
       <div class="hero-tag">Export Operations · Rebalance / HQ RMA / FedEx · 2026</div>
       <h1 class="hero-title"><span data-ko>수출 오퍼레이션</span><span data-en>EXPORT OPERATIONS</span><br><span class="a1" data-ko>3개 트랙</span><span class="a1" data-en>THREE TRACKS</span><br><span class="a2" data-ko>풀사이클 자동화</span><span class="a2" data-en>FULL-CYCLE AUTOMATION</span></h1>
       <p class="hero-desc">
-        <span data-ko><span class="pbr"><b>문제</b>해외 법인 재배치·본사 반송·FedEx 발송이 창고 조율, Oracle, 통관 서류, 실적 기입에 흩어진 수작업</span><span class="pbr"><b>해결</b>알림 감지 → 3PL 창고 조율 → Oracle 트랜잭션 → 통관 서류 → 수출신고실적 → FedEx 발송·트래킹 회수를 하나의 파이프라인으로 연결</span><span class="pbr"><b>성과</b>수출 SOP 14/14단계 코드화, 수출신고실적 13/13 컬럼 자동 기입</span></span>
+        <span data-ko><span class="pbr"><b>문제</b>해외 법인 수출(Rebalance)·본사 반송·FedEx 발송이 창고 조율, Oracle, 통관 서류, 실적 기입에 흩어진 수작업</span><span class="pbr"><b>해결</b>알림 감지 → 3PL 창고 조율 → Oracle 트랜잭션 → 통관 서류 → 수출신고실적 → FedEx 발송·트래킹 회수를 하나의 파이프라인으로 연결</span><span class="pbr"><b>성과</b>수출 SOP 14/14단계 코드화, 수출신고실적 13/13 컬럼 자동 기입</span></span>
         <span data-en><span class="pbr"><b>Problem</b>Rebalance exports, returns to HQ and FedEx bookings spread across warehouse coordination, Oracle, customs paperwork and ledger entry, all by hand</span><span class="pbr"><b>Built</b>One pipeline from the system alert through 3PL coordination, the Oracle transaction, customs documents and the export ledger to the FedEx shipment and tracking number</span><span class="pbr"><b>Result</b>14 of 14 export SOP steps coded; 13 of 13 export-ledger columns filled automatically</span></span>
       </p>
       <p class="hero-desc" style="margin-top:-30px;">
@@ -280,7 +280,7 @@
         <span data-en>The manual SOP wasn't merely transcribed into code — writing it down as code meant rewriting the procedure itself: eight rules were redefined, covering the request format sent to the warehouse, the unit of work, the source of truth for the ledger, and where the irreversible steps sit.</span>
       </p>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" style="color:var(--accent);">3</span><span class="stat-label" data-ko>자동화 트랙(재배치·반송·발송)</span><span class="stat-label" data-en>Automated Tracks</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent);">3</span><span class="stat-label" data-ko>자동화 트랙(수출·반송·발송)</span><span class="stat-label" data-en>Automated Tracks</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent2);">14/14</span><span class="stat-label" data-ko>수출 SOP 단계 코드화</span><span class="stat-label" data-en>Export SOP Steps Coded</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent3);">11</span><span class="stat-label" data-ko>FedEx 어레인지 단계 코드화</span><span class="stat-label" data-en>FedEx Booking Steps Coded</span></div>
         <div class="stat"><span class="stat-num" style="color:var(--accent4);">8</span><span class="stat-label" data-ko>재정립한 SOP 규칙</span><span class="stat-label" data-en>SOP Rules Redefined</span></div>
@@ -321,7 +321,7 @@
       <div class="mod-card c1 reveal">
         <div class="mod-head">
           <div class="mod-file">rebalance_watcher.py · rebalance</div>
-          <div class="mod-title" data-ko>국가간 재배치 수출</div>
+          <div class="mod-title" data-ko>Rebalance 수출</div>
           <div class="mod-title" data-en>Cross-Border Rebalance Export</div>
         </div>
         <div class="mod-desc" data-ko>한국 창고에서 해외 법인(호주·홍콩·중국·일본·미국·스페인)으로 재고를 옮기는 Transfer Order를, 알림 감지부터 통관 서류·수출신고실적까지 14단계 SOP 전체 코드화했다.</div>
@@ -343,7 +343,7 @@
           <div class="mod-title" data-ko>본사 반송(HQ RMA)</div>
           <div class="mod-title" data-en>HQ RMA Return</div>
         </div>
-        <div class="mod-desc" data-ko>같은 폴더로 들어오지만 목적지가 나라가 아니라 본사 조직(수리랩·리퍼브·구매)인 트리거는 국가간 재배치가 아니라 미국 본사로 되돌려 보내는 무상 반송이다. 서류 규칙이 전혀 달라 독립 분기로 10개 규칙을 명문화했다.</div>
+        <div class="mod-desc" data-ko>같은 폴더로 들어오지만 목적지가 나라가 아니라 본사 조직(수리랩·리퍼브·구매)인 트리거는 해외 법인 수출이 아니라 미국 본사로 되돌려 보내는 무상 반송이다. 서류 규칙이 전혀 달라 독립 분기로 10개 규칙을 명문화했다.</div>
         <div class="mod-desc" data-en>Alerts landing in the same folder but destined for a headquarters organisation — repair lab, refurb, purchasing — rather than a country are not a rebalance at all: they are no-charge returns to US headquarters. The documentation rules differ entirely, so ten of them were codified as a separate branch.</div>
         <div class="mod-points">
           <div class="mpoint"><div class="mpoint-dot"></div><span data-ko>목적지 3종을 하나의 반송 주소로 통일하고, 인보이스 HTS 코드는 미국 재반입 조항으로 고정 — 파트별 코드 조회 자체가 필요 없어짐</span><span data-en>Consolidates the three destination types into one return address and pins the invoice HTS code to the US re-entry provision — removing the need for any per-part code lookup</span></div>
@@ -453,7 +453,7 @@
 
       <div class="sop reveal" style="transition-delay:.20s">
         <div class="sop-n">RULE 06</div>
-        <div class="sop-t"><span data-ko>반송은 재배치와 다른 절차다</span><span data-en>A return is not a rebalance</span></div>
+        <div class="sop-t"><span data-ko>반송은 수출(Rebalance)과 다른 절차다</span><span data-en>A return is not a rebalance</span></div>
         <div class="sop-ba">
           <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>같은 알림 폴더로 들어오지만 목적지가 나라가 아닌 건은 절차가 없어 매번 수기로 처리했다.</span><span data-en>Alerts arriving in the same folder but destined for a headquarters organisation had no written procedure at all, and were handled by hand each time.</span></div>
           <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>목적지·HTS 코드·신고 금액·통관 문구·로케이터 유무·메일 제목·실적 기입·파일명·선언서·본사 서류 메일까지 10개 규칙을 독립 분기로 명문화했다.</span><span data-en>Ten rules — destination, HTS code, declared value, customs wording, whether locators apply, mail subject, ledger entry, file naming, the shipper's declaration, and the headquarters document mail — are codified as a separate branch.</span></div>
@@ -475,7 +475,7 @@
         <div class="sop-n">RULE 08</div>
         <div class="sop-t"><span data-ko>트리거는 한 경로에 기대지 않는다</span><span data-en>Never let a trigger depend on one channel</span></div>
         <div class="sop-ba">
-          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>알림 메일이 유일한 시작점이었다. 메일 발송이 멈춘 나흘 동안 재배치 4건이 통째로 밀렸고, 스캔 로그에는 매 회차 "신규 없음"만 남았다.</span><span data-en>The alert mail was the only entry point. When it stopped for four days, four rebalance cases sat untouched while every scan cycle logged nothing but "no new triggers".</span></div>
+          <div class="sop-line was"><span class="sop-k was">WAS</span><span data-ko>알림 메일이 유일한 시작점이었다. 메일 발송이 멈춘 나흘 동안 Rebalance 수출 4건이 통째로 밀렸고, 스캔 로그에는 매 회차 "신규 없음"만 남았다.</span><span data-en>The alert mail was the only entry point. When it stopped for four days, four rebalance cases sat untouched while every scan cycle logged nothing but "no new triggers".</span></div>
           <div class="sop-line now"><span class="sop-k now">NOW</span><span data-ko>메일에서 아무것도 못 찾으면 알림의 원천인 재고이동 목록을 직접 읽는다. 출발 창고·TO 번호 배정·미출고 상태로 메일과 같은 판정을 만든다.</span><span data-en>When the mail yields nothing, the stock-movement list that raises those alerts is read directly — origin warehouse, an assigned TO number, and a not-yet-shipped status reproduce the same judgement the mail carried.</span></div>
         </div>
         <div class="sop-why"><span data-ko>알림은 원천이 아니라 원천의 사본이다. 사본이 끊긴 것을 "일이 없다"로 읽으면 자동화는 조용히 멈춘 채 정상으로 보인다 — 침묵이 정상인지 장애인지 구분되지 않는 구조가 진짜 결함이었다.</span><span data-en>An alert is a copy of the source, not the source. Read a broken copy as "nothing to do" and the automation stalls while still looking healthy — the real defect was a design in which silence and failure were indistinguishable.</span></div>
@@ -495,7 +495,7 @@
       <div class="tl-item m-mail">
         <div class="tl-dot"></div>
         <div class="tl-head"><span class="tl-tag">MAIL IN</span><span class="tl-step">STEP 01</span></div>
-        <div class="tl-title" data-ko>재배치 알림 감지</div><div class="tl-title" data-en>Rebalance alert detected</div>
+        <div class="tl-title" data-ko>Rebalance 알림 감지</div><div class="tl-title" data-en>Rebalance alert detected</div>
         <div class="tl-desc" data-ko>재고 이동 관리 리스트에 TO 번호가 배정되면 변경 알림 메일이 자동으로 날아온다. 본문에서 TO 번호와 출발·도착 법인, 파트를 읽어낸다. 한 TO에 파트가 여러 개면 파트마다 메일이 따로 오기 때문에 TO 번호 단위로 묶어 한 건으로 처리하고, 아직 TO 번호가 붙지 않은 등록 알림은 트리거 대상에서 제외한다.</div>
         <div class="tl-desc" data-en>When a TO number gets assigned on the stock-movement list, a change-notification email fires automatically. The body yields the TO number, the origin and destination entities, and the part. A single TO with several parts produces one email per part, so they're grouped by TO number into one case; notifications for entries that don't have a TO number yet are skipped as triggers.</div>
       </div>
@@ -503,8 +503,8 @@
       <div class="tl-item m-rma">
         <div class="tl-dot"></div>
         <div class="tl-head"><span class="tl-tag">BRANCH</span><span class="tl-step">— · —</span></div>
-        <div class="tl-title" data-ko>목적지 판정 — 재배치인가, 본사 반송인가</div><div class="tl-title" data-en>Reading the destination — rebalance or return?</div>
-        <div class="tl-desc" data-ko>같은 폴더, 같은 형식의 알림인데 목적지가 나라 코드가 아니라 본사 조직명(수리랩·리퍼브·구매)이면 국가간 재배치가 아니라 미국 본사로 되돌려 보내는 무상 반송이다. 여기서 갈라진 뒤로는 서류 규칙이 통째로 달라진다 — 예전 정규식은 세 글자 국가 코드만 인식해서 이 유형이 조용히 무시돼 왔고, 매번 사람이 수기로 처리하고 있었다.</div>
+        <div class="tl-title" data-ko>목적지 판정 — 해외 법인 수출인가, 본사 반송인가</div><div class="tl-title" data-en>Reading the destination — rebalance or return?</div>
+        <div class="tl-desc" data-ko>같은 폴더, 같은 형식의 알림인데 목적지가 나라 코드가 아니라 본사 조직명(수리랩·리퍼브·구매)이면 해외 법인 수출이 아니라 미국 본사로 되돌려 보내는 무상 반송이다. 여기서 갈라진 뒤로는 서류 규칙이 통째로 달라진다 — 예전 정규식은 세 글자 국가 코드만 인식해서 이 유형이 조용히 무시돼 왔고, 매번 사람이 수기로 처리하고 있었다.</div>
         <div class="tl-desc" data-en>Same folder, same alert format — but when the destination is a headquarters organisation (repair lab, refurb, purchasing) rather than a country code, it isn't a rebalance at all: it's a no-charge return to US headquarters. Everything about the paperwork diverges from here. The old pattern only recognised three-letter country codes, so this type had been silently ignored and handled by hand every time.</div>
       </div>
 
@@ -577,7 +577,7 @@
         <div class="tl-title" data-ko>반송 건의 서류 규칙 — 신고가·선언서·본사 통보</div><div class="tl-title" data-en>Return-only rules — declared value, declaration, HQ notice</div>
         <div class="tl-desc" data-ko>반송은 파는 물건이 아니라 고장난 부품이 제조사로 돌아가는 것이라, 인보이스 금액을 그대로 쓰면 안 된다. 단가·품목금액·소계·총계를 전부 원본의 10%로 다시 쓰고, HTS 코드는 파트와 무관하게 재반입 조항으로 고정하며, 그 금액의 근거가 되는 통관 문구를 품목표 아래 빈 띠에 넣는다. 여기에 반송에 반드시 따라붙는 선언서(Foreign Shipper Declaration)를 양식에서 자동 생성해 인보이스와 함께 본사 담당자 앞 메일에 붙인다.</div>
         <div class="tl-desc" data-en>A return isn't merchandise — it's a faulty part going back to its manufacturer, so the invoice value cannot stand. Unit prices, line amounts, subtotal, and total are all rewritten to a tenth of the original, the HTS code is pinned to the re-entry provision regardless of the part, and the customs sentence justifying that value is placed in the blank band under the item table. The shipper's declaration that always accompanies a return is generated from its template and attached, alongside the invoice, to a mail addressed to headquarters.</div>
-        <div class="tl-desc" data-ko style="margin-top:10px;">금액을 다시 그리면 PDF의 텍스트 묶음이 깨져 품목 파싱이 무너지기 때문에, 실적에 쓸 값은 금액을 손대기 전 원본에서 읽고 코드 안에서 10%를 곱한다. 같은 파트가 시리얼별로 여러 줄에 걸쳐 있어서 선언서와 실적 수량은 파트당 합산해야 맞는다 — 반송만의 규칙으로 두었다가, 시리얼이 붙은 재배치 건에서 수량이 절반만 기입되는 것을 발견하고 두 경로 모두에 적용했다.</div>
+        <div class="tl-desc" data-ko style="margin-top:10px;">금액을 다시 그리면 PDF의 텍스트 묶음이 깨져 품목 파싱이 무너지기 때문에, 실적에 쓸 값은 금액을 손대기 전 원본에서 읽고 코드 안에서 10%를 곱한다. 같은 파트가 시리얼별로 여러 줄에 걸쳐 있어서 선언서와 실적 수량은 파트당 합산해야 맞는다 — 반송만의 규칙으로 두었다가, 시리얼이 붙은 수출 건에서 수량이 절반만 기입되는 것을 발견하고 두 경로 모두에 적용했다.</div>
         <div class="tl-desc" data-en style="margin-top:10px;">Redrawing the amounts breaks the PDF's text grouping and with it the item parser, so the values destined for the ledger are read from the untouched original and scaled in code instead. The same part also spans several rows by serial number, so the declaration and the ledger quantity only come out right when aggregated per part — treated as a return-only rule until a serialised rebalance landed in the ledger at half its quantity, after which it was applied to both paths.</div>
       </div>
 
@@ -795,7 +795,7 @@
       <div class="stack-item"><div class="stack-emoji">🖱️</div><div class="stack-name">Selenium</div><div class="stack-role" data-ko>Oracle Fusion 화면 RPA</div><div class="stack-role" data-en>Oracle Fusion UI RPA</div></div>
       <div class="stack-item"><div class="stack-emoji">☁️</div><div class="stack-name">Oracle Fusion Cloud</div><div class="stack-role" data-ko>Create Pick Wave·Ship Confirm 트랜잭션</div><div class="stack-role" data-en>Create Pick Wave &amp; Ship Confirm transactions</div></div>
       <div class="stack-item"><div class="stack-emoji">📧</div><div class="stack-name">win32com</div><div class="stack-role" data-ko>Outlook 메일 감지·발송</div><div class="stack-role" data-en>Outlook mail detect &amp; send</div></div>
-      <div class="stack-item"><div class="stack-emoji">📋</div><div class="stack-name">SharePoint</div><div class="stack-role" data-ko>재고 재배치 알림·기입</div><div class="stack-role" data-en>Rebalance alerts &amp; write-back</div></div>
+      <div class="stack-item"><div class="stack-emoji">📋</div><div class="stack-name">SharePoint</div><div class="stack-role" data-ko>Rebalance 수출 알림·기입</div><div class="stack-role" data-en>Rebalance alerts &amp; write-back</div></div>
       <div class="stack-item"><div class="stack-emoji">📄</div><div class="stack-name">PyMuPDF</div><div class="stack-role" data-ko>통관 인보이스 PDF 보정·신고가 재기입</div><div class="stack-role" data-en>Customs invoice patching &amp; declared-value rewrite</div></div>
       <div class="stack-item"><div class="stack-emoji">🚚</div><div class="stack-name">FedEx Ship</div><div class="stack-role" data-ko>발송 어레인지 11단계 · 라벨 회수</div><div class="stack-role" data-en>11-step booking flow &amp; label capture</div></div>
       <div class="stack-item"><div class="stack-emoji">📊</div><div class="stack-name">Excel COM</div><div class="stack-role" data-ko>선언서 양식 작성 · 실적 기입</div><div class="stack-role" data-en>Shipper's declaration &amp; ledger writes</div></div>
