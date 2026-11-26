@@ -154,12 +154,29 @@ def set_filters_and_search(page, from_date, to_date):
     try:
         # get_by_label("Transaction Date")는 3개가 잡힘: [0]=Between select,
         # [1]=From input, [2]=To input (실측 확인, 2026-09-30).
-        date_inputs = page.get_by_label("Transaction Date", exact=False)
-        if date_inputs.count() >= 3:
-            date_inputs.nth(1).fill(fmt_date_us(from_date))
-            date_inputs.nth(2).fill(fmt_date_us(to_date))
+        # 2026-10-07: fill()만 하고 바로 Search를 누르면 To(종료일)가 폼에 확정되기 전에
+        # 검색이 나가 "시작일~현재" 전체가 조회되는 경우가 있었다(월별 수집에서 종료일이
+        # 무시돼 수천 행이 나오고 export가 타임아웃 - 사용자가 "시작달만 필터된다"고 지적).
+        # fill 후 Tab으로 확정하고, 값을 다시 읽어 일치 확인 + 불일치 시 재입력한다.
+        want_from, want_to = fmt_date_us(from_date), fmt_date_us(to_date)
+        for attempt in range(1, 4):
+            date_inputs = page.get_by_label("Transaction Date", exact=False)
+            if date_inputs.count() < 3:
+                raise RuntimeError(f"Transaction Date 입력 필드를 3개 못 찾음(찾은 개수: {date_inputs.count()})")
+            date_inputs.nth(1).fill(want_from)
+            page.keyboard.press("Tab")
+            page.wait_for_timeout(600)
+            date_inputs = page.get_by_label("Transaction Date", exact=False)
+            date_inputs.nth(2).fill(want_to)
+            page.keyboard.press("Tab")
+            page.wait_for_timeout(600)
+            date_inputs = page.get_by_label("Transaction Date", exact=False)
+            got_from, got_to = date_inputs.nth(1).input_value(), date_inputs.nth(2).input_value()
+            if got_from.strip() == want_from and got_to.strip() == want_to:
+                break
+            log(f"  날짜 입력 불일치(시도 {attempt}/3): From={got_from!r} To={got_to!r} (기대 {want_from} ~ {want_to})")
         else:
-            raise RuntimeError(f"Transaction Date 입력 필드를 3개 못 찾음(찾은 개수: {date_inputs.count()})")
+            raise RuntimeError(f"날짜 필터 확정 실패 (From={got_from!r}, To={got_to!r})")
     except Exception as e:
         _screenshot(page, "date_range_fail")
         raise RuntimeError(f"Transaction Date 범위 설정 실패: {e}")
@@ -297,6 +314,28 @@ def parse_and_aggregate(xlsx_path):
     return totals, counts
 
 
+def save_monthly_copy(xlsx_path, month_str):
+    """2026-10-07: 원본 export를 월별 파일(downloads/item_stats/receipt_YYYY-MM.xlsx)로도 보관한다.
+    대시보드 반영(fse_dashboard_patch.py)과 품목 통계가 '그 달 것'을 정확히 집어 쓰도록.
+    검증: 거래일이 전부 그 달 안인지, 'Reached export limit'(5000행 잘림) 문구가 없는지."""
+    import shutil
+    import pandas as pd
+    df = max(pd.read_html(str(xlsx_path), encoding="utf-8"), key=len)
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = [c[-1] for c in df.columns]
+    if df.astype(str).apply(lambda c: c.str.contains("Reached export limit")).any().any():
+        raise RuntimeError("export가 5000행 제한으로 잘렸음")
+    d = pd.to_datetime(df["Transaction Date"], errors="coerce").dropna()
+    y, m = map(int, month_str.split("-"))
+    if not len(d) or not ((d.dt.year == y) & (d.dt.month == m)).all():
+        raise RuntimeError(f"거래일이 {month_str} 범위를 벗어남(종료일 필터 미적용 의심): {d.min()} ~ {d.max()}")
+    out_dir = DOWNLOAD_DIR / "item_stats"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    target = out_dir / f"receipt_{month_str}.xlsx"
+    shutil.copy2(xlsx_path, target)
+    log(f"월별 보관: {target.name} ({len(df)}행, 거래일 {d.min().date()} ~ {d.max().date()})")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--month", required=True, help="YYYY-MM")
@@ -323,6 +362,12 @@ def main():
             context.close()
             sys.exit(1)
         context.close()
+
+    try:
+        save_monthly_copy(xlsx_path, args.month)
+    except Exception as e:
+        log(f"[오류] 월별 파일 검증/보관 실패: {e}")
+        sys.exit(1)
 
     result = parse_and_aggregate(xlsx_path)
     if result is None:

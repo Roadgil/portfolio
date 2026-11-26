@@ -17,12 +17,17 @@ Monthly Closing 마감 자료 4종 월간 자동 수집 오케스트레이터.
 
 캐치업: 지난달이 아직 처리 안 됐으면(트리거를 통째로 놓친 경우) 이번 달 가드보다
 먼저 지난달분을 자동으로 복구한다(wd_cost_monthly_updater.py와 동일 패턴).
-**주의**: 소모량 리포트는 "Work Order Status not equal to Closed" 필터가 있어
-지난달로 캐치업 재조회하면 그 사이 마감된 WO가 빠져 실제보다 적게 나올 수 있다
-(fse_consumption_puller.py 자체 문서 참고) - 캐치업 로그에 경고를 남긴다.
+(참고: 예전엔 소모 리포트의 "Closed 제외" 필터 때문에 캐치업 재조회 값이 적게 나왔지만,
+2026-10-07에 fse_consumption_puller.py가 그 필터를 해제하도록 바뀌어 지금은 해당 없음.)
 
-이 스크립트는 4개 파일을 "모으기"까지만 하고, Monthly Closing 대시보드
+이 스크립트는 4개 파일을 "모으기"까지만 하고, 월 데이터(소모/입고 seed)를 Monthly Closing 대시보드
 (monthly_closing_dashboard.html)에 반영하는 건 하지 않는다(원본 데이터 수집까지만).
+2026-10-07 추가: 4개가 전부 성공하면 이어서 아래를 자동으로 한다.
+  (a) 대시보드 반영: fse_dashboard_patch.py(그 달 소모/입고 seed) -> fse_dashboard_upload.py(온핸드+Intransit을
+      그 달 기간으로 저장하고 파일 교체). 지난 달 특이사항은 보존됨(업로드 스크립트가 처리).
+  (b) "6개월 미소모(Dead) 재고" 갱신: fse_dead_stock_build.py --month <그 달> (엑셀 + 대시보드 Dead 구역)
+(a)/(b)가 실패해도 그 달 수집을 "미완료"로 만들지 않는다(전부 재수집되지 않게) - 상태에 dashboard_ok/dead_ok=False로
+남기고 다음 실행 때 실패한 후속 작업만 다시 시도한다.
 
 수동 실행법:
     C:\\Users\\yoongil.chae\\Miniconda\\python.exe fse_monthly_runner.py
@@ -238,6 +243,81 @@ def check_intransit_file(target_date):
     return False
 
 
+def _run_step(args, label, timeout):
+    """후속 스크립트 1개 실행. 성공 True. 마지막 출력 3줄을 로그에 남긴다."""
+    env = dict(os.environ, PYTHONIOENCODING="utf-8")
+    try:
+        r = subprocess.run(args, cwd=str(BASE_DIR), env=env, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=timeout)
+    except Exception as e:
+        log(f"[{label}][실패] 실행 오류: {e}")
+        return False
+    for ln in [ln for ln in (r.stdout or "").splitlines() if ln.strip()][-3:]:
+        log(f"[{label}] {ln[:200]}")
+    if r.returncode != 0:
+        log(f"[{label}][실패] 종료코드 {r.returncode}: {((r.stderr or '') + (r.stdout or '')).strip()[-300:]}")
+        return False
+    return True
+
+
+def run_dashboard_apply(month_key, target_date):
+    """그 달 소모/입고 seed 반영 + 온핸드/Intransit 월 저장(대시보드 파일 교체). 둘 다 성공해야 True."""
+    y, m = map(int, month_key.split("-"))
+    intransit = INTRANSIT_DIR / INTRANSIT_FILENAME_FMT.format(ymd=target_date.strftime("%Y%m%d"))
+    log(f"[대시보드] {month_key} 소모/입고 seed 반영 -> 온핸드/Intransit 월 저장")
+    if not _run_step([PYTHON_EXE, "fse_dashboard_patch.py", "--month", month_key], "대시보드:seed", 300):
+        return False
+    # 업로드 스크립트는 대시보드를 파일에서 새로 열어 기간을 추가하고 파일을 교체한다(seed는 방금 패치한 것 그대로 보존됨)
+    if not _run_step([PYTHON_EXE, "fse_dashboard_upload.py", "--month", f"{y}.{m}", "--intransit", str(intransit)], "대시보드:월저장", 600):
+        return False
+    log(f"[대시보드] {month_key} 반영 완료")
+    return True
+
+
+def run_dead_stock_build(month_key):
+    """Dead 재고 갱신(엑셀 + 대시보드 seed). 성공 True."""
+    log(f"[Dead] {month_key} 6개월 미소모 재고 갱신 시작 (fse_dead_stock_build.py)")
+    env = dict(os.environ, PYTHONIOENCODING="utf-8")
+    try:
+        r = subprocess.run([PYTHON_EXE, "fse_dead_stock_build.py", "--month", month_key], cwd=str(BASE_DIR),
+                           env=env, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600)
+    except Exception as e:
+        log(f"[Dead][실패] 실행 오류: {e}")
+        return False
+    tail = [ln for ln in (r.stdout or "").splitlines() if ln.strip()][-3:]
+    for ln in tail:
+        log(f"[Dead] {ln[:200]}")
+    if r.returncode != 0:
+        log(f"[Dead][실패] 종료코드 {r.returncode}: {(r.stderr or '').strip()[-300:]}")
+        return False
+    log(f"[Dead] {month_key} 갱신 완료")
+    return True
+
+
+def retry_failed_followups(state):
+    """수집은 성공했지만 후속 작업(대시보드 반영 / Dead 갱신)만 실패한 달이 있으면 그것만 다시 시도."""
+    changed = False
+    for h in state.get("history", []):
+        if not h.get("all_ok"):
+            continue
+        if h.get("dashboard_ok") is False:
+            td = h.get("target_date")
+            if td:
+                log(f"[후속][재시도] {h['month']} - 수집은 완료, 대시보드 반영만 다시 실행")
+                if run_dashboard_apply(h["month"], date.fromisoformat(td)):
+                    h["dashboard_ok"] = True
+                    changed = True
+            else:
+                log(f"[후속][재시도] {h['month']} - target_date 기록이 없어 대시보드 재시도 불가(수동 확인 필요)")
+        if h.get("dead_ok") is False:
+            log(f"[Dead][재시도] {h['month']} - 수집은 완료, Dead 갱신만 다시 실행")
+            if run_dead_stock_build(h["month"]):
+                h["dead_ok"] = True
+                changed = True
+    if changed:
+        save_state(state)
+
+
 def process_month(year, month, target_date, label=""):
     month_key = f"{year}-{month:02d}"
     consumption_label, receipt_label, onhand_label = (
@@ -254,6 +334,9 @@ def process_month(year, month, target_date, label=""):
     ok_onhand = results[onhand_label]
     ok_intransit = check_intransit_file(target_date)
     all_ok = ok_consumption and ok_receipt and ok_onhand and ok_intransit
+    # 4개가 전부 성공했을 때만 후속 작업 (결과는 all_ok에 영향 주지 않음). 대시보드 반영 -> Dead 갱신 순서
+    ok_dash = run_dashboard_apply(month_key, target_date) if all_ok else None
+    ok_dead = run_dead_stock_build(month_key) if all_ok else None
 
     # 4개 중 하나라도 실패하면 "완료"로 기록하지 않는다 - month_already_processed()가
     # all_ok만 보고 판단하므로, 실패한 달은 다음 트리거(내일 이 시각)에서 자동으로
@@ -268,6 +351,9 @@ def process_month(year, month, target_date, label=""):
         "onhand_ok": ok_onhand,
         "intransit_ok": ok_intransit,
         "all_ok": all_ok,
+        "dashboard_ok": ok_dash,
+        "dead_ok": ok_dead,
+        "target_date": target_date.isoformat(),
     })
     state["history"] = state["history"][-24:]
     save_state(state)
@@ -290,14 +376,15 @@ def main():
     log(f"===== FSE 월간 마감자료 4종 수집 시작 (기준일: {today}) =====")
 
     state = load_state()
+    retry_failed_followups(state)   # 대시보드 반영/Dead 갱신만 실패했던 달이 있으면 먼저 그것만 재시도
+    state = load_state()
 
     # 캐치업: 지난달 트리거가 통째로 안 걸렸으면 이번 달 가드보다 먼저 복구
     py, pm = prev_month(today.year, today.month)
     prev_key = f"{py}-{pm:02d}"
     if not month_already_processed(state, prev_key):
         log(f"[캐치업] 지난달({prev_key}) 처리 기록 없음 - 놓친 트리거로 판단, 캐치업 실행")
-        log("[캐치업][주의] 소모량 리포트는 'Work Order Status not equal to Closed' 필터가 있어 "
-            "지난달 재조회 시 그 사이 마감된 WO가 빠져 실제보다 적게 나올 수 있음 - 결과 확인 필요")
+        log("[캐치업] 소모 풀러는 Closed 제외 필터를 해제하고 받으므로 지난달 재조회도 정확함(2026-10-07 수정)")
         prev_last_bd = last_working_day_of_month(py, pm)
         process_month(py, pm, prev_last_bd, label="[캐치업]")
         state = load_state()
