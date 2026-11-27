@@ -40,6 +40,7 @@
 | 12 | 물류·폐기 5개 업체 월 지급요청을 목적·금액(VAT 포함)·지급차수·계좌·PR/PO 5항목 양식으로 통일. | Unified monthly payment requests to Finance for five logistics and disposal vendors on one five-field format: purpose, VAT-inclusive amount, payment run, account and PR/PO. | Finance partnership, Standardization |
 | 13 | 대표님께 보고한 월마감 SLOB 수치에서 오류를 찾아 다음 영업일에 원인과 함께 먼저 정정 보고. | Corrected a slow-moving stock figure in the month-end report to the managing director on the next business day, explaining the cause. | Integrity, Executive reporting |
 | 14 | Billable 승인라인 변경을 서비스팀에, 프로모션캔 QR 회수 절차를 전사에 공지. | Announced the billable approval-line change to Service and the promotional can QR recovery process company-wide. | Change management, Internal communication |
+| 32 | 유상 파트오더 승인을 서비스팀 차장→이사 2단계에서 출고를 맡는 Operation 내부 1단계(승인권자 3명 상호 백업)로 줄이자고 제안하고, 대표님께는 당일 출고 시간표와 선출고 리스크로, 재무팀에는 입금 확인·재무 승인 유지라는 통제 장치로 설득해 적용. | Cut billable parts-order approval from two sequential service-team sign-offs to one internal Operation approval shared by three approvers who back each other up; won over the managing director with the same-day shipping timeline and pre-shipment risk, and Finance by keeping payment confirmation and Finance approval in place. | Process improvement, Change management, Executive buy-in, Cross-functional |
 | 15 | 월마감 전 미반납 Unused Return 7건을 담당 엔지니어 4명에게 건별로 확인 요청. | Followed up with 4 engineers on 7 unused returns before the month-end close. | Month-end close, Follow-through |
 
 ## 규제 · 품질 (RA / QA)
